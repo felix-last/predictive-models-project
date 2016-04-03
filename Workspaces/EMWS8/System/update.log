@@ -8,123 +8,79 @@ Traverser: Traverser invoked.  MPCONNECT command is sas.
 Traverser: Beginning flow traversal 
 *------------------------------------------------------------* 
 * 
-* FIMPORT : Beginning Update 
-* datetime : 03APR2016:16:24:26 
+* FIMPORT2 : Beginning Update 
+* datetime : 03APR2016:17:28:55 
 * 
 *------------------------------------------------------------* 
-52188      %let emexceptionString =;
-52189      %let EMEXCEPTIONSTRING=;
-52190      *------------------------------------------------------------*;
-52191      * UPDATE: FIMPORT;
-52192      *------------------------------------------------------------*;
-52193      %let EM_ACTION = UPDATE;
-52194      %let syscc = 0;
-52195      /* Fimport.source */
-52196      %macro main;
-52197            %if %upcase(&EM_ACTION) = CREATE %then %do;
-52198               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-52199               %include temp;
-52200               filename temp;
-52201               %create;
-52202            %end;
-52203            %else
-52204            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-52205               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-52206               %include temp;
-52207               filename temp;
-52208               %train;
-52209            %end;
-52210            %else
-52211            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-52212               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-52213               %include temp;
-52214               filename temp;
-52215               %update;
-52216            %end;
-52217            %else
-52218            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-52219               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-52220               %include temp;
-52221               filename temp;
-52222               %property;
-52223            %end;
-52224             %else
-52225            %if %upcase(&EM_ACTION) = SCORE %then %do;
-52226               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-52227               %include temp;
-52228               filename temp;
-52229               %score;
-52230            %end;
-52231            %else
-52232            %if %upcase(&EM_ACTION) = REPORT %then %do;
-52233               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-52234               %include temp;
-52235               filename temp;
-52236               %report;
-52237            %end;
-52238            %else
-52239            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-52240               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-52241               %include temp;
-52242               filename temp;
-52243               %openvariableset;
-52244            %end;
-52245            %else
-52246            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-52247               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-52248               %include temp;
-52249               filename temp;
-52250               %closevariableset;
-52251            %end;
-52252      %mend main;
-52253      %main;
-NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-52254     +%macro update;
-52255     +    %let oldrole = %str();
-52256     +    data _null_;
-52257     +       set &em_data_exportset;
-52258     +       where NODEPORT='TRAIN';
-52259     +       call symput('oldrole', ROLE);
-52260     +    run;
-52261     +    %if &oldrole ne &em_property_role %then %do;
-52262     +        data &em_data_exportset;
-52263     +           set &em_data_exportset;
-52264     +           if NODEPORT='TRAIN' then do;
-52265     +              ROLE="&em_property_role";
-52266     +              NEEDUPDATE='Y';
-52267     +              EXPORT='Y';
-52268     +           end;
-52269     +        run;
-52270     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-52271     +        data _null_;
-52272     +           file x;
-52273     +           put ' ';
-52274     +        run;
-52275     +        filename x;
-52276     +    %end;
-52277     +    %else %do;
-52278     +        data &em_data_exportset;
-52279     +           set &em_data_exportset;
-52280     +           if NODEPORT='TRAIN' then do;
-52281     +              ROLE="&em_property_role";
-52282     +              NEEDUPDATE='Y';
-52283     +              EXPORT='Y';
-52284     +           end;
-52285     +        run;
-52286     +    %end;
-52288     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-52289     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-52290     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-52291     +           set &em_user_emcmetadefault;
-52292     +           drop DROP;
-52293     +           where DROP='N';
-52294     +        run;
-52295     +    %end;
-52297     +%mend update;
-NOTE: %INCLUDE (level 1) ending.
+13173      %let emexceptionString =;
+13174      %let EMEXCEPTIONSTRING=;
+13175      *------------------------------------------------------------*;
+13176      * UPDATE: FIMPORT2;
+13177      *------------------------------------------------------------*;
+13178      %let EM_ACTION = UPDATE;
+13179      %let syscc = 0;
+13180      /* Fimport.source */
+13181      %macro main;
+13182            %if %upcase(&EM_ACTION) = CREATE %then %do;
+13183               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+13184               %include temp;
+13185               filename temp;
+13186               %create;
+13187            %end;
+13188            %else
+13189            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+13190               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+13191               %include temp;
+13192               filename temp;
+13193               %train;
+13194            %end;
+13195            %else
+13196            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+13197               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+13198               %include temp;
+13199               filename temp;
+13200               %update;
+13201            %end;
+13202            %else
+13203            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+13204               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+13205               %include temp;
+13206               filename temp;
+13207               %property;
+13208            %end;
+13209             %else
+13210            %if %upcase(&EM_ACTION) = SCORE %then %do;
+13211               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+13212               %include temp;
+13213               filename temp;
+13214               %score;
+13215            %end;
+13216            %else
+13217            %if %upcase(&EM_ACTION) = REPORT %then %do;
+13218               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+13219               %include temp;
+13220               filename temp;
+13221               %report;
+13222            %end;
+13223            %else
+13224            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+13225               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+13226               %include temp;
+13227               filename temp;
+13228               %openvariableset;
+13229            %end;
+13230            %else
+13231            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+13232               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+13233               %include temp;
+13234               filename temp;
+13235               %closevariableset;
+13236            %end;
+13237      %mend main;
+13238      %main;
 NOTE: Fileref TEMP has been deassigned.
 
-NOTE: There were 1 observations read from the data set EMWS8.FIMPORT_EXPORTSET.
+NOTE: There were 1 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
       WHERE NODEPORT='TRAIN';
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
@@ -132,115 +88,26 @@ NOTE: DATA statement used (Total process time):
       
 
 
-NOTE: There were 6 observations read from the data set EMWS8.FIMPORT_EXPORTSET.
-NOTE: The data set EMWS8.FIMPORT_EXPORTSET has 6 observations and 18 variables.
+NOTE: There were 6 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
+NOTE: The data set EMWS8.FIMPORT2_EXPORTSET has 6 observations and 18 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-52302      *------------------------------------------------------------*;
-52303      * End UPDATE: FIMPORT;
-52304      *------------------------------------------------------------*;
+13287      *------------------------------------------------------------*;
+13288      * End UPDATE: FIMPORT2;
+13289      *------------------------------------------------------------*;
 
-52305      %em_delMacro;
+13290      %em_delMacro;
 
 *------------------------------------------------------------* 
 * 
-* FIMPORT : End Update 
-* datetime : 03APR2016:16:24:26 
-* 
-*------------------------------------------------------------* 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* EMCODE7 : Beginning Update 
-* datetime : 03APR2016:16:24:27 
-* 
-*------------------------------------------------------------* 
-52337      *------------------------------------------------------------*;
-52338      * EMCODE7: Update Variables Set;
-52339      *------------------------------------------------------------*;
-
-52340      proc sort data=EMWS8.FIMPORT_CMeta_TRAIN out=_SortedVar;
-52341      by name;
-52342      run;
-
-NOTE: There were 34 observations read from the data set EMWS8.FIMPORT_CMETA_TRAIN.
-NOTE: The data set WORK._SORTEDVAR has 34 observations and 20 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-52343      proc sort data=EMWS8.EMCODE7_VariableSet;
-52344      by name;
-52345      run;
-
-NOTE: Input data set is already sorted, no sorting done.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-52346      data EMWS8.EMCODE7_VariableSet;
-52347      merge _SortedVar(in=_a) EMWS8.EMCODE7_VariableSet(in=_b rename=(ROLE = OLDROLE) keep=NAME ROLE USE REPORT);
-52348      by name;
-52349      if (OLDROLE = 'TARGET' and use = 'Y') and ROLE = 'REJECTED' then USE = 'D';
-52350      drop OLDROLE;
-52351      if _b and ^_a then delete;
-52352      run;
-
-NOTE: There were 34 observations read from the data set WORK._SORTEDVAR.
-NOTE: There were 22 observations read from the data set EMWS8.EMCODE7_VARIABLESET.
-NOTE: The data set EMWS8.EMCODE7_VARIABLESET has 34 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.00 seconds
-      
-
-52353      * EMCODE7: End of Update Variables Set;
-52354      *------------------------------------------------------------*;
-
-52355      *------------------------------------------------------------*;
-52356      * EMCODE7: Computing metadata for TRAIN data;
-52357      *------------------------------------------------------------*;
-
-ERROR: The variable Kidhome from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Teenhome from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Recency from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntWines from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntFruits from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntMeatProducts from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntFishProducts from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntSweetProducts from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable MntGoldProds from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable NumDealsPurchases from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable NumWebPurchases from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable NumCatalogPurchases from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable NumStorePurchases from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable NumWebVisitsMonth from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable AcceptedCmp3 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable AcceptedCmp4 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable AcceptedCmp5 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable AcceptedCmp1 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable AcceptedCmp2 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Complain from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Z_CostContact from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Z_Revenue from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Group from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Element1 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Element2 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Element3 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-ERROR: The variable Element4 from data set EMWS8.FIMPORT_TRAIN is not defined in the INPUT view EMWS8.EMCODE7_TRAIN.
-View out of synch  EMWS8.EMCODE7_TRAIN will be deleted. 
-*------------------------------------------------------------* 
-* 
-* EMCODE7 : End Update 
-* datetime : 03APR2016:16:24:27 
+* FIMPORT2 : End Update 
+* datetime : 03APR2016:17:28:55 
 * 
 *------------------------------------------------------------* 
 Traverser: Run Completed 
-52368      proc printto;
-52369      run;
+13292      proc printto;
+13293      run;
 
