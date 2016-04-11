@@ -2,10 +2,13 @@
 * Plot: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    CatPurchase(ASC) Clothes(ASC) DepVar(DESC) Dependents(ASC) Dt_Customer(ASC)
-   Education(ASC) Frq(ASC) Gender(ASC) HouseKeeping(ASC) Income(ASC) Kitchen(ASC)
-   Marital_Status(ASC) Mnt(ASC) NetPurchase(ASC) Rcn(ASC) Recomendation(ASC)
-   SmallAppliances(ASC) Toys(ASC) Year_Birth(ASC)
+    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Dt_Customer(ASC) Education(ASC)
+   Income(ASC) Kidhome(ASC) Marital_Status(ASC) MntFishProducts(ASC)
+   MntFruits(ASC) MntGoldProds(ASC) MntMeatProducts(ASC) MntSweetProducts(ASC)
+   MntWines(ASC) NumCatalogPurchases(ASC) NumDealsPurchases(ASC)
+   NumStorePurchases(ASC) NumWebPurchases(ASC) NumWebVisitsMonth(ASC) Recency(ASC)
+   Teenhome(ASC) Year_Birth(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------*;
 * Plot: Create DMDB;
@@ -32,29 +35,64 @@ pattern1 value=solid;
 proc gchart
 data=EMWS8.FIMPORT_train gout=WORK.PlotGRAPH;
 *;
-title "CatPurchase by DepVar";
-vbar CatPurchase /
-name = "CatPurchase    x DepVar         " description = "CatPurchase by DepVar"
+title "AcceptedCmp1 by DepVar";
+vbar AcceptedCmp1 /
+name = "AcceptedCmp1   x DepVar         " description = "AcceptedCmp1 by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
 noframe
 missing
+discrete
 raxis=axis1 maxis=axis2;
 run;
-title "Clothes by DepVar";
-vbar Clothes /
-name = "Clothes        x DepVar         " description = "Clothes by DepVar"
+title "AcceptedCmp2 by DepVar";
+vbar AcceptedCmp2 /
+name = "AcceptedCmp2   x DepVar         " description = "AcceptedCmp2 by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
 noframe
 missing
+discrete
 raxis=axis1 maxis=axis2;
 run;
-title "Dependents by DepVar";
-vbar Dependents /
-name = "Dependents     x DepVar         " description = "Dependents by DepVar"
+title "AcceptedCmp3 by DepVar";
+vbar AcceptedCmp3 /
+name = "AcceptedCmp3   x DepVar         " description = "AcceptedCmp3 by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "AcceptedCmp4 by DepVar";
+vbar AcceptedCmp4 /
+name = "AcceptedCmp4   x DepVar         " description = "AcceptedCmp4 by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "AcceptedCmp5 by DepVar";
+vbar AcceptedCmp5 /
+name = "AcceptedCmp5   x DepVar         " description = "AcceptedCmp5 by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "Complain by DepVar";
+vbar Complain /
+name = "Complain       x DepVar         " description = "Complain by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -83,36 +121,6 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Frq by DepVar";
-vbar Frq /
-name = "Frq            x DepVar         " description = "Frq by DepVar"
-PERCENT
-type=PERCENT
-subgroup=DepVar
-noframe
-missing
-raxis=axis1 maxis=axis2;
-run;
-title "Gender by DepVar";
-vbar Gender /
-name = "Gender         x DepVar         " description = "Gender by DepVar"
-PERCENT
-type=PERCENT
-subgroup=DepVar
-noframe
-missing
-raxis=axis1 maxis=axis2;
-run;
-title "HouseKeeping by DepVar";
-vbar HouseKeeping /
-name = "HouseKeeping   x DepVar         " description = "HouseKeeping by DepVar"
-PERCENT
-type=PERCENT
-subgroup=DepVar
-noframe
-missing
-raxis=axis1 maxis=axis2;
-run;
 title "Income by DepVar";
 vbar Income /
 name = "Income         x DepVar         " description = "Income by DepVar"
@@ -123,14 +131,15 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Kitchen by DepVar";
-vbar Kitchen /
-name = "Kitchen        x DepVar         " description = "Kitchen by DepVar"
+title "Kidhome by DepVar";
+vbar Kidhome /
+name = "Kidhome        x DepVar         " description = "Kidhome by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
 noframe
 missing
+discrete
 raxis=axis1 maxis=axis2;
 run;
 title "Marital_Status by DepVar";
@@ -143,9 +152,9 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Mnt by DepVar";
-vbar Mnt /
-name = "Mnt            x DepVar         " description = "Mnt by DepVar"
+title "MntFishProducts by DepVar";
+vbar MntFishProducts /
+name = "MntFishProductsx DepVar         " description = "MntFishProducts by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -153,9 +162,9 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "NetPurchase by DepVar";
-vbar NetPurchase /
-name = "NetPurchase    x DepVar         " description = "NetPurchase by DepVar"
+title "MntFruits by DepVar";
+vbar MntFruits /
+name = "MntFruits      x DepVar         " description = "MntFruits by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -163,9 +172,9 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Rcn by DepVar";
-vbar Rcn /
-name = "Rcn            x DepVar         " description = "Rcn by DepVar"
+title "MntGoldProds by DepVar";
+vbar MntGoldProds /
+name = "MntGoldProds   x DepVar         " description = "MntGoldProds by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -173,9 +182,39 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Recomendation by DepVar";
-vbar Recomendation /
-name = "Recomendation  x DepVar         " description = "Recomendation by DepVar"
+title "MntMeatProducts by DepVar";
+vbar MntMeatProducts /
+name = "MntMeatProductsx DepVar         " description = "MntMeatProducts by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+raxis=axis1 maxis=axis2;
+run;
+title "MntSweetProducts by DepVar";
+vbar MntSweetProducts /
+name = "MntSweetProductx DepVar         " description = "MntSweetProducts by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+raxis=axis1 maxis=axis2;
+run;
+title "MntWines by DepVar";
+vbar MntWines /
+name = "MntWines       x DepVar         " description = "MntWines by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+raxis=axis1 maxis=axis2;
+run;
+title "NumCatalogPurchases by DepVar";
+vbar NumCatalogPurchases /
+name = "NumCatalogPurchx DepVar         " description = "NumCatalogPurchases by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -184,9 +223,53 @@ missing
 discrete
 raxis=axis1 maxis=axis2;
 run;
-title "SmallAppliances by DepVar";
-vbar SmallAppliances /
-name = "SmallAppliancesx DepVar         " description = "SmallAppliances by DepVar"
+title "NumDealsPurchases by DepVar";
+vbar NumDealsPurchases /
+name = "NumDealsPurchasx DepVar         " description = "NumDealsPurchases by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "NumStorePurchases by DepVar";
+vbar NumStorePurchases /
+name = "NumStorePurchasx DepVar         " description = "NumStorePurchases by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "NumWebPurchases by DepVar";
+vbar NumWebPurchases /
+name = "NumWebPurchasesx DepVar         " description = "NumWebPurchases by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "NumWebVisitsMonth by DepVar";
+vbar NumWebVisitsMonth /
+name = "NumWebVisitsMonx DepVar         " description = "NumWebVisitsMonth by DepVar"
+PERCENT
+type=PERCENT
+subgroup=DepVar
+noframe
+missing
+discrete
+raxis=axis1 maxis=axis2;
+run;
+title "Recency by DepVar";
+vbar Recency /
+name = "Recency        x DepVar         " description = "Recency by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
@@ -194,14 +277,15 @@ noframe
 missing
 raxis=axis1 maxis=axis2;
 run;
-title "Toys by DepVar";
-vbar Toys /
-name = "Toys           x DepVar         " description = "Toys by DepVar"
+title "Teenhome by DepVar";
+vbar Teenhome /
+name = "Teenhome       x DepVar         " description = "Teenhome by DepVar"
 PERCENT
 type=PERCENT
 subgroup=DepVar
 noframe
 missing
+discrete
 raxis=axis1 maxis=axis2;
 run;
 title "Year_Birth by DepVar";
@@ -220,126 +304,175 @@ goptions display;
 *------------------------------------------------------------*;
 * Plot: Copying graphs to node folder;
 *------------------------------------------------------------*;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\CatPurchase by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\AcceptedCmp2 by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay CATPURCH;
+replay ACCEPTE1;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Clothes by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\AcceptedCmp3 by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay CLOTHES;
+replay ACCEPTE2;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Dependents by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\AcceptedCmp4 by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay DEPENDEN;
+replay ACCEPTE3;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Dt_Customer by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\AcceptedCmp5 by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay ACCEPTE4;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\AcceptedCmp1 by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay ACCEPTED;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Complain by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay COMPLAIN;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Dt_Customer by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
 replay DT_CUSTO;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Education by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Education by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
 replay EDUCATIO;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Frq by DepVar.gif";
-goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
-proc greplay igout=WORK.PLOTGRAPH nofs;
-replay FRQ;
-quit;
-goptions device=win;
-filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Gender by DepVar.gif";
-goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
-proc greplay igout=WORK.PLOTGRAPH nofs;
-replay GENDER;
-quit;
-goptions device=win;
-filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\HouseKeeping by DepVar.gif";
-goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
-proc greplay igout=WORK.PLOTGRAPH nofs;
-replay HOUSEKEE;
-quit;
-goptions device=win;
-filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Income by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Income by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
 replay INCOME;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Kitchen by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Kidhome by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay KITCHEN;
+replay KIDHOME;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Marital_Status by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Marital_Status by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
 replay MARITAL_;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Mnt by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntFishProducts by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay MNT;
+replay MNTFISHP;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\NetPurchase by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntFruits by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay NETPURCH;
+replay MNTFRUIT;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Rcn by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntGoldProds by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay RCN;
+replay MNTGOLDP;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Recomendation by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntMeatProducts by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay RECOMEND;
+replay MNTMEATP;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\SmallAppliances by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntSweetProducts by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay SMALLAPP;
+replay MNTSWEET;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Toys by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\MntWines by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
-replay TOYS;
+replay MNTWINES;
 quit;
 goptions device=win;
 filename gsasfile;
-filename gsasfile "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Plot\GRAPH\Year_Birth by DepVar.gif";
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\NumCatalogPurchases by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay NUMCATAL;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\NumDealsPurchases by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay NUMDEALS;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\NumStorePurchases by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay NUMSTORE;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\NumWebPurchases by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay NUMWEBPU;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\NumWebVisitsMonth by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay NUMWEBVI;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Recency by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay RECENCY;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Teenhome by DepVar.gif";
+goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
+proc greplay igout=WORK.PLOTGRAPH nofs;
+replay TEENHOME;
+quit;
+goptions device=win;
+filename gsasfile;
+filename gsasfile "C:\\predictive-models-project\Workspaces\EMWS8\Plot\GRAPH\Year_Birth by DepVar.gif";
 goptions device= GIF display gaccess= gsasfile gsfmode= replace cback= white;
 proc greplay igout=WORK.PLOTGRAPH nofs;
 replay YEAR_BIR;

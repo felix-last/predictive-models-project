@@ -4,6 +4,8 @@ if upcase(strip(NAME)) in (
 "CLUS2"
 "CLUS3"
 "CLUS4"
+"CLUS5"
+"CLUS6"
 ) then ROLE="INPUT";
 else ROLE="REJECTED";
 end;
