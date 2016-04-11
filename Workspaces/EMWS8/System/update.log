@@ -9,118 +9,118 @@ Traverser: Beginning flow traversal
 *------------------------------------------------------------* 
 * 
 * FIMPORT : Beginning Update 
-* datetime : 11APR2016:15:25:41 
+* datetime : 11APR2016:17:36:07 
 * 
 *------------------------------------------------------------* 
-22814      %let emexceptionString =;
-22815      %let EMEXCEPTIONSTRING=;
-22816      *------------------------------------------------------------*;
-22817      * UPDATE: FIMPORT;
-22818      *------------------------------------------------------------*;
-22819      %let EM_ACTION = UPDATE;
-22820      %let syscc = 0;
-22821      /* Fimport.source */
-22822      %macro main;
-22823            %if %upcase(&EM_ACTION) = CREATE %then %do;
-22824               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-22825               %include temp;
-22826               filename temp;
-22827               %create;
-22828            %end;
-22829            %else
-22830            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-22831               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-22832               %include temp;
-22833               filename temp;
-22834               %train;
-22835            %end;
-22836            %else
-22837            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-22838               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-22839               %include temp;
-22840               filename temp;
-22841               %update;
-22842            %end;
-22843            %else
-22844            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-22845               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-22846               %include temp;
-22847               filename temp;
-22848               %property;
-22849            %end;
-22850             %else
-22851            %if %upcase(&EM_ACTION) = SCORE %then %do;
-22852               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-22853               %include temp;
-22854               filename temp;
-22855               %score;
-22856            %end;
-22857            %else
-22858            %if %upcase(&EM_ACTION) = REPORT %then %do;
-22859               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-22860               %include temp;
-22861               filename temp;
-22862               %report;
-22863            %end;
-22864            %else
-22865            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-22866               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-22867               %include temp;
-22868               filename temp;
-22869               %openvariableset;
-22870            %end;
-22871            %else
-22872            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-22873               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-22874               %include temp;
-22875               filename temp;
-22876               %closevariableset;
-22877            %end;
-22878      %mend main;
-22879      %main;
+25192      %let emexceptionString =;
+25193      %let EMEXCEPTIONSTRING=;
+25194      *------------------------------------------------------------*;
+25195      * UPDATE: FIMPORT;
+25196      *------------------------------------------------------------*;
+25197      %let EM_ACTION = UPDATE;
+25198      %let syscc = 0;
+25199      /* Fimport.source */
+25200      %macro main;
+25201            %if %upcase(&EM_ACTION) = CREATE %then %do;
+25202               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+25203               %include temp;
+25204               filename temp;
+25205               %create;
+25206            %end;
+25207            %else
+25208            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+25209               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+25210               %include temp;
+25211               filename temp;
+25212               %train;
+25213            %end;
+25214            %else
+25215            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+25216               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+25217               %include temp;
+25218               filename temp;
+25219               %update;
+25220            %end;
+25221            %else
+25222            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+25223               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+25224               %include temp;
+25225               filename temp;
+25226               %property;
+25227            %end;
+25228             %else
+25229            %if %upcase(&EM_ACTION) = SCORE %then %do;
+25230               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+25231               %include temp;
+25232               filename temp;
+25233               %score;
+25234            %end;
+25235            %else
+25236            %if %upcase(&EM_ACTION) = REPORT %then %do;
+25237               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+25238               %include temp;
+25239               filename temp;
+25240               %report;
+25241            %end;
+25242            %else
+25243            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+25244               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+25245               %include temp;
+25246               filename temp;
+25247               %openvariableset;
+25248            %end;
+25249            %else
+25250            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+25251               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+25252               %include temp;
+25253               filename temp;
+25254               %closevariableset;
+25255            %end;
+25256      %mend main;
+25257      %main;
 NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-22880     +%macro update;
-22881     +    %let oldrole = %str();
-22882     +    data _null_;
-22883     +       set &em_data_exportset;
-22884     +       where NODEPORT='TRAIN';
-22885     +       call symput('oldrole', ROLE);
-22886     +    run;
-22887     +    %if &oldrole ne &em_property_role %then %do;
-22888     +        data &em_data_exportset;
-22889     +           set &em_data_exportset;
-22890     +           if NODEPORT='TRAIN' then do;
-22891     +              ROLE="&em_property_role";
-22892     +              NEEDUPDATE='Y';
-22893     +              EXPORT='Y';
-22894     +           end;
-22895     +        run;
-22896     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-22897     +        data _null_;
-22898     +           file x;
-22899     +           put ' ';
-22900     +        run;
-22901     +        filename x;
-22902     +    %end;
-22903     +    %else %do;
-22904     +        data &em_data_exportset;
-22905     +           set &em_data_exportset;
-22906     +           if NODEPORT='TRAIN' then do;
-22907     +              ROLE="&em_property_role";
-22908     +              NEEDUPDATE='Y';
-22909     +              EXPORT='Y';
-22910     +           end;
-22911     +        run;
-22912     +    %end;
-22914     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-22915     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-22916     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-22917     +           set &em_user_emcmetadefault;
-22918     +           drop DROP;
-22919     +           where DROP='N';
-22920     +        run;
-22921     +    %end;
-22923     +%mend update;
+25258     +%macro update;
+25259     +    %let oldrole = %str();
+25260     +    data _null_;
+25261     +       set &em_data_exportset;
+25262     +       where NODEPORT='TRAIN';
+25263     +       call symput('oldrole', ROLE);
+25264     +    run;
+25265     +    %if &oldrole ne &em_property_role %then %do;
+25266     +        data &em_data_exportset;
+25267     +           set &em_data_exportset;
+25268     +           if NODEPORT='TRAIN' then do;
+25269     +              ROLE="&em_property_role";
+25270     +              NEEDUPDATE='Y';
+25271     +              EXPORT='Y';
+25272     +           end;
+25273     +        run;
+25274     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+25275     +        data _null_;
+25276     +           file x;
+25277     +           put ' ';
+25278     +        run;
+25279     +        filename x;
+25280     +    %end;
+25281     +    %else %do;
+25282     +        data &em_data_exportset;
+25283     +           set &em_data_exportset;
+25284     +           if NODEPORT='TRAIN' then do;
+25285     +              ROLE="&em_property_role";
+25286     +              NEEDUPDATE='Y';
+25287     +              EXPORT='Y';
+25288     +           end;
+25289     +        run;
+25290     +    %end;
+25292     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+25293     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+25294     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+25295     +           set &em_user_emcmetadefault;
+25296     +           drop DROP;
+25297     +           where DROP='N';
+25298     +        run;
+25299     +    %end;
+25301     +%mend update;
 NOTE: %INCLUDE (level 1) ending.
 NOTE: Fileref TEMP has been deassigned.
 
@@ -135,65 +135,116 @@ NOTE: DATA statement used (Total process time):
 NOTE: There were 6 observations read from the data set EMWS8.FIMPORT_EXPORTSET.
 NOTE: The data set EMWS8.FIMPORT_EXPORTSET has 6 observations and 18 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
+      real time           0.00 seconds
       cpu time            0.01 seconds
       
 
-22928      *------------------------------------------------------------*;
-22929      * End UPDATE: FIMPORT;
-22930      *------------------------------------------------------------*;
+25306      *------------------------------------------------------------*;
+25307      * End UPDATE: FIMPORT;
+25308      *------------------------------------------------------------*;
 
-22931      %em_delMacro;
+25309      %em_delMacro;
 
 *------------------------------------------------------------* 
 * 
 * FIMPORT : End Update 
-* datetime : 11APR2016:15:25:42 
+* datetime : 11APR2016:17:36:07 
 * 
 *------------------------------------------------------------* 
 Traverser: WaitingNode "FILTER" 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
 traverser_readyNode_note 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Plot : Beginning Update 
-* datetime : 11APR2016:15:25:42 
+* datetime : 11APR2016:17:36:07 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Plot : End Update 
-* datetime : 11APR2016:15:25:42 
+* datetime : 11APR2016:17:36:07 
 * 
 *------------------------------------------------------------* 
 Traverser: WaitingNode "FILTER" 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Stat : Beginning Update 
-* datetime : 11APR2016:15:25:43 
+* datetime : 11APR2016:17:36:08 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Stat : End Update 
-* datetime : 11APR2016:15:25:43 
+* datetime : 11APR2016:17:36:08 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Filter : Beginning Update 
-* datetime : 11APR2016:15:25:43 
+* datetime : 11APR2016:17:36:08 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Filter : End Update 
-* datetime : 11APR2016:15:25:44 
+* datetime : 11APR2016:17:36:08 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* EMCODE4 : Beginning Update 
+* datetime : 11APR2016:17:36:09 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* EMCODE4 : End Update 
+* datetime : 11APR2016:17:36:09 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "PART" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Trans : Beginning Update 
+* datetime : 11APR2016:17:36:09 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Trans : End Update 
+* datetime : 11APR2016:17:36:09 
+* 
+*------------------------------------------------------------* 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Part : Beginning Update 
+* datetime : 11APR2016:17:36:10 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Part : End Update 
+* datetime : 11APR2016:17:36:10 
 * 
 *------------------------------------------------------------* 
 Traverser: Run Completed 
-22992      proc printto;
-22993      run;
+25438      proc printto;
+25439      run;
 

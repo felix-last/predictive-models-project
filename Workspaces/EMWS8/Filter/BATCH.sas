@@ -9,10 +9,10 @@
 data workspace;
 length property $64 value $100;
 property= 'PROJECTLOCATION';
-value= "E:\Datamining\DataMining_Lab";
+value= "C:\";
 output;
 property= 'PROJECTNAME';
-value= "Tugas";
+value= "predictive-models-project";
 output;
 property= 'WORKSPACENAME';
 value= "EMWS8";
