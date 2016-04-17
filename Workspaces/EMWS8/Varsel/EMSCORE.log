@@ -3,8 +3,8 @@ MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
 MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   data _null_;
-MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "10 de Março de 2016" );
-MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "06H10m" );
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "16. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "20.10 Uhr" );
 MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
 MPRINT(EM_DIAGRAM):   put "* Score Log";
 MPRINT(EM_DIAGRAM):   put nldate;
@@ -13,243 +13,181 @@ MPRINT(EM_DIAGRAM):   put "*----------------------------------------------------
 MPRINT(EM_DIAGRAM):   run;
 *------------------------------------------------------------*
 * Score Log
-Date:                10 de Março de 2016
-Time:                06H10m
+Date:                16. April 2016
+Time:                20.10 Uhr
 *------------------------------------------------------------*
-MPRINT(EM_DIAGRAM):    filename O0FFENBW "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMSCORE.out" encoding="UTF-8" NOBOM;
-MPRINT(EM_DIAGRAM):   proc printto print=O0FFENBW new;
+MPRINT(EM_DIAGRAM):    filename O1I6161S "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O1I6161S new;
 MPRINT(EM_DIAGRAM):   run;
-45537      filename emflow "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
-MPRINT(EM_DIAGRAM):    filename emflow "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
+45541      filename emflow "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * Varsel: Scoring DATA data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-45538      *------------------------------------------------------------*;
-45539      * Varsel: Scoring DATA data;
-45540      *------------------------------------------------------------*;
-45541      data EMWS8.Varsel_TRAIN
-45542      / view=EMWS8.Varsel_TRAIN
-45543      ;
+45542      *------------------------------------------------------------*;
+45543      * Varsel: Scoring DATA data;
+45544      *------------------------------------------------------------*;
+45545      data EMWS8.Varsel_TRAIN
+45546      / view=EMWS8.Varsel_TRAIN
+45547      ;
 MPRINT(EM_DIAGRAM):   data EMWS8.Varsel_TRAIN / view=EMWS8.Varsel_TRAIN ;
-45544      set EMWS8.Part_TRAIN
-45545      ;
+45548      set EMWS8.Part_TRAIN
+45549      ;
 MPRINT(EM_DIAGRAM):   set EMWS8.Part_TRAIN ;
-45546      %inc emflow;
-NOTE: %INCLUDE (level 1) file EMFLOW is file E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas.
-45547     +******************************************;
+45550      %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas.
+45551     +******************************************;
 MPRINT(EM_DIAGRAM):   ******************************************;
-45548     +*** Begin Scoring Code from PROC DMINE ***;
+45552     +*** Begin Scoring Code from PROC DMINE ***;
 MPRINT(EM_DIAGRAM):   *** Begin Scoring Code from PROC DMINE ***;
-45549     +******************************************;
+45553     +******************************************;
 MPRINT(EM_DIAGRAM):   ******************************************;
-45550     +
-45551     +length _WARN_ $ 4;
-MPRINT(EM_DIAGRAM):   length _WARN_ $ 4;
-45552     +label _WARN_ = "Warnings";
-MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
-45553     +
 45554     +
-45555     +/*----G_Marital_Status begin----*/
-45556     +length _NORM12 $ 12;
-MPRINT(EM_DIAGRAM):   length _NORM12 $ 12;
-45557     +_NORM12 = put( Marital_Status , $12. );
-MPRINT(EM_DIAGRAM):   _NORM12 = put( Marital_Status , $12. );
-45558     +%DMNORMIP( _NORM12 )
-MPRINT(DMNORMIP):   call dmnorm(_NORM12,
+45555     +length _WARN_ $ 4;
+MPRINT(EM_DIAGRAM):   length _WARN_ $ 4;
+45556     +label _WARN_ = "Warnings";
+MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
+45557     +
+45558     +
+45559     +/*----G_Marital_Status begin----*/
+45560     +length _NORM8 $ 8;
+MPRINT(EM_DIAGRAM):   length _NORM8 $ 8;
+45561     +_NORM8 = put( Marital_Status , $8. );
+MPRINT(EM_DIAGRAM):   _NORM8 = put( Marital_Status , $8. );
+45562     +%DMNORMIP( _NORM8 )
+MPRINT(DMNORMIP):   call dmnorm(_NORM8,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMIP):  );
-MPRINT(EM_DIAGRAM):   drop _NORM12;
-MPRINT(EM_DIAGRAM):   select(_NORM12);
-MPRINT(EM_DIAGRAM):   when("DIVORCED    " ) G_Marital_Status = 1;
-MPRINT(EM_DIAGRAM):   when("MARRIED     " ) G_Marital_Status = 2;
-MPRINT(EM_DIAGRAM):   when("SINGLE      " ) G_Marital_Status = 3;
-45559     +drop _NORM12;
-MPRINT(EM_DIAGRAM):   when("TOGETHER    " ) G_Marital_Status = 2;
-45560     +select(_NORM12);
-MPRINT(EM_DIAGRAM):   when("WIDOW       " ) G_Marital_Status = 0;
-45561     +  when("DIVORCED    " ) G_Marital_Status = 1;
-45562     +  when("MARRIED     " ) G_Marital_Status = 2;
+MPRINT(EM_DIAGRAM):   drop _NORM8;
+MPRINT(EM_DIAGRAM):   select(_NORM8);
+MPRINT(EM_DIAGRAM):   when("DIVORCED" ) G_Marital_Status = 1;
+MPRINT(EM_DIAGRAM):   when("MARRIED " ) G_Marital_Status = 2;
+MPRINT(EM_DIAGRAM):   when("SINGLE  " ) G_Marital_Status = 0;
+45563     +drop _NORM8;
+MPRINT(EM_DIAGRAM):   when("TOGETHER" ) G_Marital_Status = 2;
+45564     +select(_NORM8);
+MPRINT(EM_DIAGRAM):   when("WIDOW   " ) G_Marital_Status = 0;
+45565     +  when("DIVORCED" ) G_Marital_Status = 1;
+45566     +  when("MARRIED " ) G_Marital_Status = 2;
 MPRINT(EM_DIAGRAM):   otherwise substr(_WARN_, 2, 1) = 'U';
-45563     +  when("SINGLE      " ) G_Marital_Status = 3;
+45567     +  when("SINGLE  " ) G_Marital_Status = 0;
 MPRINT(EM_DIAGRAM):   end;
-45564     +  when("TOGETHER    " ) G_Marital_Status = 2;
+45568     +  when("TOGETHER" ) G_Marital_Status = 2;
 MPRINT(EM_DIAGRAM):   label G_Marital_Status= "Grouped Levels for Marital_Status";
-45565     +  when("WIDOW       " ) G_Marital_Status = 0;
-45566     +  otherwise substr(_WARN_, 2, 1) = 'U';
-45567     +end;
-45568     +label G_Marital_Status="Grouped Levels for Marital_Status";
-MPRINT(EM_DIAGRAM):   length _NORM10 $ 10;
-45569     +/*----G_Marital_Status end----*/
-MPRINT(EM_DIAGRAM):   _NORM10 = put( Education , $10. );
-45570     +
-45571     +/*----G_Education begin----*/
-45572     +length _NORM10 $ 10;
-MPRINT(DMNORMIP):   call dmnorm(_NORM10,
-45573     +_NORM10 = put( Education , $10. );
-45574     +%DMNORMIP( _NORM10 )
-MPRINT(DMNORLEN):  32
-MPRINT(DMNORMIP):  );
-MPRINT(EM_DIAGRAM):   drop _NORM10;
-MPRINT(EM_DIAGRAM):   select(_NORM10);
-MPRINT(EM_DIAGRAM):   when("2N CYCLE  " ) G_Education = 1;
-MPRINT(EM_DIAGRAM):   when("BASIC     " ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   when("GRADUATION" ) G_Education = 2;
-45575     +drop _NORM10;
-MPRINT(EM_DIAGRAM):   when("MASTER    " ) G_Education = 0;
-45576     +select(_NORM10);
-MPRINT(EM_DIAGRAM):   when("PHD       " ) G_Education = 2;
-45577     +  when("2N CYCLE  " ) G_Education = 1;
-45578     +  when("BASIC     " ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   otherwise substr(_WARN_, 2, 1) = 'U';
-45579     +  when("GRADUATION" ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   end;
-45580     +  when("MASTER    " ) G_Education = 0;
-MPRINT(EM_DIAGRAM):   label G_Education= "Grouped Levels for Education";
-45581     +  when("PHD       " ) G_Education = 2;
-45582     +  otherwise substr(_WARN_, 2, 1) = 'U';
-45583     +end;
-45584     +label G_Education="Grouped Levels for Education";
+45569     +  when("WIDOW   " ) G_Marital_Status = 0;
+45570     +  otherwise substr(_WARN_, 2, 1) = 'U';
+45571     +end;
+45572     +label G_Marital_Status="Grouped Levels for Marital_Status";
 MPRINT(EM_DIAGRAM):   ****************************************;
 MPRINT(EM_DIAGRAM):   *** End Scoring Code from PROC DMINE ***;
-45585     +/*----G_Education end----*/
+45573     +/*----G_Marital_Status end----*/
 MPRINT(EM_DIAGRAM):   ****************************************;
-45586     +
-45587     +
-45588     +****************************************;
-45589     +*** End Scoring Code from PROC DMINE ***;
-45590     +****************************************;
+45574     +
+45575     +
+45576     +****************************************;
+45577     +*** End Scoring Code from PROC DMINE ***;
+45578     +****************************************;
 NOTE: %INCLUDE (level 1) ending.
 MPRINT(EM_DIAGRAM):   run;
-45591      run;
+45579      run;
 
 NOTE: DATA STEP view saved on file EMWS8.VARSEL_TRAIN.
 NOTE: A stored DATA STEP view cannot run under a different operating system.
 NOTE: DATA statement used (Total process time):
-      real time           0.03 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
 MPRINT(EM_DIAGRAM):   quit;
-45592      quit;
-45593      filename emflow;
+45580      quit;
+45581      filename emflow;
 MPRINT(EM_DIAGRAM):   filename emflow;
 NOTE: Fileref EMFLOW has been deassigned.
-45594      filename emflow "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
-MPRINT(EM_DIAGRAM):    filename emflow "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
+45582      filename emflow "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * Varsel: Scoring VALIDATE data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-45595      *------------------------------------------------------------*;
-45596      * Varsel: Scoring VALIDATE data;
-45597      *------------------------------------------------------------*;
-45598      data EMWS8.Varsel_VALIDATE
-45599      / view=EMWS8.Varsel_VALIDATE
-45600      ;
+45583      *------------------------------------------------------------*;
+45584      * Varsel: Scoring VALIDATE data;
+45585      *------------------------------------------------------------*;
+45586      data EMWS8.Varsel_VALIDATE
+45587      / view=EMWS8.Varsel_VALIDATE
+45588      ;
 MPRINT(EM_DIAGRAM):   data EMWS8.Varsel_VALIDATE / view=EMWS8.Varsel_VALIDATE ;
-45601      set EMWS8.Part_VALIDATE
-45602      ;
+45589      set EMWS8.Part_VALIDATE
+45590      ;
 MPRINT(EM_DIAGRAM):   set EMWS8.Part_VALIDATE ;
-45603      %inc emflow;
-NOTE: %INCLUDE (level 1) file EMFLOW is file E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas.
-45604     +******************************************;
+45591      %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file C:\\predictive-models-project\Workspaces\EMWS8\Varsel\EMFLOWSCORE.sas.
+45592     +******************************************;
 MPRINT(EM_DIAGRAM):   ******************************************;
-45605     +*** Begin Scoring Code from PROC DMINE ***;
+45593     +*** Begin Scoring Code from PROC DMINE ***;
 MPRINT(EM_DIAGRAM):   *** Begin Scoring Code from PROC DMINE ***;
-45606     +******************************************;
+45594     +******************************************;
 MPRINT(EM_DIAGRAM):   ******************************************;
-45607     +
-45608     +length _WARN_ $ 4;
+45595     +
+45596     +length _WARN_ $ 4;
 MPRINT(EM_DIAGRAM):   length _WARN_ $ 4;
-45609     +label _WARN_ = "Warnings";
+45597     +label _WARN_ = "Warnings";
 MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
-45610     +
-45611     +
-45612     +/*----G_Marital_Status begin----*/
-45613     +length _NORM12 $ 12;
-MPRINT(EM_DIAGRAM):   length _NORM12 $ 12;
-45614     +_NORM12 = put( Marital_Status , $12. );
-MPRINT(EM_DIAGRAM):   _NORM12 = put( Marital_Status , $12. );
-45615     +%DMNORMIP( _NORM12 )
-MPRINT(DMNORMIP):   call dmnorm(_NORM12,
+45598     +
+45599     +
+45600     +/*----G_Marital_Status begin----*/
+45601     +length _NORM8 $ 8;
+MPRINT(EM_DIAGRAM):   length _NORM8 $ 8;
+45602     +_NORM8 = put( Marital_Status , $8. );
+MPRINT(EM_DIAGRAM):   _NORM8 = put( Marital_Status , $8. );
+45603     +%DMNORMIP( _NORM8 )
+MPRINT(DMNORMIP):   call dmnorm(_NORM8,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMIP):  );
-45616     +drop _NORM12;
-MPRINT(EM_DIAGRAM):   drop _NORM12;
-45617     +select(_NORM12);
-MPRINT(EM_DIAGRAM):   select(_NORM12);
-45618     +  when("DIVORCED    " ) G_Marital_Status = 1;
-MPRINT(EM_DIAGRAM):   when("DIVORCED    " ) G_Marital_Status = 1;
-45619     +  when("MARRIED     " ) G_Marital_Status = 2;
-MPRINT(EM_DIAGRAM):   when("MARRIED     " ) G_Marital_Status = 2;
-45620     +  when("SINGLE      " ) G_Marital_Status = 3;
-MPRINT(EM_DIAGRAM):   when("SINGLE      " ) G_Marital_Status = 3;
-45621     +  when("TOGETHER    " ) G_Marital_Status = 2;
-MPRINT(EM_DIAGRAM):   when("TOGETHER    " ) G_Marital_Status = 2;
-45622     +  when("WIDOW       " ) G_Marital_Status = 0;
-MPRINT(EM_DIAGRAM):   when("WIDOW       " ) G_Marital_Status = 0;
-45623     +  otherwise substr(_WARN_, 2, 1) = 'U';
+45604     +drop _NORM8;
+MPRINT(EM_DIAGRAM):   drop _NORM8;
+45605     +select(_NORM8);
+MPRINT(EM_DIAGRAM):   select(_NORM8);
+45606     +  when("DIVORCED" ) G_Marital_Status = 1;
+MPRINT(EM_DIAGRAM):   when("DIVORCED" ) G_Marital_Status = 1;
+45607     +  when("MARRIED " ) G_Marital_Status = 2;
+MPRINT(EM_DIAGRAM):   when("MARRIED " ) G_Marital_Status = 2;
+45608     +  when("SINGLE  " ) G_Marital_Status = 0;
+MPRINT(EM_DIAGRAM):   when("SINGLE  " ) G_Marital_Status = 0;
+45609     +  when("TOGETHER" ) G_Marital_Status = 2;
+MPRINT(EM_DIAGRAM):   when("TOGETHER" ) G_Marital_Status = 2;
+45610     +  when("WIDOW   " ) G_Marital_Status = 0;
+MPRINT(EM_DIAGRAM):   when("WIDOW   " ) G_Marital_Status = 0;
+45611     +  otherwise substr(_WARN_, 2, 1) = 'U';
 MPRINT(EM_DIAGRAM):   otherwise substr(_WARN_, 2, 1) = 'U';
-45624     +end;
+45612     +end;
 MPRINT(EM_DIAGRAM):   end;
-45625     +label G_Marital_Status="Grouped Levels for Marital_Status";
+45613     +label G_Marital_Status="Grouped Levels for Marital_Status";
 MPRINT(EM_DIAGRAM):   label G_Marital_Status= "Grouped Levels for Marital_Status";
-45626     +/*----G_Marital_Status end----*/
-45627     +
-45628     +/*----G_Education begin----*/
-45629     +length _NORM10 $ 10;
-MPRINT(EM_DIAGRAM):   length _NORM10 $ 10;
-45630     +_NORM10 = put( Education , $10. );
-MPRINT(EM_DIAGRAM):   _NORM10 = put( Education , $10. );
-45631     +%DMNORMIP( _NORM10 )
-MPRINT(DMNORMIP):   call dmnorm(_NORM10,
-MPRINT(DMNORLEN):  32
-MPRINT(DMNORMIP):  );
-45632     +drop _NORM10;
-MPRINT(EM_DIAGRAM):   drop _NORM10;
-45633     +select(_NORM10);
-MPRINT(EM_DIAGRAM):   select(_NORM10);
-45634     +  when("2N CYCLE  " ) G_Education = 1;
-MPRINT(EM_DIAGRAM):   when("2N CYCLE  " ) G_Education = 1;
-45635     +  when("BASIC     " ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   when("BASIC     " ) G_Education = 2;
-45636     +  when("GRADUATION" ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   when("GRADUATION" ) G_Education = 2;
-45637     +  when("MASTER    " ) G_Education = 0;
-MPRINT(EM_DIAGRAM):   when("MASTER    " ) G_Education = 0;
-45638     +  when("PHD       " ) G_Education = 2;
-MPRINT(EM_DIAGRAM):   when("PHD       " ) G_Education = 2;
-45639     +  otherwise substr(_WARN_, 2, 1) = 'U';
-MPRINT(EM_DIAGRAM):   otherwise substr(_WARN_, 2, 1) = 'U';
-45640     +end;
-MPRINT(EM_DIAGRAM):   end;
-45641     +label G_Education="Grouped Levels for Education";
-MPRINT(EM_DIAGRAM):   label G_Education= "Grouped Levels for Education";
-45642     +/*----G_Education end----*/
-45643     +
-45644     +
-45645     +****************************************;
+45614     +/*----G_Marital_Status end----*/
+45615     +
+45616     +
+45617     +****************************************;
 MPRINT(EM_DIAGRAM):   ****************************************;
-45646     +*** End Scoring Code from PROC DMINE ***;
+45618     +*** End Scoring Code from PROC DMINE ***;
 MPRINT(EM_DIAGRAM):   *** End Scoring Code from PROC DMINE ***;
-45647     +****************************************;
+45619     +****************************************;
 MPRINT(EM_DIAGRAM):   ****************************************;
 NOTE: %INCLUDE (level 1) ending.
 MPRINT(EM_DIAGRAM):   run;
-45648      run;
+45620      run;
 
 NOTE: DATA STEP view saved on file EMWS8.VARSEL_VALIDATE.
 NOTE: A stored DATA STEP view cannot run under a different operating system.
 NOTE: DATA statement used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.00 seconds
+      real time           0.00 seconds
+      cpu time            0.01 seconds
       
 
 MPRINT(EM_DIAGRAM):   quit;
-45649      quit;
-45650      filename emflow;
+45621      quit;
+45622      filename emflow;
 MPRINT(EM_DIAGRAM):   filename emflow;
 NOTE: Fileref EMFLOW has been deassigned.
-45651      options nosource;
+45623      options nosource;
 MPRINT(EM_DIAGRAM):    options nosource;
 MPRINT(EM_DIAGRAM):   data EMWS8.Varsel_R2DS;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_OUTRSQUARE;
@@ -261,10 +199,10 @@ MPRINT(EM_DIAGRAM):   keep Effect DF RSquare;
 MPRINT(EM_DIAGRAM):   if Type="AOV16" then delete;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 42 observations read from the data set EMWS8.VARSEL_OUTRSQUARE.
-NOTE: The data set EMWS8.VARSEL_R2DS has 24 observations and 3 variables.
+NOTE: There were 59 observations read from the data set EMWS8.VARSEL_OUTRSQUARE.
+NOTE: The data set EMWS8.VARSEL_R2DS has 35 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.04 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
@@ -272,10 +210,10 @@ MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.Varsel_R2DS;
 MPRINT(EM_DIAGRAM):   by descending R2;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 24 observations read from the data set EMWS8.VARSEL_R2DS.
-NOTE: The data set EMWS8.VARSEL_R2DS has 24 observations and 3 variables.
+NOTE: There were 35 observations read from the data set EMWS8.VARSEL_R2DS.
+NOTE: The data set EMWS8.VARSEL_R2DS has 35 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.03 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
@@ -288,10 +226,10 @@ MPRINT(EM_DIAGRAM):   Rename RSquare = R2;
 MPRINT(EM_DIAGRAM):   keep Effect DF RSquare;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 9 observations read from the data set EMWS8.VARSEL_OUTEFFECT.
-NOTE: The data set EMWS8.VARSEL_EFFECTDS has 9 observations and 3 variables.
+NOTE: There were 15 observations read from the data set EMWS8.VARSEL_OUTEFFECT.
+NOTE: The data set EMWS8.VARSEL_EFFECTDS has 15 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.04 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
@@ -299,10 +237,10 @@ MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.Varsel_EFFECTDS;
 MPRINT(EM_DIAGRAM):   by descending R2;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 9 observations read from the data set EMWS8.VARSEL_EFFECTDS.
-NOTE: The data set EMWS8.VARSEL_EFFECTDS has 9 observations and 3 variables.
+NOTE: There were 15 observations read from the data set EMWS8.VARSEL_EFFECTDS.
+NOTE: The data set EMWS8.VARSEL_EFFECTDS has 15 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.03 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
@@ -311,13 +249,13 @@ MPRINT(EM_DIAGRAM):   * Varsel: Computing metadata for TRAIN data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 
 NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
-      real time           0.03 seconds
+      real time           0.01 seconds
       cpu time            0.01 seconds
       
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * &nodeid: Computing Metadata for TRAIN data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-MPRINT(EM_DIAGRAM):   filename _delta "E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Varsel\CDELTA_TRAIN.sas";
+MPRINT(EM_DIAGRAM):   filename _delta "C:\\predictive-models-project\Workspaces\EMWS8\Varsel\CDELTA_TRAIN.sas";
 MPRINT(EMADVISECOLUMNS):   proc display c=sashelp.emmeta.advisecolumns.scl;
 MPRINT(EMADVISECOLUMNS):   run;
 MPRINT(EMADVISECOLUMNS):    options validvarname=any;
@@ -332,12 +270,12 @@ MPRINT(EMADVISECOLUMNS):   call symput('_engineTable', attrc(dsid, 'ENGINE'));
 MPRINT(EMADVISECOLUMNS):   dsid = close(dsid);
 MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Varsel_TRAIN out=WORK.M31STXMF noprint;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Varsel_TRAIN out=WORK.M1BF12G6 noprint;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M31STXMF;
+MPRINT(EMADVISECOLUMNS):    data WORK.M1BF12G6;
 MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 INDEX $ 1 INDEXTYPE $ 9;
 MPRINT(EMADVISECOLUMNS):   label NAME =;
-MPRINT(EMADVISECOLUMNS):   set WORK.M31STXMF(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
+MPRINT(EMADVISECOLUMNS):   set WORK.M1BF12G6(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
 MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
 MPRINT(EMADVISECOLUMNS):   else type = 'C';
 MPRINT(EMADVISECOLUMNS):   if formatl > 0 then do;
@@ -355,21 +293,21 @@ MPRINT(EMADVISECOLUMNS):   else index = "Y";
 MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
 MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M31STXMF;
+MPRINT(EMADVISECOLUMNS):    data WORK.M1BF12G6;
 MPRINT(EMADVISECOLUMNS):   length UNAME $64;
-MPRINT(EMADVISECOLUMNS):   set WORK.M31STXMF;
+MPRINT(EMADVISECOLUMNS):   set WORK.M1BF12G6;
 MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M1HFTJSD NOTHREADS;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M08NVR51 NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by UNAME;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):    data WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   drop UNAME;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):   set WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M03LJFMZ(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):    data WORK.M1VUO8UV(keep=NAME ATTR);
 MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):   set WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
 MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
@@ -404,10 +342,10 @@ MPRINT(EMADVISECOLUMNS):   run;
 MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by attr;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):    data WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
 MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):   set WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
@@ -545,8 +483,8 @@ MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
 MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1HFTJSD;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1HFTJSD;
+MPRINT(EMADVISECOLUMNS):    data WORK.M08NVR51;
+MPRINT(EMADVISECOLUMNS):   set WORK.M08NVR51;
 MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= "Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= "Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower 
 limit" UPPERLIMIT= "Upper Limit" REPORT= "Report" COMMENT= "Comment" INDEX= "Index" INDEXTYPE= "IndexType" LABEL= "Label" LENGTH= "Length";
 MPRINT(EMADVISECOLUMNS):   drop levelAssigned roleAssigned;
@@ -575,24 +513,27 @@ MPRINT(EM_DIAGRAM):   if ^_b then CREATOR = "Varsel";
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * Varsel: Apply Delta Code;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-MPRINT(EM_DIAGRAM):   if upcase(name) = 'AGE' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'AGE_EXMPL2' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'CLOTHES' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'DEPENDENTS' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   if upcase(name) = 'ACCEPTEDCMP1' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP2' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP3' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP4' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP5' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'AGE' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'COMPLAIN' then role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'EDUCATION' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'GENDER' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HIGHEREDUCATION' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HOUSEKEEPING' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'KITCHEN' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HIGHEREDUCATIONBINARY' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'KIDHOME' then role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MARITAL_STATUS' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTFISHPRODUCTS' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTWINES' then role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MONTHSASCUSTOMER' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NETPURCHASE' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RMNTFRQ' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RCN' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'SMALLAPPLIANCES' then role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'TOYS' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMDEALSPURCHASES' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMDISTPURCHASES' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMSTOREPURCHASES' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMWEBVISITSMONTH' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'TEENHOME' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'YEAR_BIRTH' then role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   if upcase(strip(name)) = "G_MARITAL_STATUS" then level = "NOMINAL";
-MPRINT(EM_DIAGRAM):   if upcase(strip(name)) = "G_EDUCATION" then level = "NOMINAL";
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   filename _delta;
 NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
@@ -600,8 +541,8 @@ NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
       cpu time            0.01 seconds
       
 NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.01 seconds
+      real time           0.02 seconds
+      cpu time            0.03 seconds
       
 MPRINT(EM_DIAGRAM):    options nonotes nosource;
 MPRINT(EM_DIAGRAM):   data EMWS8.Varsel_RESULTEDVARS(keep = NAME ROLE LEVEL TYPE LABEL);
@@ -611,52 +552,64 @@ MPRINT(EM_DIAGRAM):   data EMWS8.Varsel_RESULTEDVARS;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_RESULTEDVARS;
 MPRINT(EM_DIAGRAM):   length COMMENT $300;
 MPRINT(EM_DIAGRAM):   label COMMENT = "Reasons for Rejection";
-MPRINT(EM_DIAGRAM):   if upcase(name) = 'AGE' then do;
+MPRINT(EM_DIAGRAM):   if upcase(name) = 'ACCEPTEDCMP1' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'AGE_EXMPL2' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP2' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'CLOTHES' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP3' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'DEPENDENTS' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP4' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'ACCEPTEDCMP5' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'AGE' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'COMPLAIN' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'EDUCATION' then do;
-MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value, Group variable preferred";
-MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'GENDER' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HIGHEREDUCATION' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HIGHEREDUCATIONBINARY' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'HOUSEKEEPING' then do;
-MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
-MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'KITCHEN' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'KIDHOME' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MARITAL_STATUS' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value, Group variable preferred";
 MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTFISHPRODUCTS' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTWINES' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MONTHSASCUSTOMER' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NETPURCHASE' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMDEALSPURCHASES' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RMNTFRQ' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMDISTPURCHASES' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RCN' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMSTOREPURCHASES' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'SMALLAPPLIANCES' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMWEBVISITSMONTH' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'TOYS' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'TEENHOME' then do;
+MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'YEAR_BIRTH' then do;
 MPRINT(EM_DIAGRAM):   comment = "Varsel:Small R-square value";
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   ;
@@ -669,52 +622,52 @@ MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_RESULTEDVARS;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   options notes source;
 MPRINT(EM_DIAGRAM):   run;
-46090      run;
+46085      run;
 
-46091      data EMWS8.Varsel_CMETA_NONREJECTS EMWS8.Varsel_CMETA_REJECTS;
+46086      data EMWS8.Varsel_CMETA_NONREJECTS EMWS8.Varsel_CMETA_REJECTS;
 MPRINT(EM_DIAGRAM):    data EMWS8.Varsel_CMETA_NONREJECTS EMWS8.Varsel_CMETA_REJECTS;
-46092      set EMWS8.Varsel_CMETA_TRAIN;
+46087      set EMWS8.Varsel_CMETA_TRAIN;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_CMETA_TRAIN;
-46093      if ROLE ='REJECTED' then output EMWS8.Varsel_CMETA_REJECTS;
+46088      if ROLE ='REJECTED' then output EMWS8.Varsel_CMETA_REJECTS;
 MPRINT(EM_DIAGRAM):   if ROLE ='REJECTED' then output EMWS8.Varsel_CMETA_REJECTS;
-46094      else output EMWS8.Varsel_CMETA_NONREJECTS;
+46089      else output EMWS8.Varsel_CMETA_NONREJECTS;
 MPRINT(EM_DIAGRAM):   else output EMWS8.Varsel_CMETA_NONREJECTS;
-46095      run;
+46090      run;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 28 observations read from the data set EMWS8.VARSEL_CMETA_TRAIN.
-NOTE: The data set EMWS8.VARSEL_CMETA_NONREJECTS has 12 observations and 20 variables.
-NOTE: The data set EMWS8.VARSEL_CMETA_REJECTS has 16 observations and 20 variables.
+NOTE: There were 38 observations read from the data set EMWS8.VARSEL_CMETA_TRAIN.
+NOTE: The data set EMWS8.VARSEL_CMETA_NONREJECTS has 18 observations and 20 variables.
+NOTE: The data set EMWS8.VARSEL_CMETA_REJECTS has 20 observations and 20 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.07 seconds
+      real time           0.00 seconds
       cpu time            0.01 seconds
       
 
-46096      data EMWS8.Varsel_CMETA_TRAIN;
+46091      data EMWS8.Varsel_CMETA_TRAIN;
 MPRINT(EM_DIAGRAM):    data EMWS8.Varsel_CMETA_TRAIN;
-46097      set EMWS8.Varsel_CMETA_NONREJECTS;
+46092      set EMWS8.Varsel_CMETA_NONREJECTS;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_CMETA_NONREJECTS;
-46098      run;
+46093      run;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 12 observations read from the data set EMWS8.VARSEL_CMETA_NONREJECTS.
-NOTE: The data set EMWS8.VARSEL_CMETA_TRAIN has 12 observations and 20 variables.
+NOTE: There were 18 observations read from the data set EMWS8.VARSEL_CMETA_NONREJECTS.
+NOTE: The data set EMWS8.VARSEL_CMETA_TRAIN has 18 observations and 20 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.04 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-46099      data WORK._tmp_meta_;
+46094      data WORK._tmp_meta_;
 MPRINT(EM_DIAGRAM):    data WORK._tmp_meta_;
-46100      set EMWS8.Varsel_CMETA_TRAIN;
+46095      set EMWS8.Varsel_CMETA_TRAIN;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_CMETA_TRAIN;
-46101      if ROLE ^= 'INPUT' then delete;
+46096      if ROLE ^= 'INPUT' then delete;
 MPRINT(EM_DIAGRAM):   if ROLE ^= 'INPUT' then delete;
-46102      run;
+46097      run;
 MPRINT(EM_DIAGRAM):   run;
 
-NOTE: There were 12 observations read from the data set EMWS8.VARSEL_CMETA_TRAIN.
-NOTE: The data set WORK._TMP_META_ has 8 observations and 20 variables.
+NOTE: There were 18 observations read from the data set EMWS8.VARSEL_CMETA_TRAIN.
+NOTE: The data set WORK._TMP_META_ has 14 observations and 20 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
       cpu time            0.00 seconds

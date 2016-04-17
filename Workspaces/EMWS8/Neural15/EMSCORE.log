@@ -1,0 +1,1671 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "16. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "20.13 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Score Log
+Date:                16. April 2016
+Time:                20.13 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O3RTXUOE 
+"C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O3RTXUOE new;
+MPRINT(EM_DIAGRAM):   run;
+444623     data work.outkey;
+MPRINT(EM_DIAGRAM):    data work.outkey;
+444624     set EMWS8.Neural15_OUTKEY;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural15_OUTKEY;
+444625     if upcase(ROLE) = 'HIDDEN';
+MPRINT(EM_DIAGRAM):   if upcase(ROLE) = 'HIDDEN';
+444626     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 36 observations read from the data set EMWS8.NEURAL15_OUTKEY.
+NOTE: The data set WORK.OUTKEY has 4 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+444627     filename emflow
+444627   ! "C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow 
+"C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Neural15: Scoring DATA data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+444628     *------------------------------------------------------------*;
+444629     * Neural15: Scoring DATA data;
+444630     *------------------------------------------------------------*;
+444631     data EMWS8.Neural15_TRAIN
+444632     / view=EMWS8.Neural15_TRAIN
+444633     ;
+MPRINT(EM_DIAGRAM):   data EMWS8.Neural15_TRAIN / view=EMWS8.Neural15_TRAIN ;
+444634     set EMWS8.PRINCOMP_TRAIN
+444635     ;
+MPRINT(EM_DIAGRAM):   set EMWS8.PRINCOMP_TRAIN ;
+444636     %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas.
+444637    +***********************************;
+MPRINT(EM_DIAGRAM):   ***********************************;
+444638    +*** Begin Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   *** Begin Scoring Code for Neural;
+444639    +***********************************;
+MPRINT(EM_DIAGRAM):   ***********************************;
+444640    +DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+MPRINT(EM_DIAGRAM):   DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+444641    + _DM_BAD = 0;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 0;
+444642    + _NOCL_ = .;
+MPRINT(EM_DIAGRAM):   _NOCL_ = .;
+444643    + _MAX_ = .;
+MPRINT(EM_DIAGRAM):   _MAX_ = .;
+444644    + _MAXP_ = .;
+MPRINT(EM_DIAGRAM):   _MAXP_ = .;
+444645    + _SUM_ = .;
+MPRINT(EM_DIAGRAM):   _SUM_ = .;
+444646    + _NTRIALS = .;
+MPRINT(EM_DIAGRAM):   _NTRIALS = .;
+444647    + _EPS =                1E-10;
+MPRINT(EM_DIAGRAM):   _EPS = 1E-10;
+444648    +LENGTH _WARN_ $4
+444649    +      F_DepVar  $ 12
+444650    +;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $4 F_DepVar $ 12 ;
+444651    +      label S_PC_1 = 'Standard: PC_1' ;
+MPRINT(EM_DIAGRAM):   label S_PC_1 = 'Standard: PC_1' ;
+444652    +
+444653    +      label S_PC_10 = 'Standard: PC_10' ;
+MPRINT(EM_DIAGRAM):   label S_PC_10 = 'Standard: PC_10' ;
+444654    +
+444655    +      label S_PC_11 = 'Standard: PC_11' ;
+MPRINT(EM_DIAGRAM):   label S_PC_11 = 'Standard: PC_11' ;
+444656    +
+444657    +      label S_PC_12 = 'Standard: PC_12' ;
+MPRINT(EM_DIAGRAM):   label S_PC_12 = 'Standard: PC_12' ;
+444658    +
+444659    +      label S_PC_13 = 'Standard: PC_13' ;
+MPRINT(EM_DIAGRAM):   label S_PC_13 = 'Standard: PC_13' ;
+444660    +
+444661    +      label S_PC_14 = 'Standard: PC_14' ;
+MPRINT(EM_DIAGRAM):   label S_PC_14 = 'Standard: PC_14' ;
+444662    +
+444663    +      label S_PC_15 = 'Standard: PC_15' ;
+MPRINT(EM_DIAGRAM):   label S_PC_15 = 'Standard: PC_15' ;
+444664    +
+444665    +      label S_PC_16 = 'Standard: PC_16' ;
+MPRINT(EM_DIAGRAM):   label S_PC_16 = 'Standard: PC_16' ;
+444666    +
+444667    +      label S_PC_17 = 'Standard: PC_17' ;
+MPRINT(EM_DIAGRAM):   label S_PC_17 = 'Standard: PC_17' ;
+444668    +
+444669    +      label S_PC_18 = 'Standard: PC_18' ;
+MPRINT(EM_DIAGRAM):   label S_PC_18 = 'Standard: PC_18' ;
+444670    +
+444671    +      label S_PC_19 = 'Standard: PC_19' ;
+MPRINT(EM_DIAGRAM):   label S_PC_19 = 'Standard: PC_19' ;
+444672    +
+444673    +      label S_PC_2 = 'Standard: PC_2' ;
+MPRINT(EM_DIAGRAM):   label S_PC_2 = 'Standard: PC_2' ;
+444674    +
+444675    +      label S_PC_20 = 'Standard: PC_20' ;
+MPRINT(EM_DIAGRAM):   label S_PC_20 = 'Standard: PC_20' ;
+444676    +
+444677    +      label S_PC_3 = 'Standard: PC_3' ;
+MPRINT(EM_DIAGRAM):   label S_PC_3 = 'Standard: PC_3' ;
+444678    +
+444679    +      label S_PC_4 = 'Standard: PC_4' ;
+MPRINT(EM_DIAGRAM):   label S_PC_4 = 'Standard: PC_4' ;
+444680    +
+444681    +      label S_PC_5 = 'Standard: PC_5' ;
+MPRINT(EM_DIAGRAM):   label S_PC_5 = 'Standard: PC_5' ;
+444682    +
+444683    +      label S_PC_6 = 'Standard: PC_6' ;
+MPRINT(EM_DIAGRAM):   label S_PC_6 = 'Standard: PC_6' ;
+444684    +
+444685    +      label S_PC_7 = 'Standard: PC_7' ;
+MPRINT(EM_DIAGRAM):   label S_PC_7 = 'Standard: PC_7' ;
+444686    +
+444687    +      label S_PC_8 = 'Standard: PC_8' ;
+MPRINT(EM_DIAGRAM):   label S_PC_8 = 'Standard: PC_8' ;
+444688    +
+444689    +      label S_PC_9 = 'Standard: PC_9' ;
+MPRINT(EM_DIAGRAM):   label S_PC_9 = 'Standard: PC_9' ;
+444690    +
+444691    +      label H11 = 'Hidden: H1=1' ;
+MPRINT(EM_DIAGRAM):   label H11 = 'Hidden: H1=1' ;
+444692    +
+444693    +      label H12 = 'Hidden: H1=2' ;
+MPRINT(EM_DIAGRAM):   label H12 = 'Hidden: H1=2' ;
+444694    +
+444695    +      label H13 = 'Hidden: H1=3' ;
+MPRINT(EM_DIAGRAM):   label H13 = 'Hidden: H1=3' ;
+444696    +
+444697    +      label H14 = 'Hidden: H1=4' ;
+MPRINT(EM_DIAGRAM):   label H14 = 'Hidden: H1=4' ;
+444698    +
+444699    +      label I_DepVar = 'Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label I_DepVar = 'Into: DepVar' ;
+444700    +
+444701    +      label F_DepVar = 'From: DepVar' ;
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'From: DepVar' ;
+444702    +
+444703    +      label U_DepVar = 'Unnormalized Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label U_DepVar = 'Unnormalized Into: DepVar' ;
+444704    +
+444705    +      label P_DepVar1 = 'Predicted: DepVar=1' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar1 = 'Predicted: DepVar=1' ;
+444706    +
+444707    +      label R_DepVar1 = 'Residual: DepVar=1' ;
+MPRINT(EM_DIAGRAM):   label R_DepVar1 = 'Residual: DepVar=1' ;
+444708    +
+444709    +      label P_DepVar0 = 'Predicted: DepVar=0' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar0 = 'Predicted: DepVar=0' ;
+444710    +
+444711    +      label R_DepVar0 = 'Residual: DepVar=0' ;
+MPRINT(EM_DIAGRAM):   label R_DepVar0 = 'Residual: DepVar=0' ;
+444712    +
+444713    +      label  _WARN_ = "Warnings";
+MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
+444714    +
+444715    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444716    +*** Checking missing input Interval
+444717    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** Checking missing input Interval *** *************************;
+444718    +
+444719    +IF NMISS(
+444720    +   PC_1 ,
+444721    +   PC_10 ,
+444722    +   PC_11 ,
+444723    +   PC_12 ,
+444724    +   PC_13 ,
+444725    +   PC_14 ,
+444726    +   PC_15 ,
+444727    +   PC_16 ,
+444728    +   PC_17 ,
+444729    +   PC_18 ,
+444730    +   PC_19 ,
+444731    +   PC_2 ,
+444732    +   PC_20 ,
+444733    +   PC_3 ,
+444734    +   PC_4 ,
+444735    +   PC_5 ,
+444736    +   PC_6 ,
+444737    +   PC_7 ,
+444738    +   PC_8 ,
+444739    +   PC_9   ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF NMISS( PC_1 , PC_10 , PC_11 , PC_12 , PC_13 , PC_14 , PC_15 , PC_16 , 
+PC_17 , PC_18 , PC_19 , PC_2 , PC_20 , PC_3 , PC_4 , PC_5 , PC_6 , PC_7 , PC_8 , PC_9 ) THEN 
+DO;
+444740    +   SUBSTR(_WARN_, 1, 1) = 'M';
+MPRINT(EM_DIAGRAM):   SUBSTR(_WARN_, 1, 1) = 'M';
+444741    +
+444742    +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+444743    +END;
+MPRINT(EM_DIAGRAM):   END;
+444744    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444745    +*** Writing the Node intvl ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node intvl ;
+444746    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444747    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+444748    +   S_PC_1  = -3.9326340637957E-15 +     0.29856127196125 * PC_1 ;
+MPRINT(EM_DIAGRAM):   S_PC_1 = -3.9326340637957E-15 + 0.29856127196125 * PC_1 ;
+444749    +   S_PC_10  = -9.2255679809319E-15 +     0.81267664272505 * PC_10 ;
+MPRINT(EM_DIAGRAM):   S_PC_10 = -9.2255679809319E-15 + 0.81267664272505 * PC_10 ;
+444750    +   S_PC_11  =  3.9010508694298E-15 +      0.8343488153056 * PC_11 ;
+MPRINT(EM_DIAGRAM):   S_PC_11 = 3.9010508694298E-15 + 0.8343488153056 * PC_11 ;
+444751    +   S_PC_12  =  -3.549148780412E-15 +     0.88094641144592 * PC_12 ;
+MPRINT(EM_DIAGRAM):   S_PC_12 = -3.549148780412E-15 + 0.88094641144592 * PC_12 ;
+444752    +   S_PC_13  =  1.2236400050078E-16 +     0.89160303670676 * PC_13 ;
+MPRINT(EM_DIAGRAM):   S_PC_13 = 1.2236400050078E-16 + 0.89160303670676 * PC_13 ;
+444753    +   S_PC_14  = -2.7740851751603E-15 +     0.89958319422991 * PC_14 ;
+MPRINT(EM_DIAGRAM):   S_PC_14 = -2.7740851751603E-15 + 0.89958319422991 * PC_14 ;
+444754    +   S_PC_15  =  1.2368456096485E-15 +      0.9273996164564 * PC_15 ;
+MPRINT(EM_DIAGRAM):   S_PC_15 = 1.2368456096485E-15 + 0.9273996164564 * PC_15 ;
+444755    +   S_PC_16  = -9.1662217565311E-16 +     0.94870355386249 * PC_16 ;
+MPRINT(EM_DIAGRAM):   S_PC_16 = -9.1662217565311E-16 + 0.94870355386249 * PC_16 ;
+444756    +   S_PC_17  = -3.2793544087531E-15 +     0.97039233963067 * PC_17 ;
+MPRINT(EM_DIAGRAM):   S_PC_17 = -3.2793544087531E-15 + 0.97039233963067 * PC_17 ;
+444757    +   S_PC_18  =  2.6573178728951E-15 +     1.01893035135692 * PC_18 ;
+MPRINT(EM_DIAGRAM):   S_PC_18 = 2.6573178728951E-15 + 1.01893035135692 * PC_18 ;
+444758    +   S_PC_19  =  5.4571033427589E-15 +     1.03575063058043 * PC_19 ;
+MPRINT(EM_DIAGRAM):   S_PC_19 = 5.4571033427589E-15 + 1.03575063058043 * PC_19 ;
+444759    +   S_PC_2  =  1.7819005044245E-16 +     0.53620237396367 * PC_2 ;
+MPRINT(EM_DIAGRAM):   S_PC_2 = 1.7819005044245E-16 + 0.53620237396367 * PC_2 ;
+444760    +   S_PC_20  = -6.5745909034615E-15 +     1.17404202930983 * PC_20 ;
+MPRINT(EM_DIAGRAM):   S_PC_20 = -6.5745909034615E-15 + 1.17404202930983 * PC_20 ;
+444761    +   S_PC_3  =  7.2659414314573E-15 +     0.54882613091499 * PC_3 ;
+MPRINT(EM_DIAGRAM):   S_PC_3 = 7.2659414314573E-15 + 0.54882613091499 * PC_3 ;
+444762    +   S_PC_4  =  -9.594020997569E-15 +     0.62616694648196 * PC_4 ;
+MPRINT(EM_DIAGRAM):   S_PC_4 = -9.594020997569E-15 + 0.62616694648196 * PC_4 ;
+444763    +   S_PC_5  =  6.4769256780617E-15 +     0.65381673515035 * PC_5 ;
+MPRINT(EM_DIAGRAM):   S_PC_5 = 6.4769256780617E-15 + 0.65381673515035 * PC_5 ;
+444764    +   S_PC_6  =   3.580536079847E-15 +     0.70036731226737 * PC_6 ;
+MPRINT(EM_DIAGRAM):   S_PC_6 = 3.580536079847E-15 + 0.70036731226737 * PC_6 ;
+444765    +   S_PC_7  =  3.7364722741013E-15 +     0.71812657760342 * PC_7 ;
+MPRINT(EM_DIAGRAM):   S_PC_7 = 3.7364722741013E-15 + 0.71812657760342 * PC_7 ;
+444766    +   S_PC_8  = -1.3132402130488E-15 +     0.77088794083704 * PC_8 ;
+MPRINT(EM_DIAGRAM):   S_PC_8 = -1.3132402130488E-15 + 0.77088794083704 * PC_8 ;
+444767    +   S_PC_9  =   6.653417690349E-15 +     0.79301377407747 * PC_9 ;
+MPRINT(EM_DIAGRAM):   S_PC_9 = 6.653417690349E-15 + 0.79301377407747 * PC_9 ;
+444768    +END;
+MPRINT(EM_DIAGRAM):   END;
+444769    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+444770    +   IF MISSING( PC_1 ) THEN S_PC_1  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_1 ) THEN S_PC_1 = . ;
+444771    +   ELSE S_PC_1  = -3.9326340637957E-15 +     0.29856127196125 * PC_1 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_1 = -3.9326340637957E-15 + 0.29856127196125 * PC_1 ;
+444772    +   IF MISSING( PC_10 ) THEN S_PC_10  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_10 ) THEN S_PC_10 = . ;
+444773    +   ELSE S_PC_10  = -9.2255679809319E-15 +     0.81267664272505 * PC_10 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_10 = -9.2255679809319E-15 + 0.81267664272505 * PC_10 ;
+444774    +   IF MISSING( PC_11 ) THEN S_PC_11  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_11 ) THEN S_PC_11 = . ;
+444775    +   ELSE S_PC_11  =  3.9010508694298E-15 +      0.8343488153056 * PC_11 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_11 = 3.9010508694298E-15 + 0.8343488153056 * PC_11 ;
+444776    +   IF MISSING( PC_12 ) THEN S_PC_12  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_12 ) THEN S_PC_12 = . ;
+444777    +   ELSE S_PC_12  =  -3.549148780412E-15 +     0.88094641144592 * PC_12 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_12 = -3.549148780412E-15 + 0.88094641144592 * PC_12 ;
+444778    +   IF MISSING( PC_13 ) THEN S_PC_13  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_13 ) THEN S_PC_13 = . ;
+444779    +   ELSE S_PC_13  =  1.2236400050078E-16 +     0.89160303670676 * PC_13 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_13 = 1.2236400050078E-16 + 0.89160303670676 * PC_13 ;
+444780    +   IF MISSING( PC_14 ) THEN S_PC_14  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_14 ) THEN S_PC_14 = . ;
+444781    +   ELSE S_PC_14  = -2.7740851751603E-15 +     0.89958319422991 * PC_14 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_14 = -2.7740851751603E-15 + 0.89958319422991 * PC_14 ;
+444782    +   IF MISSING( PC_15 ) THEN S_PC_15  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_15 ) THEN S_PC_15 = . ;
+444783    +   ELSE S_PC_15  =  1.2368456096485E-15 +      0.9273996164564 * PC_15 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_15 = 1.2368456096485E-15 + 0.9273996164564 * PC_15 ;
+444784    +   IF MISSING( PC_16 ) THEN S_PC_16  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_16 ) THEN S_PC_16 = . ;
+444785    +   ELSE S_PC_16  = -9.1662217565311E-16 +     0.94870355386249 * PC_16 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_16 = -9.1662217565311E-16 + 0.94870355386249 * PC_16 ;
+444786    +   IF MISSING( PC_17 ) THEN S_PC_17  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_17 ) THEN S_PC_17 = . ;
+444787    +   ELSE S_PC_17  = -3.2793544087531E-15 +     0.97039233963067 * PC_17 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_17 = -3.2793544087531E-15 + 0.97039233963067 * PC_17 ;
+444788    +   IF MISSING( PC_18 ) THEN S_PC_18  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_18 ) THEN S_PC_18 = . ;
+444789    +   ELSE S_PC_18  =  2.6573178728951E-15 +     1.01893035135692 * PC_18 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_18 = 2.6573178728951E-15 + 1.01893035135692 * PC_18 ;
+444790    +   IF MISSING( PC_19 ) THEN S_PC_19  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_19 ) THEN S_PC_19 = . ;
+444791    +   ELSE S_PC_19  =  5.4571033427589E-15 +     1.03575063058043 * PC_19 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_19 = 5.4571033427589E-15 + 1.03575063058043 * PC_19 ;
+444792    +   IF MISSING( PC_2 ) THEN S_PC_2  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_2 ) THEN S_PC_2 = . ;
+444793    +   ELSE S_PC_2  =  1.7819005044245E-16 +     0.53620237396367 * PC_2 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_2 = 1.7819005044245E-16 + 0.53620237396367 * PC_2 ;
+444794    +   IF MISSING( PC_20 ) THEN S_PC_20  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_20 ) THEN S_PC_20 = . ;
+444795    +   ELSE S_PC_20  = -6.5745909034615E-15 +     1.17404202930983 * PC_20 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_20 = -6.5745909034615E-15 + 1.17404202930983 * PC_20 ;
+444796    +   IF MISSING( PC_3 ) THEN S_PC_3  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_3 ) THEN S_PC_3 = . ;
+444797    +   ELSE S_PC_3  =  7.2659414314573E-15 +     0.54882613091499 * PC_3 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_3 = 7.2659414314573E-15 + 0.54882613091499 * PC_3 ;
+444798    +   IF MISSING( PC_4 ) THEN S_PC_4  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_4 ) THEN S_PC_4 = . ;
+444799    +   ELSE S_PC_4  =  -9.594020997569E-15 +     0.62616694648196 * PC_4 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_4 = -9.594020997569E-15 + 0.62616694648196 * PC_4 ;
+444800    +   IF MISSING( PC_5 ) THEN S_PC_5  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_5 ) THEN S_PC_5 = . ;
+444801    +   ELSE S_PC_5  =  6.4769256780617E-15 +     0.65381673515035 * PC_5 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_5 = 6.4769256780617E-15 + 0.65381673515035 * PC_5 ;
+444802    +   IF MISSING( PC_6 ) THEN S_PC_6  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_6 ) THEN S_PC_6 = . ;
+444803    +   ELSE S_PC_6  =   3.580536079847E-15 +     0.70036731226737 * PC_6 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_6 = 3.580536079847E-15 + 0.70036731226737 * PC_6 ;
+444804    +   IF MISSING( PC_7 ) THEN S_PC_7  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_7 ) THEN S_PC_7 = . ;
+444805    +   ELSE S_PC_7  =  3.7364722741013E-15 +     0.71812657760342 * PC_7 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_7 = 3.7364722741013E-15 + 0.71812657760342 * PC_7 ;
+444806    +   IF MISSING( PC_8 ) THEN S_PC_8  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_8 ) THEN S_PC_8 = . ;
+444807    +   ELSE S_PC_8  = -1.3132402130488E-15 +     0.77088794083704 * PC_8 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_8 = -1.3132402130488E-15 + 0.77088794083704 * PC_8 ;
+444808    +   IF MISSING( PC_9 ) THEN S_PC_9  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_9 ) THEN S_PC_9 = . ;
+444809    +   ELSE S_PC_9  =   6.653417690349E-15 +     0.79301377407747 * PC_9 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_9 = 6.653417690349E-15 + 0.79301377407747 * PC_9 ;
+444810    +END;
+MPRINT(EM_DIAGRAM):   END;
+444811    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444812    +*** Writing the Node H1 ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node H1 ;
+444813    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444814    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+444815    +   H11  =    -1.38664237458166 * S_PC_1  +    -0.06782034260642 * S_PC_10
+444816    +          +     0.41833533264093 * S_PC_11  +     0.55182612490891 * S_PC_12
+444817    +          +    -0.21657289057458 * S_PC_13  +      0.1973363300888 * S_PC_14
+444818    +          +     -0.1417561903554 * S_PC_15  +    -0.03131163883058 * S_PC_16
+444819    +          +     0.27792972200805 * S_PC_17  +    -0.23638868683216 * S_PC_18
+444820    +          +    -0.02851552423879 * S_PC_19  +     0.30789574682959 * S_PC_2
+444821    +          +     0.72981574817592 * S_PC_20  +    -0.26978055410167 * S_PC_3
+444822    +          +     0.51982800131821 * S_PC_4  +     0.38666892880921 * S_PC_5
+444823    +          +     0.67772732631906 * S_PC_6  +    -0.36589607246189 * S_PC_7
+444824    +          +     0.22095664374831 * S_PC_8  +    -0.22830858981624 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H11 = -1.38664237458166 * S_PC_1 + -0.06782034260642 * S_PC_10 + 
+0.41833533264093 * S_PC_11 + 0.55182612490891 * S_PC_12 + -0.21657289057458 * S_PC_13 + 
+0.1973363300888 * S_PC_14 + -0.1417561903554 * S_PC_15 + -0.03131163883058 * S_PC_16 + 
+0.27792972200805 * S_PC_17 + -0.23638868683216 * S_PC_18 + -0.02851552423879 * S_PC_19 + 
+0.30789574682959 * S_PC_2 + 0.72981574817592 * S_PC_20 + -0.26978055410167 * S_PC_3 + 
+0.51982800131821 * S_PC_4 + 0.38666892880921 * S_PC_5 + 0.67772732631906 * S_PC_6 + 
+-0.36589607246189 * S_PC_7 + 0.22095664374831 * S_PC_8 + -0.22830858981624 * S_PC_9 ;
+444825    +   H12  =      0.9805786605054 * S_PC_1  +    -0.37430037596207 * S_PC_10
+444826    +          +     0.71604997076331 * S_PC_11  +    -0.37233651556232 * S_PC_12
+444827    +          +    -0.52185486524765 * S_PC_13  +     0.21844531513642 * S_PC_14
+444828    +          +    -0.50341883447092 * S_PC_15  +     0.02225597429156 * S_PC_16
+444829    +          +    -0.12884671375616 * S_PC_17  +     -0.8560836980266 * S_PC_18
+444830    +          +      0.5973350246243 * S_PC_19  +     0.32304757036708 * S_PC_2
+444831    +          +    -0.05861437679794 * S_PC_20  +    -0.14021258360513 * S_PC_3
+444832    +          +     0.48920026385248 * S_PC_4  +    -0.47755213213657 * S_PC_5
+444833    +          +      0.3351347944594 * S_PC_6  +     0.75213394874988 * S_PC_7
+444834    +          +    -0.52434415948615 * S_PC_8  +     0.04645231166732 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H12 = 0.9805786605054 * S_PC_1 + -0.37430037596207 * S_PC_10 + 
+0.71604997076331 * S_PC_11 + -0.37233651556232 * S_PC_12 + -0.52185486524765 * S_PC_13 + 
+0.21844531513642 * S_PC_14 + -0.50341883447092 * S_PC_15 + 0.02225597429156 * S_PC_16 + 
+-0.12884671375616 * S_PC_17 + -0.8560836980266 * S_PC_18 + 0.5973350246243 * S_PC_19 + 
+0.32304757036708 * S_PC_2 + -0.05861437679794 * S_PC_20 + -0.14021258360513 * S_PC_3 + 
+0.48920026385248 * S_PC_4 + -0.47755213213657 * S_PC_5 + 0.3351347944594 * S_PC_6 + 
+0.75213394874988 * S_PC_7 + -0.52434415948615 * S_PC_8 + 0.04645231166732 * S_PC_9 ;
+444835    +   H13  =     0.33010260427572 * S_PC_1  +    -0.13545793109613 * S_PC_10
+444836    +          +    -0.14861438803755 * S_PC_11  +     0.51093766169435 * S_PC_12
+444837    +          +      0.2325724430542 * S_PC_13  +    -0.14593297984016 * S_PC_14
+444838    +          +    -0.44183153148936 * S_PC_15  +      -0.045799887031 * S_PC_16
+444839    +          +      0.0913031910953 * S_PC_17  +     -0.0740649444443 * S_PC_18
+444840    +          +     0.02087270473942 * S_PC_19  +    -0.17418009062705 * S_PC_2
+444841    +          +     0.05959670004179 * S_PC_20  +    -0.12107656568905 * S_PC_3
+444842    +          +     0.06025390965507 * S_PC_4  +     0.19765051020765 * S_PC_5
+444843    +          +     0.19947647122278 * S_PC_6  +    -0.00628384375489 * S_PC_7
+444844    +          +     0.09723318502979 * S_PC_8  +     0.17189824288116 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H13 = 0.33010260427572 * S_PC_1 + -0.13545793109613 * S_PC_10 + 
+-0.14861438803755 * S_PC_11 + 0.51093766169435 * S_PC_12 + 0.2325724430542 * S_PC_13 + 
+-0.14593297984016 * S_PC_14 + -0.44183153148936 * S_PC_15 + -0.045799887031 * S_PC_16 + 
+0.0913031910953 * S_PC_17 + -0.0740649444443 * S_PC_18 + 0.02087270473942 * S_PC_19 + 
+-0.17418009062705 * S_PC_2 + 0.05959670004179 * S_PC_20 + -0.12107656568905 * S_PC_3 + 
+0.06025390965507 * S_PC_4 + 0.19765051020765 * S_PC_5 + 0.19947647122278 * S_PC_6 + 
+-0.00628384375489 * S_PC_7 + 0.09723318502979 * S_PC_8 + 0.17189824288116 * S_PC_9 ;
+444845    +   H14  =     0.74200892607101 * S_PC_1  +    -0.51836259616234 * S_PC_10
+444846    +          +     0.51514679632751 * S_PC_11  +    -0.51261634544373 * S_PC_12
+444847    +          +    -0.40942113093583 * S_PC_13  +     0.14833742453259 * S_PC_14
+444848    +          +    -0.20197117611696 * S_PC_15  +    -0.99078843802702 * S_PC_16
+444849    +          +    -0.82390897919493 * S_PC_17  +     0.09026123712456 * S_PC_18
+444850    +          +    -0.52972811687495 * S_PC_19  +     0.09955183642127 * S_PC_2
+444851    +          +    -0.47043872009654 * S_PC_20  +     0.92257024311986 * S_PC_3
+444852    +          +    -0.70123238408342 * S_PC_4  +    -0.46862882411712 * S_PC_5
+444853    +          +    -0.55852364099496 * S_PC_6  +     -0.0071221830173 * S_PC_7
+444854    +          +    -0.52331395249553 * S_PC_8  +     0.11760605190876 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H14 = 0.74200892607101 * S_PC_1 + -0.51836259616234 * S_PC_10 + 
+0.51514679632751 * S_PC_11 + -0.51261634544373 * S_PC_12 + -0.40942113093583 * S_PC_13 + 
+0.14833742453259 * S_PC_14 + -0.20197117611696 * S_PC_15 + -0.99078843802702 * S_PC_16 + 
+-0.82390897919493 * S_PC_17 + 0.09026123712456 * S_PC_18 + -0.52972811687495 * S_PC_19 + 
+0.09955183642127 * S_PC_2 + -0.47043872009654 * S_PC_20 + 0.92257024311986 * S_PC_3 + 
+-0.70123238408342 * S_PC_4 + -0.46862882411712 * S_PC_5 + -0.55852364099496 * S_PC_6 + 
+-0.0071221830173 * S_PC_7 + -0.52331395249553 * S_PC_8 + 0.11760605190876 * S_PC_9 ;
+444855    +   H11  =      2.2555545403347 + H11 ;
+MPRINT(EM_DIAGRAM):   H11 = 2.2555545403347 + H11 ;
+444856    +   H12  =     -0.6156355346236 + H12 ;
+MPRINT(EM_DIAGRAM):   H12 = -0.6156355346236 + H12 ;
+444857    +   H13  =    -0.00618836290301 + H13 ;
+MPRINT(EM_DIAGRAM):   H13 = -0.00618836290301 + H13 ;
+444858    +   H14  =     0.30257133135853 + H14 ;
+MPRINT(EM_DIAGRAM):   H14 = 0.30257133135853 + H14 ;
+444859    +   H11  = TANH(H11 );
+MPRINT(EM_DIAGRAM):   H11 = TANH(H11 );
+444860    +   H12  = TANH(H12 );
+MPRINT(EM_DIAGRAM):   H12 = TANH(H12 );
+444861    +   H13  = TANH(H13 );
+MPRINT(EM_DIAGRAM):   H13 = TANH(H13 );
+444862    +   H14  = TANH(H14 );
+MPRINT(EM_DIAGRAM):   H14 = TANH(H14 );
+444863    +END;
+MPRINT(EM_DIAGRAM):   END;
+444864    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+444865    +   H11  = .;
+MPRINT(EM_DIAGRAM):   H11 = .;
+444866    +   H12  = .;
+MPRINT(EM_DIAGRAM):   H12 = .;
+444867    +   H13  = .;
+MPRINT(EM_DIAGRAM):   H13 = .;
+444868    +   H14  = .;
+MPRINT(EM_DIAGRAM):   H14 = .;
+444869    +END;
+MPRINT(EM_DIAGRAM):   END;
+444870    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444871    +*** Writing the Node DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node DepVar ;
+444872    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444873    +
+444874    +*** Generate dummy variables for DepVar ;
+MPRINT(EM_DIAGRAM):   *** Generate dummy variables for DepVar ;
+444875    +drop DepVar1 DepVar0 ;
+MPRINT(EM_DIAGRAM):   drop DepVar1 DepVar0 ;
+444876    +label F_DepVar = 'From: DepVar' ;
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'From: DepVar' ;
+444877    +length F_DepVar $ 12;
+MPRINT(EM_DIAGRAM):   length F_DepVar $ 12;
+444878    +F_DepVar = put( DepVar , BEST. );
+MPRINT(EM_DIAGRAM):   F_DepVar = put( DepVar , BEST. );
+444879    +%DMNORMIP( F_DepVar )
+MPRINT(DMNORMIP):   call dmnorm(F_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+444880    +if missing( DepVar ) then do;
+MPRINT(EM_DIAGRAM):   if missing( DepVar ) then do;
+444881    +   DepVar1 = .;
+MPRINT(EM_DIAGRAM):   DepVar1 = .;
+444882    +   DepVar0 = .;
+MPRINT(EM_DIAGRAM):   DepVar0 = .;
+444883    +end;
+MPRINT(EM_DIAGRAM):   end;
+444884    +else do;
+MPRINT(EM_DIAGRAM):   else do;
+444885    +   if F_DepVar = '0'  then do;
+MPRINT(EM_DIAGRAM):   if F_DepVar = '0' then do;
+444886    +      DepVar1 = 0;
+MPRINT(EM_DIAGRAM):   DepVar1 = 0;
+444887    +      DepVar0 = 1;
+MPRINT(EM_DIAGRAM):   DepVar0 = 1;
+444888    +   end;
+MPRINT(EM_DIAGRAM):   end;
+444889    +   else if F_DepVar = '1'  then do;
+MPRINT(EM_DIAGRAM):   else if F_DepVar = '1' then do;
+444890    +      DepVar1 = 1;
+MPRINT(EM_DIAGRAM):   DepVar1 = 1;
+444891    +      DepVar0 = 0;
+MPRINT(EM_DIAGRAM):   DepVar0 = 0;
+444892    +   end;
+MPRINT(EM_DIAGRAM):   end;
+444893    +   else do;
+MPRINT(EM_DIAGRAM):   else do;
+444894    +      DepVar1 = .;
+MPRINT(EM_DIAGRAM):   DepVar1 = .;
+444895    +      DepVar0 = .;
+MPRINT(EM_DIAGRAM):   DepVar0 = .;
+444896    +   end;
+MPRINT(EM_DIAGRAM):   end;
+444897    +end;
+MPRINT(EM_DIAGRAM):   end;
+444898    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+444899    +   P_DepVar1  =    -3.20815168642637 * H11  +    -1.34181141204955 * H12
+444900    +          +     4.24092741271129 * H13  +    -1.83584057359087 * H14 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = -3.20815168642637 * H11 + -1.34181141204955 * H12 + 
+4.24092741271129 * H13 + -1.83584057359087 * H14 ;
+444901    +   P_DepVar1  =    -1.83186535709902 + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = -1.83186535709902 + P_DepVar1 ;
+444902    +   P_DepVar0  = 0;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0;
+444903    +   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+MPRINT(EM_DIAGRAM):   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+444904    +   _SUM_ = 0.;
+MPRINT(EM_DIAGRAM):   _SUM_ = 0.;
+444905    +   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
+MPRINT(EM_DIAGRAM):   P_DepVar1 = EXP(P_DepVar1 - _MAX_);
+444906    +   _SUM_ = _SUM_ + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar1 ;
+444907    +   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
+MPRINT(EM_DIAGRAM):   P_DepVar0 = EXP(P_DepVar0 - _MAX_);
+444908    +   _SUM_ = _SUM_ + P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar0 ;
+444909    +   P_DepVar1  = P_DepVar1  / _SUM_;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = P_DepVar1 / _SUM_;
+444910    +   P_DepVar0  = P_DepVar0  / _SUM_;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = P_DepVar0 / _SUM_;
+444911    +END;
+MPRINT(EM_DIAGRAM):   END;
+444912    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+444913    +   P_DepVar1  = .;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = .;
+444914    +   P_DepVar0  = .;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = .;
+444915    +END;
+MPRINT(EM_DIAGRAM):   END;
+444916    +IF _DM_BAD EQ 1 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 1 THEN DO;
+444917    +   P_DepVar1  =     0.15122156697556;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15122156697556;
+444918    +   P_DepVar0  =     0.84877843302443;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84877843302443;
+444919    +END;
+MPRINT(EM_DIAGRAM):   END;
+444920    +*** *****************************;
+MPRINT(EM_DIAGRAM):   *** *****************************;
+444921    +*** Writing the Residuals  of the Node DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the Residuals of the Node DepVar ;
+444922    +*** ******************************;
+MPRINT(EM_DIAGRAM):   *** ******************************;
+444923    +IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( DepVar1 ) THEN R_DepVar1 = . ;
+444924    +ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   ELSE R_DepVar1 = DepVar1 - P_DepVar1 ;
+444925    +IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( DepVar0 ) THEN R_DepVar0 = . ;
+444926    +ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   ELSE R_DepVar0 = DepVar0 - P_DepVar0 ;
+444927    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444928    +*** Writing the I_DepVar  AND U_DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the I_DepVar AND U_DepVar ;
+444929    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+444930    +_MAXP_ = P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar1 ;
+444931    +I_DepVar  = "1           " ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "1           " ;
+444932    +U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+444933    +IF( _MAXP_ LT P_DepVar0  ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF( _MAXP_ LT P_DepVar0 ) THEN DO;
+444934    +   _MAXP_ = P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar0 ;
+444935    +   I_DepVar  = "0           " ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "0           " ;
+444936    +   U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+444937    +END;
+MPRINT(EM_DIAGRAM):   END;
+444938    +********************************;
+MPRINT(EM_DIAGRAM):   ********************************;
+444939    +*** End Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   *** End Scoring Code for Neural;
+444940    +********************************;
+MPRINT(EM_DIAGRAM):   ********************************;
+444941    +drop
+444942    +H11
+444943    +H12
+444944    +H13
+444945    +H14
+444946    +;
+MPRINT(EM_DIAGRAM):   drop H11 H12 H13 H14 ;
+444947    +drop S_:;
+MPRINT(EM_DIAGRAM):   drop S_:;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_DIAGRAM):   run;
+444948     run;
+
+NOTE: DATA STEP view saved on file EMWS8.NEURAL15_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS8.PRINCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.04 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+444949     quit;
+444950     filename emflow;
+MPRINT(EM_DIAGRAM):   filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+444951     filename emflow
+444951   ! "C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow 
+"C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Neural15: Scoring VALIDATE data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+444952     *------------------------------------------------------------*;
+444953     * Neural15: Scoring VALIDATE data;
+444954     *------------------------------------------------------------*;
+444955     data EMWS8.Neural15_VALIDATE
+444956     / view=EMWS8.Neural15_VALIDATE
+444957     ;
+MPRINT(EM_DIAGRAM):   data EMWS8.Neural15_VALIDATE / view=EMWS8.Neural15_VALIDATE ;
+444958     set EMWS8.PRINCOMP_VALIDATE
+444959     ;
+MPRINT(EM_DIAGRAM):   set EMWS8.PRINCOMP_VALIDATE ;
+444960     %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\Neural15\EMFLOWSCORE.sas.
+444961    +***********************************;
+MPRINT(EM_DIAGRAM):   ***********************************;
+444962    +*** Begin Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   *** Begin Scoring Code for Neural;
+444963    +***********************************;
+MPRINT(EM_DIAGRAM):   ***********************************;
+444964    +DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+MPRINT(EM_DIAGRAM):   DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+444965    + _DM_BAD = 0;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 0;
+444966    + _NOCL_ = .;
+MPRINT(EM_DIAGRAM):   _NOCL_ = .;
+444967    + _MAX_ = .;
+MPRINT(EM_DIAGRAM):   _MAX_ = .;
+444968    + _MAXP_ = .;
+MPRINT(EM_DIAGRAM):   _MAXP_ = .;
+444969    + _SUM_ = .;
+MPRINT(EM_DIAGRAM):   _SUM_ = .;
+444970    + _NTRIALS = .;
+MPRINT(EM_DIAGRAM):   _NTRIALS = .;
+444971    + _EPS =                1E-10;
+MPRINT(EM_DIAGRAM):   _EPS = 1E-10;
+444972    +LENGTH _WARN_ $4
+444973    +      F_DepVar  $ 12
+444974    +;
+MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $4 F_DepVar $ 12 ;
+444975    +      label S_PC_1 = 'Standard: PC_1' ;
+MPRINT(EM_DIAGRAM):   label S_PC_1 = 'Standard: PC_1' ;
+444976    +
+444977    +      label S_PC_10 = 'Standard: PC_10' ;
+MPRINT(EM_DIAGRAM):   label S_PC_10 = 'Standard: PC_10' ;
+444978    +
+444979    +      label S_PC_11 = 'Standard: PC_11' ;
+MPRINT(EM_DIAGRAM):   label S_PC_11 = 'Standard: PC_11' ;
+444980    +
+444981    +      label S_PC_12 = 'Standard: PC_12' ;
+MPRINT(EM_DIAGRAM):   label S_PC_12 = 'Standard: PC_12' ;
+444982    +
+444983    +      label S_PC_13 = 'Standard: PC_13' ;
+MPRINT(EM_DIAGRAM):   label S_PC_13 = 'Standard: PC_13' ;
+444984    +
+444985    +      label S_PC_14 = 'Standard: PC_14' ;
+MPRINT(EM_DIAGRAM):   label S_PC_14 = 'Standard: PC_14' ;
+444986    +
+444987    +      label S_PC_15 = 'Standard: PC_15' ;
+MPRINT(EM_DIAGRAM):   label S_PC_15 = 'Standard: PC_15' ;
+444988    +
+444989    +      label S_PC_16 = 'Standard: PC_16' ;
+MPRINT(EM_DIAGRAM):   label S_PC_16 = 'Standard: PC_16' ;
+444990    +
+444991    +      label S_PC_17 = 'Standard: PC_17' ;
+MPRINT(EM_DIAGRAM):   label S_PC_17 = 'Standard: PC_17' ;
+444992    +
+444993    +      label S_PC_18 = 'Standard: PC_18' ;
+MPRINT(EM_DIAGRAM):   label S_PC_18 = 'Standard: PC_18' ;
+444994    +
+444995    +      label S_PC_19 = 'Standard: PC_19' ;
+MPRINT(EM_DIAGRAM):   label S_PC_19 = 'Standard: PC_19' ;
+444996    +
+444997    +      label S_PC_2 = 'Standard: PC_2' ;
+MPRINT(EM_DIAGRAM):   label S_PC_2 = 'Standard: PC_2' ;
+444998    +
+444999    +      label S_PC_20 = 'Standard: PC_20' ;
+MPRINT(EM_DIAGRAM):   label S_PC_20 = 'Standard: PC_20' ;
+445000    +
+445001    +      label S_PC_3 = 'Standard: PC_3' ;
+MPRINT(EM_DIAGRAM):   label S_PC_3 = 'Standard: PC_3' ;
+445002    +
+445003    +      label S_PC_4 = 'Standard: PC_4' ;
+MPRINT(EM_DIAGRAM):   label S_PC_4 = 'Standard: PC_4' ;
+445004    +
+445005    +      label S_PC_5 = 'Standard: PC_5' ;
+MPRINT(EM_DIAGRAM):   label S_PC_5 = 'Standard: PC_5' ;
+445006    +
+445007    +      label S_PC_6 = 'Standard: PC_6' ;
+MPRINT(EM_DIAGRAM):   label S_PC_6 = 'Standard: PC_6' ;
+445008    +
+445009    +      label S_PC_7 = 'Standard: PC_7' ;
+MPRINT(EM_DIAGRAM):   label S_PC_7 = 'Standard: PC_7' ;
+445010    +
+445011    +      label S_PC_8 = 'Standard: PC_8' ;
+MPRINT(EM_DIAGRAM):   label S_PC_8 = 'Standard: PC_8' ;
+445012    +
+445013    +      label S_PC_9 = 'Standard: PC_9' ;
+MPRINT(EM_DIAGRAM):   label S_PC_9 = 'Standard: PC_9' ;
+445014    +
+445015    +      label H11 = 'Hidden: H1=1' ;
+MPRINT(EM_DIAGRAM):   label H11 = 'Hidden: H1=1' ;
+445016    +
+445017    +      label H12 = 'Hidden: H1=2' ;
+MPRINT(EM_DIAGRAM):   label H12 = 'Hidden: H1=2' ;
+445018    +
+445019    +      label H13 = 'Hidden: H1=3' ;
+MPRINT(EM_DIAGRAM):   label H13 = 'Hidden: H1=3' ;
+445020    +
+445021    +      label H14 = 'Hidden: H1=4' ;
+MPRINT(EM_DIAGRAM):   label H14 = 'Hidden: H1=4' ;
+445022    +
+445023    +      label I_DepVar = 'Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label I_DepVar = 'Into: DepVar' ;
+445024    +
+445025    +      label F_DepVar = 'From: DepVar' ;
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'From: DepVar' ;
+445026    +
+445027    +      label U_DepVar = 'Unnormalized Into: DepVar' ;
+MPRINT(EM_DIAGRAM):   label U_DepVar = 'Unnormalized Into: DepVar' ;
+445028    +
+445029    +      label P_DepVar1 = 'Predicted: DepVar=1' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar1 = 'Predicted: DepVar=1' ;
+445030    +
+445031    +      label R_DepVar1 = 'Residual: DepVar=1' ;
+MPRINT(EM_DIAGRAM):   label R_DepVar1 = 'Residual: DepVar=1' ;
+445032    +
+445033    +      label P_DepVar0 = 'Predicted: DepVar=0' ;
+MPRINT(EM_DIAGRAM):   label P_DepVar0 = 'Predicted: DepVar=0' ;
+445034    +
+445035    +      label R_DepVar0 = 'Residual: DepVar=0' ;
+MPRINT(EM_DIAGRAM):   label R_DepVar0 = 'Residual: DepVar=0' ;
+445036    +
+445037    +      label  _WARN_ = "Warnings";
+MPRINT(EM_DIAGRAM):   label _WARN_ = "Warnings";
+445038    +
+445039    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445040    +*** Checking missing input Interval
+445041    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** Checking missing input Interval *** *************************;
+445042    +
+445043    +IF NMISS(
+445044    +   PC_1 ,
+445045    +   PC_10 ,
+445046    +   PC_11 ,
+445047    +   PC_12 ,
+445048    +   PC_13 ,
+445049    +   PC_14 ,
+445050    +   PC_15 ,
+445051    +   PC_16 ,
+445052    +   PC_17 ,
+445053    +   PC_18 ,
+445054    +   PC_19 ,
+445055    +   PC_2 ,
+445056    +   PC_20 ,
+445057    +   PC_3 ,
+445058    +   PC_4 ,
+445059    +   PC_5 ,
+445060    +   PC_6 ,
+445061    +   PC_7 ,
+445062    +   PC_8 ,
+445063    +   PC_9   ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF NMISS( PC_1 , PC_10 , PC_11 , PC_12 , PC_13 , PC_14 , PC_15 , PC_16 , 
+PC_17 , PC_18 , PC_19 , PC_2 , PC_20 , PC_3 , PC_4 , PC_5 , PC_6 , PC_7 , PC_8 , PC_9 ) THEN 
+DO;
+445064    +   SUBSTR(_WARN_, 1, 1) = 'M';
+MPRINT(EM_DIAGRAM):   SUBSTR(_WARN_, 1, 1) = 'M';
+445065    +
+445066    +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+445067    +END;
+MPRINT(EM_DIAGRAM):   END;
+445068    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445069    +*** Writing the Node intvl ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node intvl ;
+445070    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445071    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+445072    +   S_PC_1  = -3.9326340637957E-15 +     0.29856127196125 * PC_1 ;
+MPRINT(EM_DIAGRAM):   S_PC_1 = -3.9326340637957E-15 + 0.29856127196125 * PC_1 ;
+445073    +   S_PC_10  = -9.2255679809319E-15 +     0.81267664272505 * PC_10 ;
+MPRINT(EM_DIAGRAM):   S_PC_10 = -9.2255679809319E-15 + 0.81267664272505 * PC_10 ;
+445074    +   S_PC_11  =  3.9010508694298E-15 +      0.8343488153056 * PC_11 ;
+MPRINT(EM_DIAGRAM):   S_PC_11 = 3.9010508694298E-15 + 0.8343488153056 * PC_11 ;
+445075    +   S_PC_12  =  -3.549148780412E-15 +     0.88094641144592 * PC_12 ;
+MPRINT(EM_DIAGRAM):   S_PC_12 = -3.549148780412E-15 + 0.88094641144592 * PC_12 ;
+445076    +   S_PC_13  =  1.2236400050078E-16 +     0.89160303670676 * PC_13 ;
+MPRINT(EM_DIAGRAM):   S_PC_13 = 1.2236400050078E-16 + 0.89160303670676 * PC_13 ;
+445077    +   S_PC_14  = -2.7740851751603E-15 +     0.89958319422991 * PC_14 ;
+MPRINT(EM_DIAGRAM):   S_PC_14 = -2.7740851751603E-15 + 0.89958319422991 * PC_14 ;
+445078    +   S_PC_15  =  1.2368456096485E-15 +      0.9273996164564 * PC_15 ;
+MPRINT(EM_DIAGRAM):   S_PC_15 = 1.2368456096485E-15 + 0.9273996164564 * PC_15 ;
+445079    +   S_PC_16  = -9.1662217565311E-16 +     0.94870355386249 * PC_16 ;
+MPRINT(EM_DIAGRAM):   S_PC_16 = -9.1662217565311E-16 + 0.94870355386249 * PC_16 ;
+445080    +   S_PC_17  = -3.2793544087531E-15 +     0.97039233963067 * PC_17 ;
+MPRINT(EM_DIAGRAM):   S_PC_17 = -3.2793544087531E-15 + 0.97039233963067 * PC_17 ;
+445081    +   S_PC_18  =  2.6573178728951E-15 +     1.01893035135692 * PC_18 ;
+MPRINT(EM_DIAGRAM):   S_PC_18 = 2.6573178728951E-15 + 1.01893035135692 * PC_18 ;
+445082    +   S_PC_19  =  5.4571033427589E-15 +     1.03575063058043 * PC_19 ;
+MPRINT(EM_DIAGRAM):   S_PC_19 = 5.4571033427589E-15 + 1.03575063058043 * PC_19 ;
+445083    +   S_PC_2  =  1.7819005044245E-16 +     0.53620237396367 * PC_2 ;
+MPRINT(EM_DIAGRAM):   S_PC_2 = 1.7819005044245E-16 + 0.53620237396367 * PC_2 ;
+445084    +   S_PC_20  = -6.5745909034615E-15 +     1.17404202930983 * PC_20 ;
+MPRINT(EM_DIAGRAM):   S_PC_20 = -6.5745909034615E-15 + 1.17404202930983 * PC_20 ;
+445085    +   S_PC_3  =  7.2659414314573E-15 +     0.54882613091499 * PC_3 ;
+MPRINT(EM_DIAGRAM):   S_PC_3 = 7.2659414314573E-15 + 0.54882613091499 * PC_3 ;
+445086    +   S_PC_4  =  -9.594020997569E-15 +     0.62616694648196 * PC_4 ;
+MPRINT(EM_DIAGRAM):   S_PC_4 = -9.594020997569E-15 + 0.62616694648196 * PC_4 ;
+445087    +   S_PC_5  =  6.4769256780617E-15 +     0.65381673515035 * PC_5 ;
+MPRINT(EM_DIAGRAM):   S_PC_5 = 6.4769256780617E-15 + 0.65381673515035 * PC_5 ;
+445088    +   S_PC_6  =   3.580536079847E-15 +     0.70036731226737 * PC_6 ;
+MPRINT(EM_DIAGRAM):   S_PC_6 = 3.580536079847E-15 + 0.70036731226737 * PC_6 ;
+445089    +   S_PC_7  =  3.7364722741013E-15 +     0.71812657760342 * PC_7 ;
+MPRINT(EM_DIAGRAM):   S_PC_7 = 3.7364722741013E-15 + 0.71812657760342 * PC_7 ;
+445090    +   S_PC_8  = -1.3132402130488E-15 +     0.77088794083704 * PC_8 ;
+MPRINT(EM_DIAGRAM):   S_PC_8 = -1.3132402130488E-15 + 0.77088794083704 * PC_8 ;
+445091    +   S_PC_9  =   6.653417690349E-15 +     0.79301377407747 * PC_9 ;
+MPRINT(EM_DIAGRAM):   S_PC_9 = 6.653417690349E-15 + 0.79301377407747 * PC_9 ;
+445092    +END;
+MPRINT(EM_DIAGRAM):   END;
+445093    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+445094    +   IF MISSING( PC_1 ) THEN S_PC_1  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_1 ) THEN S_PC_1 = . ;
+445095    +   ELSE S_PC_1  = -3.9326340637957E-15 +     0.29856127196125 * PC_1 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_1 = -3.9326340637957E-15 + 0.29856127196125 * PC_1 ;
+445096    +   IF MISSING( PC_10 ) THEN S_PC_10  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_10 ) THEN S_PC_10 = . ;
+445097    +   ELSE S_PC_10  = -9.2255679809319E-15 +     0.81267664272505 * PC_10 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_10 = -9.2255679809319E-15 + 0.81267664272505 * PC_10 ;
+445098    +   IF MISSING( PC_11 ) THEN S_PC_11  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_11 ) THEN S_PC_11 = . ;
+445099    +   ELSE S_PC_11  =  3.9010508694298E-15 +      0.8343488153056 * PC_11 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_11 = 3.9010508694298E-15 + 0.8343488153056 * PC_11 ;
+445100    +   IF MISSING( PC_12 ) THEN S_PC_12  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_12 ) THEN S_PC_12 = . ;
+445101    +   ELSE S_PC_12  =  -3.549148780412E-15 +     0.88094641144592 * PC_12 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_12 = -3.549148780412E-15 + 0.88094641144592 * PC_12 ;
+445102    +   IF MISSING( PC_13 ) THEN S_PC_13  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_13 ) THEN S_PC_13 = . ;
+445103    +   ELSE S_PC_13  =  1.2236400050078E-16 +     0.89160303670676 * PC_13 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_13 = 1.2236400050078E-16 + 0.89160303670676 * PC_13 ;
+445104    +   IF MISSING( PC_14 ) THEN S_PC_14  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_14 ) THEN S_PC_14 = . ;
+445105    +   ELSE S_PC_14  = -2.7740851751603E-15 +     0.89958319422991 * PC_14 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_14 = -2.7740851751603E-15 + 0.89958319422991 * PC_14 ;
+445106    +   IF MISSING( PC_15 ) THEN S_PC_15  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_15 ) THEN S_PC_15 = . ;
+445107    +   ELSE S_PC_15  =  1.2368456096485E-15 +      0.9273996164564 * PC_15 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_15 = 1.2368456096485E-15 + 0.9273996164564 * PC_15 ;
+445108    +   IF MISSING( PC_16 ) THEN S_PC_16  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_16 ) THEN S_PC_16 = . ;
+445109    +   ELSE S_PC_16  = -9.1662217565311E-16 +     0.94870355386249 * PC_16 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_16 = -9.1662217565311E-16 + 0.94870355386249 * PC_16 ;
+445110    +   IF MISSING( PC_17 ) THEN S_PC_17  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_17 ) THEN S_PC_17 = . ;
+445111    +   ELSE S_PC_17  = -3.2793544087531E-15 +     0.97039233963067 * PC_17 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_17 = -3.2793544087531E-15 + 0.97039233963067 * PC_17 ;
+445112    +   IF MISSING( PC_18 ) THEN S_PC_18  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_18 ) THEN S_PC_18 = . ;
+445113    +   ELSE S_PC_18  =  2.6573178728951E-15 +     1.01893035135692 * PC_18 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_18 = 2.6573178728951E-15 + 1.01893035135692 * PC_18 ;
+445114    +   IF MISSING( PC_19 ) THEN S_PC_19  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_19 ) THEN S_PC_19 = . ;
+445115    +   ELSE S_PC_19  =  5.4571033427589E-15 +     1.03575063058043 * PC_19 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_19 = 5.4571033427589E-15 + 1.03575063058043 * PC_19 ;
+445116    +   IF MISSING( PC_2 ) THEN S_PC_2  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_2 ) THEN S_PC_2 = . ;
+445117    +   ELSE S_PC_2  =  1.7819005044245E-16 +     0.53620237396367 * PC_2 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_2 = 1.7819005044245E-16 + 0.53620237396367 * PC_2 ;
+445118    +   IF MISSING( PC_20 ) THEN S_PC_20  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_20 ) THEN S_PC_20 = . ;
+445119    +   ELSE S_PC_20  = -6.5745909034615E-15 +     1.17404202930983 * PC_20 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_20 = -6.5745909034615E-15 + 1.17404202930983 * PC_20 ;
+445120    +   IF MISSING( PC_3 ) THEN S_PC_3  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_3 ) THEN S_PC_3 = . ;
+445121    +   ELSE S_PC_3  =  7.2659414314573E-15 +     0.54882613091499 * PC_3 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_3 = 7.2659414314573E-15 + 0.54882613091499 * PC_3 ;
+445122    +   IF MISSING( PC_4 ) THEN S_PC_4  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_4 ) THEN S_PC_4 = . ;
+445123    +   ELSE S_PC_4  =  -9.594020997569E-15 +     0.62616694648196 * PC_4 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_4 = -9.594020997569E-15 + 0.62616694648196 * PC_4 ;
+445124    +   IF MISSING( PC_5 ) THEN S_PC_5  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_5 ) THEN S_PC_5 = . ;
+445125    +   ELSE S_PC_5  =  6.4769256780617E-15 +     0.65381673515035 * PC_5 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_5 = 6.4769256780617E-15 + 0.65381673515035 * PC_5 ;
+445126    +   IF MISSING( PC_6 ) THEN S_PC_6  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_6 ) THEN S_PC_6 = . ;
+445127    +   ELSE S_PC_6  =   3.580536079847E-15 +     0.70036731226737 * PC_6 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_6 = 3.580536079847E-15 + 0.70036731226737 * PC_6 ;
+445128    +   IF MISSING( PC_7 ) THEN S_PC_7  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_7 ) THEN S_PC_7 = . ;
+445129    +   ELSE S_PC_7  =  3.7364722741013E-15 +     0.71812657760342 * PC_7 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_7 = 3.7364722741013E-15 + 0.71812657760342 * PC_7 ;
+445130    +   IF MISSING( PC_8 ) THEN S_PC_8  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_8 ) THEN S_PC_8 = . ;
+445131    +   ELSE S_PC_8  = -1.3132402130488E-15 +     0.77088794083704 * PC_8 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_8 = -1.3132402130488E-15 + 0.77088794083704 * PC_8 ;
+445132    +   IF MISSING( PC_9 ) THEN S_PC_9  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( PC_9 ) THEN S_PC_9 = . ;
+445133    +   ELSE S_PC_9  =   6.653417690349E-15 +     0.79301377407747 * PC_9 ;
+MPRINT(EM_DIAGRAM):   ELSE S_PC_9 = 6.653417690349E-15 + 0.79301377407747 * PC_9 ;
+445134    +END;
+MPRINT(EM_DIAGRAM):   END;
+445135    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445136    +*** Writing the Node H1 ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node H1 ;
+445137    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445138    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+445139    +   H11  =    -1.38664237458166 * S_PC_1  +    -0.06782034260642 * S_PC_10
+445140    +          +     0.41833533264093 * S_PC_11  +     0.55182612490891 * S_PC_12
+445141    +          +    -0.21657289057458 * S_PC_13  +      0.1973363300888 * S_PC_14
+445142    +          +     -0.1417561903554 * S_PC_15  +    -0.03131163883058 * S_PC_16
+445143    +          +     0.27792972200805 * S_PC_17  +    -0.23638868683216 * S_PC_18
+445144    +          +    -0.02851552423879 * S_PC_19  +     0.30789574682959 * S_PC_2
+445145    +          +     0.72981574817592 * S_PC_20  +    -0.26978055410167 * S_PC_3
+445146    +          +     0.51982800131821 * S_PC_4  +     0.38666892880921 * S_PC_5
+445147    +          +     0.67772732631906 * S_PC_6  +    -0.36589607246189 * S_PC_7
+445148    +          +     0.22095664374831 * S_PC_8  +    -0.22830858981624 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H11 = -1.38664237458166 * S_PC_1 + -0.06782034260642 * S_PC_10 + 
+0.41833533264093 * S_PC_11 + 0.55182612490891 * S_PC_12 + -0.21657289057458 * S_PC_13 + 
+0.1973363300888 * S_PC_14 + -0.1417561903554 * S_PC_15 + -0.03131163883058 * S_PC_16 + 
+0.27792972200805 * S_PC_17 + -0.23638868683216 * S_PC_18 + -0.02851552423879 * S_PC_19 + 
+0.30789574682959 * S_PC_2 + 0.72981574817592 * S_PC_20 + -0.26978055410167 * S_PC_3 + 
+0.51982800131821 * S_PC_4 + 0.38666892880921 * S_PC_5 + 0.67772732631906 * S_PC_6 + 
+-0.36589607246189 * S_PC_7 + 0.22095664374831 * S_PC_8 + -0.22830858981624 * S_PC_9 ;
+445149    +   H12  =      0.9805786605054 * S_PC_1  +    -0.37430037596207 * S_PC_10
+445150    +          +     0.71604997076331 * S_PC_11  +    -0.37233651556232 * S_PC_12
+445151    +          +    -0.52185486524765 * S_PC_13  +     0.21844531513642 * S_PC_14
+445152    +          +    -0.50341883447092 * S_PC_15  +     0.02225597429156 * S_PC_16
+445153    +          +    -0.12884671375616 * S_PC_17  +     -0.8560836980266 * S_PC_18
+445154    +          +      0.5973350246243 * S_PC_19  +     0.32304757036708 * S_PC_2
+445155    +          +    -0.05861437679794 * S_PC_20  +    -0.14021258360513 * S_PC_3
+445156    +          +     0.48920026385248 * S_PC_4  +    -0.47755213213657 * S_PC_5
+445157    +          +      0.3351347944594 * S_PC_6  +     0.75213394874988 * S_PC_7
+445158    +          +    -0.52434415948615 * S_PC_8  +     0.04645231166732 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H12 = 0.9805786605054 * S_PC_1 + -0.37430037596207 * S_PC_10 + 
+0.71604997076331 * S_PC_11 + -0.37233651556232 * S_PC_12 + -0.52185486524765 * S_PC_13 + 
+0.21844531513642 * S_PC_14 + -0.50341883447092 * S_PC_15 + 0.02225597429156 * S_PC_16 + 
+-0.12884671375616 * S_PC_17 + -0.8560836980266 * S_PC_18 + 0.5973350246243 * S_PC_19 + 
+0.32304757036708 * S_PC_2 + -0.05861437679794 * S_PC_20 + -0.14021258360513 * S_PC_3 + 
+0.48920026385248 * S_PC_4 + -0.47755213213657 * S_PC_5 + 0.3351347944594 * S_PC_6 + 
+0.75213394874988 * S_PC_7 + -0.52434415948615 * S_PC_8 + 0.04645231166732 * S_PC_9 ;
+445159    +   H13  =     0.33010260427572 * S_PC_1  +    -0.13545793109613 * S_PC_10
+445160    +          +    -0.14861438803755 * S_PC_11  +     0.51093766169435 * S_PC_12
+445161    +          +      0.2325724430542 * S_PC_13  +    -0.14593297984016 * S_PC_14
+445162    +          +    -0.44183153148936 * S_PC_15  +      -0.045799887031 * S_PC_16
+445163    +          +      0.0913031910953 * S_PC_17  +     -0.0740649444443 * S_PC_18
+445164    +          +     0.02087270473942 * S_PC_19  +    -0.17418009062705 * S_PC_2
+445165    +          +     0.05959670004179 * S_PC_20  +    -0.12107656568905 * S_PC_3
+445166    +          +     0.06025390965507 * S_PC_4  +     0.19765051020765 * S_PC_5
+445167    +          +     0.19947647122278 * S_PC_6  +    -0.00628384375489 * S_PC_7
+445168    +          +     0.09723318502979 * S_PC_8  +     0.17189824288116 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H13 = 0.33010260427572 * S_PC_1 + -0.13545793109613 * S_PC_10 + 
+-0.14861438803755 * S_PC_11 + 0.51093766169435 * S_PC_12 + 0.2325724430542 * S_PC_13 + 
+-0.14593297984016 * S_PC_14 + -0.44183153148936 * S_PC_15 + -0.045799887031 * S_PC_16 + 
+0.0913031910953 * S_PC_17 + -0.0740649444443 * S_PC_18 + 0.02087270473942 * S_PC_19 + 
+-0.17418009062705 * S_PC_2 + 0.05959670004179 * S_PC_20 + -0.12107656568905 * S_PC_3 + 
+0.06025390965507 * S_PC_4 + 0.19765051020765 * S_PC_5 + 0.19947647122278 * S_PC_6 + 
+-0.00628384375489 * S_PC_7 + 0.09723318502979 * S_PC_8 + 0.17189824288116 * S_PC_9 ;
+445169    +   H14  =     0.74200892607101 * S_PC_1  +    -0.51836259616234 * S_PC_10
+445170    +          +     0.51514679632751 * S_PC_11  +    -0.51261634544373 * S_PC_12
+445171    +          +    -0.40942113093583 * S_PC_13  +     0.14833742453259 * S_PC_14
+445172    +          +    -0.20197117611696 * S_PC_15  +    -0.99078843802702 * S_PC_16
+445173    +          +    -0.82390897919493 * S_PC_17  +     0.09026123712456 * S_PC_18
+445174    +          +    -0.52972811687495 * S_PC_19  +     0.09955183642127 * S_PC_2
+445175    +          +    -0.47043872009654 * S_PC_20  +     0.92257024311986 * S_PC_3
+445176    +          +    -0.70123238408342 * S_PC_4  +    -0.46862882411712 * S_PC_5
+445177    +          +    -0.55852364099496 * S_PC_6  +     -0.0071221830173 * S_PC_7
+445178    +          +    -0.52331395249553 * S_PC_8  +     0.11760605190876 * S_PC_9 ;
+MPRINT(EM_DIAGRAM):   H14 = 0.74200892607101 * S_PC_1 + -0.51836259616234 * S_PC_10 + 
+0.51514679632751 * S_PC_11 + -0.51261634544373 * S_PC_12 + -0.40942113093583 * S_PC_13 + 
+0.14833742453259 * S_PC_14 + -0.20197117611696 * S_PC_15 + -0.99078843802702 * S_PC_16 + 
+-0.82390897919493 * S_PC_17 + 0.09026123712456 * S_PC_18 + -0.52972811687495 * S_PC_19 + 
+0.09955183642127 * S_PC_2 + -0.47043872009654 * S_PC_20 + 0.92257024311986 * S_PC_3 + 
+-0.70123238408342 * S_PC_4 + -0.46862882411712 * S_PC_5 + -0.55852364099496 * S_PC_6 + 
+-0.0071221830173 * S_PC_7 + -0.52331395249553 * S_PC_8 + 0.11760605190876 * S_PC_9 ;
+445179    +   H11  =      2.2555545403347 + H11 ;
+MPRINT(EM_DIAGRAM):   H11 = 2.2555545403347 + H11 ;
+445180    +   H12  =     -0.6156355346236 + H12 ;
+MPRINT(EM_DIAGRAM):   H12 = -0.6156355346236 + H12 ;
+445181    +   H13  =    -0.00618836290301 + H13 ;
+MPRINT(EM_DIAGRAM):   H13 = -0.00618836290301 + H13 ;
+445182    +   H14  =     0.30257133135853 + H14 ;
+MPRINT(EM_DIAGRAM):   H14 = 0.30257133135853 + H14 ;
+445183    +   H11  = TANH(H11 );
+MPRINT(EM_DIAGRAM):   H11 = TANH(H11 );
+445184    +   H12  = TANH(H12 );
+MPRINT(EM_DIAGRAM):   H12 = TANH(H12 );
+445185    +   H13  = TANH(H13 );
+MPRINT(EM_DIAGRAM):   H13 = TANH(H13 );
+445186    +   H14  = TANH(H14 );
+MPRINT(EM_DIAGRAM):   H14 = TANH(H14 );
+445187    +END;
+MPRINT(EM_DIAGRAM):   END;
+445188    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+445189    +   H11  = .;
+MPRINT(EM_DIAGRAM):   H11 = .;
+445190    +   H12  = .;
+MPRINT(EM_DIAGRAM):   H12 = .;
+445191    +   H13  = .;
+MPRINT(EM_DIAGRAM):   H13 = .;
+445192    +   H14  = .;
+MPRINT(EM_DIAGRAM):   H14 = .;
+445193    +END;
+MPRINT(EM_DIAGRAM):   END;
+445194    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445195    +*** Writing the Node DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the Node DepVar ;
+445196    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445197    +
+445198    +*** Generate dummy variables for DepVar ;
+MPRINT(EM_DIAGRAM):   *** Generate dummy variables for DepVar ;
+445199    +drop DepVar1 DepVar0 ;
+MPRINT(EM_DIAGRAM):   drop DepVar1 DepVar0 ;
+445200    +label F_DepVar = 'From: DepVar' ;
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'From: DepVar' ;
+445201    +length F_DepVar $ 12;
+MPRINT(EM_DIAGRAM):   length F_DepVar $ 12;
+445202    +F_DepVar = put( DepVar , BEST. );
+MPRINT(EM_DIAGRAM):   F_DepVar = put( DepVar , BEST. );
+445203    +%DMNORMIP( F_DepVar )
+MPRINT(DMNORMIP):   call dmnorm(F_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+445204    +if missing( DepVar ) then do;
+MPRINT(EM_DIAGRAM):   if missing( DepVar ) then do;
+445205    +   DepVar1 = .;
+MPRINT(EM_DIAGRAM):   DepVar1 = .;
+445206    +   DepVar0 = .;
+MPRINT(EM_DIAGRAM):   DepVar0 = .;
+445207    +end;
+MPRINT(EM_DIAGRAM):   end;
+445208    +else do;
+MPRINT(EM_DIAGRAM):   else do;
+445209    +   if F_DepVar = '0'  then do;
+MPRINT(EM_DIAGRAM):   if F_DepVar = '0' then do;
+445210    +      DepVar1 = 0;
+MPRINT(EM_DIAGRAM):   DepVar1 = 0;
+445211    +      DepVar0 = 1;
+MPRINT(EM_DIAGRAM):   DepVar0 = 1;
+445212    +   end;
+MPRINT(EM_DIAGRAM):   end;
+445213    +   else if F_DepVar = '1'  then do;
+MPRINT(EM_DIAGRAM):   else if F_DepVar = '1' then do;
+445214    +      DepVar1 = 1;
+MPRINT(EM_DIAGRAM):   DepVar1 = 1;
+445215    +      DepVar0 = 0;
+MPRINT(EM_DIAGRAM):   DepVar0 = 0;
+445216    +   end;
+MPRINT(EM_DIAGRAM):   end;
+445217    +   else do;
+MPRINT(EM_DIAGRAM):   else do;
+445218    +      DepVar1 = .;
+MPRINT(EM_DIAGRAM):   DepVar1 = .;
+445219    +      DepVar0 = .;
+MPRINT(EM_DIAGRAM):   DepVar0 = .;
+445220    +   end;
+MPRINT(EM_DIAGRAM):   end;
+445221    +end;
+MPRINT(EM_DIAGRAM):   end;
+445222    +IF _DM_BAD EQ 0 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 0 THEN DO;
+445223    +   P_DepVar1  =    -3.20815168642637 * H11  +    -1.34181141204955 * H12
+445224    +          +     4.24092741271129 * H13  +    -1.83584057359087 * H14 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = -3.20815168642637 * H11 + -1.34181141204955 * H12 + 
+4.24092741271129 * H13 + -1.83584057359087 * H14 ;
+445225    +   P_DepVar1  =    -1.83186535709902 + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = -1.83186535709902 + P_DepVar1 ;
+445226    +   P_DepVar0  = 0;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0;
+445227    +   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+MPRINT(EM_DIAGRAM):   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+445228    +   _SUM_ = 0.;
+MPRINT(EM_DIAGRAM):   _SUM_ = 0.;
+445229    +   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
+MPRINT(EM_DIAGRAM):   P_DepVar1 = EXP(P_DepVar1 - _MAX_);
+445230    +   _SUM_ = _SUM_ + P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar1 ;
+445231    +   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
+MPRINT(EM_DIAGRAM):   P_DepVar0 = EXP(P_DepVar0 - _MAX_);
+445232    +   _SUM_ = _SUM_ + P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   _SUM_ = _SUM_ + P_DepVar0 ;
+445233    +   P_DepVar1  = P_DepVar1  / _SUM_;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = P_DepVar1 / _SUM_;
+445234    +   P_DepVar0  = P_DepVar0  / _SUM_;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = P_DepVar0 / _SUM_;
+445235    +END;
+MPRINT(EM_DIAGRAM):   END;
+445236    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+445237    +   P_DepVar1  = .;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = .;
+445238    +   P_DepVar0  = .;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = .;
+445239    +END;
+MPRINT(EM_DIAGRAM):   END;
+445240    +IF _DM_BAD EQ 1 THEN DO;
+MPRINT(EM_DIAGRAM):   IF _DM_BAD EQ 1 THEN DO;
+445241    +   P_DepVar1  =     0.15122156697556;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15122156697556;
+445242    +   P_DepVar0  =     0.84877843302443;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84877843302443;
+445243    +END;
+MPRINT(EM_DIAGRAM):   END;
+445244    +*** *****************************;
+MPRINT(EM_DIAGRAM):   *** *****************************;
+445245    +*** Writing the Residuals  of the Node DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the Residuals of the Node DepVar ;
+445246    +*** ******************************;
+MPRINT(EM_DIAGRAM):   *** ******************************;
+445247    +IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( DepVar1 ) THEN R_DepVar1 = . ;
+445248    +ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   ELSE R_DepVar1 = DepVar1 - P_DepVar1 ;
+445249    +IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
+MPRINT(EM_DIAGRAM):   IF MISSING( DepVar0 ) THEN R_DepVar0 = . ;
+445250    +ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   ELSE R_DepVar0 = DepVar0 - P_DepVar0 ;
+445251    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445252    +*** Writing the I_DepVar  AND U_DepVar ;
+MPRINT(EM_DIAGRAM):   *** Writing the I_DepVar AND U_DepVar ;
+445253    +*** *************************;
+MPRINT(EM_DIAGRAM):   *** *************************;
+445254    +_MAXP_ = P_DepVar1 ;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar1 ;
+445255    +I_DepVar  = "1           " ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "1           " ;
+445256    +U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+445257    +IF( _MAXP_ LT P_DepVar0  ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF( _MAXP_ LT P_DepVar0 ) THEN DO;
+445258    +   _MAXP_ = P_DepVar0 ;
+MPRINT(EM_DIAGRAM):   _MAXP_ = P_DepVar0 ;
+445259    +   I_DepVar  = "0           " ;
+MPRINT(EM_DIAGRAM):   I_DepVar = "0           " ;
+445260    +   U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+445261    +END;
+MPRINT(EM_DIAGRAM):   END;
+445262    +********************************;
+MPRINT(EM_DIAGRAM):   ********************************;
+445263    +*** End Scoring Code for Neural;
+MPRINT(EM_DIAGRAM):   *** End Scoring Code for Neural;
+445264    +********************************;
+MPRINT(EM_DIAGRAM):   ********************************;
+445265    +drop
+445266    +H11
+445267    +H12
+445268    +H13
+445269    +H14
+445270    +;
+MPRINT(EM_DIAGRAM):   drop H11 H12 H13 H14 ;
+445271    +drop S_:;
+MPRINT(EM_DIAGRAM):   drop S_:;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_DIAGRAM):   run;
+445272     run;
+
+NOTE: DATA STEP view saved on file EMWS8.NEURAL15_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS8.PRINCOMP_VALIDATE.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+445273     quit;
+445274     filename emflow;
+MPRINT(EM_DIAGRAM):   filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+445275     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+445276     * Neural15: Computing metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   * Neural15: Computing metadata for TRAIN data;
+445277     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+NOTE: View EMWS8.NEURAL15_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Computing Metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   filename _delta 
+"C:\\predictive-models-project\Workspaces\EMWS8\Neural15\CDELTA_TRAIN.sas";
+MPRINT(EMADVISECOLUMNS):   proc display c=sashelp.emmeta.advisecolumns.scl;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    options validvarname=any;
+MPRINT(EMADVISECOLUMNS):   proc contents data=EMWS8.Neural15_TRAIN out=_tempAdvisor noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   options validvarname=V7;
+MPRINT(EMADVISECOLUMNS):    data _null_;
+MPRINT(EMADVISECOLUMNS):   dsid = open('EMWS8.Neural15_TRAIN');
+MPRINT(EMADVISECOLUMNS):   call symput('_dsidTable', strip(put(dsid, best.)));
+MPRINT(EMADVISECOLUMNS):   if dsid then do;
+MPRINT(EMADVISECOLUMNS):   call symput('_engineTable', attrc(dsid, 'ENGINE'));
+MPRINT(EMADVISECOLUMNS):   dsid = close(dsid);
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Neural15_TRAIN out=WORK.M3CG7NPZ noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M3CG7NPZ;
+MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 
+INDEX $ 1 INDEXTYPE $ 9;
+MPRINT(EMADVISECOLUMNS):   label NAME =;
+MPRINT(EMADVISECOLUMNS):   set WORK.M3CG7NPZ(keep=name type length label format formatl 
+formatd informat informl informd idxusage rename=(type=itype));
+MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
+MPRINT(EMADVISECOLUMNS):   else type = 'C';
+MPRINT(EMADVISECOLUMNS):   if formatl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' then format = strip(format)!!strip(put(formatl, 
+best12.))!!'.'!!strip(put(formatd, best12.));
+MPRINT(EMADVISECOLUMNS):   else format = strip(put(formatl, best12.))!!'.'!!strip(put(formatd, 
+best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if format ne '' then format = strip(format)!!'.';
+MPRINT(EMADVISECOLUMNS):   if informl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if informat ne ' ' then informat = 
+strip(informat)!!strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   else informat = strip(put(informl, 
+best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if informat ne '' then informat = strip(informat)!!'.';
+MPRINT(EMADVISECOLUMNS):   if idxusage = 'NONE' then index ="N";
+MPRINT(EMADVISECOLUMNS):   else index = "Y";
+MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
+MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M3CG7NPZ;
+MPRINT(EMADVISECOLUMNS):   length UNAME $64;
+MPRINT(EMADVISECOLUMNS):   set WORK.M3CG7NPZ;
+MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M0NNPJU4 NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by UNAME;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   drop UNAME;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0AT55UB(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
+MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' and formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'FORMATTYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ROLE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'LEVEL';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if type = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'TYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if index = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'INDEX';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if report = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'REPORT';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by attr;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 
+FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
+MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
+MPRINT(EMADVISECOLUMNS):   pos = indexc(format,'.1234567890');
+MPRINT(EMADVISECOLUMNS):   if pos > 1 then tempfmt = substr(format,1, pos-1);
+MPRINT(EMADVISECOLUMNS):   else tempfmt = ' ';
+MPRINT(EMADVISECOLUMNS):   flen = length(tempfmt);
+MPRINT(EMADVISECOLUMNS):   select;
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATE" "DAY" "DDMMYY" "DOWNAME" "JULDAY" "JULIAN" 
+"MMDDYY" "MMDDYYD" "MMDDYYC" "MMDDYYN" "MMDDYYP" "MMDDYYS" "MONNAME" "MONTH" "MONYY" "NENGO" 
+"QTR" "QTRR" "WEEKDATE" "WEEKDATX" "WEEKDAY" "WORDDATE" "WORDDATX" "YEAR" "YYMMDD" "YYMON" 
+"YYMMDDC" "YYMMDDD" "YYMMDDN" "YYMMDDP" "YYMMDDS" "EURDFDE" "NJDATE" "NLDATE" "EURDFDD" 
+"EURDFDWN" "EURDFMN" "EURDFMY" "EURDFWK" "EURDFWKX" "EURDFWDX" "EURDFDN" "EURDFDE" )) 
+formattype = 'DATE';
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATETIME" "EURDFDT" "TOD" )) formattype = 
+"DATETIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("HHMM" "HOUR" "MMSS" "TIME" "TIMEAMPM" )) 
+formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("COMMA" "COMMAX" "DOLLAR" "DOLLARX" "E" "FRACT" 
+"NEGPAREN" "PERCENT")) formattype="QUANTITY";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("BINARY" "HEX" "IB" "OCTAL" "PD" "PIB" "PK" "RB" 
+"SSN" "Z" "ZD")) formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   formattype = "USER";
+MPRINT(EMADVISECOLUMNS):   if substr(tempfmt, 1, 6)='NLDATE' then formattype = "DATE";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 6)='NLDATM' then formattype = "DATETIME";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 4)='NLTIM' then formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   else if flen >= 4 then do;
+MPRINT(EMADVISECOLUMNS):   str = substr(tempfmt,1,4);
+MPRINT(EMADVISECOLUMNS):   if str in ("MMYY" "YYMM" "YYQR") then formattype ="DATE";
+MPRINT(EMADVISECOLUMNS):   else if str = "S370" then formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   else if str = "BEST" then formattype = "NUM";
+MPRINT(EMADVISECOLUMNS):   drop str;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if flen >=3 and substr(tempfmt,1,3) = "YYQ" then formatType = 
+"DATE";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   drop flen tempfmt pos;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   formatType = "CATEGORY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if formatType = "NUM" then do;
+MPRINT(EMADVISECOLUMNS):   if index = "Y" then formatType = "DISCRETE";
+MPRINT(EMADVISECOLUMNS):   else formatType = "QUANTITY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formatType in ("CATEGORY", "CODING", "ID") or type = "C" then 
+level = "NOMINAL";
+MPRINT(EMADVISECOLUMNS):   else level = "INTERVAL";
+MPRINT(EMADVISECOLUMNS):   levelAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else level = upcase(level);
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   length name_prefix $8 _uname $64;
+MPRINT(EMADVISECOLUMNS):   drop name_prefix _uname _freqflag;
+MPRINT(EMADVISECOLUMNS):   retain _freqflag;
+MPRINT(EMADVISECOLUMNS):   if LENGTH> 80 then ROLE = 'TEXT';
+MPRINT(EMADVISECOLUMNS):   _uname = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   select(_uname);
+MPRINT(EMADVISECOLUMNS):   when('_WARN_') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_SEGMENT') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('_NODE_') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSTARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_VALUETARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_PREDICTION') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_EVENTPROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSIFICATION') ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   when('EM_DECISION') ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROFIT') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_LOSS') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_ROI') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('URI') ROLE = 'URL';
+MPRINT(EMADVISECOLUMNS):   when('FILTERED') ROLE = 'TEXTLOC';
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   if upcase(NAME) =: 'ZIP' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'REJECTED';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   COMMENT = 'Rejected by: Exceed the maximum class level of %s';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if upcase(NAME) in('FREQ', 'FREQUENCY') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'FREQ';
+MPRINT(EMADVISECOLUMNS):   if TYPE = 'C' then ROLE = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   else if _freqflag =1 then ROLE='REJECTED';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   name_prefix = scan(_uname, 1, '_');
+MPRINT(EMADVISECOLUMNS):   if scan(_uname, 2, '_') = '' then name_prefix='';
+MPRINT(EMADVISECOLUMNS):   if name_prefix in('F', 'I', 'U') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('P', 'V') then ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('R', 'RS', 'RT', 'RD', 'RDS', 'RDT', 'RA', 
+'RAS', 'RAT') then ROLE = 'RESIDUAL';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='D' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='B' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('EP', 'BP', 'CP', 'EL', 'CL', 'BL', 'W', 
+'ROI', 'IC') then ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   array _ROLE_ (19) $32 _TEMPORARY_ 
+('ASSESS','CLASSIFICATION','CENSOR', 'COST', 'CROSSID', 'DECISION', 'ID','INPUT', 'LABEL', 
+'MISSING','PREDICT','REFERRER','REJECTED', 'RESIDUAL','SEGMENT', 'SEQUENCE','TARGET', 'TEXT', 
+'TIMEID');
+MPRINT(EMADVISECOLUMNS):   drop _found_ i;
+MPRINT(EMADVISECOLUMNS):   _found_=0;
+MPRINT(EMADVISECOLUMNS):   do i=1 to 19 until(_found_=1);
+MPRINT(EMADVISECOLUMNS):   if index(_uname, trim(_ROLE_{i}))=1 then do;
+MPRINT(EMADVISECOLUMNS):   ROLE=_ROLE_{i};
+MPRINT(EMADVISECOLUMNS):   if ROLE = 'ID' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'SEGMENT' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'TIMEID' and TYPE='N' then LEVEL = 'INTERVAL';
+MPRINT(EMADVISECOLUMNS):   _found_=1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if length(_uname)>2 then do;
+MPRINT(EMADVISECOLUMNS):   if substr(reverse(trim(_uname)), 1, 3) = 'DI_' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'ID';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if ROLE='FREQ' then _freqflag=1;
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'CLASSIFICATION' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formattype in('DATE', 'DATETIME', 'TIME') then role = 'TIMEID';
+MPRINT(EMADVISECOLUMNS):   else role = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   roleAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
+MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0NNPJU4;
+MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= 
+"Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= 
+"Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower limit" UPPERLIMIT= 
+"Upper Limit" REPORT= "Report" COMMENT= "Comment" INDEX= "Index" INDEXTYPE= "IndexType" LABEL= 
+"Label" LENGTH= "Length";
+MPRINT(EMADVISECOLUMNS):   drop levelAssigned roleAssigned;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK.COLUMNMETA;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Merge incoming metadata;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   proc contents data=EMWS8.PRINCOMP_TRAIN noprint out=_temp2(keep=NAME);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_temp2;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.PRINCOMP_CMeta_TRAIN out=_temp;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.Neural15_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   merge WORK.COLUMNMETA(in=_a) _temp2(in=_b) _temp(drop=FORMAT INFORMAT 
+LENGTH INDEX INDEXTYPE in=_c) end=_eof_;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   if (^_a and _b) or (^_c and _a and _b) then delete;
+MPRINT(EM_DIAGRAM):   if ^_b then CREATOR = "Neural15";
+MPRINT(EM_DIAGRAM):   select(upcase(name));
+MPRINT(EM_DIAGRAM):   when("P_DEPVAR1") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("R_DEPVAR1") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("P_DEPVAR0") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("R_DEPVAR0") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("F_DEPVAR") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("I_DEPVAR") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("U_DEPVAR") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("_WARN_") creator = "Neural15";
+MPRINT(EM_DIAGRAM):   when("DEPVAR") model = "Neural15";
+MPRINT(EM_DIAGRAM):   when('');
+MPRINT(EM_DIAGRAM):   otherwise;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Neural15: Apply Delta Code;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _delta;
+445589     data WORK.MODELTEMP_INFO;
+MPRINT(EM_DIAGRAM):    data WORK.MODELTEMP_INFO;
+445590     set EMWS8.Neural15_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural15_EMINFO;
+445591     where DATA='Neural15' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+MPRINT(EM_DIAGRAM):   where DATA='Neural15' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 
+'MODEL');
+445592     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL15_EMINFO.
+      WHERE (DATA='Neural15') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+445593     data EMWS8.Neural15_EMINFO;
+MPRINT(EM_DIAGRAM):    data EMWS8.Neural15_EMINFO;
+445594     length TARGET KEY $32 DATA $43;
+MPRINT(EM_DIAGRAM):   length TARGET KEY $32 DATA $43;
+445595     input TARGET KEY DATA $;
+MPRINT(EM_DIAGRAM):   input TARGET KEY DATA $;
+445596     cards;
+MPRINT(EM_DIAGRAM):   cards;
+
+NOTE: The data set EMWS8.NEURAL15_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   run;
+445600     run;
+445601     data EMWS8.Neural15_EMINFO;
+MPRINT(EM_DIAGRAM):   data EMWS8.Neural15_EMINFO;
+445602     set EMWS8.Neural15_EMINFO WORK.MODELTEMP_INFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural15_EMINFO WORK.MODELTEMP_INFO;
+445603     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set EMWS8.NEURAL15_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS8.NEURAL15_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+445604     proc sort data = EMWS8.Neural15_EMINFO NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.Neural15_EMINFO NOTHREADS;
+445605     by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+445606     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set EMWS8.NEURAL15_EMINFO.
+NOTE: The data set EMWS8.NEURAL15_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+445607     proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+445608     by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+445609     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.FIMPORT_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 1 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+445610     proc sort data = EMWS8.Neural15_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.Neural15_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+445611     by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+445612     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS8.NEURAL15_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+445613     data EMWS8.Neural15_EMINFO;
+MPRINT(EM_DIAGRAM):   data EMWS8.Neural15_EMINFO;
+445614     merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+MPRINT(EM_DIAGRAM):   merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+445615     by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+445616     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS8.NEURAL15_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+445617     proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+445618     delete TEMP_INFO SORTEDEMINFO;
+MPRINT(EM_DIAGRAM):   delete TEMP_INFO SORTEDEMINFO;
+445619     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+445620     quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+NOTE: View EMWS8.NEURAL15_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: View EMWS8.NEURAL15_VALIDATE.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

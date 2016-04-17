@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.0643642072; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.9356357928; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -34,20 +34,28 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Meta_TRAIN(keep=
-CatPurchase Clothes DepVar Dependents HouseKeeping Marital_Status Mnt Rcn
-Recomendation SmallAppliances Toys );
+AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
+AcceptedCmpTotal Complain DepVar HigherEducationBinary Kidhome Marital_Status
+Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
+MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
+NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Reg: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) Dependents(ASC) Marital_Status(ASC)
+    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) HigherEducationBinary(ASC)
+   Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    CatPurchase Clothes HouseKeeping Mnt Rcn Recomendation SmallAppliances Toys
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg: Create DMDB;
@@ -74,20 +82,42 @@ outmap= EMWS8.Reg_MAPDS namelen=200
 ;
 class
 DepVar
-Dependents
+AcceptedCmp1
+AcceptedCmp2
+AcceptedCmp3
+AcceptedCmp4
+AcceptedCmp5
+Complain
+HigherEducationBinary
 Marital_Status
 ;
 model DepVar =
-CatPurchase
-Clothes
-Dependents
-HouseKeeping
+AcceptedCmp1
+AcceptedCmp2
+AcceptedCmp3
+AcceptedCmp4
+AcceptedCmp5
+AcceptedCmpTotal
+Complain
+HigherEducationBinary
+Kidhome
 Marital_Status
 Mnt
-Rcn
-Recomendation
-SmallAppliances
-Toys
+MntFishProducts
+MntFruits
+MntGoldProds
+MntMeatProducts
+MntSweetProducts
+MntWines
+NumCatalogPurchases
+NumDealsPurchases
+NumDistPurchases
+NumStorePurchases
+NumWebPurchases
+NumWebVisitsMonth
+RFMstat
+Recency
+Teenhome
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint
@@ -96,10 +126,10 @@ Hierarchy=CLASS
 Rule=NONE
 ;
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Reg\EMPUBLISHSCORE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Reg\EMPUBLISHSCORE.sas"
 group=Reg
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Reg\EMFLOWSCORE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Reg\EMFLOWSCORE.sas"
 group=Reg
 residual
 ;

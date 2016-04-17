@@ -1,33 +1,40 @@
+if upcase(name) = 'ACCEPTEDCMP1' then role = 'REJECTED';
+else
+if upcase(name) = 'ACCEPTEDCMP2' then role = 'REJECTED';
+else
+if upcase(name) = 'ACCEPTEDCMP3' then role = 'REJECTED';
+else
+if upcase(name) = 'ACCEPTEDCMP4' then role = 'REJECTED';
+else
+if upcase(name) = 'ACCEPTEDCMP5' then role = 'REJECTED';
+else
 if upcase(name) = 'AGE' then role = 'REJECTED';
 else
-if upcase(name) = 'AGE_EXMPL2' then role = 'REJECTED';
-else
-if upcase(name) = 'CLOTHES' then role = 'REJECTED';
-else
-if upcase(name) = 'DEPENDENTS' then role = 'REJECTED';
+if upcase(name) = 'COMPLAIN' then role = 'REJECTED';
 else
 if upcase(name) = 'EDUCATION' then role = 'REJECTED';
 else
-if upcase(name) = 'GENDER' then role = 'REJECTED';
+if upcase(name) = 'HIGHEREDUCATIONBINARY' then role = 'REJECTED';
 else
-if upcase(name) = 'HIGHEREDUCATION' then role = 'REJECTED';
-else
-if upcase(name) = 'HOUSEKEEPING' then role = 'REJECTED';
-else
-if upcase(name) = 'KITCHEN' then role = 'REJECTED';
+if upcase(name) = 'KIDHOME' then role = 'REJECTED';
 else
 if upcase(name) = 'MARITAL_STATUS' then role = 'REJECTED';
 else
+if upcase(name) = 'MNTFISHPRODUCTS' then role = 'REJECTED';
+else
+if upcase(name) = 'MNTWINES' then role = 'REJECTED';
+else
 if upcase(name) = 'MONTHSASCUSTOMER' then role = 'REJECTED';
 else
-if upcase(name) = 'NETPURCHASE' then role = 'REJECTED';
+if upcase(name) = 'NUMDEALSPURCHASES' then role = 'REJECTED';
 else
-if upcase(name) = 'RMNTFRQ' then role = 'REJECTED';
+if upcase(name) = 'NUMDISTPURCHASES' then role = 'REJECTED';
 else
-if upcase(name) = 'RCN' then role = 'REJECTED';
+if upcase(name) = 'NUMSTOREPURCHASES' then role = 'REJECTED';
 else
-if upcase(name) = 'SMALLAPPLIANCES' then role = 'REJECTED';
+if upcase(name) = 'NUMWEBVISITSMONTH' then role = 'REJECTED';
 else
-if upcase(name) = 'TOYS' then role = 'REJECTED';
+if upcase(name) = 'TEENHOME' then role = 'REJECTED';
+else
+if upcase(name) = 'YEAR_BIRTH' then role = 'REJECTED';
 if upcase(strip(name)) = "G_MARITAL_STATUS" then level = "NOMINAL";
-if upcase(strip(name)) = "G_EDUCATION" then level = "NOMINAL";

@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.0643642072; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.9356357928; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -36,8 +36,11 @@ quit;
 * Tree: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    CatPurchase Clothes Dependents HouseKeeping Marital_Status Mnt Rcn
-   Recomendation SmallAppliances Toys
+    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
+   AcceptedCmpTotal Complain HigherEducationBinary Kidhome Marital_Status Mnt
+   MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
+   MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
+   NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree: Tree Targets Macro ;
@@ -52,13 +55,17 @@ run;
 * Tree: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    CatPurchase Clothes HouseKeeping Mnt Rcn Recomendation SmallAppliances Toys
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Dependents Marital_Status
+    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
+   HigherEducationBinary Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Tree: Ordinal Inputs Macro ;
@@ -114,10 +121,10 @@ Topology=EMWS8.Tree_OUTTOPOLOGY
 Pathlistnonmissing = EMWS8.Tree_OUTPATH
 Rules = EMWS8.Tree_OUTRULES
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Tree\EMPUBLISHSCORE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Tree\EMPUBLISHSCORE.sas"
 group=Tree
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Tree\EMFLOWSCORE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Tree\EMFLOWSCORE.sas"
 group=Tree
 residual
 ;

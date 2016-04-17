@@ -6,9 +6,9 @@
 Data &EM_USER_Valor;
   Set &EM_IMPORT_RANK.(Keep=RESPC DECILE MODEL MODELDESCRIPTION DATAROLE);
 
-      NumCustomers=8000;
-      CostContact=2;
-      ReturnPositiveAnswer=15;
+      NumCustomers=4500;
+      CostContact=3;
+      ReturnPositiveAnswer=11;
 
       NumContactsDecile=NumCustomers*Decile/100;
       NumEstSales=Round(NumContactsDecile*RESPC/100,1);

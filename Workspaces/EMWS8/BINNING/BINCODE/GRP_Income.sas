@@ -9,19 +9,19 @@ if MISSING(Income) then do;
 GRP_Income = 1;
 end;
 else if NOT MISSING(Income) then do;
-if Income < 51921.45 then do;
+if Income < 35268 then do;
 GRP_Income = 2;
 end;
 else
-if 51921.45 <= Income AND Income < 74868.15 then do;
+if 35268 <= Income AND Income < 52157 then do;
 GRP_Income = 3;
 end;
 else
-if 74868.15 <= Income AND Income < 97525.05 then do;
+if 52157 <= Income AND Income < 69486 then do;
 GRP_Income = 4;
 end;
 else
-if 97525.05 <= Income then do;
+if 69486 <= Income then do;
 GRP_Income = 5;
 end;
 end;

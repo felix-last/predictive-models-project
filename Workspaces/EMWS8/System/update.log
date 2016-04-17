@@ -9,118 +9,118 @@ Traverser: Beginning flow traversal
 *------------------------------------------------------------* 
 * 
 * FIMPORT : Beginning Update 
-* datetime : 16APR2016:18:29:48 
+* datetime : 16APR2016:20:09:18 
 * 
 *------------------------------------------------------------* 
-26948      %let emexceptionString =;
-26949      %let EMEXCEPTIONSTRING=;
-26950      *------------------------------------------------------------*;
-26951      * UPDATE: FIMPORT;
-26952      *------------------------------------------------------------*;
-26953      %let EM_ACTION = UPDATE;
-26954      %let syscc = 0;
-26955      /* Fimport.source */
-26956      %macro main;
-26957            %if %upcase(&EM_ACTION) = CREATE %then %do;
-26958               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-26959               %include temp;
-26960               filename temp;
-26961               %create;
-26962            %end;
-26963            %else
-26964            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-26965               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-26966               %include temp;
-26967               filename temp;
-26968               %train;
-26969            %end;
-26970            %else
-26971            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-26972               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-26973               %include temp;
-26974               filename temp;
-26975               %update;
-26976            %end;
-26977            %else
-26978            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-26979               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-26980               %include temp;
-26981               filename temp;
-26982               %property;
-26983            %end;
-26984             %else
-26985            %if %upcase(&EM_ACTION) = SCORE %then %do;
-26986               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-26987               %include temp;
-26988               filename temp;
-26989               %score;
-26990            %end;
-26991            %else
-26992            %if %upcase(&EM_ACTION) = REPORT %then %do;
-26993               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-26994               %include temp;
-26995               filename temp;
-26996               %report;
-26997            %end;
-26998            %else
-26999            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-27000               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-27001               %include temp;
-27002               filename temp;
-27003               %openvariableset;
-27004            %end;
-27005            %else
-27006            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-27007               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-27008               %include temp;
-27009               filename temp;
-27010               %closevariableset;
-27011            %end;
-27012      %mend main;
-27013      %main;
+48298      %let emexceptionString =;
+48299      %let EMEXCEPTIONSTRING=;
+48300      *------------------------------------------------------------*;
+48301      * UPDATE: FIMPORT;
+48302      *------------------------------------------------------------*;
+48303      %let EM_ACTION = UPDATE;
+48304      %let syscc = 0;
+48305      /* Fimport.source */
+48306      %macro main;
+48307            %if %upcase(&EM_ACTION) = CREATE %then %do;
+48308               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+48309               %include temp;
+48310               filename temp;
+48311               %create;
+48312            %end;
+48313            %else
+48314            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+48315               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+48316               %include temp;
+48317               filename temp;
+48318               %train;
+48319            %end;
+48320            %else
+48321            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+48322               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+48323               %include temp;
+48324               filename temp;
+48325               %update;
+48326            %end;
+48327            %else
+48328            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+48329               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48330               %include temp;
+48331               filename temp;
+48332               %property;
+48333            %end;
+48334             %else
+48335            %if %upcase(&EM_ACTION) = SCORE %then %do;
+48336               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+48337               %include temp;
+48338               filename temp;
+48339               %score;
+48340            %end;
+48341            %else
+48342            %if %upcase(&EM_ACTION) = REPORT %then %do;
+48343               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+48344               %include temp;
+48345               filename temp;
+48346               %report;
+48347            %end;
+48348            %else
+48349            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+48350               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48351               %include temp;
+48352               filename temp;
+48353               %openvariableset;
+48354            %end;
+48355            %else
+48356            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+48357               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48358               %include temp;
+48359               filename temp;
+48360               %closevariableset;
+48361            %end;
+48362      %mend main;
+48363      %main;
 NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-27014     +%macro update;
-27015     +    %let oldrole = %str();
-27016     +    data _null_;
-27017     +       set &em_data_exportset;
-27018     +       where NODEPORT='TRAIN';
-27019     +       call symput('oldrole', ROLE);
-27020     +    run;
-27021     +    %if &oldrole ne &em_property_role %then %do;
-27022     +        data &em_data_exportset;
-27023     +           set &em_data_exportset;
-27024     +           if NODEPORT='TRAIN' then do;
-27025     +              ROLE="&em_property_role";
-27026     +              NEEDUPDATE='Y';
-27027     +              EXPORT='Y';
-27028     +           end;
-27029     +        run;
-27030     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-27031     +        data _null_;
-27032     +           file x;
-27033     +           put ' ';
-27034     +        run;
-27035     +        filename x;
-27036     +    %end;
-27037     +    %else %do;
-27038     +        data &em_data_exportset;
-27039     +           set &em_data_exportset;
-27040     +           if NODEPORT='TRAIN' then do;
-27041     +              ROLE="&em_property_role";
-27042     +              NEEDUPDATE='Y';
-27043     +              EXPORT='Y';
-27044     +           end;
-27045     +        run;
-27046     +    %end;
-27048     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-27049     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-27050     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-27051     +           set &em_user_emcmetadefault;
-27052     +           drop DROP;
-27053     +           where DROP='N';
-27054     +        run;
-27055     +    %end;
-27057     +%mend update;
+48364     +%macro update;
+48365     +    %let oldrole = %str();
+48366     +    data _null_;
+48367     +       set &em_data_exportset;
+48368     +       where NODEPORT='TRAIN';
+48369     +       call symput('oldrole', ROLE);
+48370     +    run;
+48371     +    %if &oldrole ne &em_property_role %then %do;
+48372     +        data &em_data_exportset;
+48373     +           set &em_data_exportset;
+48374     +           if NODEPORT='TRAIN' then do;
+48375     +              ROLE="&em_property_role";
+48376     +              NEEDUPDATE='Y';
+48377     +              EXPORT='Y';
+48378     +           end;
+48379     +        run;
+48380     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+48381     +        data _null_;
+48382     +           file x;
+48383     +           put ' ';
+48384     +        run;
+48385     +        filename x;
+48386     +    %end;
+48387     +    %else %do;
+48388     +        data &em_data_exportset;
+48389     +           set &em_data_exportset;
+48390     +           if NODEPORT='TRAIN' then do;
+48391     +              ROLE="&em_property_role";
+48392     +              NEEDUPDATE='Y';
+48393     +              EXPORT='Y';
+48394     +           end;
+48395     +        run;
+48396     +    %end;
+48398     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+48399     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+48400     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+48401     +           set &em_user_emcmetadefault;
+48402     +           drop DROP;
+48403     +           where DROP='N';
+48404     +        run;
+48405     +    %end;
+48407     +%mend update;
 NOTE: %INCLUDE (level 1) ending.
 NOTE: Fileref TEMP has been deassigned.
 
@@ -136,134 +136,2890 @@ NOTE: There were 6 observations read from the data set EMWS8.FIMPORT_EXPORTSET.
 NOTE: The data set EMWS8.FIMPORT_EXPORTSET has 6 observations and 18 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-27062      *------------------------------------------------------------*;
-27063      * End UPDATE: FIMPORT;
-27064      *------------------------------------------------------------*;
+48412      *------------------------------------------------------------*;
+48413      * End UPDATE: FIMPORT;
+48414      *------------------------------------------------------------*;
 
-27065      %em_delMacro;
+48415      %em_delMacro;
 
 *------------------------------------------------------------* 
 * 
 * FIMPORT : End Update 
-* datetime : 16APR2016:18:29:49 
+* datetime : 16APR2016:20:09:19 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
 Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "PLOT2" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
 traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Stat : Beginning Update 
-* datetime : 16APR2016:18:29:49 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Stat : End Update 
-* datetime : 16APR2016:18:29:49 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "FILTER" 
-Traverser: WaitingNode "EMCODE4" 
-Traverser: WaitingNode "TRANS" 
-Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "PLOT2" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Plot : Beginning Update 
-* datetime : 16APR2016:18:29:50 
+* datetime : 16APR2016:20:09:19 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Plot : End Update 
-* datetime : 16APR2016:18:29:50 
+* datetime : 16APR2016:20:09:19 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "PLOT2" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Stat : Beginning Update 
+* datetime : 16APR2016:20:09:20 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Stat : End Update 
+* datetime : 16APR2016:20:09:20 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Filter : Beginning Update 
-* datetime : 16APR2016:18:29:50 
+* datetime : 16APR2016:20:09:20 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Filter : End Update 
-* datetime : 16APR2016:18:29:50 
+* datetime : 16APR2016:20:09:20 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "PLOT2" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : Beginning Update 
-* datetime : 16APR2016:18:29:51 
+* datetime : 16APR2016:20:09:21 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : End Update 
-* datetime : 16APR2016:18:29:51 
+* datetime : 16APR2016:20:09:21 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "PLOT2" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Trans : Beginning Update 
-* datetime : 16APR2016:18:29:51 
+* datetime : 16APR2016:20:09:21 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Trans : End Update 
-* datetime : 16APR2016:18:29:51 
+* datetime : 16APR2016:20:09:21 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "PLOT2" 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "PRINCOMP" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "BINNING" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "VARSEL" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Part : Beginning Update 
-* datetime : 16APR2016:18:29:52 
+* datetime : 16APR2016:20:09:22 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Part : End Update 
-* datetime : 16APR2016:18:29:52 
+* datetime : 16APR2016:20:09:22 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "REG" 
+Traverser: WaitingNode "TREE" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "NEURAL" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL7" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Meta : Beginning Update 
+* datetime : 16APR2016:20:09:23 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Meta : End Update 
+* datetime : 16APR2016:20:09:23 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "NEURAL29" 
+Traverser: WaitingNode "NEURAL24" 
+Traverser: WaitingNode "NEURAL25" 
+Traverser: WaitingNode "NEURAL26" 
+Traverser: WaitingNode "NEURAL27" 
+Traverser: WaitingNode "NEURAL28" 
+Traverser: WaitingNode "REG4" 
+Traverser: WaitingNode "TREE4" 
+Traverser: WaitingNode "NEURAL8" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Varsel : Beginning Update 
+* datetime : 16APR2016:20:09:23 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Varsel : End Update 
+* datetime : 16APR2016:20:09:23 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "REG2" 
+Traverser: WaitingNode "TREE2" 
+Traverser: WaitingNode "NEURAL12" 
+Traverser: WaitingNode "NEURAL17" 
+Traverser: WaitingNode "NEURAL16" 
+Traverser: WaitingNode "NEURAL15" 
+Traverser: WaitingNode "NEURAL14" 
+Traverser: WaitingNode "NEURAL13" 
+Traverser: WaitingNode "NEURAL11" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* PRINCOMP : Beginning Update 
+* datetime : 16APR2016:20:09:24 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* PRINCOMP : End Update 
+* datetime : 16APR2016:20:09:24 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "NEURAL20" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "NEURAL19" 
+Traverser: WaitingNode "NEURAL5" 
+Traverser: WaitingNode "NEURAL21" 
+Traverser: WaitingNode "TREE3" 
+Traverser: WaitingNode "REG3" 
+Traverser: WaitingNode "NEURAL22" 
+Traverser: WaitingNode "NEURAL23" 
+Traverser: WaitingNode "NEURAL18" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* BINNING : Beginning Update 
+* datetime : 16APR2016:20:09:24 
+* 
+*------------------------------------------------------------* 
+PERFORMANCE  DETAILS
+48865      %let emexceptionString =;
+48866      %let EMEXCEPTIONSTRING=;
+48867      *------------------------------------------------------------*;
+48868      * UPDATE: BINNING;
+48869      *------------------------------------------------------------*;
+48870      %let EM_ACTION = UPDATE;
+48871      %let syscc = 0;
+48872      %macro main;
+48873      
+48874        filename temp catalog 'sashelp.emmdfy.binning_macros.source';
+48875        %include temp;
+48876        filename temp;
+48877      
+48878        %setProperties;
+48879      
+48880        %if %upcase(&EM_ACTION) = CREATE %then %do;
+48881          filename temp catalog 'sashelp.emmdfy.binning_create.source';
+48882          %include temp;
+48883          filename temp;
+48884      
+48885          %create;
+48886        %end;
+48887      
+48888         %else
+48889         %if %upcase(&EM_ACTION) = TRAIN %then %do;
+48890      
+48891             filename temp catalog 'sashelp.emmdfy.binning_train.source';
+48892             %include temp;
+48893             filename temp;
+48894             %train;
+48895         %end;
+48896      
+48897        %else
+48898        %if %upcase(&EM_ACTION) = SCORE %then %do;
+48899          filename temp catalog 'sashelp.emmdfy.binning_score.source';
+48900          %include temp;
+48901          filename temp;
+48902      
+48903          %score;
+48904      
+48905        %end;
+48906      
+48907        %else
+48908        %if %upcase(&EM_ACTION) = REPORT %then %do;
+48909      
+48910             filename temp catalog 'sashelp.emmdfy.binning_report.source';
+48911             %include temp;
+48912             filename temp;
+48913      
+48914             %report;
+48915         %end;
+48916      
+48917         %doendm:
+48918      %mend main;
+48919      
+48920      %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMDFY.BINNING_MACROS.SOURCE.
+48922     +%macro SetProperties;
+48924     +     /* IGN options */
+48925     +     %em_checkmacro(name=EM_PROPERTY_APPLYLEVELRULE, value=N, global=Y);
+48926     +     %em_checkmacro(name=EM_PROPERTY_BINMETHOD,  value=QUANTILE, global=Y);
+48927     +     %em_checkmacro(name=EM_PROPERTY_NUMBINS,    value=4, global=Y);
+48929     +     %em_checkmacro(name=EM_PROPERTY_MISSINGASLEVEL, value=Y, global=Y);
+48930     +     %em_checkmacro(name=EM_PROPERTY_PRECISION,    value=2, global=Y);
+48931     +     %em_checkmacro(name=EM_PROPERTY_CREATEGROUPING, value=N, global=Y);
+48932     +     %em_checkmacro(name=EM_PROPERTY_CREATEMETHOD, value=OVERWRITE, global=Y);
+48933     +     %em_checkmacro(name=EM_PROPERTY_IMPORTGROUPING, value=N, global=Y);
+48934     +     %em_checkmacro(name=EM_PROPERTY_IMPORTDATA, value=, global=Y);
+48935     +     %em_checkmacro(name=EM_PROPERTY_FREEZE, value=N, global=Y);
+48936     +     %em_checkmacro(name=EM_PROPERTY_VARSELMETHOD, value=GINI, global=Y);
+48937     +     %em_checkmacro(name=EM_PROPERTY_GINICUTOFF,   value=20.0, global=Y);
+48938     +     %em_checkmacro(name=EM_PROPERTY_GRPMSMNT,     value=ORDINAL, global=Y);
+48939     +     %em_checkmacro(name=EM_PROPERTY_MAXVAR,       value=10, global=Y);
+48940     +     %em_checkmacro(name=EM_PROPERTY_CLASSGROUPRARE, value=Y, global=Y);
+48941     +     %em_checkmacro(name=EM_PROPERTY_GROUPCUTOFF,    value=0.5, global=Y);
+48942     +     %em_checkmacro(name=EM_PROPERTY_GROUPMISSING,   value=N, global=Y);
+48945     +%mend SetProperties;
+48946     +%macro appendfiles(fileref1, fileref2);
+48947     +     data _null_;
+48948     +       length c $256;
+48949     +       fid1=fopen("&fileref1",'A');
+48950     +       fid2=fopen("&fileref2",'I');
+48951     +       cval = finfo(fid2,'lrecl');
+48952     +       put cval= fid1= fid2=;
+48953     +       if (fid2 > 0) then
+48954     +         do while(fread(fid2)=0);
+48955     +           rc = fget(fid2,c,256);
+48956     +           _msg_=sysmsg();
+48957     +           /* put rc= c= _msg_=; */
+48958     +           rc = fput(fid1,strip(c));
+48959     +           rc = fwrite(fid1);
+48960     +         end;
+48961     +         _msg_=sysmsg();
+48962     +         put _msg_=;
+48963     +       rc = fclose(fid1);
+48964     +       rc = fclose(fid2);
+48965     +     run;
+48966     +%mend appendfiles;
+48968     +%macro buildOptScoreCode;
+48970     +    %em_register(key=BINCODE, type=FOLDER);
+48972     +    filename x catalog 'sashelp.emutil.em_deldir.source';
+48973     +    %inc x;
+48974     +    filename x;
+48975     +    %delDir(folder=%nrbquote(&em_user_bincode));
+48977     +    data _null_; length rc $200;
+48978     +       rc = dcreate('BINCODE', "&EM_NODEDIR");
+48979     +    run;
+48981     +    %if ^%sysfunc(exist(class_nosv)) %then %goto doendu;
+48983     +    %let dsid = %sysfunc(open(class_nosv));
+48984     +    %let nameNum    = %sysfunc(varnum(&dsid, DISPLAY_VAR));
+48985     +    %let grpnameNum = %sysfunc(varnum(&dsid, _grp_variable_));
+48987     +    %let oldname=;
+48988     +    %do %while(^%sysfunc(fetch(&dsid)));
+48989     +        %let name    = %sysfunc(getvarc(&dsid, &nameNum));
+48990     +        %let grpname = %sysfunc(getvarc(&dsid, &grpnameNum));
+48992     +        %if &name ne &oldname %then %do;
+48993     +             filename _F1 "&em_user_bincode&em_dsep.&grpname..sas" MOD;
+48994     +             data _null_;
+48995     +                length string $200 flag endflag 8;
+48996     +                retain string flag endflag;
+48997     +                set class_nosv end=eof;
+48998     +                where DISPLAY_VAR ="&name";
+48999     +                by _variable_ _group_;
+49000     +                file _F1;
+49001     +                index = kindex(_variable_, "BIN_");
+49002     +                if index gt 0 then do;
+49003     +                   if first._variable_ then do;
+49004     +                      put ' ';
+49005     +                      put "&EM_CODEBAR;";
+49006     +                      string= "* Variable: "!!strip(DISPLAY_VAR)!!";";
+49007     +                      put string;
+49008     +                      put "&EM_CODEBAR;";
+49010     +                      if origLabel ne "" then do;
+49011     +                            string = 'LABEL '!!strip(_grp_variable_)!!' = ';
+49012     +                            put string;
+49013     +                            string = tranwrd(origLabel,"'","''");
+49014     +                            string = "'Grouped: "!!%nrbquote(strip(substr(string, 1,188)))!!"';";
+49015     +                            put string;
+49016     +                      end;
+49017     +                      else do;
+49018     +                             string = 'LABEL '!!strip(_grp_variable_)!!' = "Grouped: '!!%nrbquote(strip(DISPLAY_VAR))!!'";';
+49019     +                             put string;
+49020     +                      end;
+49022     +                      put ' ';
+49024     +                      string =  "if MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49025     +                      put string;
+49026     +                      string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49027     +                      put string;
+49028     +                      put "end;";
+49029     +                      string = "else if NOT MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49030     +                      put string;
+49031     +                   end;
+49032     +                   if first._group_ then do;
+49033     +                      flag = 0;
+49034     +                      endflag = 1;
+49035     +                      if ^first._variable_ then do;
+49036     +                         put "else";
+49037     +                      end;
+49038     +                      if LB ne . then do;
+49039     +                         string = "if "!!strip(LB)!!" <= "!!strip(DISPLAY_VAR);
+49040     +                      end;
+49041     +                      else do;
+49042     +                         flag = 1;
+49043     +                         string = "if";
+49044     +                      end;
+49045     +                   end;
+49046     +                   if last._Group_ then do;
+49047     +                      if UB ne . then do;
+49048     +                        if flag ne 1 then do;
+49049     +                          string = strip(string)!!" AND "!!strip(DISPLAY_VAR)!!" < "!!strip(UB)!!" then do;";
+49050     +                        end;
+49051     +                        else do;
+49052     +                          string = "if "!!strip(DISPLAY_VAR)!!" < "!!strip(UB)!!" then do;";
+49053     +                        end;
+49054     +                      end;
+49055     +                      else do;
+49056     +                         if flag=1 then do;
+49057     +                            string = strip(DISPLAY_VAR) ;
+49058     +                            string = strip(string)!!'='!!strip(_split_Value_)!!" then do;";
+49059     +                            endflag=0;
+49060     +                            string="";
+49061     +                         end;
+49062     +                         else do;
+49063     +                            string = strip(string)!!" then do;";
+49064     +                         end;
+49065     +                      end;
+49066     +                      put string;
+49067     +                      string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49068     +                      put string;
+49069     +                      if endflag eq 1 then do;
+49070     +                        put "end;";
+49071     +                      end;
+49072     +                   end;
+49073     +                   if last._variable_ then do;
+49074     +                     string = "end;";
+49075     +                     put string;
+49076     +                   end;
+49078     +                end;
+49079     +                else do;
+49080     +                   _split_value_ = tranwrd(_split_value_,"'","''");
+49081     +                   if first._group_ then do;
+49082     +                      flag=0;
+49083     +                      if ^first._variable_ then
+49084     +                         put 'else';
+49085     +                      else do;
+49086     +                         put ' ';
+49087     +                         put "&EM_CODEBAR;";
+49088     +                         string= "* Variable: "!!strip(DISPLAY_VAR)!!";";
+49089     +                         put string;
+49090     +                         put "&EM_CODEBAR;";
+49092     +                         if origLabel ne "" then do;
+49093     +                               string = 'LABEL '!!strip(_grp_variable_)!!' = ';
+49094     +                               put string;
+49095     +                               string = tranwrd(origLabel,"'","''");
+49096     +                               string = "'Grouped: "!!%nrbquote(strip(substr(string, 1,188)))!!"';";
+49097     +                               put string;
+49098     +                         end;
+49099     +                         else do;
+49100     +                               string = 'LABEL '!!strip(_grp_variable_)!!' = "Grouped: '!!%nrbquote(strip(DISPLAY_VAR))!!'";';
+49101     +                               put string;
+49102     +                         end;
+49104     +                         put ' ';
+49106     +                         if format ne '' then do;
+49107     +                            if first._variable_ then do;
+49108     +                               string = "_UFormat = put("!!strip(DISPLAY_VAR)!!","!!strip(format)!!");";
+49109     +                               put string;
+49110     +                               string = '%dmnormip(_UFormat);';
+49111     +                               put string;
+49113     +                               string ="if MISSING(_UFORMAT) then do;";
+49114     +                               put string;
+49115     +                               string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49116     +                               put string;
+49117     +                               put "end;";
+49119     +                               string="else if NOT MISSING(_UFORMAT) then do;";
+49120     +                               put string;
+49122     +                            end;
+49123     +                         end;
+49124     +                         else do;
+49125     +                            if type = 'N' then do;
+49126     +                              string ="if MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49127     +                              put string;
+49128     +                              string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49129     +                              put string;
+49130     +                              put "end;";
+49132     +                              string="else if NOT MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49133     +                              put string;
+49134     +                            end;
+49135     +                            else if type='C' then do;
+49136     +                              string = "_UFormat = "||strip(DISPLAY_VAR)||";";
+49137     +                              put string;
+49138     +                              string = '%dmnormip(_UFormat);';
+49139     +                              put string;
+49141     +                              string ="if MISSING(_UFORMAT) then do;";
+49142     +                              put string;
+49143     +                              string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49144     +                              put string;
+49145     +                              put "end;";
+49147     +                              string="else if NOT MISSING(_UFORMAT) then do;";
+49148     +                              put string;
+49149     +                              string = '%dmnormip(_UFormat);';
+49150     +                              put string;
+49151     +                           end;
+49152     +                         end;
+49153     +                      end;
+49154     +                      if format ne '' OR type='C' then do;
+49155     +                        string = "if (_UFORMAT eq '"!!strip(_split_value_)!!"'";
+49156     +                      end;
+49157     +                      else do;
+49158     +                        string = "if ("!!strip(DISPLAY_VAR)!!" eq "!!strip(_split_value_);
+49159     +                      end;
+49160     +                   end;
+49161     +                   else do;
+49162     +                      if flag ne 1 then do;
+49163     +                       if format ne '' OR type='C' then do;
+49164     +                         tempstring = strip(string)!!" OR _UFORMAT eq '"!!strip(_split_value_)!!"'";
+49165     +                       end;
+49166     +                       else do;
+49167     +                         tempstring = strip(string)!!" OR "!!strip(DISPLAY_VAR)!!" eq "!!strip(_split_value_);
+49168     +                       end;
+49169     +                         length = length(tempstring);
+49171     +                         if length < 195 then do;
+49172     +                            string = tempstring;
+49173     +                         end;
+49174     +                         else do;
+49176     +                            string = strip(string);
+49177     +                            put string;
+49178     +                            string = ") then do;";
+49179     +                            put string;
+49181     +                            string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49182     +                            put string;
+49183     +                            put "end;";
+49185     +                            put 'else';
+49186     +                            if format ne '' OR type='C' then do;
+49187     +                              string = "if (_UFORMAT eq '"!!strip(_split_value_)!!"'";
+49188     +                            end;
+49189     +                            else do;
+49190     +                              string = "if "!!strip(DISPLAY_VAR)!!" eq ("!!strip(_split_value_);
+49191     +                            end;
+49192     +                         end;
+49193     +                      end;
+49194     +                   end;
+49196     +                   if last._group_ then do;
+49197     +                      string = strip(string);
+49198     +                      put string;
+49200     +                      string = ") then do;";
+49201     +                      put string;
+49203     +                      string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49204     +                      put string;
+49205     +                      put "end;";
+49206     +                   end;
+49208     +                   if last._variable_ then do;
+49209     +                     put "else do;";
+49211     +                     string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49212     +                     put string;
+49214     +                     put "end;";
+49215     +                     put "end;";
+49216     +                   end;
+49217     +                end;
+49218     +             run;
+49220     +             %let oldname = &name;
+49221     +        %end;
+49222     +    %end;
+49223     +    %let dsid = %sysfunc(close(&dsid));
+49225     +    filename _F1 "&em_user_bincode&em_dsep._ALL_.sas";
+49226     +    data _null_;
+49227     +       file _F1;
+49228     +       put "length _UFormat $200;";
+49229     +       put "drop _UFormat;";
+49230     +       put "_UFormat='';";
+49231     +    run;
+49232     +    filename _F1;
+49234     +   %em_register(key=EMSCOREVAR, type=DATA);
+49235     +   %let scorevarDs = %scan(&em_user_emscorevar, 2, .);
+49236     +   proc datasets lib=&em_lib nolist;
+49237     +      delete &scorevarDs;
+49238     +   run;
+49239     +   quit;
+49241     +   %let filrf=mydir;
+49242     +   %let rc=%sysfunc(filename(filrf,&em_user_bincode));
+49243     +   %let did=%sysfunc(dopen(&filrf));
+49245     +   %if &did %then %do;  %PUT  did= &did;
+49246     +       %let memcount=%sysfunc(dnum(&did));
+49247     +       %if &memcount > 0 %then %do;
+49248     +           data &em_user_emscorevar;
+49249     +              length Name $32 formula $70 file $200;
+49250     +              keep NAME Formula file;
+49251     +              formula  = '';
+49252     +           %if %sysfunc(fileexist(&em_user_bincode&em_dsep._ALL_.sas)) %then %do;
+49253     +               name=''; file="BINCODE&em_dsep._ALL_.sas";
+49254     +               output;
+49255     +           %end;
+49256     +           %do i=1 %to &memcount;
+49257     +               %let name =%nrbquote(%sysfunc(dread(&did,&i)));
+49258     +               %let newvar = %scan(&name, 1, .);
+49259     +               %if "&newvar" ne "_ALL_" %then %do;
+49260     +                   name = "&newvar"; file="BINCODE&em_dsep&name";
+49261     +                   output;
+49262     +               %end;
+49263     +           %end;
+49265     +           run;
+49266     +       %end;
+49267     +       %let did = %sysfunc(dclose(&did));
+49268     +  %end;
+49270     +   %doendu:
+49271     +%mend buildOptScoreCode;
+49274     +%macro buildScoreCode(flowCode, publishCode);
+49277     +  filename x "&flowCode";
+49279     +  proc sort data=&EM_USER_SPLITVALS; by display_var _split_Value_; run;
+49280     +  proc sort data=&EM_USER_BINMAPPINGS; by display_var bin; run;
+49281     +  proc sort data=&EM_USER_coarse out=tempcoarse; by display_var _group_; run;
+49283     +  data temp;
+49284     +    merge &EM_USER_SPLITVALS &EM_USER_BINMAPPINGS(rename=(BIN=_SPLIT_VALUE_ BIN_NAME=_VARIABLE_));
+49285     +    by display_var _Split_value_;
+49286     +     if upcase(_Split_value_) ne 'MISSING';
+49287     +   run;
+49289     +   data temp_missing;
+49290     +     merge &EM_USER_SPLITVALS(rename=(_GROUP_=MISSGRP)) &EM_USER_BINMAPPINGS(rename=(
+49291     +          BIN=_SPLIT_VALUE_ BIN_NAME=_VARIABLE_));
+49292     +     by display_var _Split_value_;
+49293     +     if upcase(_Split_value_) eq 'MISSING';
+49294     +     keep _variable_ display_var missgrp;
+49295     +   run;
+49297     +   proc sort data=temp_missing; by display_var missgrp; run;
+49299     +   data temp_missing;
+49300     +     merge temp_missing(in=_a) tempcoarse(rename=(_GROUP_=MISSGRP));
+49301     +     by display_var missgrp;
+49302     +     if ^_a then delete;
+49303     +     keep _variable_ display_var missgrp ;
+49304     +   run;
+49306     +   data temp;
+49307     +     merge temp temp_missing;
+49308     +     by display_var;
+49309     +     if display_Var eq '' then delete;
+49310     +    run;
+49312     +    /* pull in wtev values */
+49313     +    proc sort data=&EM_USER_varmappings out=tempmappings; by _variable_; run;
+49314     +    proc sort data=&EM_IMPORT_DATA_CMETA out=tempcmeta; by NAME; run;
+49315     +    proc sort data=temp;  by display_var _group_; run;
+49317     +   data temp;
+49318     +      merge temp tempcoarse(keep=display_var _group_  role) ;
+49319     +      by display_var _group_;
+49320     +    run;
+49322     +    data temp;
+49323     +      merge temp tempmappings(rename=(_variable_ = display_var)) tempcmeta(keep=NAME FORMAT TYPE LABEL rename=(NAME=display_var LABEL=origLabel));
+49324     +      by display_var;
+49326     +      if _group_ = . then delete;
+49327     +      if _variable_ = '' then delete;
+49328     +    run;
+49330     +    proc sort data=temp out=class;
+49331     +       by _variable_ _group_ LB;
+49332     +    run;
+49334     +    data _null_;
+49335     +      file X;
+49337     +      put "length _UFormat $200;";
+49338     +      put "drop _UFormat;";
+49339     +      put "_UFormat='';";
+49340     +    run;
+49342     +    data class_nosv;
+49343     +      set class;
+49344     +      if upcase(role)="INPUT";
+49345     +    run;
+49347     +    data _null_;
+49348     +       file X MOD;
+49349     +       length string $200 flag endflag 8;
+49350     +       retain string flag endflag;
+49351     +       set class_nosv end=eof;
+49352     +       by _variable_ _group_;
+49354     +       index = kindex(_variable_, "BIN_");
+49355     +       if index gt 0 then do;
+49357     +         if first._variable_ then do;
+49358     +            put ' ';
+49359     +            put "&EM_CODEBAR;";
+49360     +            string= "* Variable: "!!strip(DISPLAY_VAR)!!";";
+49361     +            put string;
+49362     +            put "&EM_CODEBAR;";
+49365     +            if origLabel ne "" then do;
+49366     +              string = 'LABEL '!!strip(_grp_variable_)!!' = ';
+49367     +              put string;
+49368     +              string = tranwrd(origLabel,"'","''");
+49369     +              string = "'Grouped: "!!%nrbquote(strip(substr(string, 1,188)))!!"';";
+49370     +              put string;
+49371     +            end;
+49372     +            else do;
+49373     +             string = 'LABEL '!!strip(_grp_variable_)!!' = "Grouped: '!!%nrbquote(strip(DISPLAY_VAR))!!'";';
+49374     +             put string;
+49375     +            end;
+49377     +            put ' ';
+49379     +            string =  "if MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49380     +            put string;
+49381     +            string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49382     +            put string;
+49383     +            put "end;";
+49384     +            string = "else if NOT MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49385     +            put string;
+49386     +          end;
+49387     +           if first._group_ then do;
+49388     +              flag = 0;
+49389     +              endflag = 1;
+49390     +              if ^first._variable_ then do;
+49391     +                put "else";
+49392     +              end;
+49393     +              if LB ne . then do;
+49394     +                 string = "if "!!strip(LB)!!" <= "!!strip(DISPLAY_VAR);
+49395     +              end;
+49396     +              else do;
+49397     +                 flag = 1;
+49398     +                 string = "if";
+49399     +              end;
+49401     +           end;
+49402     +           if last._Group_ then do;
+49403     +              if UB ne . then do;
+49404     +                if flag ne 1 then do;
+49405     +                  string = strip(string)!!" AND "!!strip(DISPLAY_VAR)!!" < "!!strip(UB)!!" then do;";
+49406     +                end;
+49407     +                else do;
+49408     +                  string = "if "!!strip(DISPLAY_VAR)!!" < "!!strip(UB)!!" then do;";
+49409     +                end;
+49410     +              end;
+49411     +              else do;
+49412     +                 if flag=1 then do;
+49413     +                   string = strip(DISPLAY_VAR) ;
+49414     +                   string = strip(string)!!'='!!strip(_split_Value_)!!" then do;";
+49415     +                   endflag = 0;
+49416     +                   string="";
+49417     +                 end;
+49418     +                 else do;
+49419     +                   string = strip(string)!!" then do;";
+49420     +                 end;
+49421     +              end;
+49422     +              put string;
+49424     +              string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49425     +              put string;
+49426     +              if endflag eq 1 then do;
+49427     +                put "end;";
+49428     +              end;
+49429     +           end;
+49430     +           if last._variable_ then do;
+49431     +             string = "end;";
+49432     +             put string;
+49433     +           end;
+49434     +       end;
+49435     +       else do;
+49436     +           _split_value_ = tranwrd(_split_value_,"'","''");
+49437     +           if first._group_ then do;
+49438     +              flag=0;
+49439     +              if ^first._variable_ then
+49440     +                 put 'else';
+49441     +              else do;
+49442     +                 put ' ';
+49443     +                 put "&EM_CODEBAR;";
+49444     +                 string= "* Variable: "!!strip(DISPLAY_VAR)!!";";
+49445     +                 put string;
+49446     +                 put "&EM_CODEBAR;";
+49448     +                 if origLabel ne "" then do;
+49449     +                   string = 'LABEL '!!strip(_grp_variable_)!!' = ';
+49450     +                   put string;
+49451     +                   string = tranwrd(origLabel,"'","''");
+49452     +                   string = "'Grouped: "!!%nrbquote(strip(substr(string, 1,188)))!!"';";
+49453     +                   put string;
+49454     +                 end;
+49455     +                 else do;
+49456     +                   string = 'LABEL '!!strip(_grp_variable_)!!' = "Grouped: '!!%nrbquote(strip(DISPLAY_VAR))!!'";';
+49457     +                   put string;
+49458     +                 end;
+49460     +                 put ' ';
+49462     +                if format ne '' then do;
+49463     +                  if first._variable_ then do;
+49464     +                    string = "_UFormat = put("!!strip(DISPLAY_VAR)!!","!!strip(format)!!");";
+49465     +                    put string;
+49466     +                    string = '%dmnormip(_UFormat);';
+49467     +                    put string;
+49469     +                     string ="if MISSING(_UFORMAT) then do;";
+49470     +                     put string;
+49471     +                     string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49472     +                     put string;
+49473     +                     put "end;";
+49475     +                     string="else if NOT MISSING(_UFORMAT) then do;";
+49476     +                     put string;
+49478     +                  end;
+49479     +                end;
+49480     +                else do;
+49481     +                     if type = 'N' then do;
+49482     +                       string ="if MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49483     +                       put string;
+49484     +                       string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49485     +                       put string;
+49486     +                       put "end;";
+49488     +                       string="else if NOT MISSING("!!strip(DISPLAY_VAR)!!") then do;";
+49489     +                       put string;
+49491     +                     end;
+49492     +                     else if type='C' then do;
+49493     +                        string = "_UFormat = "||strip(DISPLAY_VAR)||";";
+49494     +                        put string;
+49495     +                        string = '%dmnormip(_UFormat);';
+49496     +                        put string;
+49498     +                        string ="if MISSING(_UFORMAT) then do;";
+49499     +                        put string;
+49500     +                        string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49501     +                        put string;
+49502     +                        put "end;";
+49504     +                        string="else if NOT MISSING(_UFORMAT) then do;";
+49505     +                        put string;
+49506     +                        string = '%dmnormip(_UFormat);';
+49507     +                        put string;
+49508     +                    end;
+49509     +                end;
+49510     +              end;
+49511     +              if format ne '' OR type='C' then do;
+49512     +                string = "if (_UFORMAT eq '"!!strip(_split_value_)!!"'";
+49513     +              end;
+49514     +              else do;
+49515     +                string = "if ("!!strip(DISPLAY_VAR)!!" eq "!!strip(_split_value_);
+49516     +              end;
+49517     +           end;
+49518     +           else do;
+49519     +              if flag ne 1 then do;
+49520     +                if format ne '' OR type='C' then do;
+49521     +                  tempstring = strip(string)!!" OR _UFORMAT eq '"!!strip(_split_value_)!!"'";
+49522     +                end;
+49523     +                else do;
+49524     +                  tempstring = strip(string)!!" OR "!!strip(DISPLAY_VAR)!!" eq "!!strip(_split_value_);
+49525     +                end;
+49526     +                length = klength(tempstring);
+49528     +                if length < 195 then do;
+49529     +                   string = tempstring;
+49530     +                end;
+49531     +                else do;
+49533     +                   string = strip(string);
+49534     +                   put string;
+49535     +                   string = ") then do;";
+49536     +                   put string;
+49538     +                   string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49539     +                   put string;
+49540     +                   put "end;";
+49542     +                 /*  string = strip(string)||",'...';"; */
+49544     +                   put 'else';
+49545     +                   if format ne '' OR type='C' then do;
+49546     +                     string = "if (_UFORMAT eq '"!!strip(_split_value_)!!"'";
+49547     +                   end;
+49548     +                   else do;
+49549     +                     string = "if ("!!strip(DISPLAY_VAR)!!" eq "!!strip(_split_value_);
+49550     +                   end;
+49553     +                end;
+49554     +              end;
+49555     +           end;
+49557     +           if last._group_ then do;
+49558     +              string = strip(string);
+49559     +              put string;
+49560     +              string = ") then do;";
+49561     +              put string;
+49563     +              string = strip(_grp_variable_)!!" = "!!strip(_GROUP_)!!";";
+49564     +              put string;
+49565     +              put "end;";
+49566     +           end;
+49568     +           if last._variable_ then do;
+49569     +             put "else do;";
+49571     +             string = strip(_grp_variable_)!!" = "!!strip(MISSGRP)!!";";
+49572     +             put string;
+49574     +             put "end;";
+49575     +             put "end;";
+49576     +           end;
+49577     +         *end;
+49578     +       end;
+49579     +    run;
+49581     +    /* generate PublishCode the same as flowscorecode */
+49582     +    filename Y "&publishCode";
+49584     +    /* if publishCode already exists, wipe it out first */
+49585     +    %if %sysfunc(fexist(Y)) eq 1 %then %do;
+49586     +      %let rc = %sysfunc(fdelete(Y));
+49587     +    %end;
+49589     +    %appendfiles(Y, X);
+49591     +    filename X;
+49592     +    filename Y;
+49594     +    %buildOptScoreCode;
+49596     +    proc datasets library=work nolist;
+49597     +      delete class class_nosv temp temp_missing tempmappings tempcmeta;
+49598     +    run;
+49599     +    quit;
+49601     +%mend buildScoreCode;
+49603     +%macro buildMetaCode(DeltaCodeFile=);
+49605     +   /* set variable roles based on New Role column in the Results table */
+49606     +   data _null_;
+49607     +      file &DeltaCodeFile;
+49608     +      %let dsid = %sysfunc(open(&EM_USER_RESULTSTABLE));
+49609     +      %if &dsid %then %do;
+49610     +        %let obs = %sysfunc(fetch(&dsid));
+49611     +        %let vnum = %sysfunc(VARNUM(&dsid, DISPLAY_VAR));
+49612     +        %let rnum = %sysfunc(VARNUM(&dsid, _new_role_));
+49613     +        %let ornum = %sysfunc(VARNUM(&dsid, _role_));
+49615     +        %do %while(&obs=0);
+49616     +          %let inputname = %sysfunc(getvarc(&dsid, &vnum));
+49617     +          %let role      = %upcase(%sysfunc(getvarc(&dsid, &rnum)));
+49618     +          %let oldrole   = %upcase(%sysfunc(getvarc(&dsid, &ornum)));
+49620     +          /* retrieve grp and woe names from varmappings dataset */
+49621     +          %let choice = _VARIABLE_ = "&inputname";
+49622     +          %let cdsid = %sysfunc(open(&EM_USER_VARMAPPINGS(where=(&choice))));
+49623     +          %let cobs = %sysfunc(fetchobs(&cdsid, 1));
+49624     +          %let grpnum = %sysfunc(VARNUM(&cdsid, _GRP_VARIABLE_));
+49625     +          %let grpname = %sysfunc(getvarc(&cdsid, &grpnum));
+49626     +          %if &cdsid %then %let cdsid = %sysfunc(close(&cdsid));
+49628     +          put "if name = '&inputname' then role='REJECTED';";
+49629     +          %if "&role" ne "DEFAULT" %then %do;
+49630     +            put "if name = '&grpname' then role='&role';";
+49631     +          %end;
+49632     +          %else %do;
+49633     +            put "if name = '&grpname' then role='&oldrole';";
+49634     +          %end;
+49635     +          put "if name = '&grpname' then level='&EM_PROPERTY_GRPMSMNT';";
+49637     +          %let obs = %sysfunc(fetch(&dsid));
+49638     +        %end;
+49639     +      %end;
+49640     +      %if &dsid %then %let dsid = %sysfunc(close(&dsid));
+49641     +   run;
+49643     +   /* drop all vars in the splitvals dataset that aren't present in the varmappings dataset */
+49644     +   data _null_;
+49645     +      file &DeltaCodeFile MOD;
+49647     +      %let sdsid = %sysfunc(open(&EM_USER_SPLITVALS));
+49648     +      %if &sdsid %then %do;
+49649     +        %let sobs = %sysfunc(fetch(&sdsid));
+49650     +        %do %while(&sobs=0);
+49651     +          %let varnum = %sysfunc(VARNUM(&sdsid, _VARIABLE_));
+49652     +          %let checkname = %sysfunc(getvarc(&sdsid, &varnum));
+49653     +          %let dispvarnum = %sysfunc(VARNUM(&sdsid, DISPLAY_VAR));
+49654     +          %let displayvar = %sysfunc(getvarc(&sdsid, &dispvarnum));
+49656     +          %let checkgrp = GRP_&checkname;
+49657     +          %let lenname = %length(&checkgrp);
+49658     +          %if %eval(&lenname-32) > 0 %then %do;
+49659     +            %let checkgrp = %substr(&checkgrp, 1, 32);
+49660     +          %end;
+49662     +          %let choice = _VARIABLE_ ="&checkname";
+49663     +          %let vdsid = %sysfunc(open(&EM_USER_VARMAPPINGS(where=(&choice))));
+49665     +          /* if var not found in varmappings, delete variables; */
+49666     +          /* this could happen when freeze=Y and vars in the frozen dataset aren't in the incoming training data */
+49667     +          %if &vdsid eq 0 %then %do;
+49668     +            put 'if name="&displayvar" then delete;';
+49669     +            %let dispgrp = GRP_&displayvar;
+49670     +            put 'if name="&dispgrp" then delete;';
+49671     +          %end;
+49673     +          %if &vdsid > 0 %then %let vdsid = %sysfunc(close(&vdsid));
+49674     +          %let sobs = %sysfunc(fetch(&sdsid));
+49675     +        %end;
+49676     +      %end;
+49677     +      %if &sdsid > 0 %then %let sdsid= %sysfunc(close(&sdsid));
+49678     +   run;
+49680     +%mend buildMetaCode;
+49682     +%macro EM_GENERATE_RESULTSTABLE(coarse, resultstable, varmappings);
+49684     +   proc sort data=&coarse out=sortedcoarse nodupkey;
+49685     +     by display_var;
+49686     +   run;
+49687     +   proc sort data=&varmappings nodupkey;
+49688     +     by _variable_;
+49689     +   run;
+49690     +   %if %sysfunc(exist(&resultstable, data)) %then %do;
+49691     +     proc sort data=&resultstable; by display_var; run;
+49692     +   %end;
+49694     +   data &resultstable (Keep = display_var _gini_  _role_ _new_role_ procLevel);
+49695     +     merge sortedcoarse(in=_a) &varmappings(rename=(_Variable_ = DISPLAY_VAR))
+49696     +     %if %sysfunc(exist(&resultstable, data)) %then %do;
+49697     +        &resultstable (keep = display_var _new_role_ )
+49698     +     %end;
+49699     +     ;
+49700     +     by display_var;
+49701     +     length _role_ _new_role_ $10;
+49702     +     label display_var = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel , NOQUOTE))"
+49703     +           _gini_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_ginistatistic_vlabel , NOQUOTE))"
+49704     +           _role_     = "%sysfunc(sasmsg(sashelp.dmine, calcrole_vlabel_vlabel , NOQUOTE))"
+49705     +           _new_role_ = "%sysfunc(sasmsg(sashelp.dmine, meta_NEWROLE_vlabel, NOQUOTE))"
+49706     +           LEVEL      = "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel , NOQUOTE))"
+49707     +           ;
+49709     +           %if &EM_PROPERTY_VARSELMETHOD eq GINI %then %do;
+49710     +             if _gini_ < &EM_PROPERTY_GINICUTOFF then
+49711     +                _role_ = "Rejected";
+49712     +             else _role_ = "Input";
+49713     +           %end;
+49714     +           %else %do;
+49715     +             _role_ = "Input";
+49716     +           %end;
+49717     +           if _new_role_ eq "" then _new_role_="Default";
+49718     +      if ^_a then do;
+49719     +        _gini_ = 0;
+49720     +        _role_ = 'Rejected';
+49721     +        if _new_role_ eq "" then _new_role_="Default";
+49722     +      end;
+49723     +   run;
+49724     +   proc sort data=&EM_DATA_VARIABLESET out=outlabel(keep=NAME LABEL LEVEL rename=(NAME=display_var LABEL=_label_));
+49725     +     by NAME;
+49726     +   run;
+49727     +   data outlabel;
+49728     +     set outlabel;
+49729     +     if _label_ = '' then _label_ = _variable_;
+49730     +   run;
+49731     +   data &resultstable;
+49732     +     merge &resultstable(in=_a_) outlabel;
+49733     +     by display_Var;
+49734     +     if _a_ then output;
+49735     +   run;
+49736     +   proc datasets library=work nolist;
+49737     +     delete sortedcoarse outlabel;
+49738     +   run;
+49739     +   quit;
+49740     +   proc sort data=&resultstable nodupkey;
+49741     +      by DESCENDING
+49742     +        _gini_ display_Var;
+49743     +   run;
+49744     +   data &resultstable;
+49745     +     set &resultstable;
+49747     +     label giniOrder = "%sysfunc(sasmsg(sashelp.dmine, rpt_giniorder_vlabel , NOQUOTE))"
+49748     +           LEVEL      = "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel , NOQUOTE))";
+49749     +     giniOrder = _N_;
+49750     +     _gini_ = round(_GINI_, .001);
+49751     +     drop _variable_;
+49752     +   run;
+49754     +   proc print data=&resultstable label;
+49755     +   run;
+49757     +   /* merge role, infovalOrder or giniOrder back into Coarse table as well */
+49758     +   data &coarse;
+49759     +     set &coarse;
+49760     +     length role $10;
+49761     +     %let dsid = %sysfunc(open(&resultstable));
+49762     +     %if &dsid %then %do;
+49763     +       %let disnum = %sysfunc(VARNUM(&dsid, DISPLAY_VAR));
+49764     +       %let rolenum = %sysfunc(VARNUM(&dsid, _ROLE_));
+49765     +       %let orderNum = %sysfunc(VARNUM(&dsid, giniOrder));
+49767     +       %let obs = %sysfunc(fetch(&dsid));
+49768     +       %do %while(&obs=0);
+49769     +          %let displayvar = %sysfunc(getvarc(&dsid, &disnum));
+49770     +          %let role       = %sysfunc(getvarc(&dsid, &rolenum));
+49771     +          %let order = %sysfunc(getvarn(&dsid, &ordernum));
+49773     +                                                                                               if DISPLAY_VAR = "&displayVar" then do;
+49774     +            label giniOrder = "%sysfunc(sasmsg(sashelp.dmine, rpt_giniorder_vlabel , NOQUOTE))";
+49775     +            giniOrder = &order;
+49776     +            role = "&role";
+49777     +          end;
+49779     +          %let obs = %sysfunc(fetch(&dsid));
+49780     +       %end;
+49781     +     %end;
+49782     +     %if &dsid %then %let dsid = %sysfunc(close(&dsid));
+49783     +   run;
+49786     +%mend EM_GENERATE_RESULTSTABLE;
+49788     +%macro EM_GENERATE_EXPORTGROUP(exportGrouping, createMethod);
+49790     +    /* instantiate the zchar macro to be used in adding bin definition */
+49791     +    filename _temp catalog 'sashelp.emmacs.zchar.source';
+49792     +    %inc _temp;
+49793     +    filename _temp;
+49795     +    proc sort data=&EM_USER_FINEDETAILDATA out=sortedfine;
+49796     +      by _variable_ binFlag _group_ LB;
+49797     +    run;
+49799     +    data tempExport;
+49800     +      set sortedFine;
+49801     +      by _variable_ binFlag _group_;
+49802     +      length _split_value_ $200;
+49804     +      /* for all binned variables, need to modify the split value to original cutoff as well as change level to interval */
+49805     +      if binFlag = 0 then do;
+49806     +        index = kindex(_variable_, "BIN_");
+49807     +        if index gt 0 then do;
+49808     +          _LEVEL_ = "INTERVAL";
+49809     +        end;
+49810     +        _Split_value_ = _split_value_;
+49811     +        output;
+49812     +      end;
+49813     +      else do;
+49814     +         * if last._group_ then do;
+49815     +          index = kindex(_variable_, "BIN_");
+49816     +          if index gt 0 then do;
+49817     +            _LEVEL_ = "INTERVAL";
+49818     +          end;
+49819     +          _Split_value_ = %zchar(UB);
+49820     +          output;
+49821     +         * end;
+49822     +      end;
+49824     +      rename display_Var = _variable_;
+49825     +      keep display_var _level_ _group_ _split_value_ binFlag;
+49826     +    run;
+49828     +    %if &CREATEMETHOD eq OVERWRITE %then %do;
+49829     +       data &EXPORTGROUPING;
+49830     +         set tempexport;
+49831     +       run;
+49832     +    %end;
+49833     +    %else %do;
+49834     +       /* determine if EXPORTGROUPING already exists */
+49835     +       %if %sysfunc(exist(&EXPORTGROUPING, DATA)) %then %do;
+49836     +         data &EXPORTGROUPING;
+49837     +            set &EXPORTGROUPING tempexport;
+49838     +         run;
+49839     +       %end;
+49840     +       %else %do;
+49841     +         data &EXPORTGROUPING;
+49842     +            set tempexport;
+49843     +         run;
+49844     +       %end;
+49845     +    %end;
+49847     +    proc datasets lib=work nolist;
+49848     +      delete sortedFine tempexport;
+49849     +    run;
+49850     +    quit;
+49852     +%mend EM_GENERATE_EXPORTGROUP;
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+49856      
+49857      *------------------------------------------------------------*;
+49858      * End UPDATE: BINNING;
+49859      *------------------------------------------------------------*;
+
+49860      %em_delMacro;
+
+*------------------------------------------------------------* 
+* 
+* BINNING : End Update 
+* datetime : 16APR2016:20:09:24 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg : Beginning Update 
+* datetime : 16APR2016:20:09:25 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Reg : End Update 
+* datetime : 16APR2016:20:09:25 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree : Beginning Update 
+* datetime : 16APR2016:20:09:25 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Tree : End Update 
+* datetime : 16APR2016:20:09:25 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural4 : Beginning Update 
+* datetime : 16APR2016:20:09:26 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural4 : End Update 
+* datetime : 16APR2016:20:09:26 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural : Beginning Update 
+* datetime : 16APR2016:20:09:27 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural : End Update 
+* datetime : 16APR2016:20:09:27 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural2 : Beginning Update 
+* datetime : 16APR2016:20:09:27 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural2 : End Update 
+* datetime : 16APR2016:20:09:27 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural3 : Beginning Update 
+* datetime : 16APR2016:20:09:28 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural3 : End Update 
+* datetime : 16APR2016:20:09:28 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural7 : Beginning Update 
+* datetime : 16APR2016:20:09:28 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural7 : End Update 
+* datetime : 16APR2016:20:09:28 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural9 : Beginning Update 
+* datetime : 16APR2016:20:09:29 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural9 : End Update 
+* datetime : 16APR2016:20:09:29 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL" 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural10 : Beginning Update 
+* datetime : 16APR2016:20:09:29 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural10 : End Update 
+* datetime : 16APR2016:20:09:29 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg4 : Beginning Update 
+* datetime : 16APR2016:20:09:30 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Reg4 : End Update 
+* datetime : 16APR2016:20:09:30 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree4 : Beginning Update 
+* datetime : 16APR2016:20:09:30 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Tree4 : End Update 
+* datetime : 16APR2016:20:09:30 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural8 : Beginning Update 
+* datetime : 16APR2016:20:09:31 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural8 : End Update 
+* datetime : 16APR2016:20:09:31 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural28 : Beginning Update 
+* datetime : 16APR2016:20:09:32 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural28 : End Update 
+* datetime : 16APR2016:20:09:32 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural27 : Beginning Update 
+* datetime : 16APR2016:20:09:32 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural27 : End Update 
+* datetime : 16APR2016:20:09:32 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural26 : Beginning Update 
+* datetime : 16APR2016:20:09:33 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural26 : End Update 
+* datetime : 16APR2016:20:09:33 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural25 : Beginning Update 
+* datetime : 16APR2016:20:09:33 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural25 : End Update 
+* datetime : 16APR2016:20:09:33 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural24 : Beginning Update 
+* datetime : 16APR2016:20:09:34 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural24 : End Update 
+* datetime : 16APR2016:20:09:34 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "ENSMBL4" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural29 : Beginning Update 
+* datetime : 16APR2016:20:09:34 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural29 : End Update 
+* datetime : 16APR2016:20:09:34 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg2 : Beginning Update 
+* datetime : 16APR2016:20:09:35 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Reg2 : End Update 
+* datetime : 16APR2016:20:09:35 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree2 : Beginning Update 
+* datetime : 16APR2016:20:09:35 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Tree2 : End Update 
+* datetime : 16APR2016:20:09:35 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural12 : Beginning Update 
+* datetime : 16APR2016:20:09:36 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural12 : End Update 
+* datetime : 16APR2016:20:09:36 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural17 : Beginning Update 
+* datetime : 16APR2016:20:09:36 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural17 : End Update 
+* datetime : 16APR2016:20:09:37 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural16 : Beginning Update 
+* datetime : 16APR2016:20:09:37 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural16 : End Update 
+* datetime : 16APR2016:20:09:37 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural15 : Beginning Update 
+* datetime : 16APR2016:20:09:38 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural15 : End Update 
+* datetime : 16APR2016:20:09:38 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural14 : Beginning Update 
+* datetime : 16APR2016:20:09:38 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural14 : End Update 
+* datetime : 16APR2016:20:09:38 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural13 : Beginning Update 
+* datetime : 16APR2016:20:09:39 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural13 : End Update 
+* datetime : 16APR2016:20:09:39 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL2" 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural11 : Beginning Update 
+* datetime : 16APR2016:20:09:39 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural11 : End Update 
+* datetime : 16APR2016:20:09:39 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural5 : Beginning Update 
+* datetime : 16APR2016:20:09:40 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural5 : End Update 
+* datetime : 16APR2016:20:09:40 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural19 : Beginning Update 
+* datetime : 16APR2016:20:09:40 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural19 : End Update 
+* datetime : 16APR2016:20:09:40 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural20 : Beginning Update 
+* datetime : 16APR2016:20:09:41 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural20 : End Update 
+* datetime : 16APR2016:20:09:41 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural21 : Beginning Update 
+* datetime : 16APR2016:20:09:41 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural21 : End Update 
+* datetime : 16APR2016:20:09:41 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural22 : Beginning Update 
+* datetime : 16APR2016:20:09:42 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural22 : End Update 
+* datetime : 16APR2016:20:09:42 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural23 : Beginning Update 
+* datetime : 16APR2016:20:09:42 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural23 : End Update 
+* datetime : 16APR2016:20:09:42 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural18 : Beginning Update 
+* datetime : 16APR2016:20:09:43 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural18 : End Update 
+* datetime : 16APR2016:20:09:43 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Tree3 : Beginning Update 
+* datetime : 16APR2016:20:09:43 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Tree3 : End Update 
+* datetime : 16APR2016:20:09:43 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL3" 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Reg3 : Beginning Update 
+* datetime : 16APR2016:20:09:44 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Reg3 : End Update 
+* datetime : 16APR2016:20:09:44 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Ensmbl : Beginning Update 
+* datetime : 16APR2016:20:09:45 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Ensmbl : End Update 
+* datetime : 16APR2016:20:09:45 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Ensmbl4 : Beginning Update 
+* datetime : 16APR2016:20:09:45 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Ensmbl4 : End Update 
+* datetime : 16APR2016:20:09:45 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Ensmbl2 : Beginning Update 
+* datetime : 16APR2016:20:09:46 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Ensmbl2 : End Update 
+* datetime : 16APR2016:20:09:46 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "MDLCOMP" 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Ensmbl3 : Beginning Update 
+* datetime : 16APR2016:20:09:46 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Ensmbl3 : End Update 
+* datetime : 16APR2016:20:09:46 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "EMCODE2" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* MdlComp : Beginning Update 
+* datetime : 16APR2016:20:09:47 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* MdlComp : End Update 
+* datetime : 16APR2016:20:09:47 
 * 
 *------------------------------------------------------------* 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
-* Plot2 : Beginning Update 
-* datetime : 16APR2016:18:29:52 
+* EMCODE2 : Beginning Update 
+* datetime : 16APR2016:20:09:47 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
-* Plot2 : End Update 
-* datetime : 16APR2016:18:29:52 
+* EMCODE2 : End Update 
+* datetime : 16APR2016:20:09:47 
 * 
 *------------------------------------------------------------* 
 Traverser: Run Completed 
-27213      proc printto;
-27214      run;
+51153      proc printto;
+51154      run;
 

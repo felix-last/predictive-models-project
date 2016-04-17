@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.0643642072; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.9356357928; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -34,19 +34,27 @@ run;
 quit;
 data EM_Neural;
 set EMWS8.Meta_TRAIN(keep=
-CatPurchase DepVar Mnt Rcn );
+AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
+AcceptedCmpTotal Complain DepVar HigherEducationBinary Kidhome Mnt
+MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
+MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
+NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Neural: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC)
+    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) HigherEducationBinary(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    CatPurchase Mnt Rcn
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural: Create DMDB;
@@ -66,13 +74,17 @@ quit;
 * Neural: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    CatPurchase Mnt Rcn
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural: Binary Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro BININPUTS;
-
+    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
+   HigherEducationBinary
 %mend BININPUTS;
 *------------------------------------------------------------* ;
 * Neural: Nominal Inputs Macro ;
@@ -100,6 +112,8 @@ performance alldetails noutilfile;
 netopts
 decay=0;
 input %INTINPUTS / level=interval id=intvl
+;
+input %BININPUTS / level=nominal id=bin
 ;
 target DepVar / level=NOMINAL id=DepVar
 bias
@@ -143,11 +157,11 @@ nloptions noprint;
 performance alldetails noutilfile;
 initial inest=EMWS8.Neural_INITIAL;
 train tech=NONE;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural\SCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural\SCORECODE.sas"
 group=Neural
 ;
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural\RESIDUALSCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural\RESIDUALSCORECODE.sas"
 group=Neural
 residual
 ;

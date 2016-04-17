@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.06989576946658; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.93010423053341; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -33,22 +33,26 @@ label DECISION2= '0';
 run;
 quit;
 data EM_Neural5;
-set EMWS8.PRINCOMP_TRAIN(keep=
-DepVar PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2
-PC_20 PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9 );
+set EMWS8.BINNING_TRAIN(keep=
+DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
+GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
+GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+Mnt );
 run;
 *------------------------------------------------------------* ;
 * Neural5: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
+   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
+   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
+   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    Mnt
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural5: Create DMDB;
@@ -68,8 +72,7 @@ quit;
 * Neural5: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    Mnt
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural5: Binary Inputs Macro ;
@@ -81,7 +84,9 @@ quit;
 * Neural5: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-
+    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
+   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
+   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural5: Ordinal Inputs Macro ;
@@ -94,7 +99,7 @@ quit;
 ;
 *------------------------------------------------------------*;
 proc neural data=EM_Neural5 dmdbcat=WORK.Neural5_DMDB
-validdata = EMWS8.PRINCOMP_VALIDATE
+validdata = EMWS8.BINNING_VALIDATE
 random=12345
 ;
 nloptions
@@ -104,11 +109,13 @@ netopts
 decay=0;
 input %INTINPUTS / level=interval id=intvl
 ;
+input %NOMINPUTS / level=nominal id=nom
+;
 target DepVar / level=NOMINAL id=DepVar
 bias
 ;
 arch MLP
-Hidden=3
+Hidden=1
 ;
 Prelim 5 preiter=10
 pretime=3600
@@ -138,7 +145,7 @@ run;
 ;
 *------------------------------------------------------------*;
 proc neural data=EM_Neural5 dmdbcat=WORK.Neural5_DMDB
-validdata = EMWS8.PRINCOMP_VALIDATE
+validdata = EMWS8.BINNING_VALIDATE
 network = EMWS8.Neural5_NETWORK.dm_neural
 random=12345
 ;
@@ -146,20 +153,20 @@ nloptions noprint;
 performance alldetails noutilfile;
 initial inest=EMWS8.Neural5_INITIAL;
 train tech=NONE;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural5\SCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural5\SCORECODE.sas"
 group=Neural5
 ;
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural5\RESIDUALSCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural5\RESIDUALSCORECODE.sas"
 group=Neural5
 residual
 ;
 ;
-score data=EMWS8.PRINCOMP_TRAIN out=_NULL_
+score data=EMWS8.BINNING_TRAIN out=_NULL_
 outfit=WORK.FIT1
 role=TRAIN
 outkey=EMWS8.Neural5_OUTKEY;
-score data=EMWS8.PRINCOMP_VALIDATE out=_NULL_
+score data=EMWS8.BINNING_VALIDATE out=_NULL_
 outfit=WORK.FIT2
 role=VALID
 outkey=EMWS8.Neural5_OUTKEY;

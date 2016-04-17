@@ -1,5 +1,5 @@
 *------------------------------------------------------------*;
-* Ensmbl: Average Posteriors of 6 models;
+* Ensmbl: Average Posteriors of 9 models;
 *------------------------------------------------------------*;
 P_DepVar1 = (
 Reg_P_DepVar1 +
@@ -7,16 +7,22 @@ Tree_P_DepVar1 +
 Neural4_P_DepVar1 +
 Neural_P_DepVar1 +
 Neural2_P_DepVar1 +
-Neural3_P_DepVar1
-)/6;
+Neural3_P_DepVar1 +
+Neural7_P_DepVar1 +
+Neural9_P_DepVar1 +
+Neural10_P_DepVar1
+)/9;
 P_DepVar0 = (
 Reg_P_DepVar0 +
 Tree_P_DepVar0 +
 Neural4_P_DepVar0 +
 Neural_P_DepVar0 +
 Neural2_P_DepVar0 +
-Neural3_P_DepVar0
-)/6;
+Neural3_P_DepVar0 +
+Neural7_P_DepVar0 +
+Neural9_P_DepVar0 +
+Neural10_P_DepVar0
+)/9;
 *------------------------------------------------------------*;
 * Ensmbl: Computing Classification Vars;
 *------------------------------------------------------------*;
@@ -73,3 +79,15 @@ if index(NEURAL3_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) =
 if index(NEURAL3_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL3_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL3_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL7_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL7_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL7_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL7_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL9_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL9_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL9_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL9_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL10_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL10_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL10_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL10_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';

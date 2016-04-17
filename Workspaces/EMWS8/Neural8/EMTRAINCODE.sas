@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.06989576946658; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.93010423053341; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -33,25 +33,23 @@ label DECISION2= '0';
 run;
 quit;
 data EM_Neural8;
-set EMWS8.BINNING_TRAIN(keep=
-DepVar GRP_Age GRP_Age_Exmpl2 GRP_CatPurchase GRP_Dependents GRP_Frq
-GRP_Income GRP_Mnt GRP_NetPurchase GRP_RMntFrq GRP_RMntFrq_Exmpl2
-GRP_Recomendation );
+set EMWS8.Varsel_TRAIN(keep=
+AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntFruits MntGoldProds
+MntMeatProducts MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat
+RMntFrq Recency );
 run;
 *------------------------------------------------------------* ;
 * Neural8: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_Age(ASC) GRP_Age_Exmpl2(ASC) GRP_CatPurchase(ASC)
-   GRP_Dependents(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_NetPurchase(ASC) GRP_RMntFrq(ASC) GRP_RMntFrq_Exmpl2(ASC)
-   GRP_Recomendation(ASC)
+    DepVar(DESC) G_Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural8: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-
+    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
+   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural8: Create DMDB;
@@ -71,7 +69,8 @@ quit;
 * Neural8: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-
+    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
+   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural8: Binary Inputs Macro ;
@@ -83,8 +82,7 @@ quit;
 * Neural8: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    GRP_Age GRP_Age_Exmpl2 GRP_CatPurchase GRP_Dependents GRP_Frq GRP_Income
-   GRP_Mnt GRP_NetPurchase GRP_RMntFrq GRP_RMntFrq_Exmpl2 GRP_Recomendation
+    G_Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural8: Ordinal Inputs Macro ;
@@ -97,7 +95,7 @@ quit;
 ;
 *------------------------------------------------------------*;
 proc neural data=EM_Neural8 dmdbcat=WORK.Neural8_DMDB
-validdata = EMWS8.BINNING_VALIDATE
+validdata = EMWS8.Varsel_VALIDATE
 random=12345
 ;
 nloptions
@@ -105,13 +103,15 @@ nloptions
 performance alldetails noutilfile;
 netopts
 decay=0;
+input %INTINPUTS / level=interval id=intvl
+;
 input %NOMINPUTS / level=nominal id=nom
 ;
 target DepVar / level=NOMINAL id=DepVar
 bias
 ;
 arch MLP
-Hidden=3
+Hidden=7
 ;
 Prelim 5 preiter=10
 pretime=3600
@@ -141,7 +141,7 @@ run;
 ;
 *------------------------------------------------------------*;
 proc neural data=EM_Neural8 dmdbcat=WORK.Neural8_DMDB
-validdata = EMWS8.BINNING_VALIDATE
+validdata = EMWS8.Varsel_VALIDATE
 network = EMWS8.Neural8_NETWORK.dm_neural
 random=12345
 ;
@@ -149,20 +149,20 @@ nloptions noprint;
 performance alldetails noutilfile;
 initial inest=EMWS8.Neural8_INITIAL;
 train tech=NONE;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural8\SCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural8\SCORECODE.sas"
 group=Neural8
 ;
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural8\RESIDUALSCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural8\RESIDUALSCORECODE.sas"
 group=Neural8
 residual
 ;
 ;
-score data=EMWS8.BINNING_TRAIN out=_NULL_
+score data=EMWS8.Varsel_TRAIN out=_NULL_
 outfit=WORK.FIT1
 role=TRAIN
 outkey=EMWS8.Neural8_OUTKEY;
-score data=EMWS8.BINNING_VALIDATE out=_NULL_
+score data=EMWS8.Varsel_VALIDATE out=_NULL_
 outfit=WORK.FIT2
 role=VALID
 outkey=EMWS8.Neural8_OUTKEY;

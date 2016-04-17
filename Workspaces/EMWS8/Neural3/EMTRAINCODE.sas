@@ -20,9 +20,9 @@ data WORK.DepVar;
            ;
   format   COUNT 10.
            ;
-DepVar="1"; COUNT=114; DATAPRIOR=0.0643642072; TRAINPRIOR=0.06989576946658; DECPRIOR=.; DECISION1=1; DECISION2=0;
+DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556; DECPRIOR=.; DECISION1=1; DECISION2=0;
 output;
-DepVar="0"; COUNT=1517; DATAPRIOR=0.9356357928; TRAINPRIOR=0.93010423053341; DECPRIOR=.; DECISION1=0; DECISION2=1;
+DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443; DECPRIOR=.; DECISION1=0; DECISION2=1;
 output;
 ;
 run;
@@ -34,20 +34,28 @@ run;
 quit;
 data EM_Neural3;
 set EMWS8.Meta_TRAIN(keep=
-CatPurchase Clothes DepVar Dependents HouseKeeping Marital_Status Mnt Rcn
-Recomendation SmallAppliances Toys );
+AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
+AcceptedCmpTotal Complain DepVar HigherEducationBinary Kidhome Marital_Status
+Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
+MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
+NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Neural3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) Dependents(ASC) Marital_Status(ASC)
+    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) HigherEducationBinary(ASC)
+   Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural3: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    CatPurchase Clothes HouseKeeping Mnt Rcn Recomendation SmallAppliances Toys
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural3: Create DMDB;
@@ -67,13 +75,17 @@ quit;
 * Neural3: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    CatPurchase Clothes HouseKeeping Mnt Rcn Recomendation SmallAppliances Toys
+    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
+   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
+   Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural3: Binary Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro BININPUTS;
-    Dependents
+    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
+   HigherEducationBinary
 %mend BININPUTS;
 *------------------------------------------------------------* ;
 * Neural3: Nominal Inputs Macro ;
@@ -148,11 +160,11 @@ nloptions noprint;
 performance alldetails noutilfile;
 initial inest=EMWS8.Neural3_INITIAL;
 train tech=NONE;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural3\SCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural3\SCORECODE.sas"
 group=Neural3
 ;
 ;
-code file="E:\DataMining_EMProjects\Tugas\Workspaces\EMWS8\Neural3\RESIDUALSCORECODE.sas"
+code file="C:\\predictive-models-project\Workspaces\EMWS8\Neural3\RESIDUALSCORECODE.sas"
 group=Neural3
 residual
 ;
