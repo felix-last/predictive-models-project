@@ -9,13 +9,6 @@ REP_Education=Education;
 *;
 _UFORMAT200 = strip(put(Education,$10.0));
 if ^(_UFORMAT200 in(
-"Graduation", "2n Cycle", "Master", "Basic", "PhD", "", "OldSchool"
-)) then
+"Graduation", "PhD", "Master", "2n Cycle", "Basic"
+, "" )) then
 REP_Education= "";
-* ;
-* Variable: Education;
-* ;
-_UFORMAT200 = strip(
-put(Education,$10.0));
-if _UFORMAT200 =  "OldSchool" then
-REP_Education="";

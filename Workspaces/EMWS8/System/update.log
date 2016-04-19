@@ -9,118 +9,118 @@ Traverser: Beginning flow traversal
 *------------------------------------------------------------* 
 * 
 * FIMPORT : Beginning Update 
-* datetime : 19APR2016:10:48:47 
+* datetime : 19APR2016:16:35:13 
 * 
 *------------------------------------------------------------* 
-53179      %let emexceptionString =;
-53180      %let EMEXCEPTIONSTRING=;
-53181      *------------------------------------------------------------*;
-53182      * UPDATE: FIMPORT;
-53183      *------------------------------------------------------------*;
-53184      %let EM_ACTION = UPDATE;
-53185      %let syscc = 0;
-53186      /* Fimport.source */
-53187      %macro main;
-53188            %if %upcase(&EM_ACTION) = CREATE %then %do;
-53189               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-53190               %include temp;
-53191               filename temp;
-53192               %create;
-53193            %end;
-53194            %else
-53195            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-53196               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-53197               %include temp;
-53198               filename temp;
-53199               %train;
-53200            %end;
-53201            %else
-53202            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-53203               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-53204               %include temp;
-53205               filename temp;
-53206               %update;
-53207            %end;
-53208            %else
-53209            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-53210               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-53211               %include temp;
-53212               filename temp;
-53213               %property;
-53214            %end;
-53215             %else
-53216            %if %upcase(&EM_ACTION) = SCORE %then %do;
-53217               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-53218               %include temp;
-53219               filename temp;
-53220               %score;
-53221            %end;
-53222            %else
-53223            %if %upcase(&EM_ACTION) = REPORT %then %do;
-53224               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-53225               %include temp;
-53226               filename temp;
-53227               %report;
-53228            %end;
-53229            %else
-53230            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-53231               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-53232               %include temp;
-53233               filename temp;
-53234               %openvariableset;
-53235            %end;
-53236            %else
-53237            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-53238               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-53239               %include temp;
-53240               filename temp;
-53241               %closevariableset;
-53242            %end;
-53243      %mend main;
-53244      %main;
+48669      %let emexceptionString =;
+48670      %let EMEXCEPTIONSTRING=;
+48671      *------------------------------------------------------------*;
+48672      * UPDATE: FIMPORT;
+48673      *------------------------------------------------------------*;
+48674      %let EM_ACTION = UPDATE;
+48675      %let syscc = 0;
+48676      /* Fimport.source */
+48677      %macro main;
+48678            %if %upcase(&EM_ACTION) = CREATE %then %do;
+48679               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+48680               %include temp;
+48681               filename temp;
+48682               %create;
+48683            %end;
+48684            %else
+48685            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+48686               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+48687               %include temp;
+48688               filename temp;
+48689               %train;
+48690            %end;
+48691            %else
+48692            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+48693               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+48694               %include temp;
+48695               filename temp;
+48696               %update;
+48697            %end;
+48698            %else
+48699            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+48700               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48701               %include temp;
+48702               filename temp;
+48703               %property;
+48704            %end;
+48705             %else
+48706            %if %upcase(&EM_ACTION) = SCORE %then %do;
+48707               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+48708               %include temp;
+48709               filename temp;
+48710               %score;
+48711            %end;
+48712            %else
+48713            %if %upcase(&EM_ACTION) = REPORT %then %do;
+48714               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+48715               %include temp;
+48716               filename temp;
+48717               %report;
+48718            %end;
+48719            %else
+48720            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+48721               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48722               %include temp;
+48723               filename temp;
+48724               %openvariableset;
+48725            %end;
+48726            %else
+48727            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+48728               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+48729               %include temp;
+48730               filename temp;
+48731               %closevariableset;
+48732            %end;
+48733      %mend main;
+48734      %main;
 NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-53245     +%macro update;
-53246     +    %let oldrole = %str();
-53247     +    data _null_;
-53248     +       set &em_data_exportset;
-53249     +       where NODEPORT='TRAIN';
-53250     +       call symput('oldrole', ROLE);
-53251     +    run;
-53252     +    %if &oldrole ne &em_property_role %then %do;
-53253     +        data &em_data_exportset;
-53254     +           set &em_data_exportset;
-53255     +           if NODEPORT='TRAIN' then do;
-53256     +              ROLE="&em_property_role";
-53257     +              NEEDUPDATE='Y';
-53258     +              EXPORT='Y';
-53259     +           end;
-53260     +        run;
-53261     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-53262     +        data _null_;
-53263     +           file x;
-53264     +           put ' ';
-53265     +        run;
-53266     +        filename x;
-53267     +    %end;
-53268     +    %else %do;
-53269     +        data &em_data_exportset;
-53270     +           set &em_data_exportset;
-53271     +           if NODEPORT='TRAIN' then do;
-53272     +              ROLE="&em_property_role";
-53273     +              NEEDUPDATE='Y';
-53274     +              EXPORT='Y';
-53275     +           end;
-53276     +        run;
-53277     +    %end;
-53279     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-53280     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-53281     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-53282     +           set &em_user_emcmetadefault;
-53283     +           drop DROP;
-53284     +           where DROP='N';
-53285     +        run;
-53286     +    %end;
-53288     +%mend update;
+48735     +%macro update;
+48736     +    %let oldrole = %str();
+48737     +    data _null_;
+48738     +       set &em_data_exportset;
+48739     +       where NODEPORT='TRAIN';
+48740     +       call symput('oldrole', ROLE);
+48741     +    run;
+48742     +    %if &oldrole ne &em_property_role %then %do;
+48743     +        data &em_data_exportset;
+48744     +           set &em_data_exportset;
+48745     +           if NODEPORT='TRAIN' then do;
+48746     +              ROLE="&em_property_role";
+48747     +              NEEDUPDATE='Y';
+48748     +              EXPORT='Y';
+48749     +           end;
+48750     +        run;
+48751     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+48752     +        data _null_;
+48753     +           file x;
+48754     +           put ' ';
+48755     +        run;
+48756     +        filename x;
+48757     +    %end;
+48758     +    %else %do;
+48759     +        data &em_data_exportset;
+48760     +           set &em_data_exportset;
+48761     +           if NODEPORT='TRAIN' then do;
+48762     +              ROLE="&em_property_role";
+48763     +              NEEDUPDATE='Y';
+48764     +              EXPORT='Y';
+48765     +           end;
+48766     +        run;
+48767     +    %end;
+48769     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+48770     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+48771     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+48772     +           set &em_user_emcmetadefault;
+48773     +           drop DROP;
+48774     +           where DROP='N';
+48775     +        run;
+48776     +    %end;
+48778     +%mend update;
 NOTE: %INCLUDE (level 1) ending.
 NOTE: Fileref TEMP has been deassigned.
 
@@ -139,693 +139,452 @@ NOTE: DATA statement used (Total process time):
       cpu time            0.00 seconds
       
 
-53293      *------------------------------------------------------------*;
-53294      * End UPDATE: FIMPORT;
-53295      *------------------------------------------------------------*;
+48783      *------------------------------------------------------------*;
+48784      * End UPDATE: FIMPORT;
+48785      *------------------------------------------------------------*;
 
-53296      %em_delMacro;
+48786      %em_delMacro;
 
 *------------------------------------------------------------* 
 * 
 * FIMPORT : End Update 
-* datetime : 19APR2016:10:48:47 
+* datetime : 19APR2016:16:35:13 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* FIMPORT2 : Beginning Update 
+* datetime : 19APR2016:16:35:13 
+* 
+*------------------------------------------------------------* 
+48989      %let emexceptionString =;
+48990      %let EMEXCEPTIONSTRING=;
+48991      *------------------------------------------------------------*;
+48992      * UPDATE: FIMPORT2;
+48993      *------------------------------------------------------------*;
+48994      %let EM_ACTION = UPDATE;
+48995      %let syscc = 0;
+48996      /* Fimport.source */
+48997      %macro main;
+48998            %if %upcase(&EM_ACTION) = CREATE %then %do;
+48999               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+49000               %include temp;
+49001               filename temp;
+49002               %create;
+49003            %end;
+49004            %else
+49005            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+49006               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+49007               %include temp;
+49008               filename temp;
+49009               %train;
+49010            %end;
+49011            %else
+49012            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+49013               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+49014               %include temp;
+49015               filename temp;
+49016               %update;
+49017            %end;
+49018            %else
+49019            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+49020               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+49021               %include temp;
+49022               filename temp;
+49023               %property;
+49024            %end;
+49025             %else
+49026            %if %upcase(&EM_ACTION) = SCORE %then %do;
+49027               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+49028               %include temp;
+49029               filename temp;
+49030               %score;
+49031            %end;
+49032            %else
+49033            %if %upcase(&EM_ACTION) = REPORT %then %do;
+49034               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+49035               %include temp;
+49036               filename temp;
+49037               %report;
+49038            %end;
+49039            %else
+49040            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+49041               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+49042               %include temp;
+49043               filename temp;
+49044               %openvariableset;
+49045            %end;
+49046            %else
+49047            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+49048               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+49049               %include temp;
+49050               filename temp;
+49051               %closevariableset;
+49052            %end;
+49053      %mend main;
+49054      %main;
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
+49055     +%macro update;
+49056     +    %let oldrole = %str();
+49057     +    data _null_;
+49058     +       set &em_data_exportset;
+49059     +       where NODEPORT='TRAIN';
+49060     +       call symput('oldrole', ROLE);
+49061     +    run;
+49062     +    %if &oldrole ne &em_property_role %then %do;
+49063     +        data &em_data_exportset;
+49064     +           set &em_data_exportset;
+49065     +           if NODEPORT='TRAIN' then do;
+49066     +              ROLE="&em_property_role";
+49067     +              NEEDUPDATE='Y';
+49068     +              EXPORT='Y';
+49069     +           end;
+49070     +        run;
+49071     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+49072     +        data _null_;
+49073     +           file x;
+49074     +           put ' ';
+49075     +        run;
+49076     +        filename x;
+49077     +    %end;
+49078     +    %else %do;
+49079     +        data &em_data_exportset;
+49080     +           set &em_data_exportset;
+49081     +           if NODEPORT='TRAIN' then do;
+49082     +              ROLE="&em_property_role";
+49083     +              NEEDUPDATE='Y';
+49084     +              EXPORT='Y';
+49085     +           end;
+49086     +        run;
+49087     +    %end;
+49089     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+49090     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+49091     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+49092     +           set &em_user_emcmetadefault;
+49093     +           drop DROP;
+49094     +           where DROP='N';
+49095     +        run;
+49096     +    %end;
+49098     +%mend update;
+NOTE: %INCLUDE (level 1) ending.
+NOTE: Fileref TEMP has been deassigned.
+
+NOTE: There were 1 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
+      WHERE NODEPORT='TRAIN';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+
+NOTE: There were 6 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
+NOTE: The data set EMWS8.FIMPORT2_EXPORTSET has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+49103      *------------------------------------------------------------*;
+49104      * End UPDATE: FIMPORT2;
+49105      *------------------------------------------------------------*;
+
+49106      %em_delMacro;
+
+*------------------------------------------------------------* 
+* 
+* FIMPORT2 : End Update 
+* datetime : 19APR2016:16:35:14 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "FILTER" 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Stat : Beginning Update 
-* datetime : 19APR2016:10:48:47 
+* datetime : 19APR2016:16:35:14 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Stat : End Update 
-* datetime : 19APR2016:10:48:47 
+* datetime : 19APR2016:16:35:14 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Plot : Beginning Update 
-* datetime : 19APR2016:10:48:48 
+* datetime : 19APR2016:16:35:15 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Plot : End Update 
-* datetime : 19APR2016:10:48:48 
+* datetime : 19APR2016:16:35:15 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Filter : Beginning Update 
-* datetime : 19APR2016:10:48:48 
+* datetime : 19APR2016:16:35:15 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Filter : End Update 
-* datetime : 19APR2016:10:48:48 
+* datetime : 19APR2016:16:35:15 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : Beginning Update 
-* datetime : 19APR2016:10:48:49 
+* datetime : 19APR2016:16:35:16 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : End Update 
-* datetime : 19APR2016:10:48:49 
+* datetime : 19APR2016:16:35:16 
 * 
 *------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Trans : Beginning Update 
-* datetime : 19APR2016:10:48:50 
+* datetime : 19APR2016:16:35:16 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Trans : End Update 
-* datetime : 19APR2016:10:48:50 
+* datetime : 19APR2016:16:35:16 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "META3" 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "META" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Part : Beginning Update 
-* datetime : 19APR2016:10:48:50 
+* datetime : 19APR2016:16:35:17 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Part : End Update 
-* datetime : 19APR2016:10:48:50 
+* datetime : 19APR2016:16:35:17 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "NEURAL10" 
+Traverser: WaitingNode "NEURAL9" 
+Traverser: WaitingNode "NEURAL3" 
+Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "NEURAL4" 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Meta : Beginning Update 
+* datetime : 19APR2016:16:35:17 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Meta : End Update 
+* datetime : 19APR2016:16:35:17 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural10 : Beginning Update 
+* datetime : 19APR2016:16:35:18 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural10 : End Update 
+* datetime : 19APR2016:16:35:18 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural9 : Beginning Update 
+* datetime : 19APR2016:16:35:18 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural9 : End Update 
+* datetime : 19APR2016:16:35:18 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural3 : Beginning Update 
+* datetime : 19APR2016:16:35:19 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural3 : End Update 
+* datetime : 19APR2016:16:35:19 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural2 : Beginning Update 
+* datetime : 19APR2016:16:35:19 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural2 : End Update 
+* datetime : 19APR2016:16:35:19 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "ENSMBL32" 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Neural4 : Beginning Update 
+* datetime : 19APR2016:16:35:20 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Neural4 : End Update 
+* datetime : 19APR2016:16:35:20 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Ensmbl32 : Beginning Update 
+* datetime : 19APR2016:16:35:20 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Ensmbl32 : End Update 
+* datetime : 19APR2016:16:35:21 
 * 
 *------------------------------------------------------------* 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
-* Meta3 : Beginning Update 
-* datetime : 19APR2016:10:48:51 
+* Score : Beginning Update 
+* datetime : 19APR2016:16:35:21 
 * 
 *------------------------------------------------------------* 
-53456      *------------------------------------------------------------*;
-53457      * Meta3: Update DATA Variables Set;
-53458      *------------------------------------------------------------*;
-
-53459      data WORK.META_TEMP;
-53460      set EMWS8.Part_CMeta_TRAIN;
-53461      length Hidden $1;
-53462      retain Hidden 'N';
-53463      run;
-
-NOTE: There were 36 observations read from the data set EMWS8.PART_CMETA_TRAIN.
-NOTE: The data set WORK.META_TEMP has 36 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53464      %emAdviseColumns(EMWS8.Part_TRAIN, outdata=WORK.META_TEMP, newdataflag=N);
-
-53465      %let SYSCC = 0;
-53466      options validvarname=any;
-53467      proc contents data=EMWS8.Part_TRAIN out=_tempAdvisor noprint;
-53468      run;
-
-NOTE: The data set WORK._TEMPADVISOR has 45 observations and 40 variables.
-NOTE: PROCEDURE CONTENTS used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53469      options validvarname=V7;
-53470      %let _dsidTable = 0;
-53471      %let _engineTable =;
-53472      data _null_;
-53473      dsid = open('EMWS8.Part_TRAIN');
-53474      call symput('_dsidTable', strip(put(dsid, best.)));
-53475      if dsid then do;
-53476      call symput('_engineTable', attrc(dsid, 'ENGINE'));
-53477      dsid = close(dsid);
-53478      end;
-53479      run;
-
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53480      options fmterr;
-53481      data _metaTestView;
-53482      set EMWS8.Part_TRAIN;
-53483      if _N_=1 then do;
-53484      output;
-53485      stop;
-53486      end;
-53487      run;
-
-NOTE: There were 1 observations read from the data set EMWS8.PART_TRAIN.
-NOTE: The data set WORK._METATESTVIEW has 1 observations and 45 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53488      proc contents data=EMWS8.Part_TRAIN
-53489      out=WORK.M27KWNLQ noprint;
-53490      run;
-
-NOTE: The data set WORK.M27KWNLQ has 45 observations and 40 variables.
-NOTE: PROCEDURE CONTENTS used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53491      data WORK.M27KWNLQ;
-53492      length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 INDEX $ 1 INDEXTYPE $ 9;
-53493      label NAME =;
-53494      set WORK.M27KWNLQ(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
-53495      if itype = 1 then type = 'N';
-53496      else type = 'C';
-53497      if formatl > 0 then do;
-53498      if format ne ' ' then format = strip(format)!!strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
-53499      else format = strip(put(formatl, best12.))!!'.'!!strip(put(formatd, best12.));
-53500      end;
-53501      else if format ne '' then format = strip(format)!!'.';
-53502      if informl > 0 then do;
-53503      if informat ne ' ' then informat = strip(informat)!!strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
-53504      else informat = strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
-53505      end;
-53506      else if informat ne '' then informat = strip(informat)!!'.';
-53507      if idxusage = 'NONE' then index ="N";
-53508      else index = "Y";
-53509      indextype = idxusage;
-53510      drop idxusage itype formatl formatd informl informd;
-53511      run;
-
-NOTE: There were 45 observations read from the data set WORK.M27KWNLQ.
-NOTE: The data set WORK.M27KWNLQ has 45 observations and 8 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.00 seconds
-      
-
-53512      data WORK.M2COERQQ;
-53513      length UNAME $64;
-53514      set WORK.M2COERQQ;
-53515      UNAME = upcase(NAME);
-53516      run;
-
-NOTE: There were 36 observations read from the data set WORK.M2COERQQ.
-NOTE: The data set WORK.M2COERQQ has 36 observations and 22 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53517      data WORK.M27KWNLQ;
-53518      length UNAME $64;
-53519      set WORK.M27KWNLQ;
-53520      UNAME = upcase(NAME);
-53521      run;
-
-NOTE: There were 45 observations read from the data set WORK.M27KWNLQ.
-NOTE: The data set WORK.M27KWNLQ has 45 observations and 9 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53533      data WORK.M2COERQQ;
-53534      drop UNAME;
-53535      set WORK.M2COERQQ;
-53536      run;
-
-NOTE: There were 45 observations read from the data set WORK.M2COERQQ.
-NOTE: The data set WORK.M2COERQQ has 45 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-NOTE: PROCEDURE DISPLAY used (Total process time):
-      real time           0.36 seconds
-      cpu time            0.35 seconds
-      
-
-53754      data WORK.META_TEMP;
-53755      set WORK.META_TEMP;
-53756      if Hidden eq '' then do;
-53757      Role = 'REJECTED';
-53758      Hidden = 'Y';
-53759      end;
-53760      run;
-
-NOTE: There were 45 observations read from the data set WORK.META_TEMP.
-NOTE: The data set WORK.META_TEMP has 45 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53761      %let EM_LIB = EMWS8;
-53762      %em_path(NODEID=Meta3, OUTDS=work.path, NODES=PATH);
-
-53763      data work.path;
-53764      length nodelabel $32 component $32;
-53765      nodelabel="FIMPORT";
-53766      component="FileImport";
-53767      output;
-53768      nodelabel="Stat";
-53769      component="StatExplore";
-53770      output;
-53771      nodelabel="Plot";
-53772      component="MultiPlot";
-53773      output;
-53774      nodelabel="Filter";
-53775      component="Filter";
-53776      output;
-53777      nodelabel="EMCODE4";
-53778      component="SASCode";
-53779      output;
-53780      nodelabel="Trans";
-53781      component="Transform";
-53782      output;
-53783      nodelabel="Part";
-53784      component="Partition";
-53785      output;
-53786      run;
-
-NOTE: The data set WORK.PATH has 7 observations and 2 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.00 seconds
-      
-
-NOTE: PROCEDURE DISPLAY used (Total process time):
-      real time           0.02 seconds
-      cpu time            0.03 seconds
-      
-
-53787      data temp;
-53788      set WORK.META_TEMP;
-53789      where Hidden = 'Y';
-53790      run;
-
-NOTE: There were 9 observations read from the data set WORK.META_TEMP.
-      WHERE Hidden='Y';
-NOTE: The data set WORK.TEMP has 9 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53791      data creator;
-53792      set
-53793      EMWS8.FIMPORT_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53794      EMWS8.Stat_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53795      EMWS8.Plot_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53796      EMWS8.Filter_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53797      EMWS8.EMCODE4_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53798      EMWS8.Trans_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53799      EMWS8.Part_cmeta_TRAIN(keep=NAME LEVEL CREATOR where=(CREATOR ne ''))
-53800      ;
-
-NOTE: There were 0 observations read from the data set EMWS8.FIMPORT_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 0 observations read from the data set EMWS8.STAT_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 0 observations read from the data set EMWS8.PLOT_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 0 observations read from the data set EMWS8.FILTER_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 7 observations read from the data set EMWS8.EMCODE4_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 9 observations read from the data set EMWS8.TRANS_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: There were 10 observations read from the data set EMWS8.PART_CMETA_TRAIN.
-      WHERE CREATOR not = ' ';
-NOTE: The data set WORK.CREATOR has 26 observations and 3 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53801      proc sort data=creator nodupkey;
-53802      by NAME;
-53803      run;
-
-NOTE: There were 26 observations read from the data set WORK.CREATOR.
-NOTE: 15 observations with duplicate key values were deleted.
-NOTE: The data set WORK.CREATOR has 11 observations and 3 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53804      proc sort data=temp;
-53805      by NAME;
-53806      run;
-
-NOTE: There were 9 observations read from the data set WORK.TEMP.
-NOTE: The data set WORK.TEMP has 9 observations and 21 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53807      data temp;
-53808      merge temp(in=a) creator;
-53809      by NAME;
-53810      keep NAME LEVEL CREATOR;
-53811      if a then output;
-53812      run;
-
-NOTE: There were 9 observations read from the data set WORK.TEMP.
-NOTE: There were 11 observations read from the data set WORK.CREATOR.
-NOTE: The data set WORK.TEMP has 9 observations and 3 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53813      proc sort data=WORK.META_TEMP;
-53814      by NAME;
-53815      run;
-
-NOTE: There were 45 observations read from the data set WORK.META_TEMP.
-NOTE: The data set WORK.META_TEMP has 45 observations and 21 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-53816      data WORK.META_TEMP;
-53817      merge WORK.META_TEMP temp;
-53818      by NAME;
-53819      run;
-
-NOTE: There were 45 observations read from the data set WORK.META_TEMP.
-NOTE: There were 9 observations read from the data set WORK.TEMP.
-NOTE: The data set WORK.META_TEMP has 45 observations and 21 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53820      data EMWS8.Meta3_VariableSet;
-53821      length NEWROLE $32;
-53822      label NEWROLE = "New Role";
-53823      length NEWLEVEL $8;
-53824      label NEWLEVEL = "New Level";
-53825      length NEWREPORT $1;
-53826      length NEWORDER $8;
-53827      label NEWORDER = "New Order";
-53828      length HIDDEN $1;
-53829      length HIDE $1;
-53830      set WORK.META_TEMP;
-53831      run;
-
-NOTE: Variable NEWROLE is uninitialized.
-NOTE: Variable NEWLEVEL is uninitialized.
-NOTE: Variable NEWREPORT is uninitialized.
-NOTE: Variable NEWORDER is uninitialized.
-NOTE: Variable HIDE is uninitialized.
-NOTE: There were 45 observations read from the data set WORK.META_TEMP.
-NOTE: The data set EMWS8.META3_VARIABLESET has 45 observations and 26 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53832      %let EM_LIB=EMWS8;
-53833      %em_path(NODEID=Meta3, OUTDS=META_PREDECESSOR, NODES=PREDECESSOR);
-
-53834      data META_PREDECESSOR;
-53835      length nodelabel $32 component $32;
-53836      nodelabel="Part";
-53837      component="Partition";
-53838      output;
-53839      run;
-
-NOTE: The data set WORK.META_PREDECESSOR has 1 observations and 2 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-NOTE: PROCEDURE DISPLAY used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
-      
-
-
-53840      data EMWS8.Meta3_CHOICE(rename=(role=Key dataset=Choice));
-53841      retain Variable 'DATASET';
-53842      set
-53843      EMWS8.Part_exportset
-53844      ;
-53845      where ROLE in('RAW', 'TRAIN', 'VALIDATE', 'TEST', 'SCORE', 'TRANSACTION') and export='Y';
-53846      if ROLE in('RAW','TRAIN') then ROLE='TRAIN';
-53847      drop export needupdate importport applydelta applyscore deltacode;
-53848      run;
-
-NOTE: There were 2 observations read from the data set EMWS8.PART_EXPORTSET.
-      WHERE ROLE in ('RAW', 'SCORE', 'TEST', 'TRAIN', 'TRANSACTION', 'VALIDATE') and (export='Y');
-NOTE: The data set EMWS8.META3_CHOICE has 2 observations and 13 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53849      %let hiddenNum=0;
-53850      data _null_;
-53851      length string $200;
-53852      set EMWS8.Meta3_VariableSet end = eof;
-53853      file #LN15105;
-53854      where HIDDEN = 'Y' and HIDE = 'N';
-53855      if _N_=1 then do;
-53856      put "*------------------------------------------------------------*;";
-53857      put '* Unhide Variables;';
-53858      put "*------------------------------------------------------------*;";
-53859      put 'length NAME $32 ROLE $32 LEVEL $10 ORDER $8 CREATOR $32 REPORT $1 FORMATTYPE $10';
-53860      put '       LABEL $200 FORMAT INFORMAT $20 INDEX $1 INDEXTYPE $9;';
-53861      end;
-53862      string = 'NAME="'!!strip(NAME)!!'";';
-53863      put string;
-53864      if NEWROLE ne 'DEFAULT' then ROLE = NEWROLE;
-53865      string = 'ROLE="'!!strip(ROLE)!!'";';
-53866      put string;
-53867      if NEWLEVEL ne 'DEFAULT' then LEVEL = NEWLEVEL;
-53868      string = 'LEVEL="'!!strip(LEVEL)!!'";';
-53869      put string;
-53870      if NEWREPORT ne 'D' then REPORT = NEWREPORT;
-53871      string = 'REPORT="'!!strip(REPORT)!!'";';
-53872      put string;
-53873      if NEWORDER ne 'DEFAULT' then ORDER = NEWORDER;
-53874      string = 'ORDER="'!!strip(ORDER)!!'";';
-53875      put string;
-53876      string = 'CREATOR="'!!strip(CREATOR)!!'";';
-53877      put string;
-53878      string = 'FORMATTYPE="'!!strip(FORMATTYPE)!!'";';
-53879      put string;
-53880      string = 'TYPE="'!!strip(TYPE)!!'";';
-53881      put string;
-53882      string = 'LABEL="'!!strip(LABEL)!!'";';
-53883      put string;
-53884      string = 'FORMAT="'!!strip(FORMAT)!!'";';
-53885      put string;
-53886      string = 'INFORMAT="'!!strip(INFORMAT)!!'";';
-53887      put string;
-53888      string = 'INDEX="'!!strip(INDEX)!!'";';
-53889      put string;
-53890      string = 'INDEXTYPE="'!!strip(INDEXTYPE)!!'";';
-53891      put string;
-53892      string = 'LENGTH='!!strip(put(length, best.))!!';';
-53893      put string;
-53894      put 'output;';
-53895      if eof then call symput('hiddenNum', '1');
-53896      run;
-
-NOTE: The file #LN15105 is:
-      Filename=C:\\predictive-models-project\Workspaces\EMWS8\Meta3\UNHIDECODE_DATA.sas,
-      RECFM=V,LRECL=256,File Size (bytes)=0,
-      Last Modified=19. April 2016 10.48 Uhr,
-      Create Time=19. April 2016 10.48 Uhr
-
-NOTE: 0 records were written to the file #LN15105.
-NOTE: There were 0 observations read from the data set EMWS8.META3_VARIABLESET.
-      WHERE (HIDDEN='Y') and (HIDE='N');
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53897      data _TEMP;
-53898      set EMWS8.Part_CMeta_TRAIN;
-53899      *------------------------------------------------------------*;
-53900      * Metadata Changes;
-53901      *------------------------------------------------------------*;
-53902      if upcase(NAME) = "HIGHEREDUCATION" then ROLE="REJECTED";
-53903      if upcase(NAME) = "HIGHEREDUCATION" then delete;
-53904      if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";
-53905      run;
-
-NOTE: There were 36 observations read from the data set EMWS8.PART_CMETA_TRAIN.
-NOTE: The data set WORK._TEMP has 36 observations and 20 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53906      
-53907      
-
-53908      proc sort data=_TEMP;
-53909      by NAME;
-53910      run;
-
-NOTE: There were 36 observations read from the data set WORK._TEMP.
-NOTE: The data set WORK._TEMP has 36 observations and 20 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53911      data EMWS8.Meta3_CMeta_TRAIN;
-53912      set _TEMP;
-53913      run;
-
-NOTE: There were 36 observations read from the data set WORK._TEMP.
-NOTE: The data set EMWS8.META3_CMETA_TRAIN has 36 observations and 20 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53914      data EMWS8.Meta3_VariableSet;
-53915      set EMWS8.Meta3_VariableSet;
-53916      %inc #LN15114;
-NOTE: %INCLUDE (level 1) file #LN15114 is file C:\\predictive-models-project\Workspaces\EMWS8\Meta3\VARIABLEPROPERTIES_DATA.sas.
-53917     +*------------------------------------------------------------*;
-53918     +* Variable Attributes for DATA;
-53919     +*------------------------------------------------------------*;
-53920     +if upcase(NAME) = "HIGHEREDUCATION" then NEWROLE="REJECTED";
-53921     +if upcase(NAME) = "HIGHEREDUCATION" then HIDE="Y";
-53922     +if upcase(NAME) = "YEAR_BIRTH" then NEWROLE="REJECTED";
-53923     +
-53924     +
-NOTE: %INCLUDE (level 1) ending.
-53925      run;
-
-NOTE: There were 45 observations read from the data set EMWS8.META3_VARIABLESET.
-NOTE: The data set EMWS8.META3_VARIABLESET has 45 observations and 26 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-53926      * Meta3: End of Update DATA Variables Set;
-53927      *------------------------------------------------------------*;
-
-53928      *------------------------------------------------------------*;
-53929      * Meta3: Update TEST Variables Set;
-53930      *------------------------------------------------------------*;
-
-53931      *------------------------------------------------------------*;
-53932      * Meta3: Update SCORE Variables Set;
-53933      *------------------------------------------------------------*;
-
-53934      *------------------------------------------------------------*;
-53935      * Meta3: Update TRANSACTION Variables Set;
-53936      *------------------------------------------------------------*;
-
-53937      *------------------------------------------------------------*;
-53938      * Meta3: Update DOCUMENT Variables Set;
-53939      *------------------------------------------------------------*;
-
-53940      *------------------------------------------------------------*;
-53941      * Meta3: Computing metadata for TRAIN data;
-53942      *------------------------------------------------------------*;
-
-53943      data _TEMP;
-53944      set EMWS8.Part_CMeta_TRAIN;
-53945      *------------------------------------------------------------*;
-53946      * Metadata Changes;
-53947      *------------------------------------------------------------*;
-53948      if upcase(NAME) = "HIGHEREDUCATION" then ROLE="REJECTED";
-53949      if upcase(NAME) = "HIGHEREDUCATION" then delete;
-53950      if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";
-53951      run;
-
-NOTE: There were 36 observations read from the data set EMWS8.PART_CMETA_TRAIN.
-NOTE: The data set WORK._TEMP has 36 observations and 20 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53952      
-53953      
-
-53954      proc sort data=_TEMP;
-53955      by NAME;
-53956      run;
-
-NOTE: There were 36 observations read from the data set WORK._TEMP.
-NOTE: The data set WORK._TEMP has 36 observations and 20 variables.
-NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.01 seconds
-      
-
-53957      data EMWS8.Meta3_CMeta_TRAIN;
-53958      set _TEMP;
-53959      run;
-
-NOTE: There were 36 observations read from the data set WORK._TEMP.
-NOTE: The data set EMWS8.META3_CMETA_TRAIN has 36 observations and 20 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
 *------------------------------------------------------------* 
 * 
-* Meta3 : End Update 
-* datetime : 19APR2016:10:48:52 
+* Score : End Update 
+* datetime : 19APR2016:16:35:21 
 * 
 *------------------------------------------------------------* 
 Traverser: Run Completed 
-53961      proc printto;
-53962      run;
+49438      proc printto;
+49439      run;
 

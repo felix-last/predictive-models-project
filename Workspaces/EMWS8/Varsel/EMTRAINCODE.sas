@@ -18,7 +18,7 @@
 *------------------------------------------------------------*;
 * EM: Create DMDB;
 *------------------------------------------------------------*;
-libname _spdslib SPDE "C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD8012_WN7LF-LEAVE_\Prc2";
+libname _spdslib SPDE "C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD15536_WN7LF-LEAVE_\Prc2";
 proc dmdb batch data=EMWS8.Part_TRAIN
 dmdbcat=WORK.EM_DMDB
 maxlevel = 101

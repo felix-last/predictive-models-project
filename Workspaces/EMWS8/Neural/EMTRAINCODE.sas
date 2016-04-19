@@ -36,8 +36,8 @@ data EM_Neural;
 set EMWS8.Meta_TRAIN(keep=
 AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
 AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
-Kidhome Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts
-MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
+Kidhome Marital_Status Mnt MntFishProducts MntFruits MntGoldProds
+MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
 NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases
 NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome );
 run;
@@ -47,7 +47,7 @@ run;
 %macro DMDBClass;
     AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
    AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC)
+   HigherEducationBinary(ASC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural: DMDBVar Macro ;
@@ -92,7 +92,7 @@ quit;
 * Neural: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education
+    Education Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural: Ordinal Inputs Macro ;

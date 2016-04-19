@@ -37,7 +37,7 @@ set EMWS8.BINNING_TRAIN(keep=
 DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
 GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
 GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Mnt Year_Birth );
+Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Neural5: DMDBClass Macro ;
@@ -52,7 +52,7 @@ run;
 * Neural5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Mnt Year_Birth
+    Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural5: Create DMDB;
@@ -72,7 +72,7 @@ quit;
 * Neural5: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    Mnt Year_Birth
+    Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural5: Binary Inputs Macro ;

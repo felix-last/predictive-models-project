@@ -35,22 +35,23 @@ quit;
 data EM_Neural6;
 set EMWS8.Meta2_TRAIN(keep=
 AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-DepVar Education Income Kidhome Mnt MntFishProducts MntFruits MntGoldProds
-MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome );
+DepVar Education Income Kidhome Marital_Status MntFishProducts MntFruits
+MntGoldProds MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases
+NumDealsPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency
+Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Neural6: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
     AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural6: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts
+    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
    MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
    NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
 %mend DMDBVar;
@@ -72,7 +73,7 @@ quit;
 * Neural6: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    Income Kidhome Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts
+    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
    MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
    NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
 %mend INTINPUTS;
@@ -86,7 +87,7 @@ quit;
 * Neural6: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education
+    Education Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural6: Ordinal Inputs Macro ;

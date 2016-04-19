@@ -53,126 +53,104 @@ NumDistPurchases =NumCatalogPurchases + NumWebPurchases ;
 * NODE: Meta2;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
-* TOOL: Regression;
+* TOOL: Neural;
 * TYPE: MODEL;
-* NODE: Reg9;
+* NODE: Neural6;
 *------------------------------------------------------------*;
-*************************************;
-*** begin scoring code for regression;
-*************************************;
+***********************************;
+*** Begin Scoring Code for Neural;
+***********************************;
+DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+ _DM_BAD = 0;
+ _NOCL_ = .;
+ _MAX_ = .;
+ _MAXP_ = .;
+ _SUM_ = .;
+ _NTRIALS = .;
+ _EPS =                1E-10;
+LENGTH _WARN_ $4
+      F_DepVar  $ 12
+;
+      label S_Income = 'Standard: Income' ;
 
-length _WARN_ $4;
-label _WARN_ = 'Warnings' ;
+      label S_Kidhome = 'Standard: Kidhome' ;
 
-length I_DepVar $ 12;
-label I_DepVar = 'Into: DepVar' ;
-*** Target Values;
-array REG9DRF [2] $12 _temporary_ ('1' '0' );
-label U_DepVar = 'Unnormalized Into: DepVar' ;
-format U_DepVar BEST.;
-*** Unnormalized target values;
-ARRAY REG9DRU[2]  _TEMPORARY_ (1 0);
+      label S_MntFishProducts = 'Standard: MntFishProducts' ;
 
-*** Generate dummy variables for DepVar ;
-drop _Y ;
-label F_DepVar = 'From: DepVar' ;
-length F_DepVar $ 12;
-F_DepVar = put( DepVar , BEST. );
-%DMNORMIP( F_DepVar )
-if missing( DepVar ) then do;
-   _Y = .;
-end;
-else do;
-   if F_DepVar = '0'  then do;
-      _Y = 1;
-   end;
-   else if F_DepVar = '1'  then do;
-      _Y = 0;
-   end;
-   else do;
-      _Y = .;
-   end;
-end;
+      label S_MntFruits = 'Standard: MntFruits' ;
 
-drop _DM_BAD;
-_DM_BAD=0;
+      label S_MntGoldProds = 'Standard: MntGoldProds' ;
 
-*** Check Income for missing values ;
-if missing( Income ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
 
-*** Check MntFishProducts for missing values ;
-if missing( MntFishProducts ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
 
-*** Check MntFruits for missing values ;
-if missing( MntFruits ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_MntWines = 'Standard: MntWines' ;
 
-*** Check MntMeatProducts for missing values ;
-if missing( MntMeatProducts ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
 
-*** Check MntWines for missing values ;
-if missing( MntWines ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
 
-*** Check NumCatalogPurchases for missing values ;
-if missing( NumCatalogPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
 
-*** Check NumDealsPurchases for missing values ;
-if missing( NumDealsPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
 
-*** Check NumStorePurchases for missing values ;
-if missing( NumStorePurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
 
-*** Check NumWebPurchases for missing values ;
-if missing( NumWebPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_Recency = 'Standard: Recency' ;
 
-*** Check NumWebVisitsMonth for missing values ;
-if missing( NumWebVisitsMonth ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label S_Teenhome = 'Standard: Teenhome' ;
 
-*** Check Recency for missing values ;
-if missing( Recency ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
 
-*** Check Teenhome for missing values ;
-if missing( Teenhome ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
+      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
+
+      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
+
+      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
+
+      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
+
+      label Complain0 = 'Dummy: Complain=0' ;
+
+      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
+
+      label EducationBasic = 'Dummy: Education=Basic' ;
+
+      label EducationGraduation = 'Dummy: Education=Graduation' ;
+
+      label EducationMaster = 'Dummy: Education=Master' ;
+
+      label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
+
+      label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
+
+      label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
+
+      label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
+
+      label H11 = 'Hidden: H1=1' ;
+
+      label I_DepVar = 'Into: DepVar' ;
+
+      label F_DepVar = 'From: DepVar' ;
+
+      label U_DepVar = 'Unnormalized Into: DepVar' ;
+
+      label P_DepVar1 = 'Predicted: DepVar=1' ;
+
+      label R_DepVar1 = 'Residual: DepVar=1' ;
+
+      label P_DepVar0 = 'Predicted: DepVar=0' ;
+
+      label R_DepVar0 = 'Residual: DepVar=0' ;
+
+      label  _WARN_ = "Warnings";
 
 *** Generate dummy variables for AcceptedCmp1 ;
-drop _1_0 ;
+drop AcceptedCmp10 ;
 if missing( AcceptedCmp1 ) then do;
-   _1_0 = .;
+   AcceptedCmp10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -181,22 +159,22 @@ else do;
    _dm12 = put( AcceptedCmp1 , BEST. );
    %DMNORMIP( _dm12 )
    if _dm12 = '0'  then do;
-      _1_0 = 1;
+      AcceptedCmp10 = 1;
    end;
    else if _dm12 = '1'  then do;
-      _1_0 = -1;
+      AcceptedCmp10 = -1;
    end;
    else do;
-      _1_0 = .;
+      AcceptedCmp10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for AcceptedCmp2 ;
-drop _2_0 ;
+drop AcceptedCmp20 ;
 if missing( AcceptedCmp2 ) then do;
-   _2_0 = .;
+   AcceptedCmp20 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -205,22 +183,22 @@ else do;
    _dm12 = put( AcceptedCmp2 , BEST. );
    %DMNORMIP( _dm12 )
    if _dm12 = '0'  then do;
-      _2_0 = 1;
+      AcceptedCmp20 = 1;
    end;
    else if _dm12 = '1'  then do;
-      _2_0 = -1;
+      AcceptedCmp20 = -1;
    end;
    else do;
-      _2_0 = .;
+      AcceptedCmp20 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for AcceptedCmp3 ;
-drop _3_0 ;
+drop AcceptedCmp30 ;
 if missing( AcceptedCmp3 ) then do;
-   _3_0 = .;
+   AcceptedCmp30 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -229,22 +207,22 @@ else do;
    _dm12 = put( AcceptedCmp3 , BEST. );
    %DMNORMIP( _dm12 )
    if _dm12 = '0'  then do;
-      _3_0 = 1;
+      AcceptedCmp30 = 1;
    end;
    else if _dm12 = '1'  then do;
-      _3_0 = -1;
+      AcceptedCmp30 = -1;
    end;
    else do;
-      _3_0 = .;
+      AcceptedCmp30 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for AcceptedCmp4 ;
-drop _4_0 ;
+drop AcceptedCmp40 ;
 if missing( AcceptedCmp4 ) then do;
-   _4_0 = .;
+   AcceptedCmp40 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -253,22 +231,22 @@ else do;
    _dm12 = put( AcceptedCmp4 , BEST. );
    %DMNORMIP( _dm12 )
    if _dm12 = '0'  then do;
-      _4_0 = 1;
+      AcceptedCmp40 = 1;
    end;
    else if _dm12 = '1'  then do;
-      _4_0 = -1;
+      AcceptedCmp40 = -1;
    end;
    else do;
-      _4_0 = .;
+      AcceptedCmp40 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for AcceptedCmp5 ;
-drop _5_0 ;
+drop AcceptedCmp50 ;
 if missing( AcceptedCmp5 ) then do;
-   _5_0 = .;
+   AcceptedCmp50 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -277,30 +255,102 @@ else do;
    _dm12 = put( AcceptedCmp5 , BEST. );
    %DMNORMIP( _dm12 )
    if _dm12 = '0'  then do;
-      _5_0 = 1;
+      AcceptedCmp50 = 1;
    end;
    else if _dm12 = '1'  then do;
-      _5_0 = -1;
+      AcceptedCmp50 = -1;
    end;
    else do;
-      _5_0 = .;
+      AcceptedCmp50 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Complain ;
+drop Complain0 ;
+if missing( Complain ) then do;
+   Complain0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( Complain , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      Complain0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      Complain0 = -1;
+   end;
+   else do;
+      Complain0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Education ;
+drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
+*** encoding is sparse, initialize to zero;
+Education2n_Cycle = 0;
+EducationBasic = 0;
+EducationGraduation = 0;
+EducationMaster = 0;
+if missing( Education ) then do;
+   Education2n_Cycle = .;
+   EducationBasic = .;
+   EducationGraduation = .;
+   EducationMaster = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm10 $ 10; drop _dm10 ;
+   _dm10 = put( Education , $10. );
+   %DMNORMIP( _dm10 )
+   if _dm10 = 'GRADUATION'  then do;
+      EducationGraduation = 1;
+   end;
+   else if _dm10 = 'PHD'  then do;
+      Education2n_Cycle = -1;
+      EducationBasic = -1;
+      EducationGraduation = -1;
+      EducationMaster = -1;
+   end;
+   else if _dm10 = 'MASTER'  then do;
+      EducationMaster = 1;
+   end;
+   else if _dm10 = '2N CYCLE'  then do;
+      Education2n_Cycle = 1;
+   end;
+   else if _dm10 = 'BASIC'  then do;
+      EducationBasic = 1;
+   end;
+   else do;
+      Education2n_Cycle = .;
+      EducationBasic = .;
+      EducationGraduation = .;
+      EducationMaster = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for Marital_Status ;
-drop _8_0 _8_1 _8_2 _8_3 ;
+drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
+        Marital_StatusTogether ;
 *** encoding is sparse, initialize to zero;
-_8_0 = 0;
-_8_1 = 0;
-_8_2 = 0;
-_8_3 = 0;
+Marital_StatusDivorced = 0;
+Marital_StatusMarried = 0;
+Marital_StatusSingle = 0;
+Marital_StatusTogether = 0;
 if missing( Marital_Status ) then do;
-   _8_0 = .;
-   _8_1 = .;
-   _8_2 = .;
-   _8_3 = .;
+   Marital_StatusDivorced = .;
+   Marital_StatusMarried = .;
+   Marital_StatusSingle = .;
+   Marital_StatusTogether = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -312,408 +362,1523 @@ else do;
    if _dm8 <= 'SINGLE'  then do;
       if _dm8 <= 'MARRIED'  then do;
          if _dm8 = 'DIVORCED'  then do;
-            _8_0 = 1;
+            Marital_StatusDivorced = 1;
             _dm_find = 1;
          end;
          else do;
             if _dm8 = 'MARRIED'  then do;
-               _8_1 = 1;
+               Marital_StatusMarried = 1;
                _dm_find = 1;
             end;
          end;
       end;
       else do;
          if _dm8 = 'SINGLE'  then do;
-            _8_2 = 1;
+            Marital_StatusSingle = 1;
             _dm_find = 1;
          end;
       end;
    end;
    else do;
       if _dm8 = 'TOGETHER'  then do;
-         _8_3 = 1;
+         Marital_StatusTogether = 1;
          _dm_find = 1;
       end;
       else do;
          if _dm8 = 'WIDOW'  then do;
-            _8_0 = -1;
-            _8_1 = -1;
-            _8_2 = -1;
-            _8_3 = -1;
+            Marital_StatusDivorced = -1;
+            Marital_StatusMarried = -1;
+            Marital_StatusSingle = -1;
+            Marital_StatusTogether = -1;
             _dm_find = 1;
          end;
       end;
    end;
    if not _dm_find then do;
-      _8_0 = .;
-      _8_1 = .;
-      _8_2 = .;
-      _8_3 = .;
+      Marital_StatusDivorced = .;
+      Marital_StatusMarried = .;
+      Marital_StatusSingle = .;
+      Marital_StatusTogether = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
-*** If missing inputs, use averages;
-if _DM_BAD > 0 then do;
-   _P0 = 0.151221567;
-   _P1 = 0.848778433;
-   goto REG9DR1;
-end;
+*** *************************;
+*** Checking missing input Interval
+*** *************************;
 
-*** Compute Linear Predictor;
-drop _TEMP;
-drop _LP0;
-_LP0 = 0;
+IF NMISS(
+   Income ,
+   Kidhome ,
+   MntFishProducts ,
+   MntFruits ,
+   MntGoldProds ,
+   MntMeatProducts ,
+   MntSweetProducts ,
+   MntWines ,
+   NumCatalogPurchases ,
+   NumDealsPurchases ,
+   NumStorePurchases ,
+   NumWebPurchases ,
+   NumWebVisitsMonth ,
+   Recency ,
+   Teenhome   ) THEN DO;
+   SUBSTR(_WARN_, 1, 1) = 'M';
 
-***  Effect: AcceptedCmp1 ;
-_TEMP = 1;
-_LP0 = _LP0 + (   -1.28114872833376) * _TEMP * _1_0;
+   _DM_BAD = 1;
+END;
+*** *************************;
+*** Writing the Node intvl ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
+   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
+        NumCatalogPurchases ;
+   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
+ELSE DO;
+   IF MISSING( Income ) THEN S_Income  = . ;
+   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
+   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
+   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
+   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
+         ;
+   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
+   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
+   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
+   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   IF MISSING( MntWines ) THEN S_MntWines  = . ;
+   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
+   ELSE S_NumCatalogPurchases
+          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
+         ;
+   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
+   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
+   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
+   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
+   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   IF MISSING( Recency ) THEN S_Recency  = . ;
+   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
+   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
+*** *************************;
+*** Writing the Node bin ;
+*** *************************;
+*** *************************;
+*** Writing the Node nom ;
+*** *************************;
+*** *************************;
+*** Writing the Node H1 ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H11  =    -0.16969868213328 * S_Income  +     0.02694502969256 * S_Kidhome
+          +     0.03393898746968 * S_MntFishProducts
+          +     0.03394640220058 * S_MntFruits  +    -0.01587167417367 *
+        S_MntGoldProds  +    -0.21495242415153 * S_MntMeatProducts
+          +     0.02266052799747 * S_MntSweetProducts
+          +     0.12574687751719 * S_MntWines  +    -0.21850463721003 *
+        S_NumCatalogPurchases  +    -0.14568080551206 * S_NumDealsPurchases
+          +     0.14229567420228 * S_NumStorePurchases
+          +     0.12847652303094 * S_NumWebPurchases
+          +    -0.27944976547358 * S_NumWebVisitsMonth
+          +     0.34174699105869 * S_Recency  +     0.09717306809084 *
+        S_Teenhome ;
+   H11  = H11  +     0.14287293066948 * AcceptedCmp10
+          +     0.17019666922685 * AcceptedCmp20  +      0.1773366178584 *
+        AcceptedCmp30  +     0.13131611179689 * AcceptedCmp40
+          +     0.19540838220921 * AcceptedCmp50  +    -0.06278476006654 *
+        Complain0 ;
+   H11  = H11  +    -0.01270106768575 * Education2n_Cycle
+          +     0.06504707206132 * EducationBasic  +    -0.03889488068058 *
+        EducationGraduation  +    -0.00452456149121 * EducationMaster
+          +    -0.03502175493382 * Marital_StatusDivorced
+          +     0.10402983157245 * Marital_StatusMarried
+          +    -0.09554165782029 * Marital_StatusSingle
+          +     0.11204179692307 * Marital_StatusTogether ;
+   H11  =    -0.16570612477441 + H11 ;
+   H11  = TANH(H11 );
+END;
+ELSE DO;
+   H11  = .;
+END;
+*** *************************;
+*** Writing the Node DepVar ;
+*** *************************;
 
-***  Effect: AcceptedCmp2 ;
-_TEMP = 1;
-_LP0 = _LP0 + (    -1.4871451186069) * _TEMP * _2_0;
-
-***  Effect: AcceptedCmp3 ;
-_TEMP = 1;
-_LP0 = _LP0 + (   -1.58721567367346) * _TEMP * _3_0;
-
-***  Effect: AcceptedCmp4 ;
-_TEMP = 1;
-_LP0 = _LP0 + (    -1.1573037622615) * _TEMP * _4_0;
-
-***  Effect: AcceptedCmp5 ;
-_TEMP = 1;
-_LP0 = _LP0 + (   -1.68835129992038) * _TEMP * _5_0;
-
-***  Effect: Income ;
-_TEMP = Income ;
-_LP0 = _LP0 + (    0.00006770818936 * _TEMP);
-
-***  Effect: Marital_Status ;
-_TEMP = 1;
-_LP0 = _LP0 + (    0.18351716765826) * _TEMP * _8_0;
-_LP0 = _LP0 + (   -0.88993819943493) * _TEMP * _8_1;
-_LP0 = _LP0 + (    0.89971120865107) * _TEMP * _8_2;
-_LP0 = _LP0 + (   -0.96825171718714) * _TEMP * _8_3;
-
-***  Effect: MntFishProducts ;
-_TEMP = MntFishProducts ;
-_LP0 = _LP0 + (    -0.0053789406447 * _TEMP);
-
-***  Effect: MntFruits ;
-_TEMP = MntFruits ;
-_LP0 = _LP0 + (   -0.00810096702081 * _TEMP);
-
-***  Effect: MntMeatProducts ;
-_TEMP = MntMeatProducts ;
-_LP0 = _LP0 + (    0.00876618054091 * _TEMP);
-
-***  Effect: MntWines ;
-_TEMP = MntWines ;
-_LP0 = _LP0 + (   -0.00323708533956 * _TEMP);
-
-***  Effect: NumCatalogPurchases ;
-_TEMP = NumCatalogPurchases ;
-_LP0 = _LP0 + (    0.72583602627024 * _TEMP);
-
-***  Effect: NumDealsPurchases ;
-_TEMP = NumDealsPurchases ;
-_LP0 = _LP0 + (    0.71587738133808 * _TEMP);
-
-***  Effect: NumStorePurchases ;
-_TEMP = NumStorePurchases ;
-_LP0 = _LP0 + (   -0.38414846639641 * _TEMP);
-
-***  Effect: NumWebPurchases ;
-_TEMP = NumWebPurchases ;
-_LP0 = _LP0 + (   -0.39960732899531 * _TEMP);
-
-***  Effect: NumWebVisitsMonth ;
-_TEMP = NumWebVisitsMonth ;
-_LP0 = _LP0 + (    1.00690630599849 * _TEMP);
-
-***  Effect: Recency ;
-_TEMP = Recency ;
-_LP0 = _LP0 + (   -0.10368937560371 * _TEMP);
-
-***  Effect: Teenhome ;
-_TEMP = Teenhome ;
-_LP0 = _LP0 + (   -1.33387551959166 * _TEMP);
-
-*** Naive Posterior Probabilities;
-drop _MAXP _IY _P0 _P1;
-_TEMP =    -1.29156803352583 + _LP0;
-if (_TEMP < 0) then do;
-   _TEMP = exp(_TEMP);
-   _P0 = _TEMP / (1 + _TEMP);
-end;
-else _P0 = 1 / (1 + exp(-_TEMP));
-_P1 = 1.0 - _P0;
-
-REG9DR1:
-
-*** Residuals;
-if (_Y = .) then do;
-   R_DepVar1 = .;
-   R_DepVar0 = .;
+*** Generate dummy variables for DepVar ;
+drop DepVar1 DepVar0 ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   DepVar1 = .;
+   DepVar0 = .;
 end;
 else do;
-    label R_DepVar1 = 'Residual: DepVar=1' ;
-    label R_DepVar0 = 'Residual: DepVar=0' ;
-   R_DepVar1 = - _P0;
-   R_DepVar0 = - _P1;
-   select( _Y );
-      when (0)  R_DepVar1 = R_DepVar1 + 1;
-      when (1)  R_DepVar0 = R_DepVar0 + 1;
+   if F_DepVar = '0'  then do;
+      DepVar1 = 0;
+      DepVar0 = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      DepVar1 = 1;
+      DepVar0 = 0;
+   end;
+   else do;
+      DepVar1 = .;
+      DepVar0 = .;
    end;
 end;
-
-*** Posterior Probabilities and Predicted Level;
-label P_DepVar1 = 'Predicted: DepVar=1' ;
-label P_DepVar0 = 'Predicted: DepVar=0' ;
-P_DepVar1 = _P0;
-_MAXP = _P0;
-_IY = 1;
-P_DepVar0 = _P1;
-if (_P1 >  _MAXP + 1E-8) then do;
-   _MAXP = _P1;
-   _IY = 2;
-end;
-I_DepVar = REG9DRF[_IY];
-U_DepVar = REG9DRU[_IY];
-
-*************************************;
-***** end scoring code for regression;
-*************************************;
-* Renaming variables for Reg9;
+IF _DM_BAD EQ 0 THEN DO;
+   P_DepVar1  =     -9.2939742190595 * H11 ;
+   P_DepVar1  =    -0.77234034139714 + P_DepVar1 ;
+   P_DepVar0  = 0;
+   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+   _SUM_ = 0.;
+   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar1 ;
+   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar0 ;
+   P_DepVar1  = P_DepVar1  / _SUM_;
+   P_DepVar0  = P_DepVar0  / _SUM_;
+END;
+ELSE DO;
+   P_DepVar1  = .;
+   P_DepVar0  = .;
+END;
+IF _DM_BAD EQ 1 THEN DO;
+   P_DepVar1  =     0.15122156697556;
+   P_DepVar0  =     0.84877843302443;
+END;
+*** *****************************;
+*** Writing the Residuals  of the Node DepVar ;
+*** ******************************;
+IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
+ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
+IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
+ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
+*** *************************;
+*** Writing the I_DepVar  AND U_DepVar ;
+*** *************************;
+_MAXP_ = P_DepVar1 ;
+I_DepVar  = "1           " ;
+U_DepVar  =                    1;
+IF( _MAXP_ LT P_DepVar0  ) THEN DO;
+   _MAXP_ = P_DepVar0 ;
+   I_DepVar  = "0           " ;
+   U_DepVar  =                    0;
+END;
+********************************;
+*** End Scoring Code for Neural;
+********************************;
+drop
+H11
+;
+drop S_:;
+* Renaming variables for Neural6;
 *------------------------------------------------------------*;
-* Renaming Posterior variables for Reg9;
+* Renaming Posterior variables for Neural6;
 *------------------------------------------------------------*;
-drop Reg9_P_DepVar1;
-Reg9_P_DepVar1 = P_DepVar1;
-drop Reg9_P_DepVar0;
-Reg9_P_DepVar0 = P_DepVar0;
+drop Neural6_P_DepVar1;
+Neural6_P_DepVar1 = P_DepVar1;
+drop Neural6_P_DepVar0;
+Neural6_P_DepVar0 = P_DepVar0;
 *------------------------------------------------------------*;
-* Renaming _WARN_ variable for Reg9;
+* Renaming _WARN_ variable for Neural6;
 *------------------------------------------------------------*;
-length Reg9_WARN_ $4;
-drop Reg9_WARN_;
-Reg9_WARN_ = _WARN_;
+length Neural6_WARN_ $4;
+drop Neural6_WARN_;
+Neural6_WARN_ = _WARN_;
 *------------------------------------------------------------*;
 * Ensmbl9: Scoring Code of model 2 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
-* TOOL: Decision Tree;
+* TOOL: Neural;
 * TYPE: MODEL;
-* NODE: Tree5;
+* NODE: Neural31;
 *------------------------------------------------------------*;
-****************************************************************;
-******             DECISION TREE SCORING CODE             ******;
-****************************************************************;
+***********************************;
+*** Begin Scoring Code for Neural;
+***********************************;
+DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+ _DM_BAD = 0;
+ _NOCL_ = .;
+ _MAX_ = .;
+ _MAXP_ = .;
+ _SUM_ = .;
+ _NTRIALS = .;
+ _EPS =                1E-10;
+LENGTH _WARN_ $4
+      F_DepVar  $ 12
+;
+      label S_Income = 'Standard: Income' ;
 
-******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
-LENGTH F_DepVar  $   12;
-LENGTH I_DepVar  $   12;
-LENGTH _WARN_  $    4;
+      label S_Kidhome = 'Standard: Kidhome' ;
 
-******              LABELS FOR NEW VARIABLES              ******;
-LABEL _NODE_  = 'Node' ;
-LABEL _LEAF_  = 'Leaf' ;
-LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
-LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
-LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
-LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
-LABEL V_DepVar0  = 'Validated: DepVar=0' ;
-LABEL V_DepVar1  = 'Validated: DepVar=1' ;
-LABEL R_DepVar0  = 'Residual: DepVar=0' ;
-LABEL R_DepVar1  = 'Residual: DepVar=1' ;
-LABEL F_DepVar  = 'From: DepVar' ;
-LABEL I_DepVar  = 'Into: DepVar' ;
-LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
-LABEL _WARN_  = 'Warnings' ;
+      label S_MntFishProducts = 'Standard: MntFishProducts' ;
 
+      label S_MntFruits = 'Standard: MntFruits' ;
 
-******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
-LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
-_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
-LENGTH _ARBFMT_8 $      8; DROP _ARBFMT_8;
-_ARBFMT_8 = ' '; /* Initialize to avoid warning. */
+      label S_MntGoldProds = 'Standard: MntGoldProds' ;
 
+      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
 
-_ARBFMT_12 = PUT( DepVar , BEST.);
- %DMNORMCP( _ARBFMT_12, F_DepVar );
+      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
 
-******             ASSIGN OBSERVATION TO NODE             ******;
-IF  NOT MISSING(Recency ) AND
-  Recency  <                 38.5 THEN DO;
-  IF  NOT MISSING(MntMeatProducts ) AND
-                   431.5 <= MntMeatProducts  THEN DO;
-    IF  NOT MISSING(NumCatalogPurchases ) AND
-      NumCatalogPurchases  <                  5.5 THEN DO;
-      _ARBFMT_8 = PUT( Marital_Status , $8.);
-       %DMNORMIP( _ARBFMT_8);
-      IF _ARBFMT_8 IN ('MARRIED' ,'TOGETHER' ) THEN DO;
-        _NODE_  =                   21;
-        _LEAF_  =                    5;
-        P_DepVar0  =     0.71052631578947;
-        P_DepVar1  =     0.28947368421052;
-        Q_DepVar0  =     0.71052631578947;
-        Q_DepVar1  =     0.28947368421052;
-        V_DepVar0  =     0.66666666666666;
-        V_DepVar1  =     0.33333333333333;
-        I_DepVar  = '0' ;
-        U_DepVar  =                    0;
-        END;
-      ELSE DO;
-        _NODE_  =                   20;
-        _LEAF_  =                    4;
-        P_DepVar0  =     0.17647058823529;
-        P_DepVar1  =      0.8235294117647;
-        Q_DepVar0  =     0.17647058823529;
-        Q_DepVar1  =      0.8235294117647;
-        V_DepVar0  =                 0.25;
-        V_DepVar1  =                 0.75;
-        I_DepVar  = '1' ;
-        U_DepVar  =                    1;
-        END;
-      END;
-    ELSE DO;
-      _NODE_  =                   11;
-      _LEAF_  =                    6;
-      P_DepVar0  =     0.15730337078651;
-      P_DepVar1  =     0.84269662921348;
-      Q_DepVar0  =     0.15730337078651;
-      Q_DepVar1  =     0.84269662921348;
-      V_DepVar0  =     0.29411764705882;
-      V_DepVar1  =     0.70588235294117;
-      I_DepVar  = '1' ;
-      U_DepVar  =                    1;
-      END;
-    END;
-  ELSE DO;
-    _ARBFMT_12 = PUT( AcceptedCmp3 , BEST.);
-     %DMNORMIP( _ARBFMT_12);
-    IF _ARBFMT_12 IN ('1' ) THEN DO;
-      IF  NOT MISSING(NumWebVisitsMonth ) AND
-        NumWebVisitsMonth  <                  5.5 THEN DO;
-        _NODE_  =                   16;
-        _LEAF_  =                    1;
-        P_DepVar0  =     0.64705882352941;
-        P_DepVar1  =     0.35294117647058;
-        Q_DepVar0  =     0.64705882352941;
-        Q_DepVar1  =     0.35294117647058;
-        V_DepVar0  =     0.57142857142857;
-        V_DepVar1  =     0.42857142857142;
-        I_DepVar  = '0' ;
-        U_DepVar  =                    0;
-        END;
-      ELSE DO;
-        _NODE_  =                   17;
-        _LEAF_  =                    2;
-        P_DepVar0  =     0.17391304347826;
-        P_DepVar1  =     0.82608695652173;
-        Q_DepVar0  =     0.17391304347826;
-        Q_DepVar1  =     0.82608695652173;
-        V_DepVar0  =                 0.15;
-        V_DepVar1  =                 0.85;
-        I_DepVar  = '1' ;
-        U_DepVar  =                    1;
-        END;
-      END;
-    ELSE DO;
-      _NODE_  =                    9;
-      _LEAF_  =                    3;
-      P_DepVar0  =     0.82099596231493;
-      P_DepVar1  =     0.17900403768506;
-      Q_DepVar0  =     0.82099596231493;
-      Q_DepVar1  =     0.17900403768506;
-      V_DepVar0  =     0.80966767371601;
-      V_DepVar1  =     0.19033232628398;
-      I_DepVar  = '0' ;
-      U_DepVar  =                    0;
-      END;
-    END;
-  END;
+      label S_MntWines = 'Standard: MntWines' ;
+
+      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
+
+      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
+
+      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
+
+      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
+
+      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
+
+      label S_Recency = 'Standard: Recency' ;
+
+      label S_Teenhome = 'Standard: Teenhome' ;
+
+      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
+
+      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
+
+      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
+
+      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
+
+      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
+
+      label Complain0 = 'Dummy: Complain=0' ;
+
+      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
+
+      label EducationBasic = 'Dummy: Education=Basic' ;
+
+      label EducationGraduation = 'Dummy: Education=Graduation' ;
+
+      label EducationMaster = 'Dummy: Education=Master' ;
+
+      label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
+
+      label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
+
+      label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
+
+      label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
+
+      label H11 = 'Hidden: H1=1' ;
+
+      label H12 = 'Hidden: H1=2' ;
+
+      label I_DepVar = 'Into: DepVar' ;
+
+      label F_DepVar = 'From: DepVar' ;
+
+      label U_DepVar = 'Unnormalized Into: DepVar' ;
+
+      label P_DepVar1 = 'Predicted: DepVar=1' ;
+
+      label R_DepVar1 = 'Residual: DepVar=1' ;
+
+      label P_DepVar0 = 'Predicted: DepVar=0' ;
+
+      label R_DepVar0 = 'Residual: DepVar=0' ;
+
+      label  _WARN_ = "Warnings";
+
+*** Generate dummy variables for AcceptedCmp1 ;
+drop AcceptedCmp10 ;
+if missing( AcceptedCmp1 ) then do;
+   AcceptedCmp10 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp1 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp10 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp10 = -1;
+   end;
+   else do;
+      AcceptedCmp10 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp2 ;
+drop AcceptedCmp20 ;
+if missing( AcceptedCmp2 ) then do;
+   AcceptedCmp20 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp2 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp20 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp20 = -1;
+   end;
+   else do;
+      AcceptedCmp20 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp3 ;
+drop AcceptedCmp30 ;
+if missing( AcceptedCmp3 ) then do;
+   AcceptedCmp30 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp3 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp30 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp30 = -1;
+   end;
+   else do;
+      AcceptedCmp30 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp4 ;
+drop AcceptedCmp40 ;
+if missing( AcceptedCmp4 ) then do;
+   AcceptedCmp40 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp4 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp40 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp40 = -1;
+   end;
+   else do;
+      AcceptedCmp40 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp5 ;
+drop AcceptedCmp50 ;
+if missing( AcceptedCmp5 ) then do;
+   AcceptedCmp50 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp5 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp50 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp50 = -1;
+   end;
+   else do;
+      AcceptedCmp50 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Complain ;
+drop Complain0 ;
+if missing( Complain ) then do;
+   Complain0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( Complain , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      Complain0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      Complain0 = -1;
+   end;
+   else do;
+      Complain0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Education ;
+drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
+*** encoding is sparse, initialize to zero;
+Education2n_Cycle = 0;
+EducationBasic = 0;
+EducationGraduation = 0;
+EducationMaster = 0;
+if missing( Education ) then do;
+   Education2n_Cycle = .;
+   EducationBasic = .;
+   EducationGraduation = .;
+   EducationMaster = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm10 $ 10; drop _dm10 ;
+   _dm10 = put( Education , $10. );
+   %DMNORMIP( _dm10 )
+   if _dm10 = 'GRADUATION'  then do;
+      EducationGraduation = 1;
+   end;
+   else if _dm10 = 'PHD'  then do;
+      Education2n_Cycle = -1;
+      EducationBasic = -1;
+      EducationGraduation = -1;
+      EducationMaster = -1;
+   end;
+   else if _dm10 = 'MASTER'  then do;
+      EducationMaster = 1;
+   end;
+   else if _dm10 = '2N CYCLE'  then do;
+      Education2n_Cycle = 1;
+   end;
+   else if _dm10 = 'BASIC'  then do;
+      EducationBasic = 1;
+   end;
+   else do;
+      Education2n_Cycle = .;
+      EducationBasic = .;
+      EducationGraduation = .;
+      EducationMaster = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Marital_Status ;
+drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
+        Marital_StatusTogether ;
+*** encoding is sparse, initialize to zero;
+Marital_StatusDivorced = 0;
+Marital_StatusMarried = 0;
+Marital_StatusSingle = 0;
+Marital_StatusTogether = 0;
+if missing( Marital_Status ) then do;
+   Marital_StatusDivorced = .;
+   Marital_StatusMarried = .;
+   Marital_StatusSingle = .;
+   Marital_StatusTogether = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm8 $ 8; drop _dm8 ;
+   _dm8 = put( Marital_Status , $8. );
+   %DMNORMIP( _dm8 )
+   _dm_find = 0; drop _dm_find;
+   if _dm8 <= 'SINGLE'  then do;
+      if _dm8 <= 'MARRIED'  then do;
+         if _dm8 = 'DIVORCED'  then do;
+            Marital_StatusDivorced = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm8 = 'MARRIED'  then do;
+               Marital_StatusMarried = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm8 = 'SINGLE'  then do;
+            Marital_StatusSingle = 1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   else do;
+      if _dm8 = 'TOGETHER'  then do;
+         Marital_StatusTogether = 1;
+         _dm_find = 1;
+      end;
+      else do;
+         if _dm8 = 'WIDOW'  then do;
+            Marital_StatusDivorced = -1;
+            Marital_StatusMarried = -1;
+            Marital_StatusSingle = -1;
+            Marital_StatusTogether = -1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
+      Marital_StatusDivorced = .;
+      Marital_StatusMarried = .;
+      Marital_StatusSingle = .;
+      Marital_StatusTogether = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** *************************;
+*** Checking missing input Interval
+*** *************************;
+
+IF NMISS(
+   Income ,
+   Kidhome ,
+   MntFishProducts ,
+   MntFruits ,
+   MntGoldProds ,
+   MntMeatProducts ,
+   MntSweetProducts ,
+   MntWines ,
+   NumCatalogPurchases ,
+   NumDealsPurchases ,
+   NumStorePurchases ,
+   NumWebPurchases ,
+   NumWebVisitsMonth ,
+   Recency ,
+   Teenhome   ) THEN DO;
+   SUBSTR(_WARN_, 1, 1) = 'M';
+
+   _DM_BAD = 1;
+END;
+*** *************************;
+*** Writing the Node intvl ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
+   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
+        NumCatalogPurchases ;
+   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
 ELSE DO;
-  _ARBFMT_12 = PUT( AcceptedCmp5 , BEST.);
-   %DMNORMIP( _ARBFMT_12);
-  IF _ARBFMT_12 IN ('1' ) THEN DO;
-    IF  NOT MISSING(MntWines ) AND
-      MntWines  <                412.5 THEN DO;
-      _NODE_  =                   12;
-      _LEAF_  =                    7;
-      P_DepVar0  =     0.13333333333333;
-      P_DepVar1  =     0.86666666666666;
-      Q_DepVar0  =     0.13333333333333;
-      Q_DepVar1  =     0.86666666666666;
-      V_DepVar0  =     0.16666666666666;
-      V_DepVar1  =     0.83333333333333;
-      I_DepVar  = '1' ;
-      U_DepVar  =                    1;
-      END;
-    ELSE DO;
-      _NODE_  =                   13;
-      _LEAF_  =                    8;
-      P_DepVar0  =     0.70833333333333;
-      P_DepVar1  =     0.29166666666666;
-      Q_DepVar0  =     0.70833333333333;
-      Q_DepVar1  =     0.29166666666666;
-      V_DepVar0  =     0.63461538461538;
-      V_DepVar1  =     0.36538461538461;
-      I_DepVar  = '0' ;
-      U_DepVar  =                    0;
-      END;
-    END;
-  ELSE DO;
-    _NODE_  =                    7;
-    _LEAF_  =                    9;
-    P_DepVar0  =     0.96877380045696;
-    P_DepVar1  =     0.03122619954303;
-    Q_DepVar0  =     0.96877380045696;
-    Q_DepVar1  =     0.03122619954303;
-    V_DepVar0  =     0.96756756756756;
-    V_DepVar1  =     0.03243243243243;
-    I_DepVar  = '0' ;
-    U_DepVar  =                    0;
-    END;
-  END;
+   IF MISSING( Income ) THEN S_Income  = . ;
+   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
+   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
+   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
+   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
+         ;
+   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
+   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
+   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
+   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   IF MISSING( MntWines ) THEN S_MntWines  = . ;
+   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
+   ELSE S_NumCatalogPurchases
+          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
+         ;
+   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
+   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
+   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
+   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
+   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   IF MISSING( Recency ) THEN S_Recency  = . ;
+   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
+   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
+*** *************************;
+*** Writing the Node bin ;
+*** *************************;
+*** *************************;
+*** Writing the Node nom ;
+*** *************************;
+*** *************************;
+*** Writing the Node H1 ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H11  =    -1.33502235588914 * S_Income  +     0.86914778071024 * S_Kidhome
+          +     0.06177226616611 * S_MntFishProducts
+          +     0.22465531888584 * S_MntFruits  +    -0.01216018017424 *
+        S_MntGoldProds  +    -0.10435601171346 * S_MntMeatProducts
+          +     0.19245635559754 * S_MntSweetProducts
+          +    -0.06473329764962 * S_MntWines  +    -0.40260570275107 *
+        S_NumCatalogPurchases  +    -0.01043435397255 * S_NumDealsPurchases
+          +    -0.35392759932805 * S_NumStorePurchases
+          +     -0.2443007642616 * S_NumWebPurchases
+          +    -0.72667572173837 * S_NumWebVisitsMonth
+          +     0.97336679863544 * S_Recency  +     0.72544205905496 *
+        S_Teenhome ;
+   H12  =    -0.09105644521483 * S_Income  +     0.01920168996111 * S_Kidhome
+          +     0.00012212205827 * S_MntFishProducts
+          +     0.00032664246198 * S_MntFruits  +    -0.02161363659377 *
+        S_MntGoldProds  +    -0.40917729724893 * S_MntMeatProducts
+          +     0.01459978689352 * S_MntSweetProducts
+          +     0.28732983017398 * S_MntWines  +    -0.26033282919423 *
+        S_NumCatalogPurchases  +      -0.306688498482 * S_NumDealsPurchases
+          +      0.4054643699817 * S_NumStorePurchases
+          +     0.27747327375374 * S_NumWebPurchases
+          +    -0.31325270852641 * S_NumWebVisitsMonth
+          +      0.3707065492652 * S_Recency  +     0.05681262835219 *
+        S_Teenhome ;
+   H11  = H11  +     0.23904403737743 * AcceptedCmp10
+          +     0.12365860406863 * AcceptedCmp20  +     0.28547657706908 *
+        AcceptedCmp30  +     0.37587337003909 * AcceptedCmp40
+          +    -0.04113029526683 * AcceptedCmp50  +      0.2596440604013 *
+        Complain0 ;
+   H12  = H12  +     0.25336773034662 * AcceptedCmp10
+          +     0.39499004620022 * AcceptedCmp20  +     0.19852127214148 *
+        AcceptedCmp30  +     0.19215250383325 * AcceptedCmp40
+          +     0.27213364707939 * AcceptedCmp50  +    -0.00774901485124 *
+        Complain0 ;
+   H11  = H11  +    -0.05263155952227 * Education2n_Cycle
+          +    -1.40124591386453 * EducationBasic  +     0.43501491332678 *
+        EducationGraduation  +     0.77305262508081 * EducationMaster
+          +    -0.43667846017683 * Marital_StatusDivorced
+          +     1.33507828005472 * Marital_StatusMarried
+          +    -0.75026283842664 * Marital_StatusSingle
+          +     0.84436594207558 * Marital_StatusTogether ;
+   H12  = H12  +     0.08398432584098 * Education2n_Cycle
+          +     0.12375156883157 * EducationBasic  +     -0.0901891766073 *
+        EducationGraduation  +    -0.07691770257441 * EducationMaster
+          +    -0.03531690128173 * Marital_StatusDivorced
+          +    -0.04344171367809 * Marital_StatusMarried
+          +    -0.05137362653166 * Marital_StatusSingle
+          +    -0.01265518570667 * Marital_StatusTogether ;
+   H11  =     1.86846527977677 + H11 ;
+   H12  =    -0.42494263287735 + H12 ;
+   H11  = TANH(H11 );
+   H12  = TANH(H12 );
+END;
+ELSE DO;
+   H11  = .;
+   H12  = .;
+END;
+*** *************************;
+*** Writing the Node DepVar ;
+*** *************************;
 
-*****  RESIDUALS R_ *************;
-IF  F_DepVar  NE '0'
-AND F_DepVar  NE '1'  THEN DO;
-        R_DepVar0  = .;
-        R_DepVar1  = .;
- END;
- ELSE DO;
-       R_DepVar0  =  -P_DepVar0 ;
-       R_DepVar1  =  -P_DepVar1 ;
-       SELECT( F_DepVar  );
-          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
-          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
-       END;
- END;
-
-****************************************************************;
-******          END OF DECISION TREE SCORING CODE         ******;
-****************************************************************;
-drop _LEAF_;
-* Renaming variables for Tree5;
+*** Generate dummy variables for DepVar ;
+drop DepVar1 DepVar0 ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   DepVar1 = .;
+   DepVar0 = .;
+end;
+else do;
+   if F_DepVar = '0'  then do;
+      DepVar1 = 0;
+      DepVar0 = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      DepVar1 = 1;
+      DepVar0 = 0;
+   end;
+   else do;
+      DepVar1 = .;
+      DepVar0 = .;
+   end;
+end;
+IF _DM_BAD EQ 0 THEN DO;
+   P_DepVar1  =    -5.43090515434696 * H11  +    -9.08673127131886 * H12 ;
+   P_DepVar1  =      2.7752946076831 + P_DepVar1 ;
+   P_DepVar0  = 0;
+   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+   _SUM_ = 0.;
+   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar1 ;
+   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar0 ;
+   P_DepVar1  = P_DepVar1  / _SUM_;
+   P_DepVar0  = P_DepVar0  / _SUM_;
+END;
+ELSE DO;
+   P_DepVar1  = .;
+   P_DepVar0  = .;
+END;
+IF _DM_BAD EQ 1 THEN DO;
+   P_DepVar1  =     0.15122156697556;
+   P_DepVar0  =     0.84877843302443;
+END;
+*** *****************************;
+*** Writing the Residuals  of the Node DepVar ;
+*** ******************************;
+IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
+ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
+IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
+ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
+*** *************************;
+*** Writing the I_DepVar  AND U_DepVar ;
+*** *************************;
+_MAXP_ = P_DepVar1 ;
+I_DepVar  = "1           " ;
+U_DepVar  =                    1;
+IF( _MAXP_ LT P_DepVar0  ) THEN DO;
+   _MAXP_ = P_DepVar0 ;
+   I_DepVar  = "0           " ;
+   U_DepVar  =                    0;
+END;
+********************************;
+*** End Scoring Code for Neural;
+********************************;
+drop
+H11
+H12
+;
+drop S_:;
+* Renaming variables for Neural31;
 *------------------------------------------------------------*;
-* Renaming Posterior variables for Tree5;
+* Renaming Posterior variables for Neural31;
 *------------------------------------------------------------*;
-drop Tree5_P_DepVar1;
-Tree5_P_DepVar1 = P_DepVar1;
-drop Tree5_P_DepVar0;
-Tree5_P_DepVar0 = P_DepVar0;
+drop Neural31_P_DepVar1;
+Neural31_P_DepVar1 = P_DepVar1;
+drop Neural31_P_DepVar0;
+Neural31_P_DepVar0 = P_DepVar0;
 *------------------------------------------------------------*;
-* Renaming _WARN_ variable for Tree5;
+* Renaming _WARN_ variable for Neural31;
 *------------------------------------------------------------*;
-length Tree5_WARN_ $4;
-drop Tree5_WARN_;
-Tree5_WARN_ = _WARN_;
+length Neural31_WARN_ $4;
+drop Neural31_WARN_;
+Neural31_WARN_ = _WARN_;
 *------------------------------------------------------------*;
 * Ensmbl9: Scoring Code of model 3 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Neural;
+* TYPE: MODEL;
+* NODE: Neural32;
+*------------------------------------------------------------*;
+***********************************;
+*** Begin Scoring Code for Neural;
+***********************************;
+DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
+ _DM_BAD = 0;
+ _NOCL_ = .;
+ _MAX_ = .;
+ _MAXP_ = .;
+ _SUM_ = .;
+ _NTRIALS = .;
+ _EPS =                1E-10;
+LENGTH _WARN_ $4
+      F_DepVar  $ 12
+;
+      label S_Income = 'Standard: Income' ;
+
+      label S_Kidhome = 'Standard: Kidhome' ;
+
+      label S_MntFishProducts = 'Standard: MntFishProducts' ;
+
+      label S_MntFruits = 'Standard: MntFruits' ;
+
+      label S_MntGoldProds = 'Standard: MntGoldProds' ;
+
+      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
+
+      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
+
+      label S_MntWines = 'Standard: MntWines' ;
+
+      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
+
+      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
+
+      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
+
+      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
+
+      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
+
+      label S_Recency = 'Standard: Recency' ;
+
+      label S_Teenhome = 'Standard: Teenhome' ;
+
+      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
+
+      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
+
+      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
+
+      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
+
+      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
+
+      label Complain0 = 'Dummy: Complain=0' ;
+
+      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
+
+      label EducationBasic = 'Dummy: Education=Basic' ;
+
+      label EducationGraduation = 'Dummy: Education=Graduation' ;
+
+      label EducationMaster = 'Dummy: Education=Master' ;
+
+      label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
+
+      label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
+
+      label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
+
+      label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
+
+      label H11 = 'Hidden: H1=1' ;
+
+      label H12 = 'Hidden: H1=2' ;
+
+      label H13 = 'Hidden: H1=3' ;
+
+      label I_DepVar = 'Into: DepVar' ;
+
+      label F_DepVar = 'From: DepVar' ;
+
+      label U_DepVar = 'Unnormalized Into: DepVar' ;
+
+      label P_DepVar1 = 'Predicted: DepVar=1' ;
+
+      label R_DepVar1 = 'Residual: DepVar=1' ;
+
+      label P_DepVar0 = 'Predicted: DepVar=0' ;
+
+      label R_DepVar0 = 'Residual: DepVar=0' ;
+
+      label  _WARN_ = "Warnings";
+
+*** Generate dummy variables for AcceptedCmp1 ;
+drop AcceptedCmp10 ;
+if missing( AcceptedCmp1 ) then do;
+   AcceptedCmp10 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp1 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp10 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp10 = -1;
+   end;
+   else do;
+      AcceptedCmp10 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp2 ;
+drop AcceptedCmp20 ;
+if missing( AcceptedCmp2 ) then do;
+   AcceptedCmp20 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp2 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp20 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp20 = -1;
+   end;
+   else do;
+      AcceptedCmp20 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp3 ;
+drop AcceptedCmp30 ;
+if missing( AcceptedCmp3 ) then do;
+   AcceptedCmp30 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp3 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp30 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp30 = -1;
+   end;
+   else do;
+      AcceptedCmp30 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp4 ;
+drop AcceptedCmp40 ;
+if missing( AcceptedCmp4 ) then do;
+   AcceptedCmp40 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp4 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp40 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp40 = -1;
+   end;
+   else do;
+      AcceptedCmp40 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp5 ;
+drop AcceptedCmp50 ;
+if missing( AcceptedCmp5 ) then do;
+   AcceptedCmp50 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp5 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      AcceptedCmp50 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      AcceptedCmp50 = -1;
+   end;
+   else do;
+      AcceptedCmp50 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Complain ;
+drop Complain0 ;
+if missing( Complain ) then do;
+   Complain0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( Complain , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      Complain0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      Complain0 = -1;
+   end;
+   else do;
+      Complain0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Education ;
+drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
+*** encoding is sparse, initialize to zero;
+Education2n_Cycle = 0;
+EducationBasic = 0;
+EducationGraduation = 0;
+EducationMaster = 0;
+if missing( Education ) then do;
+   Education2n_Cycle = .;
+   EducationBasic = .;
+   EducationGraduation = .;
+   EducationMaster = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm10 $ 10; drop _dm10 ;
+   _dm10 = put( Education , $10. );
+   %DMNORMIP( _dm10 )
+   if _dm10 = 'GRADUATION'  then do;
+      EducationGraduation = 1;
+   end;
+   else if _dm10 = 'PHD'  then do;
+      Education2n_Cycle = -1;
+      EducationBasic = -1;
+      EducationGraduation = -1;
+      EducationMaster = -1;
+   end;
+   else if _dm10 = 'MASTER'  then do;
+      EducationMaster = 1;
+   end;
+   else if _dm10 = '2N CYCLE'  then do;
+      Education2n_Cycle = 1;
+   end;
+   else if _dm10 = 'BASIC'  then do;
+      EducationBasic = 1;
+   end;
+   else do;
+      Education2n_Cycle = .;
+      EducationBasic = .;
+      EducationGraduation = .;
+      EducationMaster = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Marital_Status ;
+drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
+        Marital_StatusTogether ;
+*** encoding is sparse, initialize to zero;
+Marital_StatusDivorced = 0;
+Marital_StatusMarried = 0;
+Marital_StatusSingle = 0;
+Marital_StatusTogether = 0;
+if missing( Marital_Status ) then do;
+   Marital_StatusDivorced = .;
+   Marital_StatusMarried = .;
+   Marital_StatusSingle = .;
+   Marital_StatusTogether = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm8 $ 8; drop _dm8 ;
+   _dm8 = put( Marital_Status , $8. );
+   %DMNORMIP( _dm8 )
+   _dm_find = 0; drop _dm_find;
+   if _dm8 <= 'SINGLE'  then do;
+      if _dm8 <= 'MARRIED'  then do;
+         if _dm8 = 'DIVORCED'  then do;
+            Marital_StatusDivorced = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm8 = 'MARRIED'  then do;
+               Marital_StatusMarried = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm8 = 'SINGLE'  then do;
+            Marital_StatusSingle = 1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   else do;
+      if _dm8 = 'TOGETHER'  then do;
+         Marital_StatusTogether = 1;
+         _dm_find = 1;
+      end;
+      else do;
+         if _dm8 = 'WIDOW'  then do;
+            Marital_StatusDivorced = -1;
+            Marital_StatusMarried = -1;
+            Marital_StatusSingle = -1;
+            Marital_StatusTogether = -1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
+      Marital_StatusDivorced = .;
+      Marital_StatusMarried = .;
+      Marital_StatusSingle = .;
+      Marital_StatusTogether = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** *************************;
+*** Checking missing input Interval
+*** *************************;
+
+IF NMISS(
+   Income ,
+   Kidhome ,
+   MntFishProducts ,
+   MntFruits ,
+   MntGoldProds ,
+   MntMeatProducts ,
+   MntSweetProducts ,
+   MntWines ,
+   NumCatalogPurchases ,
+   NumDealsPurchases ,
+   NumStorePurchases ,
+   NumWebPurchases ,
+   NumWebVisitsMonth ,
+   Recency ,
+   Teenhome   ) THEN DO;
+   SUBSTR(_WARN_, 1, 1) = 'M';
+
+   _DM_BAD = 1;
+END;
+*** *************************;
+*** Writing the Node intvl ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
+   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
+        NumCatalogPurchases ;
+   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
+ELSE DO;
+   IF MISSING( Income ) THEN S_Income  = . ;
+   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
+   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
+   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
+   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
+   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
+        MntFishProducts ;
+   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
+   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
+         ;
+   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
+   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
+        MntGoldProds ;
+   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
+   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
+   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
+        MntSweetProducts ;
+   IF MISSING( MntWines ) THEN S_MntWines  = . ;
+   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
+   ELSE S_NumCatalogPurchases
+          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
+         ;
+   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
+   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
+        NumDealsPurchases ;
+   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
+   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
+        NumStorePurchases ;
+   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
+   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
+        NumWebPurchases ;
+   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
+   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
+        NumWebVisitsMonth ;
+   IF MISSING( Recency ) THEN S_Recency  = . ;
+   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
+   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
+   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
+END;
+*** *************************;
+*** Writing the Node bin ;
+*** *************************;
+*** *************************;
+*** Writing the Node nom ;
+*** *************************;
+*** *************************;
+*** Writing the Node H1 ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H11  =     1.40261108800308 * S_Income  +     -0.8062097507842 * S_Kidhome
+          +    -0.12974862644982 * S_MntFishProducts
+          +     0.08065642800368 * S_MntFruits  +    -0.12102130003972 *
+        S_MntGoldProds  +     0.19226249622126 * S_MntMeatProducts
+          +    -0.12290326901613 * S_MntSweetProducts
+          +     0.07790241176978 * S_MntWines  +     0.36123042724896 *
+        S_NumCatalogPurchases  +    -0.01034406765754 * S_NumDealsPurchases
+          +     0.09738032540137 * S_NumStorePurchases
+          +     0.44459515215205 * S_NumWebPurchases
+          +      0.8471075994578 * S_NumWebVisitsMonth
+          +    -1.10667985160899 * S_Recency  +    -0.88509832868515 *
+        S_Teenhome ;
+   H12  =     0.51266936686642 * S_Income  +     0.26909433357851 * S_Kidhome
+          +     0.02406077596811 * S_MntFishProducts
+          +    -0.57443793453522 * S_MntFruits  +     0.36824731232149 *
+        S_MntGoldProds  +     0.40177289143061 * S_MntMeatProducts
+          +     -0.1147507059349 * S_MntSweetProducts
+          +    -0.66379351187459 * S_MntWines  +     1.33407347415468 *
+        S_NumCatalogPurchases  +     1.00633891197299 * S_NumDealsPurchases
+          +    -0.23920969262322 * S_NumStorePurchases
+          +     -0.6008837862932 * S_NumWebPurchases
+          +     0.26759743722885 * S_NumWebVisitsMonth
+          +    -0.42755419464125 * S_Recency  +    -0.14471776361394 *
+        S_Teenhome ;
+   H13  =    -0.19807308698832 * S_Income  +     0.25934675474849 * S_Kidhome
+          +     0.04398331533724 * S_MntFishProducts
+          +    -0.00090357598988 * S_MntFruits  +     0.05139545341773 *
+        S_MntGoldProds  +    -0.74617114336019 * S_MntMeatProducts
+          +     0.00552488718744 * S_MntSweetProducts
+          +     0.47194407197012 * S_MntWines  +    -0.35149551848487 *
+        S_NumCatalogPurchases  +    -0.30232522133093 * S_NumDealsPurchases
+          +     0.60058189155105 * S_NumStorePurchases
+          +     0.51423374855856 * S_NumWebPurchases
+          +     -0.9075304423321 * S_NumWebVisitsMonth
+          +     0.83597739226791 * S_Recency  +     0.15783202762709 *
+        S_Teenhome ;
+   H11  = H11  +    -0.26274045665457 * AcceptedCmp10
+          +    -0.86105702939371 * AcceptedCmp20  +    -0.50476270558977 *
+        AcceptedCmp30  +    -0.84284126473343 * AcceptedCmp40
+          +     0.19764907691314 * AcceptedCmp50  +    -0.29305577412263 *
+        Complain0 ;
+   H12  = H12  +    -0.27394139847883 * AcceptedCmp10
+          +    -0.14688750266104 * AcceptedCmp20  +    -0.27982299242327 *
+        AcceptedCmp30  +    -0.10465140408787 * AcceptedCmp40
+          +    -0.81681330244218 * AcceptedCmp50  +    -0.28152730217644 *
+        Complain0 ;
+   H13  = H13  +     0.42310780831005 * AcceptedCmp10
+          +     0.41337614261155 * AcceptedCmp20  +     0.41436520641821 *
+        AcceptedCmp30  +     0.08914989208239 * AcceptedCmp40
+          +     0.54013759697695 * AcceptedCmp50  +    -0.19478210268955 *
+        Complain0 ;
+   H11  = H11  +     0.40331200702699 * Education2n_Cycle
+          +     0.17202421641945 * EducationBasic  +    -0.29654161092174 *
+        EducationGraduation  +     -0.4835104183635 * EducationMaster
+          +     0.52129580188513 * Marital_StatusDivorced
+          +     -1.5224490339553 * Marital_StatusMarried
+          +     1.05062906057771 * Marital_StatusSingle
+          +    -1.16420887937635 * Marital_StatusTogether ;
+   H12  = H12  +     -0.3488928858263 * Education2n_Cycle
+          +     0.38279680594423 * EducationBasic  +     0.20376044836519 *
+        EducationGraduation  +     0.20697694670185 * EducationMaster
+          +    -0.14428158063317 * Marital_StatusDivorced
+          +     0.22396926143356 * Marital_StatusMarried
+          +    -0.12980854818876 * Marital_StatusSingle
+          +     0.32607015627906 * Marital_StatusTogether ;
+   H13  = H13  +    -0.18351418824199 * Education2n_Cycle
+          +     0.53417952447263 * EducationBasic  +    -0.14333929289628 *
+        EducationGraduation  +     0.04513004774082 * EducationMaster
+          +    -0.25615797303064 * Marital_StatusDivorced
+          +     0.18825506199046 * Marital_StatusMarried
+          +    -0.24607556819871 * Marital_StatusSingle
+          +     0.29531673844201 * Marital_StatusTogether ;
+   H11  =    -1.29289362679377 + H11 ;
+   H12  =     0.88724419151235 + H12 ;
+   H13  =    -0.51194544699467 + H13 ;
+   H11  = TANH(H11 );
+   H12  = TANH(H12 );
+   H13  = TANH(H13 );
+END;
+ELSE DO;
+   H11  = .;
+   H12  = .;
+   H13  = .;
+END;
+*** *************************;
+*** Writing the Node DepVar ;
+*** *************************;
+
+*** Generate dummy variables for DepVar ;
+drop DepVar1 DepVar0 ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   DepVar1 = .;
+   DepVar0 = .;
+end;
+else do;
+   if F_DepVar = '0'  then do;
+      DepVar1 = 0;
+      DepVar0 = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      DepVar1 = 1;
+      DepVar0 = 0;
+   end;
+   else do;
+      DepVar1 = .;
+      DepVar0 = .;
+   end;
+end;
+IF _DM_BAD EQ 0 THEN DO;
+   P_DepVar1  =     4.44251020865882 * H11  +     2.67139161773156 * H12
+          +    -4.73549395111184 * H13 ;
+   P_DepVar1  =     0.45492690116644 + P_DepVar1 ;
+   P_DepVar0  = 0;
+   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
+   _SUM_ = 0.;
+   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar1 ;
+   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
+   _SUM_ = _SUM_ + P_DepVar0 ;
+   P_DepVar1  = P_DepVar1  / _SUM_;
+   P_DepVar0  = P_DepVar0  / _SUM_;
+END;
+ELSE DO;
+   P_DepVar1  = .;
+   P_DepVar0  = .;
+END;
+IF _DM_BAD EQ 1 THEN DO;
+   P_DepVar1  =     0.15122156697556;
+   P_DepVar0  =     0.84877843302443;
+END;
+*** *****************************;
+*** Writing the Residuals  of the Node DepVar ;
+*** ******************************;
+IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
+ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
+IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
+ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
+*** *************************;
+*** Writing the I_DepVar  AND U_DepVar ;
+*** *************************;
+_MAXP_ = P_DepVar1 ;
+I_DepVar  = "1           " ;
+U_DepVar  =                    1;
+IF( _MAXP_ LT P_DepVar0  ) THEN DO;
+   _MAXP_ = P_DepVar0 ;
+   I_DepVar  = "0           " ;
+   U_DepVar  =                    0;
+END;
+********************************;
+*** End Scoring Code for Neural;
+********************************;
+drop
+H11
+H12
+H13
+;
+drop S_:;
+* Renaming variables for Neural32;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Neural32;
+*------------------------------------------------------------*;
+drop Neural32_P_DepVar1;
+Neural32_P_DepVar1 = P_DepVar1;
+drop Neural32_P_DepVar0;
+Neural32_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Neural32;
+*------------------------------------------------------------*;
+length Neural32_WARN_ $4;
+drop Neural32_WARN_;
+Neural32_WARN_ = _WARN_;
+*------------------------------------------------------------*;
+* Ensmbl9: Scoring Code of model 4 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -1383,1763 +2548,7 @@ length Neural33_WARN_ $4;
 drop Neural33_WARN_;
 Neural33_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl9: Scoring Code of model 4 of 10;
-*------------------------------------------------------------*;
-*------------------------------------------------------------*;
-* TOOL: Neural;
-* TYPE: MODEL;
-* NODE: Neural6;
-*------------------------------------------------------------*;
-***********************************;
-*** Begin Scoring Code for Neural;
-***********************************;
-DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
- _DM_BAD = 0;
- _NOCL_ = .;
- _MAX_ = .;
- _MAXP_ = .;
- _SUM_ = .;
- _NTRIALS = .;
- _EPS =                1E-10;
-LENGTH _WARN_ $4
-      F_DepVar  $ 12
-;
-      label S_Income = 'Standard: Income' ;
-
-      label S_Kidhome = 'Standard: Kidhome' ;
-
-      label S_Mnt = 'Standard: Mnt' ;
-
-      label S_MntFishProducts = 'Standard: MntFishProducts' ;
-
-      label S_MntFruits = 'Standard: MntFruits' ;
-
-      label S_MntGoldProds = 'Standard: MntGoldProds' ;
-
-      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
-
-      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
-
-      label S_MntWines = 'Standard: MntWines' ;
-
-      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
-
-      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
-
-      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
-
-      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
-
-      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
-
-      label S_Recency = 'Standard: Recency' ;
-
-      label S_Teenhome = 'Standard: Teenhome' ;
-
-      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
-
-      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
-
-      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
-
-      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
-
-      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
-
-      label Complain0 = 'Dummy: Complain=0' ;
-
-      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
-
-      label EducationBasic = 'Dummy: Education=Basic' ;
-
-      label EducationGraduation = 'Dummy: Education=Graduation' ;
-
-      label EducationMaster = 'Dummy: Education=Master' ;
-
-      label H11 = 'Hidden: H1=1' ;
-
-      label I_DepVar = 'Into: DepVar' ;
-
-      label F_DepVar = 'From: DepVar' ;
-
-      label U_DepVar = 'Unnormalized Into: DepVar' ;
-
-      label P_DepVar1 = 'Predicted: DepVar=1' ;
-
-      label R_DepVar1 = 'Residual: DepVar=1' ;
-
-      label P_DepVar0 = 'Predicted: DepVar=0' ;
-
-      label R_DepVar0 = 'Residual: DepVar=0' ;
-
-      label  _WARN_ = "Warnings";
-
-*** Generate dummy variables for AcceptedCmp1 ;
-drop AcceptedCmp10 ;
-if missing( AcceptedCmp1 ) then do;
-   AcceptedCmp10 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp1 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp10 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp10 = -1;
-   end;
-   else do;
-      AcceptedCmp10 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp2 ;
-drop AcceptedCmp20 ;
-if missing( AcceptedCmp2 ) then do;
-   AcceptedCmp20 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp2 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp20 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp20 = -1;
-   end;
-   else do;
-      AcceptedCmp20 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp3 ;
-drop AcceptedCmp30 ;
-if missing( AcceptedCmp3 ) then do;
-   AcceptedCmp30 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp3 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp30 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp30 = -1;
-   end;
-   else do;
-      AcceptedCmp30 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp4 ;
-drop AcceptedCmp40 ;
-if missing( AcceptedCmp4 ) then do;
-   AcceptedCmp40 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp4 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp40 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp40 = -1;
-   end;
-   else do;
-      AcceptedCmp40 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp5 ;
-drop AcceptedCmp50 ;
-if missing( AcceptedCmp5 ) then do;
-   AcceptedCmp50 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp5 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp50 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp50 = -1;
-   end;
-   else do;
-      AcceptedCmp50 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Complain ;
-drop Complain0 ;
-if missing( Complain ) then do;
-   Complain0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( Complain , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      Complain0 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      Complain0 = -1;
-   end;
-   else do;
-      Complain0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Education ;
-drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
-*** encoding is sparse, initialize to zero;
-Education2n_Cycle = 0;
-EducationBasic = 0;
-EducationGraduation = 0;
-EducationMaster = 0;
-if missing( Education ) then do;
-   Education2n_Cycle = .;
-   EducationBasic = .;
-   EducationGraduation = .;
-   EducationMaster = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm10 $ 10; drop _dm10 ;
-   _dm10 = put( Education , $10. );
-   %DMNORMIP( _dm10 )
-   if _dm10 = 'GRADUATION'  then do;
-      EducationGraduation = 1;
-   end;
-   else if _dm10 = 'PHD'  then do;
-      Education2n_Cycle = -1;
-      EducationBasic = -1;
-      EducationGraduation = -1;
-      EducationMaster = -1;
-   end;
-   else if _dm10 = 'MASTER'  then do;
-      EducationMaster = 1;
-   end;
-   else if _dm10 = '2N CYCLE'  then do;
-      Education2n_Cycle = 1;
-   end;
-   else if _dm10 = 'BASIC'  then do;
-      EducationBasic = 1;
-   end;
-   else do;
-      Education2n_Cycle = .;
-      EducationBasic = .;
-      EducationGraduation = .;
-      EducationMaster = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** *************************;
-*** Checking missing input Interval
-*** *************************;
-
-IF NMISS(
-   Income ,
-   Kidhome ,
-   Mnt ,
-   MntFishProducts ,
-   MntFruits ,
-   MntGoldProds ,
-   MntMeatProducts ,
-   MntSweetProducts ,
-   MntWines ,
-   NumCatalogPurchases ,
-   NumDealsPurchases ,
-   NumStorePurchases ,
-   NumWebPurchases ,
-   NumWebVisitsMonth ,
-   Recency ,
-   Teenhome   ) THEN DO;
-   SUBSTR(_WARN_, 1, 1) = 'M';
-
-   _DM_BAD = 1;
-END;
-*** *************************;
-*** Writing the Node intvl ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
-   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
-        NumCatalogPurchases ;
-   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-ELSE DO;
-   IF MISSING( Income ) THEN S_Income  = . ;
-   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
-   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   IF MISSING( Mnt ) THEN S_Mnt  = . ;
-   ELSE S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
-   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
-   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
-         ;
-   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
-   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
-   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
-   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   IF MISSING( MntWines ) THEN S_MntWines  = . ;
-   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
-   ELSE S_NumCatalogPurchases
-          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
-         ;
-   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
-   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
-   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
-   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
-   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   IF MISSING( Recency ) THEN S_Recency  = . ;
-   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
-   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-*** *************************;
-*** Writing the Node bin ;
-*** *************************;
-*** *************************;
-*** Writing the Node nom ;
-*** *************************;
-*** *************************;
-*** Writing the Node H1 ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H11  =    -0.03281362065647 * S_Income  +     0.00535686931174 * S_Kidhome
-          +    -0.01250948278467 * S_Mnt  +     0.00699255131323 *
-        S_MntFishProducts  +      0.0076699264859 * S_MntFruits
-          +    -0.00197175743075 * S_MntGoldProds  +    -0.03648519433733 *
-        S_MntMeatProducts  +     0.00505629880474 * S_MntSweetProducts
-          +     0.03058954226232 * S_MntWines  +     -0.0420799719311 *
-        S_NumCatalogPurchases  +    -0.02833732377257 * S_NumDealsPurchases
-          +     0.02790503880998 * S_NumStorePurchases
-          +     0.02520512526218 * S_NumWebPurchases
-          +    -0.05282883696993 * S_NumWebVisitsMonth
-          +     0.06563256173645 * S_Recency  +     0.01797337388273 *
-        S_Teenhome ;
-   H11  = H11  +     0.02870149682732 * AcceptedCmp10
-          +     0.02798378890148 * AcceptedCmp20  +     0.03430631974463 *
-        AcceptedCmp30  +     0.02526418526905 * AcceptedCmp40
-          +     0.03693742114225 * AcceptedCmp50  +    -0.01462363843793 *
-        Complain0 ;
-   H11  = H11  +    -0.00153701661702 * Education2n_Cycle
-          +      0.0085508617275 * EducationBasic  +    -0.00635980121817 *
-        EducationGraduation  +     0.00121093589886 * EducationMaster ;
-   H11  =    -0.10607308229024 + H11 ;
-   H11  = TANH(H11 );
-END;
-ELSE DO;
-   H11  = .;
-END;
-*** *************************;
-*** Writing the Node DepVar ;
-*** *************************;
-
-*** Generate dummy variables for DepVar ;
-drop DepVar1 DepVar0 ;
-label F_DepVar = 'From: DepVar' ;
-length F_DepVar $ 12;
-F_DepVar = put( DepVar , BEST. );
-%DMNORMIP( F_DepVar )
-if missing( DepVar ) then do;
-   DepVar1 = .;
-   DepVar0 = .;
-end;
-else do;
-   if F_DepVar = '0'  then do;
-      DepVar1 = 0;
-      DepVar0 = 1;
-   end;
-   else if F_DepVar = '1'  then do;
-      DepVar1 = 1;
-      DepVar0 = 0;
-   end;
-   else do;
-      DepVar1 = .;
-      DepVar0 = .;
-   end;
-end;
-IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -42.7395691647266 * H11 ;
-   P_DepVar1  =    -4.33224364987351 + P_DepVar1 ;
-   P_DepVar0  = 0;
-   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
-   _SUM_ = 0.;
-   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar1 ;
-   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar0 ;
-   P_DepVar1  = P_DepVar1  / _SUM_;
-   P_DepVar0  = P_DepVar0  / _SUM_;
-END;
-ELSE DO;
-   P_DepVar1  = .;
-   P_DepVar0  = .;
-END;
-IF _DM_BAD EQ 1 THEN DO;
-   P_DepVar1  =     0.15122156697556;
-   P_DepVar0  =     0.84877843302443;
-END;
-*** *****************************;
-*** Writing the Residuals  of the Node DepVar ;
-*** ******************************;
-IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
-ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
-IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
-ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
-*** *************************;
-*** Writing the I_DepVar  AND U_DepVar ;
-*** *************************;
-_MAXP_ = P_DepVar1 ;
-I_DepVar  = "1           " ;
-U_DepVar  =                    1;
-IF( _MAXP_ LT P_DepVar0  ) THEN DO;
-   _MAXP_ = P_DepVar0 ;
-   I_DepVar  = "0           " ;
-   U_DepVar  =                    0;
-END;
-********************************;
-*** End Scoring Code for Neural;
-********************************;
-drop
-H11
-;
-drop S_:;
-* Renaming variables for Neural6;
-*------------------------------------------------------------*;
-* Renaming Posterior variables for Neural6;
-*------------------------------------------------------------*;
-drop Neural6_P_DepVar1;
-Neural6_P_DepVar1 = P_DepVar1;
-drop Neural6_P_DepVar0;
-Neural6_P_DepVar0 = P_DepVar0;
-*------------------------------------------------------------*;
-* Renaming _WARN_ variable for Neural6;
-*------------------------------------------------------------*;
-length Neural6_WARN_ $4;
-drop Neural6_WARN_;
-Neural6_WARN_ = _WARN_;
-*------------------------------------------------------------*;
 * Ensmbl9: Scoring Code of model 5 of 10;
-*------------------------------------------------------------*;
-*------------------------------------------------------------*;
-* TOOL: Neural;
-* TYPE: MODEL;
-* NODE: Neural31;
-*------------------------------------------------------------*;
-***********************************;
-*** Begin Scoring Code for Neural;
-***********************************;
-DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
- _DM_BAD = 0;
- _NOCL_ = .;
- _MAX_ = .;
- _MAXP_ = .;
- _SUM_ = .;
- _NTRIALS = .;
- _EPS =                1E-10;
-LENGTH _WARN_ $4
-      F_DepVar  $ 12
-;
-      label S_Income = 'Standard: Income' ;
-
-      label S_Kidhome = 'Standard: Kidhome' ;
-
-      label S_MntFishProducts = 'Standard: MntFishProducts' ;
-
-      label S_MntFruits = 'Standard: MntFruits' ;
-
-      label S_MntGoldProds = 'Standard: MntGoldProds' ;
-
-      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
-
-      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
-
-      label S_MntWines = 'Standard: MntWines' ;
-
-      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
-
-      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
-
-      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
-
-      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
-
-      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
-
-      label S_Recency = 'Standard: Recency' ;
-
-      label S_Teenhome = 'Standard: Teenhome' ;
-
-      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
-
-      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
-
-      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
-
-      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
-
-      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
-
-      label Complain0 = 'Dummy: Complain=0' ;
-
-      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
-
-      label EducationBasic = 'Dummy: Education=Basic' ;
-
-      label EducationGraduation = 'Dummy: Education=Graduation' ;
-
-      label EducationMaster = 'Dummy: Education=Master' ;
-
-      label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
-
-      label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
-
-      label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
-
-      label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
-
-      label H11 = 'Hidden: H1=1' ;
-
-      label H12 = 'Hidden: H1=2' ;
-
-      label I_DepVar = 'Into: DepVar' ;
-
-      label F_DepVar = 'From: DepVar' ;
-
-      label U_DepVar = 'Unnormalized Into: DepVar' ;
-
-      label P_DepVar1 = 'Predicted: DepVar=1' ;
-
-      label R_DepVar1 = 'Residual: DepVar=1' ;
-
-      label P_DepVar0 = 'Predicted: DepVar=0' ;
-
-      label R_DepVar0 = 'Residual: DepVar=0' ;
-
-      label  _WARN_ = "Warnings";
-
-*** Generate dummy variables for AcceptedCmp1 ;
-drop AcceptedCmp10 ;
-if missing( AcceptedCmp1 ) then do;
-   AcceptedCmp10 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp1 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp10 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp10 = -1;
-   end;
-   else do;
-      AcceptedCmp10 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp2 ;
-drop AcceptedCmp20 ;
-if missing( AcceptedCmp2 ) then do;
-   AcceptedCmp20 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp2 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp20 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp20 = -1;
-   end;
-   else do;
-      AcceptedCmp20 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp3 ;
-drop AcceptedCmp30 ;
-if missing( AcceptedCmp3 ) then do;
-   AcceptedCmp30 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp3 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp30 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp30 = -1;
-   end;
-   else do;
-      AcceptedCmp30 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp4 ;
-drop AcceptedCmp40 ;
-if missing( AcceptedCmp4 ) then do;
-   AcceptedCmp40 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp4 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp40 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp40 = -1;
-   end;
-   else do;
-      AcceptedCmp40 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp5 ;
-drop AcceptedCmp50 ;
-if missing( AcceptedCmp5 ) then do;
-   AcceptedCmp50 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp5 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp50 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp50 = -1;
-   end;
-   else do;
-      AcceptedCmp50 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Complain ;
-drop Complain0 ;
-if missing( Complain ) then do;
-   Complain0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( Complain , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      Complain0 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      Complain0 = -1;
-   end;
-   else do;
-      Complain0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Education ;
-drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
-*** encoding is sparse, initialize to zero;
-Education2n_Cycle = 0;
-EducationBasic = 0;
-EducationGraduation = 0;
-EducationMaster = 0;
-if missing( Education ) then do;
-   Education2n_Cycle = .;
-   EducationBasic = .;
-   EducationGraduation = .;
-   EducationMaster = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm10 $ 10; drop _dm10 ;
-   _dm10 = put( Education , $10. );
-   %DMNORMIP( _dm10 )
-   if _dm10 = 'GRADUATION'  then do;
-      EducationGraduation = 1;
-   end;
-   else if _dm10 = 'PHD'  then do;
-      Education2n_Cycle = -1;
-      EducationBasic = -1;
-      EducationGraduation = -1;
-      EducationMaster = -1;
-   end;
-   else if _dm10 = 'MASTER'  then do;
-      EducationMaster = 1;
-   end;
-   else if _dm10 = '2N CYCLE'  then do;
-      Education2n_Cycle = 1;
-   end;
-   else if _dm10 = 'BASIC'  then do;
-      EducationBasic = 1;
-   end;
-   else do;
-      Education2n_Cycle = .;
-      EducationBasic = .;
-      EducationGraduation = .;
-      EducationMaster = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Marital_Status ;
-drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
-        Marital_StatusTogether ;
-*** encoding is sparse, initialize to zero;
-Marital_StatusDivorced = 0;
-Marital_StatusMarried = 0;
-Marital_StatusSingle = 0;
-Marital_StatusTogether = 0;
-if missing( Marital_Status ) then do;
-   Marital_StatusDivorced = .;
-   Marital_StatusMarried = .;
-   Marital_StatusSingle = .;
-   Marital_StatusTogether = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm8 $ 8; drop _dm8 ;
-   _dm8 = put( Marital_Status , $8. );
-   %DMNORMIP( _dm8 )
-   _dm_find = 0; drop _dm_find;
-   if _dm8 <= 'SINGLE'  then do;
-      if _dm8 <= 'MARRIED'  then do;
-         if _dm8 = 'DIVORCED'  then do;
-            Marital_StatusDivorced = 1;
-            _dm_find = 1;
-         end;
-         else do;
-            if _dm8 = 'MARRIED'  then do;
-               Marital_StatusMarried = 1;
-               _dm_find = 1;
-            end;
-         end;
-      end;
-      else do;
-         if _dm8 = 'SINGLE'  then do;
-            Marital_StatusSingle = 1;
-            _dm_find = 1;
-         end;
-      end;
-   end;
-   else do;
-      if _dm8 = 'TOGETHER'  then do;
-         Marital_StatusTogether = 1;
-         _dm_find = 1;
-      end;
-      else do;
-         if _dm8 = 'WIDOW'  then do;
-            Marital_StatusDivorced = -1;
-            Marital_StatusMarried = -1;
-            Marital_StatusSingle = -1;
-            Marital_StatusTogether = -1;
-            _dm_find = 1;
-         end;
-      end;
-   end;
-   if not _dm_find then do;
-      Marital_StatusDivorced = .;
-      Marital_StatusMarried = .;
-      Marital_StatusSingle = .;
-      Marital_StatusTogether = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** *************************;
-*** Checking missing input Interval
-*** *************************;
-
-IF NMISS(
-   Income ,
-   Kidhome ,
-   MntFishProducts ,
-   MntFruits ,
-   MntGoldProds ,
-   MntMeatProducts ,
-   MntSweetProducts ,
-   MntWines ,
-   NumCatalogPurchases ,
-   NumDealsPurchases ,
-   NumStorePurchases ,
-   NumWebPurchases ,
-   NumWebVisitsMonth ,
-   Recency ,
-   Teenhome   ) THEN DO;
-   SUBSTR(_WARN_, 1, 1) = 'M';
-
-   _DM_BAD = 1;
-END;
-*** *************************;
-*** Writing the Node intvl ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
-   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
-        NumCatalogPurchases ;
-   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-ELSE DO;
-   IF MISSING( Income ) THEN S_Income  = . ;
-   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
-   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
-   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
-   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
-         ;
-   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
-   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
-   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
-   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   IF MISSING( MntWines ) THEN S_MntWines  = . ;
-   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
-   ELSE S_NumCatalogPurchases
-          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
-         ;
-   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
-   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
-   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
-   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
-   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   IF MISSING( Recency ) THEN S_Recency  = . ;
-   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
-   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-*** *************************;
-*** Writing the Node bin ;
-*** *************************;
-*** *************************;
-*** Writing the Node nom ;
-*** *************************;
-*** *************************;
-*** Writing the Node H1 ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H11  =    -1.33502235588914 * S_Income  +     0.86914778071024 * S_Kidhome
-          +     0.06177226616611 * S_MntFishProducts
-          +     0.22465531888584 * S_MntFruits  +    -0.01216018017424 *
-        S_MntGoldProds  +    -0.10435601171346 * S_MntMeatProducts
-          +     0.19245635559754 * S_MntSweetProducts
-          +    -0.06473329764962 * S_MntWines  +    -0.40260570275107 *
-        S_NumCatalogPurchases  +    -0.01043435397255 * S_NumDealsPurchases
-          +    -0.35392759932805 * S_NumStorePurchases
-          +     -0.2443007642616 * S_NumWebPurchases
-          +    -0.72667572173837 * S_NumWebVisitsMonth
-          +     0.97336679863544 * S_Recency  +     0.72544205905496 *
-        S_Teenhome ;
-   H12  =    -0.09105644521483 * S_Income  +     0.01920168996111 * S_Kidhome
-          +     0.00012212205827 * S_MntFishProducts
-          +     0.00032664246198 * S_MntFruits  +    -0.02161363659377 *
-        S_MntGoldProds  +    -0.40917729724893 * S_MntMeatProducts
-          +     0.01459978689352 * S_MntSweetProducts
-          +     0.28732983017398 * S_MntWines  +    -0.26033282919423 *
-        S_NumCatalogPurchases  +      -0.306688498482 * S_NumDealsPurchases
-          +      0.4054643699817 * S_NumStorePurchases
-          +     0.27747327375374 * S_NumWebPurchases
-          +    -0.31325270852641 * S_NumWebVisitsMonth
-          +      0.3707065492652 * S_Recency  +     0.05681262835219 *
-        S_Teenhome ;
-   H11  = H11  +     0.23904403737743 * AcceptedCmp10
-          +     0.12365860406863 * AcceptedCmp20  +     0.28547657706908 *
-        AcceptedCmp30  +     0.37587337003909 * AcceptedCmp40
-          +    -0.04113029526683 * AcceptedCmp50  +      0.2596440604013 *
-        Complain0 ;
-   H12  = H12  +     0.25336773034662 * AcceptedCmp10
-          +     0.39499004620022 * AcceptedCmp20  +     0.19852127214148 *
-        AcceptedCmp30  +     0.19215250383325 * AcceptedCmp40
-          +     0.27213364707939 * AcceptedCmp50  +    -0.00774901485124 *
-        Complain0 ;
-   H11  = H11  +    -0.05263155952227 * Education2n_Cycle
-          +    -1.40124591386453 * EducationBasic  +     0.43501491332678 *
-        EducationGraduation  +     0.77305262508081 * EducationMaster
-          +    -0.43667846017683 * Marital_StatusDivorced
-          +     1.33507828005472 * Marital_StatusMarried
-          +    -0.75026283842664 * Marital_StatusSingle
-          +     0.84436594207558 * Marital_StatusTogether ;
-   H12  = H12  +     0.08398432584098 * Education2n_Cycle
-          +     0.12375156883157 * EducationBasic  +     -0.0901891766073 *
-        EducationGraduation  +    -0.07691770257441 * EducationMaster
-          +    -0.03531690128173 * Marital_StatusDivorced
-          +    -0.04344171367809 * Marital_StatusMarried
-          +    -0.05137362653166 * Marital_StatusSingle
-          +    -0.01265518570667 * Marital_StatusTogether ;
-   H11  =     1.86846527977677 + H11 ;
-   H12  =    -0.42494263287735 + H12 ;
-   H11  = TANH(H11 );
-   H12  = TANH(H12 );
-END;
-ELSE DO;
-   H11  = .;
-   H12  = .;
-END;
-*** *************************;
-*** Writing the Node DepVar ;
-*** *************************;
-
-*** Generate dummy variables for DepVar ;
-drop DepVar1 DepVar0 ;
-label F_DepVar = 'From: DepVar' ;
-length F_DepVar $ 12;
-F_DepVar = put( DepVar , BEST. );
-%DMNORMIP( F_DepVar )
-if missing( DepVar ) then do;
-   DepVar1 = .;
-   DepVar0 = .;
-end;
-else do;
-   if F_DepVar = '0'  then do;
-      DepVar1 = 0;
-      DepVar0 = 1;
-   end;
-   else if F_DepVar = '1'  then do;
-      DepVar1 = 1;
-      DepVar0 = 0;
-   end;
-   else do;
-      DepVar1 = .;
-      DepVar0 = .;
-   end;
-end;
-IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -5.43090515434696 * H11  +    -9.08673127131886 * H12 ;
-   P_DepVar1  =      2.7752946076831 + P_DepVar1 ;
-   P_DepVar0  = 0;
-   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
-   _SUM_ = 0.;
-   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar1 ;
-   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar0 ;
-   P_DepVar1  = P_DepVar1  / _SUM_;
-   P_DepVar0  = P_DepVar0  / _SUM_;
-END;
-ELSE DO;
-   P_DepVar1  = .;
-   P_DepVar0  = .;
-END;
-IF _DM_BAD EQ 1 THEN DO;
-   P_DepVar1  =     0.15122156697556;
-   P_DepVar0  =     0.84877843302443;
-END;
-*** *****************************;
-*** Writing the Residuals  of the Node DepVar ;
-*** ******************************;
-IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
-ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
-IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
-ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
-*** *************************;
-*** Writing the I_DepVar  AND U_DepVar ;
-*** *************************;
-_MAXP_ = P_DepVar1 ;
-I_DepVar  = "1           " ;
-U_DepVar  =                    1;
-IF( _MAXP_ LT P_DepVar0  ) THEN DO;
-   _MAXP_ = P_DepVar0 ;
-   I_DepVar  = "0           " ;
-   U_DepVar  =                    0;
-END;
-********************************;
-*** End Scoring Code for Neural;
-********************************;
-drop
-H11
-H12
-;
-drop S_:;
-* Renaming variables for Neural31;
-*------------------------------------------------------------*;
-* Renaming Posterior variables for Neural31;
-*------------------------------------------------------------*;
-drop Neural31_P_DepVar1;
-Neural31_P_DepVar1 = P_DepVar1;
-drop Neural31_P_DepVar0;
-Neural31_P_DepVar0 = P_DepVar0;
-*------------------------------------------------------------*;
-* Renaming _WARN_ variable for Neural31;
-*------------------------------------------------------------*;
-length Neural31_WARN_ $4;
-drop Neural31_WARN_;
-Neural31_WARN_ = _WARN_;
-*------------------------------------------------------------*;
-* Ensmbl9: Scoring Code of model 6 of 10;
-*------------------------------------------------------------*;
-*------------------------------------------------------------*;
-* TOOL: Neural;
-* TYPE: MODEL;
-* NODE: Neural32;
-*------------------------------------------------------------*;
-***********************************;
-*** Begin Scoring Code for Neural;
-***********************************;
-DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
- _DM_BAD = 0;
- _NOCL_ = .;
- _MAX_ = .;
- _MAXP_ = .;
- _SUM_ = .;
- _NTRIALS = .;
- _EPS =                1E-10;
-LENGTH _WARN_ $4
-      F_DepVar  $ 12
-;
-      label S_Income = 'Standard: Income' ;
-
-      label S_Kidhome = 'Standard: Kidhome' ;
-
-      label S_MntFishProducts = 'Standard: MntFishProducts' ;
-
-      label S_MntFruits = 'Standard: MntFruits' ;
-
-      label S_MntGoldProds = 'Standard: MntGoldProds' ;
-
-      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
-
-      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
-
-      label S_MntWines = 'Standard: MntWines' ;
-
-      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
-
-      label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
-
-      label S_NumStorePurchases = 'Standard: NumStorePurchases' ;
-
-      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
-
-      label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
-
-      label S_Recency = 'Standard: Recency' ;
-
-      label S_Teenhome = 'Standard: Teenhome' ;
-
-      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
-
-      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
-
-      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
-
-      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
-
-      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
-
-      label Complain0 = 'Dummy: Complain=0' ;
-
-      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
-
-      label EducationBasic = 'Dummy: Education=Basic' ;
-
-      label EducationGraduation = 'Dummy: Education=Graduation' ;
-
-      label EducationMaster = 'Dummy: Education=Master' ;
-
-      label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
-
-      label Marital_StatusMarried = 'Dummy: Marital_Status=Married' ;
-
-      label Marital_StatusSingle = 'Dummy: Marital_Status=Single' ;
-
-      label Marital_StatusTogether = 'Dummy: Marital_Status=Together' ;
-
-      label H11 = 'Hidden: H1=1' ;
-
-      label H12 = 'Hidden: H1=2' ;
-
-      label H13 = 'Hidden: H1=3' ;
-
-      label I_DepVar = 'Into: DepVar' ;
-
-      label F_DepVar = 'From: DepVar' ;
-
-      label U_DepVar = 'Unnormalized Into: DepVar' ;
-
-      label P_DepVar1 = 'Predicted: DepVar=1' ;
-
-      label R_DepVar1 = 'Residual: DepVar=1' ;
-
-      label P_DepVar0 = 'Predicted: DepVar=0' ;
-
-      label R_DepVar0 = 'Residual: DepVar=0' ;
-
-      label  _WARN_ = "Warnings";
-
-*** Generate dummy variables for AcceptedCmp1 ;
-drop AcceptedCmp10 ;
-if missing( AcceptedCmp1 ) then do;
-   AcceptedCmp10 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp1 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp10 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp10 = -1;
-   end;
-   else do;
-      AcceptedCmp10 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp2 ;
-drop AcceptedCmp20 ;
-if missing( AcceptedCmp2 ) then do;
-   AcceptedCmp20 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp2 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp20 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp20 = -1;
-   end;
-   else do;
-      AcceptedCmp20 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp3 ;
-drop AcceptedCmp30 ;
-if missing( AcceptedCmp3 ) then do;
-   AcceptedCmp30 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp3 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp30 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp30 = -1;
-   end;
-   else do;
-      AcceptedCmp30 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp4 ;
-drop AcceptedCmp40 ;
-if missing( AcceptedCmp4 ) then do;
-   AcceptedCmp40 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp4 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp40 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp40 = -1;
-   end;
-   else do;
-      AcceptedCmp40 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp5 ;
-drop AcceptedCmp50 ;
-if missing( AcceptedCmp5 ) then do;
-   AcceptedCmp50 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp5 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp50 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp50 = -1;
-   end;
-   else do;
-      AcceptedCmp50 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Complain ;
-drop Complain0 ;
-if missing( Complain ) then do;
-   Complain0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( Complain , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      Complain0 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      Complain0 = -1;
-   end;
-   else do;
-      Complain0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Education ;
-drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
-*** encoding is sparse, initialize to zero;
-Education2n_Cycle = 0;
-EducationBasic = 0;
-EducationGraduation = 0;
-EducationMaster = 0;
-if missing( Education ) then do;
-   Education2n_Cycle = .;
-   EducationBasic = .;
-   EducationGraduation = .;
-   EducationMaster = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm10 $ 10; drop _dm10 ;
-   _dm10 = put( Education , $10. );
-   %DMNORMIP( _dm10 )
-   if _dm10 = 'GRADUATION'  then do;
-      EducationGraduation = 1;
-   end;
-   else if _dm10 = 'PHD'  then do;
-      Education2n_Cycle = -1;
-      EducationBasic = -1;
-      EducationGraduation = -1;
-      EducationMaster = -1;
-   end;
-   else if _dm10 = 'MASTER'  then do;
-      EducationMaster = 1;
-   end;
-   else if _dm10 = '2N CYCLE'  then do;
-      Education2n_Cycle = 1;
-   end;
-   else if _dm10 = 'BASIC'  then do;
-      EducationBasic = 1;
-   end;
-   else do;
-      Education2n_Cycle = .;
-      EducationBasic = .;
-      EducationGraduation = .;
-      EducationMaster = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Marital_Status ;
-drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
-        Marital_StatusTogether ;
-*** encoding is sparse, initialize to zero;
-Marital_StatusDivorced = 0;
-Marital_StatusMarried = 0;
-Marital_StatusSingle = 0;
-Marital_StatusTogether = 0;
-if missing( Marital_Status ) then do;
-   Marital_StatusDivorced = .;
-   Marital_StatusMarried = .;
-   Marital_StatusSingle = .;
-   Marital_StatusTogether = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm8 $ 8; drop _dm8 ;
-   _dm8 = put( Marital_Status , $8. );
-   %DMNORMIP( _dm8 )
-   _dm_find = 0; drop _dm_find;
-   if _dm8 <= 'SINGLE'  then do;
-      if _dm8 <= 'MARRIED'  then do;
-         if _dm8 = 'DIVORCED'  then do;
-            Marital_StatusDivorced = 1;
-            _dm_find = 1;
-         end;
-         else do;
-            if _dm8 = 'MARRIED'  then do;
-               Marital_StatusMarried = 1;
-               _dm_find = 1;
-            end;
-         end;
-      end;
-      else do;
-         if _dm8 = 'SINGLE'  then do;
-            Marital_StatusSingle = 1;
-            _dm_find = 1;
-         end;
-      end;
-   end;
-   else do;
-      if _dm8 = 'TOGETHER'  then do;
-         Marital_StatusTogether = 1;
-         _dm_find = 1;
-      end;
-      else do;
-         if _dm8 = 'WIDOW'  then do;
-            Marital_StatusDivorced = -1;
-            Marital_StatusMarried = -1;
-            Marital_StatusSingle = -1;
-            Marital_StatusTogether = -1;
-            _dm_find = 1;
-         end;
-      end;
-   end;
-   if not _dm_find then do;
-      Marital_StatusDivorced = .;
-      Marital_StatusMarried = .;
-      Marital_StatusSingle = .;
-      Marital_StatusTogether = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** *************************;
-*** Checking missing input Interval
-*** *************************;
-
-IF NMISS(
-   Income ,
-   Kidhome ,
-   MntFishProducts ,
-   MntFruits ,
-   MntGoldProds ,
-   MntMeatProducts ,
-   MntSweetProducts ,
-   MntWines ,
-   NumCatalogPurchases ,
-   NumDealsPurchases ,
-   NumStorePurchases ,
-   NumWebPurchases ,
-   NumWebVisitsMonth ,
-   Recency ,
-   Teenhome   ) THEN DO;
-   SUBSTR(_WARN_, 1, 1) = 'M';
-
-   _DM_BAD = 1;
-END;
-*** *************************;
-*** Writing the Node intvl ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
-   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
-        NumCatalogPurchases ;
-   S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-ELSE DO;
-   IF MISSING( Income ) THEN S_Income  = . ;
-   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
-   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
-   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
-   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
-         ;
-   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
-   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
-   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
-        MntMeatProducts ;
-   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
-   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   IF MISSING( MntWines ) THEN S_MntWines  = . ;
-   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
-   ELSE S_NumCatalogPurchases
-          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
-         ;
-   IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
-   ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
-        NumDealsPurchases ;
-   IF MISSING( NumStorePurchases ) THEN S_NumStorePurchases  = . ;
-   ELSE S_NumStorePurchases  =    -1.81825213465822 +     0.30716078899015 *
-        NumStorePurchases ;
-   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
-   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 *
-        NumWebPurchases ;
-   IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
-   ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
-        NumWebVisitsMonth ;
-   IF MISSING( Recency ) THEN S_Recency  = . ;
-   ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
-   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
-END;
-*** *************************;
-*** Writing the Node bin ;
-*** *************************;
-*** *************************;
-*** Writing the Node nom ;
-*** *************************;
-*** *************************;
-*** Writing the Node H1 ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H11  =     1.40261108800308 * S_Income  +     -0.8062097507842 * S_Kidhome
-          +    -0.12974862644982 * S_MntFishProducts
-          +     0.08065642800368 * S_MntFruits  +    -0.12102130003972 *
-        S_MntGoldProds  +     0.19226249622126 * S_MntMeatProducts
-          +    -0.12290326901613 * S_MntSweetProducts
-          +     0.07790241176978 * S_MntWines  +     0.36123042724896 *
-        S_NumCatalogPurchases  +    -0.01034406765754 * S_NumDealsPurchases
-          +     0.09738032540137 * S_NumStorePurchases
-          +     0.44459515215205 * S_NumWebPurchases
-          +      0.8471075994578 * S_NumWebVisitsMonth
-          +    -1.10667985160899 * S_Recency  +    -0.88509832868515 *
-        S_Teenhome ;
-   H12  =     0.51266936686642 * S_Income  +     0.26909433357851 * S_Kidhome
-          +     0.02406077596811 * S_MntFishProducts
-          +    -0.57443793453522 * S_MntFruits  +     0.36824731232149 *
-        S_MntGoldProds  +     0.40177289143061 * S_MntMeatProducts
-          +     -0.1147507059349 * S_MntSweetProducts
-          +    -0.66379351187459 * S_MntWines  +     1.33407347415468 *
-        S_NumCatalogPurchases  +     1.00633891197299 * S_NumDealsPurchases
-          +    -0.23920969262322 * S_NumStorePurchases
-          +     -0.6008837862932 * S_NumWebPurchases
-          +     0.26759743722885 * S_NumWebVisitsMonth
-          +    -0.42755419464125 * S_Recency  +    -0.14471776361394 *
-        S_Teenhome ;
-   H13  =    -0.19807308698832 * S_Income  +     0.25934675474849 * S_Kidhome
-          +     0.04398331533724 * S_MntFishProducts
-          +    -0.00090357598988 * S_MntFruits  +     0.05139545341773 *
-        S_MntGoldProds  +    -0.74617114336019 * S_MntMeatProducts
-          +     0.00552488718744 * S_MntSweetProducts
-          +     0.47194407197012 * S_MntWines  +    -0.35149551848487 *
-        S_NumCatalogPurchases  +    -0.30232522133093 * S_NumDealsPurchases
-          +     0.60058189155105 * S_NumStorePurchases
-          +     0.51423374855856 * S_NumWebPurchases
-          +     -0.9075304423321 * S_NumWebVisitsMonth
-          +     0.83597739226791 * S_Recency  +     0.15783202762709 *
-        S_Teenhome ;
-   H11  = H11  +    -0.26274045665457 * AcceptedCmp10
-          +    -0.86105702939371 * AcceptedCmp20  +    -0.50476270558977 *
-        AcceptedCmp30  +    -0.84284126473343 * AcceptedCmp40
-          +     0.19764907691314 * AcceptedCmp50  +    -0.29305577412263 *
-        Complain0 ;
-   H12  = H12  +    -0.27394139847883 * AcceptedCmp10
-          +    -0.14688750266104 * AcceptedCmp20  +    -0.27982299242327 *
-        AcceptedCmp30  +    -0.10465140408787 * AcceptedCmp40
-          +    -0.81681330244218 * AcceptedCmp50  +    -0.28152730217644 *
-        Complain0 ;
-   H13  = H13  +     0.42310780831005 * AcceptedCmp10
-          +     0.41337614261155 * AcceptedCmp20  +     0.41436520641821 *
-        AcceptedCmp30  +     0.08914989208239 * AcceptedCmp40
-          +     0.54013759697695 * AcceptedCmp50  +    -0.19478210268955 *
-        Complain0 ;
-   H11  = H11  +     0.40331200702699 * Education2n_Cycle
-          +     0.17202421641945 * EducationBasic  +    -0.29654161092174 *
-        EducationGraduation  +     -0.4835104183635 * EducationMaster
-          +     0.52129580188513 * Marital_StatusDivorced
-          +     -1.5224490339553 * Marital_StatusMarried
-          +     1.05062906057771 * Marital_StatusSingle
-          +    -1.16420887937635 * Marital_StatusTogether ;
-   H12  = H12  +     -0.3488928858263 * Education2n_Cycle
-          +     0.38279680594423 * EducationBasic  +     0.20376044836519 *
-        EducationGraduation  +     0.20697694670185 * EducationMaster
-          +    -0.14428158063317 * Marital_StatusDivorced
-          +     0.22396926143356 * Marital_StatusMarried
-          +    -0.12980854818876 * Marital_StatusSingle
-          +     0.32607015627906 * Marital_StatusTogether ;
-   H13  = H13  +    -0.18351418824199 * Education2n_Cycle
-          +     0.53417952447263 * EducationBasic  +    -0.14333929289628 *
-        EducationGraduation  +     0.04513004774082 * EducationMaster
-          +    -0.25615797303064 * Marital_StatusDivorced
-          +     0.18825506199046 * Marital_StatusMarried
-          +    -0.24607556819871 * Marital_StatusSingle
-          +     0.29531673844201 * Marital_StatusTogether ;
-   H11  =    -1.29289362679377 + H11 ;
-   H12  =     0.88724419151235 + H12 ;
-   H13  =    -0.51194544699467 + H13 ;
-   H11  = TANH(H11 );
-   H12  = TANH(H12 );
-   H13  = TANH(H13 );
-END;
-ELSE DO;
-   H11  = .;
-   H12  = .;
-   H13  = .;
-END;
-*** *************************;
-*** Writing the Node DepVar ;
-*** *************************;
-
-*** Generate dummy variables for DepVar ;
-drop DepVar1 DepVar0 ;
-label F_DepVar = 'From: DepVar' ;
-length F_DepVar $ 12;
-F_DepVar = put( DepVar , BEST. );
-%DMNORMIP( F_DepVar )
-if missing( DepVar ) then do;
-   DepVar1 = .;
-   DepVar0 = .;
-end;
-else do;
-   if F_DepVar = '0'  then do;
-      DepVar1 = 0;
-      DepVar0 = 1;
-   end;
-   else if F_DepVar = '1'  then do;
-      DepVar1 = 1;
-      DepVar0 = 0;
-   end;
-   else do;
-      DepVar1 = .;
-      DepVar0 = .;
-   end;
-end;
-IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =     4.44251020865882 * H11  +     2.67139161773156 * H12
-          +    -4.73549395111184 * H13 ;
-   P_DepVar1  =     0.45492690116644 + P_DepVar1 ;
-   P_DepVar0  = 0;
-   _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
-   _SUM_ = 0.;
-   P_DepVar1  = EXP(P_DepVar1  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar1 ;
-   P_DepVar0  = EXP(P_DepVar0  - _MAX_);
-   _SUM_ = _SUM_ + P_DepVar0 ;
-   P_DepVar1  = P_DepVar1  / _SUM_;
-   P_DepVar0  = P_DepVar0  / _SUM_;
-END;
-ELSE DO;
-   P_DepVar1  = .;
-   P_DepVar0  = .;
-END;
-IF _DM_BAD EQ 1 THEN DO;
-   P_DepVar1  =     0.15122156697556;
-   P_DepVar0  =     0.84877843302443;
-END;
-*** *****************************;
-*** Writing the Residuals  of the Node DepVar ;
-*** ******************************;
-IF MISSING( DepVar1 ) THEN R_DepVar1  = . ;
-ELSE R_DepVar1  = DepVar1  - P_DepVar1 ;
-IF MISSING( DepVar0 ) THEN R_DepVar0  = . ;
-ELSE R_DepVar0  = DepVar0  - P_DepVar0 ;
-*** *************************;
-*** Writing the I_DepVar  AND U_DepVar ;
-*** *************************;
-_MAXP_ = P_DepVar1 ;
-I_DepVar  = "1           " ;
-U_DepVar  =                    1;
-IF( _MAXP_ LT P_DepVar0  ) THEN DO;
-   _MAXP_ = P_DepVar0 ;
-   I_DepVar  = "0           " ;
-   U_DepVar  =                    0;
-END;
-********************************;
-*** End Scoring Code for Neural;
-********************************;
-drop
-H11
-H12
-H13
-;
-drop S_:;
-* Renaming variables for Neural32;
-*------------------------------------------------------------*;
-* Renaming Posterior variables for Neural32;
-*------------------------------------------------------------*;
-drop Neural32_P_DepVar1;
-Neural32_P_DepVar1 = P_DepVar1;
-drop Neural32_P_DepVar0;
-Neural32_P_DepVar0 = P_DepVar0;
-*------------------------------------------------------------*;
-* Renaming _WARN_ variable for Neural32;
-*------------------------------------------------------------*;
-length Neural32_WARN_ $4;
-drop Neural32_WARN_;
-Neural32_WARN_ = _WARN_;
-*------------------------------------------------------------*;
-* Ensmbl9: Scoring Code of model 7 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -3840,7 +3249,7 @@ length Neural34_WARN_ $4;
 drop Neural34_WARN_;
 Neural34_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl9: Scoring Code of model 8 of 10;
+* Ensmbl9: Scoring Code of model 6 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -4571,7 +3980,7 @@ length Neural35_WARN_ $4;
 drop Neural35_WARN_;
 Neural35_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl9: Scoring Code of model 9 of 10;
+* Ensmbl9: Scoring Code of model 7 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -5333,6 +4742,669 @@ length Neural30_WARN_ $4;
 drop Neural30_WARN_;
 Neural30_WARN_ = _WARN_;
 *------------------------------------------------------------*;
+* Ensmbl9: Scoring Code of model 8 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Decision Tree;
+* TYPE: MODEL;
+* NODE: Tree5;
+*------------------------------------------------------------*;
+****************************************************************;
+******             DECISION TREE SCORING CODE             ******;
+****************************************************************;
+
+******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+LENGTH F_DepVar  $   12;
+LENGTH I_DepVar  $   12;
+LENGTH _WARN_  $    4;
+
+******              LABELS FOR NEW VARIABLES              ******;
+LABEL _NODE_  = 'Node' ;
+LABEL _LEAF_  = 'Leaf' ;
+LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
+LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
+LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
+LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
+LABEL V_DepVar0  = 'Validated: DepVar=0' ;
+LABEL V_DepVar1  = 'Validated: DepVar=1' ;
+LABEL R_DepVar0  = 'Residual: DepVar=0' ;
+LABEL R_DepVar1  = 'Residual: DepVar=1' ;
+LABEL F_DepVar  = 'From: DepVar' ;
+LABEL I_DepVar  = 'Into: DepVar' ;
+LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
+LABEL _WARN_  = 'Warnings' ;
+
+
+******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
+LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
+_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
+LENGTH _ARBFMT_8 $      8; DROP _ARBFMT_8;
+_ARBFMT_8 = ' '; /* Initialize to avoid warning. */
+
+
+_ARBFMT_12 = PUT( DepVar , BEST.);
+ %DMNORMCP( _ARBFMT_12, F_DepVar );
+
+******             ASSIGN OBSERVATION TO NODE             ******;
+IF  NOT MISSING(Recency ) AND
+  Recency  <                 38.5 THEN DO;
+  IF  NOT MISSING(MntMeatProducts ) AND
+                   431.5 <= MntMeatProducts  THEN DO;
+    IF  NOT MISSING(NumCatalogPurchases ) AND
+      NumCatalogPurchases  <                  5.5 THEN DO;
+      _ARBFMT_8 = PUT( Marital_Status , $8.);
+       %DMNORMIP( _ARBFMT_8);
+      IF _ARBFMT_8 IN ('MARRIED' ,'TOGETHER' ) THEN DO;
+        _NODE_  =                   21;
+        _LEAF_  =                    5;
+        P_DepVar0  =     0.71052631578947;
+        P_DepVar1  =     0.28947368421052;
+        Q_DepVar0  =     0.71052631578947;
+        Q_DepVar1  =     0.28947368421052;
+        V_DepVar0  =     0.66666666666666;
+        V_DepVar1  =     0.33333333333333;
+        I_DepVar  = '0' ;
+        U_DepVar  =                    0;
+        END;
+      ELSE DO;
+        _NODE_  =                   20;
+        _LEAF_  =                    4;
+        P_DepVar0  =     0.17647058823529;
+        P_DepVar1  =      0.8235294117647;
+        Q_DepVar0  =     0.17647058823529;
+        Q_DepVar1  =      0.8235294117647;
+        V_DepVar0  =                 0.25;
+        V_DepVar1  =                 0.75;
+        I_DepVar  = '1' ;
+        U_DepVar  =                    1;
+        END;
+      END;
+    ELSE DO;
+      _NODE_  =                   11;
+      _LEAF_  =                    6;
+      P_DepVar0  =     0.15730337078651;
+      P_DepVar1  =     0.84269662921348;
+      Q_DepVar0  =     0.15730337078651;
+      Q_DepVar1  =     0.84269662921348;
+      V_DepVar0  =     0.29411764705882;
+      V_DepVar1  =     0.70588235294117;
+      I_DepVar  = '1' ;
+      U_DepVar  =                    1;
+      END;
+    END;
+  ELSE DO;
+    _ARBFMT_12 = PUT( AcceptedCmp3 , BEST.);
+     %DMNORMIP( _ARBFMT_12);
+    IF _ARBFMT_12 IN ('1' ) THEN DO;
+      IF  NOT MISSING(NumWebVisitsMonth ) AND
+        NumWebVisitsMonth  <                  5.5 THEN DO;
+        _NODE_  =                   16;
+        _LEAF_  =                    1;
+        P_DepVar0  =     0.64705882352941;
+        P_DepVar1  =     0.35294117647058;
+        Q_DepVar0  =     0.64705882352941;
+        Q_DepVar1  =     0.35294117647058;
+        V_DepVar0  =     0.57142857142857;
+        V_DepVar1  =     0.42857142857142;
+        I_DepVar  = '0' ;
+        U_DepVar  =                    0;
+        END;
+      ELSE DO;
+        _NODE_  =                   17;
+        _LEAF_  =                    2;
+        P_DepVar0  =     0.17391304347826;
+        P_DepVar1  =     0.82608695652173;
+        Q_DepVar0  =     0.17391304347826;
+        Q_DepVar1  =     0.82608695652173;
+        V_DepVar0  =                 0.15;
+        V_DepVar1  =                 0.85;
+        I_DepVar  = '1' ;
+        U_DepVar  =                    1;
+        END;
+      END;
+    ELSE DO;
+      _NODE_  =                    9;
+      _LEAF_  =                    3;
+      P_DepVar0  =     0.82099596231493;
+      P_DepVar1  =     0.17900403768506;
+      Q_DepVar0  =     0.82099596231493;
+      Q_DepVar1  =     0.17900403768506;
+      V_DepVar0  =     0.80966767371601;
+      V_DepVar1  =     0.19033232628398;
+      I_DepVar  = '0' ;
+      U_DepVar  =                    0;
+      END;
+    END;
+  END;
+ELSE DO;
+  _ARBFMT_12 = PUT( AcceptedCmp5 , BEST.);
+   %DMNORMIP( _ARBFMT_12);
+  IF _ARBFMT_12 IN ('1' ) THEN DO;
+    IF  NOT MISSING(MntWines ) AND
+      MntWines  <                412.5 THEN DO;
+      _NODE_  =                   12;
+      _LEAF_  =                    7;
+      P_DepVar0  =     0.13333333333333;
+      P_DepVar1  =     0.86666666666666;
+      Q_DepVar0  =     0.13333333333333;
+      Q_DepVar1  =     0.86666666666666;
+      V_DepVar0  =     0.16666666666666;
+      V_DepVar1  =     0.83333333333333;
+      I_DepVar  = '1' ;
+      U_DepVar  =                    1;
+      END;
+    ELSE DO;
+      _NODE_  =                   13;
+      _LEAF_  =                    8;
+      P_DepVar0  =     0.70833333333333;
+      P_DepVar1  =     0.29166666666666;
+      Q_DepVar0  =     0.70833333333333;
+      Q_DepVar1  =     0.29166666666666;
+      V_DepVar0  =     0.63461538461538;
+      V_DepVar1  =     0.36538461538461;
+      I_DepVar  = '0' ;
+      U_DepVar  =                    0;
+      END;
+    END;
+  ELSE DO;
+    _NODE_  =                    7;
+    _LEAF_  =                    9;
+    P_DepVar0  =     0.96877380045696;
+    P_DepVar1  =     0.03122619954303;
+    Q_DepVar0  =     0.96877380045696;
+    Q_DepVar1  =     0.03122619954303;
+    V_DepVar0  =     0.96756756756756;
+    V_DepVar1  =     0.03243243243243;
+    I_DepVar  = '0' ;
+    U_DepVar  =                    0;
+    END;
+  END;
+
+*****  RESIDUALS R_ *************;
+IF  F_DepVar  NE '0'
+AND F_DepVar  NE '1'  THEN DO;
+        R_DepVar0  = .;
+        R_DepVar1  = .;
+ END;
+ ELSE DO;
+       R_DepVar0  =  -P_DepVar0 ;
+       R_DepVar1  =  -P_DepVar1 ;
+       SELECT( F_DepVar  );
+          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
+          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
+       END;
+ END;
+
+****************************************************************;
+******          END OF DECISION TREE SCORING CODE         ******;
+****************************************************************;
+drop _LEAF_;
+* Renaming variables for Tree5;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Tree5;
+*------------------------------------------------------------*;
+drop Tree5_P_DepVar1;
+Tree5_P_DepVar1 = P_DepVar1;
+drop Tree5_P_DepVar0;
+Tree5_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Tree5;
+*------------------------------------------------------------*;
+length Tree5_WARN_ $4;
+drop Tree5_WARN_;
+Tree5_WARN_ = _WARN_;
+*------------------------------------------------------------*;
+* Ensmbl9: Scoring Code of model 9 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Regression;
+* TYPE: MODEL;
+* NODE: Reg9;
+*------------------------------------------------------------*;
+*************************************;
+*** begin scoring code for regression;
+*************************************;
+
+length _WARN_ $4;
+label _WARN_ = 'Warnings' ;
+
+length I_DepVar $ 12;
+label I_DepVar = 'Into: DepVar' ;
+*** Target Values;
+array REG9DRF [2] $12 _temporary_ ('1' '0' );
+label U_DepVar = 'Unnormalized Into: DepVar' ;
+format U_DepVar BEST.;
+*** Unnormalized target values;
+ARRAY REG9DRU[2]  _TEMPORARY_ (1 0);
+
+*** Generate dummy variables for DepVar ;
+drop _Y ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   _Y = .;
+end;
+else do;
+   if F_DepVar = '0'  then do;
+      _Y = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      _Y = 0;
+   end;
+   else do;
+      _Y = .;
+   end;
+end;
+
+drop _DM_BAD;
+_DM_BAD=0;
+
+*** Check Income for missing values ;
+if missing( Income ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntFishProducts for missing values ;
+if missing( MntFishProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntFruits for missing values ;
+if missing( MntFruits ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntMeatProducts for missing values ;
+if missing( MntMeatProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntWines for missing values ;
+if missing( MntWines ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumDealsPurchases for missing values ;
+if missing( NumDealsPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumStorePurchases for missing values ;
+if missing( NumStorePurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumWebPurchases for missing values ;
+if missing( NumWebPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumWebVisitsMonth for missing values ;
+if missing( NumWebVisitsMonth ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Recency for missing values ;
+if missing( Recency ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Teenhome for missing values ;
+if missing( Teenhome ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Generate dummy variables for AcceptedCmp1 ;
+drop _1_0 ;
+if missing( AcceptedCmp1 ) then do;
+   _1_0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp1 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      _1_0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      _1_0 = -1;
+   end;
+   else do;
+      _1_0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp2 ;
+drop _2_0 ;
+if missing( AcceptedCmp2 ) then do;
+   _2_0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp2 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      _2_0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      _2_0 = -1;
+   end;
+   else do;
+      _2_0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp3 ;
+drop _3_0 ;
+if missing( AcceptedCmp3 ) then do;
+   _3_0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp3 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      _3_0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      _3_0 = -1;
+   end;
+   else do;
+      _3_0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp4 ;
+drop _4_0 ;
+if missing( AcceptedCmp4 ) then do;
+   _4_0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp4 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      _4_0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      _4_0 = -1;
+   end;
+   else do;
+      _4_0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for AcceptedCmp5 ;
+drop _5_0 ;
+if missing( AcceptedCmp5 ) then do;
+   _5_0 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( AcceptedCmp5 , BEST. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '0'  then do;
+      _5_0 = 1;
+   end;
+   else if _dm12 = '1'  then do;
+      _5_0 = -1;
+   end;
+   else do;
+      _5_0 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for Marital_Status ;
+drop _8_0 _8_1 _8_2 _8_3 ;
+*** encoding is sparse, initialize to zero;
+_8_0 = 0;
+_8_1 = 0;
+_8_2 = 0;
+_8_3 = 0;
+if missing( Marital_Status ) then do;
+   _8_0 = .;
+   _8_1 = .;
+   _8_2 = .;
+   _8_3 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm8 $ 8; drop _dm8 ;
+   _dm8 = put( Marital_Status , $8. );
+   %DMNORMIP( _dm8 )
+   _dm_find = 0; drop _dm_find;
+   if _dm8 <= 'SINGLE'  then do;
+      if _dm8 <= 'MARRIED'  then do;
+         if _dm8 = 'DIVORCED'  then do;
+            _8_0 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm8 = 'MARRIED'  then do;
+               _8_1 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm8 = 'SINGLE'  then do;
+            _8_2 = 1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   else do;
+      if _dm8 = 'TOGETHER'  then do;
+         _8_3 = 1;
+         _dm_find = 1;
+      end;
+      else do;
+         if _dm8 = 'WIDOW'  then do;
+            _8_0 = -1;
+            _8_1 = -1;
+            _8_2 = -1;
+            _8_3 = -1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
+      _8_0 = .;
+      _8_1 = .;
+      _8_2 = .;
+      _8_3 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** If missing inputs, use averages;
+if _DM_BAD > 0 then do;
+   _P0 = 0.151221567;
+   _P1 = 0.848778433;
+   goto REG9DR1;
+end;
+
+*** Compute Linear Predictor;
+drop _TEMP;
+drop _LP0;
+_LP0 = 0;
+
+***  Effect: AcceptedCmp1 ;
+_TEMP = 1;
+_LP0 = _LP0 + (   -1.28114872833376) * _TEMP * _1_0;
+
+***  Effect: AcceptedCmp2 ;
+_TEMP = 1;
+_LP0 = _LP0 + (    -1.4871451186069) * _TEMP * _2_0;
+
+***  Effect: AcceptedCmp3 ;
+_TEMP = 1;
+_LP0 = _LP0 + (   -1.58721567367346) * _TEMP * _3_0;
+
+***  Effect: AcceptedCmp4 ;
+_TEMP = 1;
+_LP0 = _LP0 + (    -1.1573037622615) * _TEMP * _4_0;
+
+***  Effect: AcceptedCmp5 ;
+_TEMP = 1;
+_LP0 = _LP0 + (   -1.68835129992038) * _TEMP * _5_0;
+
+***  Effect: Income ;
+_TEMP = Income ;
+_LP0 = _LP0 + (    0.00006770818936 * _TEMP);
+
+***  Effect: Marital_Status ;
+_TEMP = 1;
+_LP0 = _LP0 + (    0.18351716765826) * _TEMP * _8_0;
+_LP0 = _LP0 + (   -0.88993819943493) * _TEMP * _8_1;
+_LP0 = _LP0 + (    0.89971120865107) * _TEMP * _8_2;
+_LP0 = _LP0 + (   -0.96825171718714) * _TEMP * _8_3;
+
+***  Effect: MntFishProducts ;
+_TEMP = MntFishProducts ;
+_LP0 = _LP0 + (    -0.0053789406447 * _TEMP);
+
+***  Effect: MntFruits ;
+_TEMP = MntFruits ;
+_LP0 = _LP0 + (   -0.00810096702081 * _TEMP);
+
+***  Effect: MntMeatProducts ;
+_TEMP = MntMeatProducts ;
+_LP0 = _LP0 + (    0.00876618054091 * _TEMP);
+
+***  Effect: MntWines ;
+_TEMP = MntWines ;
+_LP0 = _LP0 + (   -0.00323708533956 * _TEMP);
+
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (    0.72583602627024 * _TEMP);
+
+***  Effect: NumDealsPurchases ;
+_TEMP = NumDealsPurchases ;
+_LP0 = _LP0 + (    0.71587738133808 * _TEMP);
+
+***  Effect: NumStorePurchases ;
+_TEMP = NumStorePurchases ;
+_LP0 = _LP0 + (   -0.38414846639641 * _TEMP);
+
+***  Effect: NumWebPurchases ;
+_TEMP = NumWebPurchases ;
+_LP0 = _LP0 + (   -0.39960732899531 * _TEMP);
+
+***  Effect: NumWebVisitsMonth ;
+_TEMP = NumWebVisitsMonth ;
+_LP0 = _LP0 + (    1.00690630599849 * _TEMP);
+
+***  Effect: Recency ;
+_TEMP = Recency ;
+_LP0 = _LP0 + (   -0.10368937560371 * _TEMP);
+
+***  Effect: Teenhome ;
+_TEMP = Teenhome ;
+_LP0 = _LP0 + (   -1.33387551959166 * _TEMP);
+
+*** Naive Posterior Probabilities;
+drop _MAXP _IY _P0 _P1;
+_TEMP =    -1.29156803352583 + _LP0;
+if (_TEMP < 0) then do;
+   _TEMP = exp(_TEMP);
+   _P0 = _TEMP / (1 + _TEMP);
+end;
+else _P0 = 1 / (1 + exp(-_TEMP));
+_P1 = 1.0 - _P0;
+
+REG9DR1:
+
+*** Residuals;
+if (_Y = .) then do;
+   R_DepVar1 = .;
+   R_DepVar0 = .;
+end;
+else do;
+    label R_DepVar1 = 'Residual: DepVar=1' ;
+    label R_DepVar0 = 'Residual: DepVar=0' ;
+   R_DepVar1 = - _P0;
+   R_DepVar0 = - _P1;
+   select( _Y );
+      when (0)  R_DepVar1 = R_DepVar1 + 1;
+      when (1)  R_DepVar0 = R_DepVar0 + 1;
+   end;
+end;
+
+*** Posterior Probabilities and Predicted Level;
+label P_DepVar1 = 'Predicted: DepVar=1' ;
+label P_DepVar0 = 'Predicted: DepVar=0' ;
+P_DepVar1 = _P0;
+_MAXP = _P0;
+_IY = 1;
+P_DepVar0 = _P1;
+if (_P1 >  _MAXP + 1E-8) then do;
+   _MAXP = _P1;
+   _IY = 2;
+end;
+I_DepVar = REG9DRF[_IY];
+U_DepVar = REG9DRU[_IY];
+
+*************************************;
+***** end scoring code for regression;
+*************************************;
+* Renaming variables for Reg9;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Reg9;
+*------------------------------------------------------------*;
+drop Reg9_P_DepVar1;
+Reg9_P_DepVar1 = P_DepVar1;
+drop Reg9_P_DepVar0;
+Reg9_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Reg9;
+*------------------------------------------------------------*;
+length Reg9_WARN_ $4;
+drop Reg9_WARN_;
+Reg9_WARN_ = _WARN_;
+*------------------------------------------------------------*;
 * Ensmbl9: Scoring Code of model 10 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
@@ -5782,27 +5854,27 @@ Reg10_WARN_ = _WARN_;
 * Ensmbl9: Average Posteriors of 10 models;
 *------------------------------------------------------------*;
 P_DepVar1 = (
-Reg9_P_DepVar1 +
-Tree5_P_DepVar1 +
-Neural33_P_DepVar1 +
 Neural6_P_DepVar1 +
 Neural31_P_DepVar1 +
 Neural32_P_DepVar1 +
+Neural33_P_DepVar1 +
 Neural34_P_DepVar1 +
 Neural35_P_DepVar1 +
 Neural30_P_DepVar1 +
+Tree5_P_DepVar1 +
+Reg9_P_DepVar1 +
 Reg10_P_DepVar1
 )/10;
 P_DepVar0 = (
-Reg9_P_DepVar0 +
-Tree5_P_DepVar0 +
-Neural33_P_DepVar0 +
 Neural6_P_DepVar0 +
 Neural31_P_DepVar0 +
 Neural32_P_DepVar0 +
+Neural33_P_DepVar0 +
 Neural34_P_DepVar0 +
 Neural35_P_DepVar0 +
 Neural30_P_DepVar0 +
+Tree5_P_DepVar0 +
+Reg9_P_DepVar0 +
 Reg10_P_DepVar0
 )/10;
 *------------------------------------------------------------*;
@@ -5837,18 +5909,6 @@ if I_DepVar = '0' then U_DepVar = 0;
 length _WARN_ $4;
 label _WARN_ = 'Warnings';
 _WARN_ = '';
-if index(REG9_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(REG9_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(REG9_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(REG9_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
-if index(TREE5_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(TREE5_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(TREE5_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(TREE5_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
-if index(NEURAL33_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(NEURAL33_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(NEURAL33_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(NEURAL33_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(NEURAL6_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(NEURAL6_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL6_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
@@ -5861,6 +5921,10 @@ if index(NEURAL32_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) 
 if index(NEURAL32_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL32_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL32_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL33_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL33_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL33_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL33_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(NEURAL34_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(NEURAL34_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL34_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
@@ -5873,6 +5937,14 @@ if index(NEURAL30_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) 
 if index(NEURAL30_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL30_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL30_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(TREE5_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(TREE5_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(TREE5_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(TREE5_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(REG9_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(REG9_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(REG9_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(REG9_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(REG10_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(REG10_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(REG10_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';

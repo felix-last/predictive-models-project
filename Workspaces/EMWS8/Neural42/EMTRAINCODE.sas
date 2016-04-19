@@ -36,7 +36,7 @@ data EM_Neural42;
 set EMWS8.Meta3_TRAIN(keep=
 AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
 AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
-Kidhome Mnt MntFishProducts MntFruits MntGoldProds MntSweetProducts
+Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds MntSweetProducts
 MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat RMntFrq Recency
 Teenhome );
 run;
@@ -46,15 +46,15 @@ run;
 %macro DMDBClass;
     AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
    AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC)
+   HigherEducationBinary(ASC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural42: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
-   MntGoldProds MntSweetProducts MonthsAsCustomer NumDealsPurchases
-   NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
+   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
+   RMntFrq Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural42: Create DMDB;
@@ -74,9 +74,9 @@ quit;
 * Neural42: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
-   MntGoldProds MntSweetProducts MonthsAsCustomer NumDealsPurchases
-   NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
+   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
+   RMntFrq Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural42: Binary Inputs Macro ;
@@ -89,7 +89,7 @@ quit;
 * Neural42: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education
+    Education Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural42: Ordinal Inputs Macro ;

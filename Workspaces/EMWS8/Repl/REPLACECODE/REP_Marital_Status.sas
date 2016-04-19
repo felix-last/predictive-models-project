@@ -2,20 +2,13 @@
 * ;
 * Defining: REP_Marital_Status;
 * ;
-Length REP_Marital_Status$12;
+Length REP_Marital_Status$8;
 Label REP_Marital_Status='Replacement: Marital_Status';
-format REP_Marital_Status $12.0;
+format REP_Marital_Status $8.0;
 REP_Marital_Status=Marital_Status;
 *;
-_UFORMAT200 = strip(put(Marital_Status,$12.0));
+_UFORMAT200 = strip(put(Marital_Status,$8.0));
 if ^(_UFORMAT200 in(
-"Married", "Together", "Single", "Divorced", "Widow", "BigConfusion", ""
-)) then
+"Married", "Together", "Single", "Divorced", "Widow"
+, "" )) then
 REP_Marital_Status= "";
-* ;
-* Variable: Marital_Status;
-* ;
-_UFORMAT200 = strip(
-put(Marital_Status,$12.0));
-if _UFORMAT200 =  "BigConfusion" then
-REP_Marital_Status="";
