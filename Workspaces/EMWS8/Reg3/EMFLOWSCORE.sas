@@ -38,6 +38,12 @@ end;
 drop _DM_BAD;
 _DM_BAD=0;
 
+*** Check Year_Birth for missing values ;
+if missing( Year_Birth ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
 *** Generate dummy variables for GRP_AcceptedCmp5 ;
 drop _1_0 ;
 if missing( GRP_AcceptedCmp5 ) then do;
@@ -444,64 +450,68 @@ _LP0 = 0;
 
 ***  Effect: GRP_AcceptedCmp5 ;
 _TEMP = 1;
-_LP0 = _LP0 + (   -1.02877515677573) * _TEMP * _1_0;
+_LP0 = _LP0 + (    -1.0202735142883) * _TEMP * _1_0;
 
 ***  Effect: GRP_Frq ;
 _TEMP = 1;
-_LP0 = _LP0 + (     1.9467311516595) * _TEMP * _2_0;
-_LP0 = _LP0 + (    0.16734849497288) * _TEMP * _2_1;
-_LP0 = _LP0 + (   -0.71216043302912) * _TEMP * _2_2;
+_LP0 = _LP0 + (    1.96135216788678) * _TEMP * _2_0;
+_LP0 = _LP0 + (    0.16052598190077) * _TEMP * _2_1;
+_LP0 = _LP0 + (   -0.70902116030282) * _TEMP * _2_2;
 
 ***  Effect: GRP_Income ;
 _TEMP = 1;
-_LP0 = _LP0 + (    1.00633080323166) * _TEMP * _3_0;
-_LP0 = _LP0 + (    0.85917878021713) * _TEMP * _3_1;
-_LP0 = _LP0 + (   -0.97761167986152) * _TEMP * _3_2;
+_LP0 = _LP0 + (    0.93791732843579) * _TEMP * _3_0;
+_LP0 = _LP0 + (    0.86323578315443) * _TEMP * _3_1;
+_LP0 = _LP0 + (   -0.93701763797667) * _TEMP * _3_2;
 
 ***  Effect: GRP_MntFishProducts ;
 _TEMP = 1;
-_LP0 = _LP0 + (    0.65248692594388) * _TEMP * _5_0;
-_LP0 = _LP0 + (     0.0417259399181) * _TEMP * _5_1;
-_LP0 = _LP0 + (   -0.05258075832348) * _TEMP * _5_2;
+_LP0 = _LP0 + (     0.6826557743697) * _TEMP * _5_0;
+_LP0 = _LP0 + (    0.02285788144903) * _TEMP * _5_1;
+_LP0 = _LP0 + (   -0.06609528477722) * _TEMP * _5_2;
 
 ***  Effect: GRP_MntMeatProducts ;
 _TEMP = 1;
-_LP0 = _LP0 + (   -1.48113569275309) * _TEMP * _7_0;
-_LP0 = _LP0 + (   -0.22439832100882) * _TEMP * _7_1;
-_LP0 = _LP0 + (     0.5480751224945) * _TEMP * _7_2;
+_LP0 = _LP0 + (   -1.44582935530291) * _TEMP * _7_0;
+_LP0 = _LP0 + (   -0.21318741203534) * _TEMP * _7_1;
+_LP0 = _LP0 + (    0.53364168349885) * _TEMP * _7_2;
 
 ***  Effect: GRP_MntWines ;
 _TEMP = 1;
-_LP0 = _LP0 + (    1.04449090892344) * _TEMP * _8_0;
-_LP0 = _LP0 + (    0.44337701613731) * _TEMP * _8_1;
-_LP0 = _LP0 + (   -0.60815032674089) * _TEMP * _8_2;
+_LP0 = _LP0 + (    0.98273321190928) * _TEMP * _8_0;
+_LP0 = _LP0 + (      0.432298434838) * _TEMP * _8_1;
+_LP0 = _LP0 + (   -0.57365050311778) * _TEMP * _8_2;
 
 ***  Effect: GRP_NumCatalogPurchases ;
 _TEMP = 1;
-_LP0 = _LP0 + (   -1.14772939970229) * _TEMP * _9_0;
-_LP0 = _LP0 + (    0.01236638317437) * _TEMP * _9_1;
+_LP0 = _LP0 + (   -1.15145054763997) * _TEMP * _9_0;
+_LP0 = _LP0 + (    0.03505087718511) * _TEMP * _9_1;
 
 ***  Effect: GRP_NumDistPurchases ;
 _TEMP = 1;
-_LP0 = _LP0 + (   -2.65515163278803) * _TEMP * _10_0;
-_LP0 = _LP0 + (    0.05356116501287) * _TEMP * _10_1;
-_LP0 = _LP0 + (    0.54048303369343) * _TEMP * _10_2;
+_LP0 = _LP0 + (   -2.65890505222228) * _TEMP * _10_0;
+_LP0 = _LP0 + (     0.0545239904585) * _TEMP * _10_1;
+_LP0 = _LP0 + (    0.51990032635141) * _TEMP * _10_2;
 
 ***  Effect: GRP_RMntFrq ;
 _TEMP = 1;
-_LP0 = _LP0 + (   -0.25558521864842) * _TEMP * _13_0;
-_LP0 = _LP0 + (    0.02282756746923) * _TEMP * _13_1;
-_LP0 = _LP0 + (   -0.39418668032866) * _TEMP * _13_2;
+_LP0 = _LP0 + (   -0.25494301084801) * _TEMP * _13_0;
+_LP0 = _LP0 + (    0.02802747054775) * _TEMP * _13_1;
+_LP0 = _LP0 + (   -0.40273598284868) * _TEMP * _13_2;
 
 ***  Effect: GRP_Recency ;
 _TEMP = 1;
-_LP0 = _LP0 + (    1.93344839762718) * _TEMP * _14_0;
-_LP0 = _LP0 + (    0.53898198413912) * _TEMP * _14_1;
-_LP0 = _LP0 + (   -0.59895640903963) * _TEMP * _14_2;
+_LP0 = _LP0 + (    1.94607798996867) * _TEMP * _14_0;
+_LP0 = _LP0 + (    0.53257949184685) * _TEMP * _14_1;
+_LP0 = _LP0 + (   -0.62881974341908) * _TEMP * _14_2;
+
+***  Effect: Year_Birth ;
+_TEMP = Year_Birth ;
+_LP0 = _LP0 + (    0.01824806947783 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =    -1.75214170195592 + _LP0;
+_TEMP =    -37.6992883159803 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

@@ -39,6 +39,7 @@ quit;
     GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
    GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
    GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+   Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree3: Tree Targets Macro ;
@@ -53,7 +54,7 @@ run;
 * Tree3: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-
+    Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree3: Binary and Nominal Inputs Macro ;
@@ -88,6 +89,8 @@ Exhaustive=5000
 event='1'
 ;
 ;
+input %INTINPUTS
+/ level = interval;
 input %NOMINPUTS
 / level=nominal;
 target DepVar / level=BINARY

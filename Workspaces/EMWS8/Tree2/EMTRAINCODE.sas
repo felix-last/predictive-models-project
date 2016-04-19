@@ -36,8 +36,8 @@ quit;
 * Tree2: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+   PC_7 PC_8 PC_9 Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree2: Tree Targets Macro ;
@@ -52,8 +52,8 @@ run;
 * Tree2: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+   PC_7 PC_8 PC_9 Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree2: Binary and Nominal Inputs Macro ;

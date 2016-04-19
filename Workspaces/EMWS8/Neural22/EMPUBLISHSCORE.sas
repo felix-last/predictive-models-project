@@ -11,6 +11,8 @@ DROP _DM_BAD _EPS _NOCL_ _MAX_ _MAXP_ _SUM_ _NTRIALS;
  _EPS =                1E-10;
 LENGTH _WARN_ $4
 ;
+      label S_Year_Birth = 'Standard: Year_Birth' ;
+
       label GRP_AcceptedCmp52 = 'Dummy: GRP_AcceptedCmp5=2' ;
 
       label GRP_Frq2 = 'Dummy: GRP_Frq=2' ;
@@ -668,6 +670,28 @@ else do;
       _DM_BAD = 1;
    end;
 end;
+
+*** *************************;
+*** Checking missing input Interval
+*** *************************;
+
+IF NMISS(
+   Year_Birth   ) THEN DO;
+   SUBSTR(_WARN_, 1, 1) = 'M';
+
+   _DM_BAD = 1;
+END;
+*** *************************;
+*** Writing the Node intvl ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   S_Year_Birth  =    -163.205330145852 +     0.08289609202864 * Year_Birth ;
+END;
+ELSE DO;
+   IF MISSING( Year_Birth ) THEN S_Year_Birth  = . ;
+   ELSE S_Year_Birth  =    -163.205330145852 +     0.08289609202864 *
+        Year_Birth ;
+END;
 *** *************************;
 *** Writing the Node nom ;
 *** *************************;
@@ -675,166 +699,171 @@ end;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =    -0.47846451014473 * GRP_AcceptedCmp52  +     0.19123593876387 *
-        GRP_Frq2  +     0.09643181492148 * GRP_Frq3  +     0.05144024674895 *
-        GRP_Frq4  +     0.04295631018086 * GRP_Income2
-          +     -0.1228594895838 * GRP_Income3  +    -0.24669259703155 *
-        GRP_Income4  +    -0.12634710557505 * GRP_Mnt2
-          +     0.06153848379201 * GRP_Mnt3  +    -0.25623825887978 * GRP_Mnt4
-          +    -0.09885892988252 * GRP_MntFishProducts2
-          +     0.08406776876431 * GRP_MntFishProducts3
-          +    -0.01961506207304 * GRP_MntFishProducts4
-          +     0.05865015349102 * GRP_MntGoldProds2
-          +    -0.19025881153665 * GRP_MntGoldProds3
-          +     0.11742267670165 * GRP_MntGoldProds4
-          +    -0.48107725600014 * GRP_MntMeatProducts2
-          +    -0.06405219545244 * GRP_MntMeatProducts3
-          +    -0.28599597872655 * GRP_MntMeatProducts4
-          +     0.09252331701173 * GRP_MntWines2  +    -0.01679973092371 *
-        GRP_MntWines3  +    -0.28118765113398 * GRP_MntWines4
-          +    -0.20589129984224 * GRP_NumCatalogPurchases3
-          +     0.09269540062859 * GRP_NumCatalogPurchases4
-          +    -0.21301173258264 * GRP_NumDistPurchases2
-          +     0.02968077077204 * GRP_NumDistPurchases3
-          +     0.37847518797466 * GRP_NumDistPurchases4
-          +    -0.14460622553066 * GRP_NumWebPurchases2
-          +     0.24087714617368 * GRP_NumWebPurchases3
-          +     0.31645984538255 * GRP_NumWebPurchases4
-          +    -0.21603366146166 * GRP_RFMstat2  +    -0.16662861409798 *
-        GRP_RFMstat3  +     0.21007601365613 * GRP_RFMstat4
-          +    -0.01443663304415 * GRP_RMntFrq2  +    -0.10326438582674 *
-        GRP_RMntFrq3  +    -0.65474128199839 * GRP_RMntFrq4
-          +     0.32165037855922 * GRP_Recency2  +     0.13838311684738 *
-        GRP_Recency3  +     0.25495034500897 * GRP_Recency4 ;
-   H12  =     0.19980227701329 * GRP_AcceptedCmp52  +     0.35227413860542 *
-        GRP_Frq2  +    -0.08132751965568 * GRP_Frq3  +     0.06274660992037 *
-        GRP_Frq4  +     0.14609729670665 * GRP_Income2
-          +     -0.0521158725468 * GRP_Income3  +     0.29485821055626 *
-        GRP_Income4  +     0.11491631500511 * GRP_Mnt2
-          +    -0.48249282197964 * GRP_Mnt3  +    -0.43275960999945 * GRP_Mnt4
-          +     0.23372129286866 * GRP_MntFishProducts2
-          +     0.08173006283377 * GRP_MntFishProducts3
-          +    -0.26374451563307 * GRP_MntFishProducts4
-          +    -0.05478986771486 * GRP_MntGoldProds2
-          +     0.15674217490538 * GRP_MntGoldProds3
-          +     -0.0970693263223 * GRP_MntGoldProds4
-          +    -0.07551339114514 * GRP_MntMeatProducts2
-          +     0.20520020022282 * GRP_MntMeatProducts3
-          +     0.18185271543305 * GRP_MntMeatProducts4
-          +     0.13372808101693 * GRP_MntWines2  +    -0.23508613293176 *
-        GRP_MntWines3  +     0.03782283781196 * GRP_MntWines4
-          +    -0.01759208575836 * GRP_NumCatalogPurchases3
-          +     0.03228155996803 * GRP_NumCatalogPurchases4
-          +    -0.16689756602171 * GRP_NumDistPurchases2
-          +     0.23008084678616 * GRP_NumDistPurchases3
-          +      0.1020080832353 * GRP_NumDistPurchases4
-          +     0.00689419482794 * GRP_NumWebPurchases2
-          +     0.45549724613494 * GRP_NumWebPurchases3
-          +     0.21666691620434 * GRP_NumWebPurchases4
-          +    -0.02464138218078 * GRP_RFMstat2  +     0.13412544784153 *
-        GRP_RFMstat3  +    -0.09645970560405 * GRP_RFMstat4
-          +     0.04270814348512 * GRP_RMntFrq2  +     -0.1501520967589 *
-        GRP_RMntFrq3  +     -0.1772447013278 * GRP_RMntFrq4
-          +      0.1223375687576 * GRP_Recency2  +      0.1019105028487 *
-        GRP_Recency3  +     0.06326170958276 * GRP_Recency4 ;
-   H13  =    -0.47552326597307 * GRP_AcceptedCmp52  +     0.13942347151662 *
-        GRP_Frq2  +     0.15792042601114 * GRP_Frq3  +    -0.31699137546772 *
-        GRP_Frq4  +     0.31623959766757 * GRP_Income2
-          +     0.51675448663341 * GRP_Income3  +    -0.28386096750656 *
-        GRP_Income4  +    -0.19585257598596 * GRP_Mnt2
-          +     0.03528129174811 * GRP_Mnt3  +     0.16020552351069 * GRP_Mnt4
-          +     0.11549870508237 * GRP_MntFishProducts2
-          +    -0.02472870244462 * GRP_MntFishProducts3
-          +    -0.08397818027214 * GRP_MntFishProducts4
-          +    -0.15352678487636 * GRP_MntGoldProds2
-          +    -0.22936969994696 * GRP_MntGoldProds3
-          +    -0.14955434708754 * GRP_MntGoldProds4
-          +    -0.27851745198006 * GRP_MntMeatProducts2
-          +    -0.20347624413948 * GRP_MntMeatProducts3
-          +     0.22612412661729 * GRP_MntMeatProducts4
-          +      0.0680550338972 * GRP_MntWines2  +     0.13605728094791 *
-        GRP_MntWines3  +    -0.24233826362305 * GRP_MntWines4
-          +    -0.51105265438413 * GRP_NumCatalogPurchases3
-          +      0.3463181885617 * GRP_NumCatalogPurchases4
-          +    -0.42061003686263 * GRP_NumDistPurchases2
-          +     0.05694490202182 * GRP_NumDistPurchases3
-          +    -0.05589065356183 * GRP_NumDistPurchases4
-          +    -0.15004779907268 * GRP_NumWebPurchases2
-          +    -0.03683214810286 * GRP_NumWebPurchases3
-          +    -0.14152766915751 * GRP_NumWebPurchases4
-          +    -0.34448387603605 * GRP_RFMstat2  +    -0.12678315363038 *
-        GRP_RFMstat3  +    -0.17785766746488 * GRP_RFMstat4
-          +    -0.12269367915474 * GRP_RMntFrq2  +     0.15261716486225 *
-        GRP_RMntFrq3  +    -0.14834283523731 * GRP_RMntFrq4
-          +     0.41906757309616 * GRP_Recency2  +     0.11383836551208 *
-        GRP_Recency3  +    -0.50873022901358 * GRP_Recency4 ;
-   H14  =     0.47487308000188 * GRP_AcceptedCmp52  +    -0.20783874293801 *
-        GRP_Frq2  +     -0.2262487293265 * GRP_Frq3  +    -0.24497015722444 *
-        GRP_Frq4  +    -0.41352416374349 * GRP_Income2
-          +    -0.19029917786221 * GRP_Income3  +     0.44371774186743 *
-        GRP_Income4  +     0.03966957052109 * GRP_Mnt2
-          +     0.21041258864544 * GRP_Mnt3  +    -0.03545115071009 * GRP_Mnt4
-          +     -0.3523117475999 * GRP_MntFishProducts2
-          +     0.01075749365425 * GRP_MntFishProducts3
-          +    -0.19220397921061 * GRP_MntFishProducts4
-          +     0.24691019907326 * GRP_MntGoldProds2
-          +    -0.36269131170152 * GRP_MntGoldProds3
-          +    -0.07442729340208 * GRP_MntGoldProds4
-          +     0.14166838567576 * GRP_MntMeatProducts2
-          +     -0.0573636128895 * GRP_MntMeatProducts3
-          +     0.11782684497872 * GRP_MntMeatProducts4
-          +    -0.58306293735162 * GRP_MntWines2  +     -0.1332347200661 *
-        GRP_MntWines3  +     -0.0491151521812 * GRP_MntWines4
-          +     0.19217394838443 * GRP_NumCatalogPurchases3
-          +     0.30242368378572 * GRP_NumCatalogPurchases4
-          +      0.5631335040028 * GRP_NumDistPurchases2
-          +      0.2833277493575 * GRP_NumDistPurchases3
-          +     0.15501991757103 * GRP_NumDistPurchases4
-          +     0.06522663204791 * GRP_NumWebPurchases2
-          +    -0.24250508241812 * GRP_NumWebPurchases3
-          +    -0.14936719392927 * GRP_NumWebPurchases4
-          +     0.07538326365237 * GRP_RFMstat2  +    -0.11207708467015 *
-        GRP_RFMstat3  +    -0.03495013261696 * GRP_RFMstat4
-          +    -0.07948642963964 * GRP_RMntFrq2  +     -0.3740993499425 *
-        GRP_RMntFrq3  +      0.1224880912483 * GRP_RMntFrq4
-          +    -1.20234498415322 * GRP_Recency2  +    -0.15277267671243 *
-        GRP_Recency3  +     0.17498175973385 * GRP_Recency4 ;
-   H15  =     0.31607756545434 * GRP_AcceptedCmp52  +    -0.39938983779344 *
-        GRP_Frq2  +     0.14190381114364 * GRP_Frq3  +    -0.04654073105991 *
-        GRP_Frq4  +    -0.46847099915399 * GRP_Income2
-          +    -0.24521056791482 * GRP_Income3  +     0.29673900247528 *
-        GRP_Income4  +    -0.24347594694596 * GRP_Mnt2
-          +    -0.25470417967356 * GRP_Mnt3  +     -0.3155333752807 * GRP_Mnt4
-          +    -0.16164851437662 * GRP_MntFishProducts2
-          +    -0.07507872874942 * GRP_MntFishProducts3
-          +     -0.0000128165366 * GRP_MntFishProducts4
-          +    -0.13003975496355 * GRP_MntGoldProds2
-          +     0.10076462685161 * GRP_MntGoldProds3
-          +     0.06823082371801 * GRP_MntGoldProds4
-          +    -0.06661203056726 * GRP_MntMeatProducts2
-          +     0.21135583081997 * GRP_MntMeatProducts3
-          +     0.05317467469941 * GRP_MntMeatProducts4
-          +     -0.6790577471338 * GRP_MntWines2  +    -0.29030845400198 *
-        GRP_MntWines3  +     0.17538455641954 * GRP_MntWines4
-          +     0.27411589551701 * GRP_NumCatalogPurchases3
-          +     0.33639439802576 * GRP_NumCatalogPurchases4
-          +     0.37202178791302 * GRP_NumDistPurchases2
-          +     0.21242089259106 * GRP_NumDistPurchases3
-          +     0.01745612539369 * GRP_NumDistPurchases4
-          +     0.06417261665114 * GRP_NumWebPurchases2
-          +     0.34302874594069 * GRP_NumWebPurchases3
-          +     0.08556934131582 * GRP_NumWebPurchases4
-          +    -0.01317484038203 * GRP_RFMstat2  +    -0.26798645102872 *
-        GRP_RFMstat3  +    -0.23199496411354 * GRP_RFMstat4
-          +    -0.36396476479849 * GRP_RMntFrq2  +    -0.16838193614715 *
-        GRP_RMntFrq3  +       0.051807632343 * GRP_RMntFrq4
-          +    -0.13014582685433 * GRP_Recency2  +     0.01537566565331 *
-        GRP_Recency3  +      0.1365007617785 * GRP_Recency4 ;
-   H11  =    -0.02804722687441 + H11 ;
-   H12  =    -1.15173994765723 + H12 ;
-   H13  =     0.30124306509106 + H13 ;
-   H14  =    -0.37792609262463 + H14 ;
-   H15  =     0.46405557098176 + H15 ;
+   H11  =     0.04727192845675 * S_Year_Birth ;
+   H12  =    -0.03499603197831 * S_Year_Birth ;
+   H13  =      -0.249387333167 * S_Year_Birth ;
+   H14  =    -0.18145230662582 * S_Year_Birth ;
+   H15  =    -0.07744416350216 * S_Year_Birth ;
+   H11  = H11  +    -0.25371698668168 * GRP_AcceptedCmp52
+          +     0.38185615945621 * GRP_Frq2  +     0.03545555759423 * GRP_Frq3
+          +    -0.00061660249238 * GRP_Frq4  +     0.41779261820045 *
+        GRP_Income2  +     0.51800912898069 * GRP_Income3
+          +    -0.36427548932695 * GRP_Income4  +    -0.06433979614617 *
+        GRP_Mnt2  +     0.00045120565293 * GRP_Mnt3  +    -0.13992317322759 *
+        GRP_Mnt4  +     0.34207391538024 * GRP_MntFishProducts2
+          +     0.03411739869638 * GRP_MntFishProducts3
+          +      -0.083693402353 * GRP_MntFishProducts4
+          +     -0.1318128730187 * GRP_MntGoldProds2
+          +     -0.0614737729382 * GRP_MntGoldProds3
+          +    -0.00372986687449 * GRP_MntGoldProds4
+          +     -0.3129171829017 * GRP_MntMeatProducts2
+          +     0.01519664718127 * GRP_MntMeatProducts3
+          +     0.29997111548812 * GRP_MntMeatProducts4
+          +       0.389673942682 * GRP_MntWines2  +     0.21159785789434 *
+        GRP_MntWines3  +    -0.26921349986988 * GRP_MntWines4
+          +    -0.47013218092095 * GRP_NumCatalogPurchases3
+          +     0.23943411636141 * GRP_NumCatalogPurchases4
+          +    -0.68715024477164 * GRP_NumDistPurchases2
+          +    -0.09178471992122 * GRP_NumDistPurchases3
+          +    -0.01170225640351 * GRP_NumDistPurchases4
+          +    -0.14760833919227 * GRP_NumWebPurchases2
+          +     0.02966820025811 * GRP_NumWebPurchases3
+          +    -0.04127892210576 * GRP_NumWebPurchases4
+          +    -0.45467119970502 * GRP_RFMstat2  +    -0.14644406995031 *
+        GRP_RFMstat3  +    -0.12660007404037 * GRP_RFMstat4
+          +     0.04829215694488 * GRP_RMntFrq2  +     0.10137738373353 *
+        GRP_RMntFrq3  +     -0.2873514159435 * GRP_RMntFrq4
+          +     0.61737333380878 * GRP_Recency2  +     0.16651370318087 *
+        GRP_Recency3  +    -0.15382569411658 * GRP_Recency4 ;
+   H12  = H12  +    -0.00960598895677 * GRP_AcceptedCmp52
+          +    -0.13877780492855 * GRP_Frq2  +    -0.12078849771739 * GRP_Frq3
+          +     0.25058833013238 * GRP_Frq4  +     0.13932014454657 *
+        GRP_Income2  +    -0.11560599273748 * GRP_Income3
+          +    -0.36622829757109 * GRP_Income4  +     0.12796853065131 *
+        GRP_Mnt2  +    -0.15829126446209 * GRP_Mnt3  +    -0.35779207872654 *
+        GRP_Mnt4  +     0.06590491513415 * GRP_MntFishProducts2
+          +     0.00842475350903 * GRP_MntFishProducts3
+          +     -0.1623103908885 * GRP_MntFishProducts4
+          +    -0.23845524931139 * GRP_MntGoldProds2
+          +    -0.07128567155438 * GRP_MntGoldProds3
+          +     0.25778887379163 * GRP_MntGoldProds4
+          +    -0.12224351227219 * GRP_MntMeatProducts2
+          +     0.06269922653052 * GRP_MntMeatProducts3
+          +      0.2587215409794 * GRP_MntMeatProducts4
+          +     0.20096090232239 * GRP_MntWines2  +    -0.16858917844476 *
+        GRP_MntWines3  +     0.03815809499779 * GRP_MntWines4
+          +     0.05177526225067 * GRP_NumCatalogPurchases3
+          +    -0.18831777813313 * GRP_NumCatalogPurchases4
+          +     0.12374838743082 * GRP_NumDistPurchases2
+          +    -0.19910688422086 * GRP_NumDistPurchases3
+          +    -0.03804569737208 * GRP_NumDistPurchases4
+          +    -0.17179633678901 * GRP_NumWebPurchases2
+          +    -0.08560184232365 * GRP_NumWebPurchases3
+          +     0.09237237622553 * GRP_NumWebPurchases4
+          +     0.01544327143979 * GRP_RFMstat2  +      0.1127818122444 *
+        GRP_RFMstat3  +    -0.21371736650143 * GRP_RFMstat4
+          +    -0.14005478166078 * GRP_RMntFrq2  +     0.07954568858907 *
+        GRP_RMntFrq3  +    -0.02313269086836 * GRP_RMntFrq4
+          +     0.04358116545272 * GRP_Recency2  +    -0.02969695172962 *
+        GRP_Recency3  +     0.00206593904485 * GRP_Recency4 ;
+   H13  = H13  +     0.11273135858209 * GRP_AcceptedCmp52
+          +    -0.15015665173608 * GRP_Frq2  +    -0.20454924588356 * GRP_Frq3
+          +    -0.04047998964496 * GRP_Frq4  +    -0.29897237144541 *
+        GRP_Income2  +      -0.028464296882 * GRP_Income3
+          +     0.24836294191696 * GRP_Income4  +     0.08738925553158 *
+        GRP_Mnt2  +     0.00962293230168 * GRP_Mnt3  +    -0.12661643514597 *
+        GRP_Mnt4  +    -0.03747719154948 * GRP_MntFishProducts2
+          +    -0.07078012229572 * GRP_MntFishProducts3
+          +    -0.14569186671189 * GRP_MntFishProducts4
+          +     0.14963390032413 * GRP_MntGoldProds2
+          +    -0.11869917970226 * GRP_MntGoldProds3
+          +     0.25943105626615 * GRP_MntGoldProds4
+          +     0.36609689271233 * GRP_MntMeatProducts2
+          +     0.10969864655073 * GRP_MntMeatProducts3
+          +    -0.03446779336952 * GRP_MntMeatProducts4
+          +    -0.16882321573662 * GRP_MntWines2  +     0.07914922328232 *
+        GRP_MntWines3  +     0.13243594484158 * GRP_MntWines4
+          +     0.39758714937962 * GRP_NumCatalogPurchases3
+          +     0.31434011051179 * GRP_NumCatalogPurchases4
+          +     0.08068432649382 * GRP_NumDistPurchases2
+          +    -0.08875599058351 * GRP_NumDistPurchases3
+          +     0.26738740475822 * GRP_NumDistPurchases4
+          +     -0.0916247468051 * GRP_NumWebPurchases2
+          +    -0.17267741073665 * GRP_NumWebPurchases3
+          +     0.01349113315351 * GRP_NumWebPurchases4
+          +    -0.19075973281592 * GRP_RFMstat2  +    -0.20146461162283 *
+        GRP_RFMstat3  +    -0.13097471458987 * GRP_RFMstat4
+          +     0.06761773631631 * GRP_RMntFrq2  +     0.27576244694442 *
+        GRP_RMntFrq3  +      0.1281788430307 * GRP_RMntFrq4
+          +    -0.15939599795679 * GRP_Recency2  +    -0.00210397286084 *
+        GRP_Recency3  +     0.28490847560375 * GRP_Recency4 ;
+   H14  = H14  +     0.27713596853764 * GRP_AcceptedCmp52
+          +    -0.11480256849934 * GRP_Frq2  +      0.0285240312455 * GRP_Frq3
+          +     0.09416065239682 * GRP_Frq4  +     -0.1229961422993 *
+        GRP_Income2  +     0.01867364051002 * GRP_Income3
+          +     0.05820105400306 * GRP_Income4  +    -0.16873429334819 *
+        GRP_Mnt2  +    -0.01221085891741 * GRP_Mnt3  +    -0.10225236565235 *
+        GRP_Mnt4  +    -0.09613387975858 * GRP_MntFishProducts2
+          +    -0.18334484867808 * GRP_MntFishProducts3
+          +     0.13484477561766 * GRP_MntFishProducts4
+          +    -0.05145913380692 * GRP_MntGoldProds2
+          +     0.04459987080173 * GRP_MntGoldProds3
+          +     0.01539767655772 * GRP_MntGoldProds4
+          +     0.26537148543352 * GRP_MntMeatProducts2
+          +     0.22913678530176 * GRP_MntMeatProducts3
+          +     0.21262490658374 * GRP_MntMeatProducts4
+          +    -0.11513521401249 * GRP_MntWines2  +    -0.14420673462527 *
+        GRP_MntWines3  +     0.11949691312637 * GRP_MntWines4
+          +    -0.02289734111038 * GRP_NumCatalogPurchases3
+          +    -0.12014539185275 * GRP_NumCatalogPurchases4
+          +     0.09224372228857 * GRP_NumDistPurchases2
+          +    -0.14205094961773 * GRP_NumDistPurchases3
+          +    -0.27160467877541 * GRP_NumDistPurchases4
+          +    -0.15428446875019 * GRP_NumWebPurchases2
+          +    -0.36914157795453 * GRP_NumWebPurchases3
+          +    -0.41610537355059 * GRP_NumWebPurchases4
+          +    -0.29442656678388 * GRP_RFMstat2  +     0.03961235509827 *
+        GRP_RFMstat3  +    -0.18322878380243 * GRP_RFMstat4
+          +     0.06857495854453 * GRP_RMntFrq2  +     0.08325769999442 *
+        GRP_RMntFrq3  +     0.24334424933749 * GRP_RMntFrq4
+          +    -0.50963259840069 * GRP_Recency2  +    -0.24163634485458 *
+        GRP_Recency3  +     -0.1023689653207 * GRP_Recency4 ;
+   H15  = H15  +    -0.58071728739803 * GRP_AcceptedCmp52
+          +    -0.33803120859672 * GRP_Frq2  +    -0.08690701614481 * GRP_Frq3
+          +     0.06107334775294 * GRP_Frq4  +     0.00751374071999 *
+        GRP_Income2  +     0.20911873861779 * GRP_Income3
+          +    -0.14977199160976 * GRP_Income4  +     0.15427447371686 *
+        GRP_Mnt2  +    -0.24298277669059 * GRP_Mnt3  +    -0.02935492111499 *
+        GRP_Mnt4  +     0.04923982061963 * GRP_MntFishProducts2
+          +    -0.08952948139975 * GRP_MntFishProducts3
+          +     0.15338133379465 * GRP_MntFishProducts4
+          +     0.04821845492824 * GRP_MntGoldProds2
+          +     0.20117781904284 * GRP_MntGoldProds3
+          +     0.13013396690778 * GRP_MntGoldProds4
+          +    -0.03940841472157 * GRP_MntMeatProducts2
+          +     0.03161017721112 * GRP_MntMeatProducts3
+          +    -0.21938330779867 * GRP_MntMeatProducts4
+          +      0.3039864690076 * GRP_MntWines2  +     0.33038690291786 *
+        GRP_MntWines3  +     0.03314465135063 * GRP_MntWines4
+          +    -0.07655889365033 * GRP_NumCatalogPurchases3
+          +    -0.17353955777897 * GRP_NumCatalogPurchases4
+          +    -0.16058154480995 * GRP_NumDistPurchases2
+          +    -0.30101518928361 * GRP_NumDistPurchases3
+          +      0.0473480026433 * GRP_NumDistPurchases4
+          +     0.03132883547053 * GRP_NumWebPurchases2
+          +    -0.29425936985479 * GRP_NumWebPurchases3
+          +    -0.12527625315403 * GRP_NumWebPurchases4
+          +     0.30683805591766 * GRP_RFMstat2  +    -0.21275334469197 *
+        GRP_RFMstat3  +     0.32474239840607 * GRP_RFMstat4
+          +     0.09289841520091 * GRP_RMntFrq2  +     0.22137778862379 *
+        GRP_RMntFrq3  +     0.12254524703503 * GRP_RMntFrq4
+          +     0.46836624272095 * GRP_Recency2  +     0.01747843890017 *
+        GRP_Recency3  +    -0.28363324780869 * GRP_Recency4 ;
+   H11  =    -0.09329902916762 + H11 ;
+   H12  =     0.21894996952826 + H12 ;
+   H13  =    -0.97210428395662 + H13 ;
+   H14  =    -0.47241372860242 + H14 ;
+   H15  =    -0.89551869986721 + H15 ;
    H11  = TANH(H11 );
    H12  = TANH(H12 );
    H13  = TANH(H13 );
@@ -852,10 +881,10 @@ END;
 *** Writing the Node DepVar ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =     1.14388401268032 * H11  +      0.6001876010487 * H12
-          +     2.09526498410663 * H13  +    -1.84849014758118 * H14
-          +    -1.09009016441951 * H15 ;
-   P_DepVar1  =    -1.61414772995986 + P_DepVar1 ;
+   P_DepVar1  =     2.68876927057109 * H11  +     0.34381275178608 * H12
+          +    -1.13153750790029 * H13  +    -0.93563986714952 * H14
+          +     1.84382077322412 * H15 ;
+   P_DepVar1  =    -1.53169022796223 + P_DepVar1 ;
    P_DepVar0  = 0;
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.;
@@ -895,3 +924,4 @@ H13
 H14
 H15
 ;
+drop S_:;

@@ -8,9 +8,9 @@ if upcase(name) = 'RECENCY' then role = 'INPUT';
 else
 if upcase(name) = 'NUMCATALOGPURCHASES' then role = 'INPUT';
 else
-if upcase(name) = 'NUMSTOREPURCHASES' then role = 'INPUT';
-else
 if upcase(name) = 'NUMWEBVISITSMONTH' then role = 'INPUT';
+else
+if upcase(name) = 'NUMSTOREPURCHASES' then role = 'INPUT';
 else
 if upcase(name) = 'MARITAL_STATUS' then role = 'INPUT';
 else
@@ -18,16 +18,9 @@ if upcase(name) = 'KIDHOME' then role = 'INPUT';
 else
 if upcase(name) = 'MNTFISHPRODUCTS' then role = 'INPUT';
 else
-if upcase(name) = 'NUMDEALSPURCHASES' then role = 'INPUT';
-else
 if upcase(name) = 'RFMSTAT' then role = 'INPUT';
 else
-if upcase(name) = 'NUMWEBPURCHASES' then do;
-role = 'REJECTED';
-comment = "Tree: TREELOWIMPORTANCE";
-end;
-else
-if upcase(name) = 'MNTMEATPRODUCTS' then do;
+if upcase(name) = 'INCOME' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
@@ -42,7 +35,17 @@ role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'ACCEPTEDCMP3' then do;
+if upcase(name) = 'MNTWINES' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'MONTHSASCUSTOMER' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'MNTMEATPRODUCTS' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
@@ -52,7 +55,32 @@ role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'MNTWINES' then do;
+if upcase(name) = 'NUMDISTPURCHASES' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'ACCEPTEDCMP2' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'NUMWEBPURCHASES' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'AGE' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'FRQ' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'RMNTFRQ' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
@@ -72,12 +100,12 @@ role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'ACCEPTEDCMP2' then do;
+if upcase(name) = 'COMPLAIN' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'COMPLAIN' then do;
+if upcase(name) = 'ACCEPTEDCMP3' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
@@ -97,7 +125,12 @@ role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'NUMDISTPURCHASES' then do;
+if upcase(name) = 'EDUCATION' then do;
+role = 'REJECTED';
+comment = "Tree: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'NUMDEALSPURCHASES' then do;
 role = 'REJECTED';
 comment = "Tree: TREELOWIMPORTANCE";
 end;

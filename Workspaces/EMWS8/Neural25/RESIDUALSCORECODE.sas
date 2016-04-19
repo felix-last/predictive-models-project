@@ -46,6 +46,8 @@ LENGTH _WARN_ $4
 
       label H12 = 'Hidden: H1=2' ;
 
+      label H13 = 'Hidden: H1=3' ;
+
       label I_DepVar = 'Into: DepVar' ;
 
       label F_DepVar = 'From: DepVar' ;
@@ -183,36 +185,50 @@ END;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =    -0.23012961341552 * S_AcceptedCmpTotal  +     0.46196798170863 * 
-        S_Frq  +     0.10792957007496 * S_Income  +     0.01598495816724 * 
-        S_Mnt  +     0.04110199082094 * S_MntFruits  +    -0.03861520815517 * 
-        S_MntGoldProds  +    -0.21282606264093 * S_MntMeatProducts
-          +     0.01715600461602 * S_MntSweetProducts
-          +    -0.23329547812839 * S_NumCatalogPurchases
-          +    -0.11507537772092 * S_NumWebPurchases
-          +    -0.03410149182919 * S_RFMstat  +     0.14966504694497 * 
-        S_RMntFrq  +     0.28566269847001 * S_Recency ;
-   H12  =     0.05540254918167 * S_AcceptedCmpTotal  +     1.29235531722682 * 
-        S_Frq  +     0.06366828093255 * S_Income  +    -0.26947825948002 * 
-        S_Mnt  +     0.21714508305015 * S_MntFruits  +     0.26812345284438 * 
-        S_MntGoldProds  +    -4.04479521582802 * S_MntMeatProducts
-          +     0.04792709763034 * S_MntSweetProducts
-          +    -1.08549455020763 * S_NumCatalogPurchases
-          +    -0.48337305556946 * S_NumWebPurchases
-          +    -0.22222278831599 * S_RFMstat  +    -0.23407358569927 * 
-        S_RMntFrq  +    -0.01186280761112 * S_Recency ;
-   H11  = H11  +    -0.14627707216264 * G_Marital_Status0
-          +    -0.05689581037738 * G_Marital_Status1 ;
-   H12  = H12  +     0.20389328110579 * G_Marital_Status0
-          +     0.12863423712687 * G_Marital_Status1 ;
-   H11  =     0.26937694072834 + H11 ;
-   H12  =    -3.07173299704836 + H12 ;
+   H11  =    -0.29033160943141 * S_AcceptedCmpTotal  +     1.65008720168986 * 
+        S_Frq  +     0.06251288055572 * S_Income  +      0.0668512722962 * 
+        S_Mnt  +     0.03892214147304 * S_MntFruits  +     0.20062210213612 * 
+        S_MntGoldProds  +    -3.11480309420656 * S_MntMeatProducts
+          +    -0.04673959319989 * S_MntSweetProducts
+          +    -1.21625330274707 * S_NumCatalogPurchases
+          +     -0.4971041829957 * S_NumWebPurchases
+          +    -0.17470099705144 * S_RFMstat  +    -0.53358474622759 * 
+        S_RMntFrq  +     0.38389131134706 * S_Recency ;
+   H12  =     0.45303153795041 * S_AcceptedCmpTotal  +    -0.78996479450613 * 
+        S_Frq  +    -0.58298284968136 * S_Income  +     0.14918533356272 * 
+        S_Mnt  +    -0.40559802868396 * S_MntFruits  +     0.11972304240892 * 
+        S_MntGoldProds  +     0.31356670313089 * S_MntMeatProducts
+          +    -0.14032278714215 * S_MntSweetProducts
+          +     0.13835096224468 * S_NumCatalogPurchases
+          +     0.13800491118955 * S_NumWebPurchases
+          +     0.10506847679186 * S_RFMstat  +    -0.29903179406638 * 
+        S_RMntFrq  +    -0.52813041903353 * S_Recency ;
+   H13  =    -0.60990818976997 * S_AcceptedCmpTotal  +     0.78563794151057 * 
+        S_Frq  +    -0.67740326666919 * S_Income  +     0.64266139486854 * 
+        S_Mnt  +    -0.14912060810947 * S_MntFruits  +    -0.06683180032017 * 
+        S_MntGoldProds  +    -1.00660670853382 * S_MntMeatProducts
+          +     0.01239684835876 * S_MntSweetProducts
+          +    -1.19356791317323 * S_NumCatalogPurchases
+          +    -0.62897909821994 * S_NumWebPurchases
+          +      -0.010489589719 * S_RFMstat  +      0.1434960860838 * 
+        S_RMntFrq  +     1.20335007293573 * S_Recency ;
+   H11  = H11  +    -0.02749612145805 * G_Marital_Status0
+          +     0.04851614991645 * G_Marital_Status1 ;
+   H12  = H12  +     0.25900717859534 * G_Marital_Status0
+          +    -0.00514755509392 * G_Marital_Status1 ;
+   H13  = H13  +    -0.74074264175662 * G_Marital_Status0
+          +    -0.23517796339687 * G_Marital_Status1 ;
+   H11  =    -1.76667308717451 + H11 ;
+   H12  =    -0.06899369466405 + H12 ;
+   H13  =     4.22583207425873 + H13 ;
    H11  = TANH(H11 );
    H12  = TANH(H12 );
+   H13  = TANH(H13 );
 END;
 ELSE DO;
    H11  = .;
    H12  = .;
+   H13  = .;
 END;
 *** *************************;
 *** Writing the Node DepVar ;
@@ -243,8 +259,9 @@ else do;
    end;
 end;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -8.61120981649634 * H11  +    -5.72570140806215 * H12 ;
-   P_DepVar1  =    -4.82159913495753 + P_DepVar1 ;
+   P_DepVar1  =    -4.70859697618201 * H11  +     3.63900660721997 * H12
+          +    -4.60310081273681 * H13 ;
+   P_DepVar1  =     -0.6194274413348 + P_DepVar1 ;
    P_DepVar0  = 0; 
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.; 

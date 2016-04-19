@@ -23,6 +23,24 @@ if missing( AcceptedCmpTotal ) then do;
    _DM_BAD = 1;
 end;
 
+*** Check Age for missing values ;
+if missing( Age ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Frq for missing values ;
+if missing( Frq ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Income for missing values ;
+if missing( Income ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
 *** Check Mnt for missing values ;
 if missing( Mnt ) then do;
    substr(_warn_,1,1) = 'M';
@@ -53,18 +71,6 @@ if missing( NumDealsPurchases ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check NumDistPurchases for missing values ;
-if missing( NumDistPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check NumStorePurchases for missing values ;
-if missing( NumStorePurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
 *** Check NumWebVisitsMonth for missing values ;
 if missing( NumWebVisitsMonth ) then do;
    substr(_warn_,1,1) = 'M';
@@ -89,42 +95,18 @@ if missing( Teenhome ) then do;
    _DM_BAD = 1;
 end;
 
-*** Generate dummy variables for AcceptedCmp5 ;
-drop _5_0 ;
-if missing( AcceptedCmp5 ) then do;
-   _5_0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp5 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      _5_0 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      _5_0 = -1;
-   end;
-   else do;
-      _5_0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
 *** Generate dummy variables for Marital_Status ;
-drop _8_0 _8_1 _8_2 _8_3 ;
+drop _9_0 _9_1 _9_2 _9_3 ;
 *** encoding is sparse, initialize to zero;
-_8_0 = 0;
-_8_1 = 0;
-_8_2 = 0;
-_8_3 = 0;
+_9_0 = 0;
+_9_1 = 0;
+_9_2 = 0;
+_9_3 = 0;
 if missing( Marital_Status ) then do;
-   _8_0 = .;
-   _8_1 = .;
-   _8_2 = .;
-   _8_3 = .;
+   _9_0 = .;
+   _9_1 = .;
+   _9_2 = .;
+   _9_3 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -136,43 +118,43 @@ else do;
    if _dm8 <= 'SINGLE'  then do;
       if _dm8 <= 'MARRIED'  then do;
          if _dm8 = 'DIVORCED'  then do;
-            _8_0 = 1;
+            _9_0 = 1;
             _dm_find = 1;
          end;
          else do;
             if _dm8 = 'MARRIED'  then do;
-               _8_1 = 1;
+               _9_1 = 1;
                _dm_find = 1;
             end;
          end;
       end;
       else do;
          if _dm8 = 'SINGLE'  then do;
-            _8_2 = 1;
+            _9_2 = 1;
             _dm_find = 1;
          end;
       end;
    end;
    else do;
       if _dm8 = 'TOGETHER'  then do;
-         _8_3 = 1;
+         _9_3 = 1;
          _dm_find = 1;
       end;
       else do;
          if _dm8 = 'WIDOW'  then do;
-            _8_0 = -1;
-            _8_1 = -1;
-            _8_2 = -1;
-            _8_3 = -1;
+            _9_0 = -1;
+            _9_1 = -1;
+            _9_2 = -1;
+            _9_3 = -1;
             _dm_find = 1;
          end;
       end;
    end;
    if not _dm_find then do;
-      _8_0 = .;
-      _8_1 = .;
-      _8_2 = .;
-      _8_3 = .;
+      _9_0 = .;
+      _9_1 = .;
+      _9_2 = .;
+      _9_3 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
@@ -190,68 +172,68 @@ drop _TEMP;
 drop _LP0;
 _LP0 = 0;
 
-***  Effect: AcceptedCmp5 ;
-_TEMP = 1;
-_LP0 = _LP0 + (   -0.56028520837373) * _TEMP * _5_0;
-
 ***  Effect: AcceptedCmpTotal ;
 _TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (    2.79239159186379 * _TEMP);
+_LP0 = _LP0 + (    2.95660035656229 * _TEMP);
+
+***  Effect: Age ;
+_TEMP = Age ;
+_LP0 = _LP0 + (   -0.01941875166212 * _TEMP);
+
+***  Effect: Frq ;
+_TEMP = Frq ;
+_LP0 = _LP0 + (   -0.41047634158755 * _TEMP);
+
+***  Effect: Income ;
+_TEMP = Income ;
+_LP0 = _LP0 + (    0.00006532180674 * _TEMP);
 
 ***  Effect: Marital_Status ;
 _TEMP = 1;
-_LP0 = _LP0 + (     0.2275252741727) * _TEMP * _8_0;
-_LP0 = _LP0 + (   -0.91116218011236) * _TEMP * _8_1;
-_LP0 = _LP0 + (    0.79946068413138) * _TEMP * _8_2;
-_LP0 = _LP0 + (   -0.98989949139857) * _TEMP * _8_3;
+_LP0 = _LP0 + (    0.17791594529968) * _TEMP * _9_0;
+_LP0 = _LP0 + (   -1.00641962019516) * _TEMP * _9_1;
+_LP0 = _LP0 + (    0.74716428311041) * _TEMP * _9_2;
+_LP0 = _LP0 + (    -1.0069846290756) * _TEMP * _9_3;
 
 ***  Effect: Mnt ;
 _TEMP = Mnt ;
-_LP0 = _LP0 + (   -0.00335712586387 * _TEMP);
+_LP0 = _LP0 + (   -0.00385241964842 * _TEMP);
 
 ***  Effect: MntGoldProds ;
 _TEMP = MntGoldProds ;
-_LP0 = _LP0 + (    0.00629742829089 * _TEMP);
+_LP0 = _LP0 + (    0.00669490355232 * _TEMP);
 
 ***  Effect: MntMeatProducts ;
 _TEMP = MntMeatProducts ;
-_LP0 = _LP0 + (    0.01279646348912 * _TEMP);
+_LP0 = _LP0 + (     0.0125330231858 * _TEMP);
 
 ***  Effect: NumCatalogPurchases ;
 _TEMP = NumCatalogPurchases ;
-_LP0 = _LP0 + (    1.04928237490658 * _TEMP);
+_LP0 = _LP0 + (     1.1253806716991 * _TEMP);
 
 ***  Effect: NumDealsPurchases ;
 _TEMP = NumDealsPurchases ;
-_LP0 = _LP0 + (    0.63552663903891 * _TEMP);
-
-***  Effect: NumDistPurchases ;
-_TEMP = NumDistPurchases ;
-_LP0 = _LP0 + (   -0.30009214663172 * _TEMP);
-
-***  Effect: NumStorePurchases ;
-_TEMP = NumStorePurchases ;
-_LP0 = _LP0 + (   -0.35266748733964 * _TEMP);
+_LP0 = _LP0 + (    0.71729818686875 * _TEMP);
 
 ***  Effect: NumWebVisitsMonth ;
 _TEMP = NumWebVisitsMonth ;
-_LP0 = _LP0 + (    0.81352797289677 * _TEMP);
+_LP0 = _LP0 + (    0.99094794685674 * _TEMP);
 
 ***  Effect: RFMstat ;
 _TEMP = RFMstat ;
-_LP0 = _LP0 + (    0.00030864821595 * _TEMP);
+_LP0 = _LP0 + (    0.00024460251782 * _TEMP);
 
 ***  Effect: Recency ;
 _TEMP = Recency ;
-_LP0 = _LP0 + (    -0.0914537880502 * _TEMP);
+_LP0 = _LP0 + (   -0.09585871705652 * _TEMP);
 
 ***  Effect: Teenhome ;
 _TEMP = Teenhome ;
-_LP0 = _LP0 + (   -0.66398866776766 * _TEMP);
+_LP0 = _LP0 + (   -1.10694522398045 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =    -5.00123691079588 + _LP0;
+_TEMP =    -7.58770818124898 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

@@ -35,26 +35,28 @@ quit;
 data EM_Neural;
 set EMWS8.Meta_TRAIN(keep=
 AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-AcceptedCmpTotal Complain DepVar HigherEducationBinary Kidhome Mnt
-MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
-MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
-NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome );
+AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
+Kidhome Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts
+MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
+NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases
+NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Neural: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
     AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) HigherEducationBinary(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
+   HigherEducationBinary(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
-   Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
+   MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer
+   NumCatalogPurchases NumDealsPurchases NumDistPurchases NumStorePurchases
+   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural: Create DMDB;
@@ -74,10 +76,10 @@ quit;
 * Neural: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
-   Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
+   MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer
+   NumCatalogPurchases NumDealsPurchases NumDistPurchases NumStorePurchases
+   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural: Binary Inputs Macro ;
@@ -90,7 +92,7 @@ quit;
 * Neural: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-
+    Education
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural: Ordinal Inputs Macro ;
@@ -114,6 +116,8 @@ decay=0;
 input %INTINPUTS / level=interval id=intvl
 ;
 input %BININPUTS / level=nominal id=bin
+;
+input %NOMINPUTS / level=nominal id=nom
 ;
 target DepVar / level=NOMINAL id=DepVar
 bias

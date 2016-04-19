@@ -37,10 +37,11 @@ quit;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
     AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-   AcceptedCmpTotal Complain HigherEducationBinary Kidhome Marital_Status Mnt
-   MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
-   MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome
+   AcceptedCmpTotal Age Complain Education Frq HigherEducationBinary Income
+   Kidhome Marital_Status Mnt MntFishProducts MntFruits MntGoldProds
+   MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
+   NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases
+   NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree: Tree Targets Macro ;
@@ -55,17 +56,17 @@ run;
 * Tree: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
-   Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
+   MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer
+   NumCatalogPurchases NumDealsPurchases NumDistPurchases NumStorePurchases
+   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
     AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   HigherEducationBinary Marital_Status
+   Education HigherEducationBinary Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Tree: Ordinal Inputs Macro ;

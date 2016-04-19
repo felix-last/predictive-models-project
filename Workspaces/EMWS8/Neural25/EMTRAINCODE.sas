@@ -111,7 +111,7 @@ target DepVar / level=NOMINAL id=DepVar
 bias
 ;
 arch MLP
-Hidden=2
+Hidden=3
 ;
 Prelim 5 preiter=10
 pretime=3600

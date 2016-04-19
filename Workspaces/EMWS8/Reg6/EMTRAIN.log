@@ -1,0 +1,985 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "11.12 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                19. April 2016
+Time:                11.12 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O02W_VRY 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O02W_VRY new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "11.12 Uhr" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_7PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.03.01M2P081512";
+MPRINT(EM_DIAGRAM):   put "EM Version:          12.1";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "11.12 Uhr" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+721728     proc freq data=EMWS8.Reg6_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS8.Reg6_VariableSet noprint;
+721729     table ROLE*LEVEL/out=WORK.Reg6META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.Reg6META;
+721730     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set EMWS8.REG6_VARIABLESET.
+NOTE: The data set WORK.REG6META has 2 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+721731     proc print data=WORK.Reg6META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Reg6META label noobs;
+721732     var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+721733     label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+721733   ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+721733   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+721734     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+721735     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+721736     run;
+
+NOTE: There were 2 observations read from the data set WORK.REG6META.
+NOTE: The PROCEDURE PRINT printed page 616.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+721737     title10;
+MPRINT(EM_DIAGRAM):   title10;
+721738     %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN EMWS8 PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN EMWS8 PRINCOMP_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS8.PRINCOMP_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _sortedDecData;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS8.Reg6_DepVar_DD;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.Reg6_DepVar_DD;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.Reg6_DepVar_DD;
+MPRINT(EM_DIAGRAM):   merge EMWS8.Reg6_DepVar_DD _TEMPCLASS(rename=(NMISSPERCENT=TRAINPRIOR 
+FREQUENCY=COUNT));
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.Reg6_DepVar_DD 
+out=EMWS8.Reg6_DepVar_DD(drop=_levelorder_);
+MPRINT(EM_DIAGRAM):   by _levelorder_;
+MPRINT(EM_DIAGRAM):   run;
+721785     data WORK.Reg6_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.Reg6_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+721786     length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+721787     label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+721787   ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+721787   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+721788        "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+721788   ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+721788   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+721789     set EMWS8.REG6_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS8.REG6_DEPVAR_DM( where=(_TYPE_="TARGET"));
+721790     NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+721791     select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+721792     when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+721793     when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+721794     when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+721795     when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+721796     otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+721797     end;
+MPRINT(EM_DIAGRAM):   end;
+721798     output;
+MPRINT(EM_DIAGRAM):   output;
+721799     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.REG6_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.REG6_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+721800     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+721801     proc print data=WORK.Reg6_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Reg6_EVENT noobs label;
+721802     var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+721803     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+721804     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+721805     run;
+
+NOTE: There were 1 observations read from the data set WORK.REG6_EVENT.
+NOTE: The PROCEDURE PRINT printed page 617.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+721806     title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+721807     proc print data = EMWS8.Reg6_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS8.Reg6_DepVar_DM noobs label;
+721808     var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+721809     where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+721810     label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+721810   ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+721810   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+721811     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+721812     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+721813     run;
+
+NOTE: There were 7 observations read from the data set EMWS8.REG6_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 618.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+721814     title10;
+MPRINT(EM_DIAGRAM):   title10;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Reg6: Preparing metadata for Training 
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data WORK.M3W0QSKR;
+MPRINT(EM_DIAGRAM):   set WORK.M3W0QSKR;
+MPRINT(EM_DIAGRAM):   where use = 'Y' or (role = 'INPUT' and use = 'D') ;
+MPRINT(EM_DIAGRAM):   if (role = 'REJECTED') then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   if use = 'D' then use = 'Y';
+MPRINT(EM_DIAGRAM):   run;
+721824     data WORK.M3W0QSKR;
+MPRINT(EM_DIAGRAM):    data WORK.M3W0QSKR;
+721825     set WORK.M3W0QSKR end=eof;
+MPRINT(EM_DIAGRAM):   set WORK.M3W0QSKR end=eof;
+721826     output;
+MPRINT(EM_DIAGRAM):   output;
+721827     if eof then do;
+MPRINT(EM_DIAGRAM):   if eof then do;
+721828     NAME="";
+MPRINT(EM_DIAGRAM):   NAME="";
+721829     ROLE="COST";
+MPRINT(EM_DIAGRAM):   ROLE="COST";
+721830     LEVEL="INTERVAL";
+MPRINT(EM_DIAGRAM):   LEVEL="INTERVAL";
+721831     TYPE="N";
+MPRINT(EM_DIAGRAM):   TYPE="N";
+721832     output;
+MPRINT(EM_DIAGRAM):   output;
+721833     end;
+MPRINT(EM_DIAGRAM):   end;
+721834     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set WORK.M3W0QSKR.
+NOTE: The data set WORK.M3W0QSKR has 20 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS8.REG6_DEPVAR_DD.
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+721835     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+721836     * Reg6: Create decision matrix;
+MPRINT(EM_DIAGRAM):   * Reg6: Create decision matrix;
+721837     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+721838     data WORK.DepVar;
+MPRINT(EM_DIAGRAM):   data WORK.DepVar;
+721839       length   DepVar                           $  32
+721840                COUNT                                8
+721841                DATAPRIOR                            8
+721842                TRAINPRIOR                           8
+721843                DECPRIOR                             8
+721844                DECISION1                            8
+721845                DECISION2                            8
+721846                ;
+MPRINT(EM_DIAGRAM):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 DECISION1 
+8 DECISION2 8 ;
+721847     
+721848       label    COUNT="Level Counts"
+721849                DATAPRIOR="Data Proportions"
+721850                TRAINPRIOR="Training Proportions"
+721851                DECPRIOR="Decision Priors"
+721852                DECISION1="1"
+721853                DECISION2="0"
+721854                ;
+MPRINT(EM_DIAGRAM):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+721855       format   COUNT 10.
+721856                ;
+MPRINT(EM_DIAGRAM):   format COUNT 10. ;
+721857     DepVar="1"; COUNT=359; DATAPRIOR=0.0643642072; TRAINPRIOR=0.15122156697556;
+721857   ! DECPRIOR=.; DECISION1=1; DECISION2=0;
+MPRINT(EM_DIAGRAM):   DepVar="1";
+MPRINT(EM_DIAGRAM):   COUNT=359;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.0643642072;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.15122156697556;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=1;
+MPRINT(EM_DIAGRAM):   DECISION2=0;
+721858     output;
+MPRINT(EM_DIAGRAM):   output;
+721859     DepVar="0"; COUNT=2015; DATAPRIOR=0.9356357928; TRAINPRIOR=0.84877843302443;
+721859   ! DECPRIOR=.; DECISION1=0; DECISION2=1;
+MPRINT(EM_DIAGRAM):   DepVar="0";
+MPRINT(EM_DIAGRAM):   COUNT=2015;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.9356357928;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.84877843302443;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=0;
+MPRINT(EM_DIAGRAM):   DECISION2=1;
+721860     output;
+MPRINT(EM_DIAGRAM):   output;
+721861     ;
+MPRINT(EM_DIAGRAM):   ;
+721862     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+721863     proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+721864     modify DepVar(type=PROFIT label=DepVar);
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= '1';
+MPRINT(EM_DIAGRAM):   label DECISION2= '0';
+MPRINT(EM_DIAGRAM):   run;
+721865     label DECISION1= '1';
+721866     label DECISION2= '0';
+721867     run;
+
+NOTE: MODIFY was successful for WORK.DEPVAR.DATA.
+721868     quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.06 seconds
+      
+
+721869     data EM_DMREG / view=EM_DMREG;
+MPRINT(EM_DIAGRAM):   data EM_DMREG / view=EM_DMREG;
+721870     set EMWS8.PRINCOMP_TRAIN(keep=
+721871     DepVar PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4
+721872     PC_5 PC_6 PC_7 PC_8 PC_9 Year_Birth );
+MPRINT(EM_DIAGRAM):   set EMWS8.PRINCOMP_TRAIN(keep= DepVar PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 
+PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9 Year_Birth );
+721873     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: DATA STEP view saved on file WORK.EM_DMREG.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS8.PRINCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.04 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * Reg6: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+721874     *------------------------------------------------------------* ;
+721875     * Reg6: DMDBClass Macro ;
+721876     *------------------------------------------------------------* ;
+721877     %macro DMDBClass;
+721878         DepVar(DESC)
+721879     %mend DMDBClass;
+721880     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+721881     * Reg6: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * Reg6: DMDBVar Macro ;
+721882     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+721883     %macro DMDBVar;
+721884         PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+721885        PC_7 PC_8 PC_9 Year_Birth
+721886     %mend DMDBVar;
+721887     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+721888     * Reg6: Create DMDB;
+MPRINT(EM_DIAGRAM):   * Reg6: Create DMDB;
+721889     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+721890     proc dmdb batch data=WORK.EM_DMREG
+721891     dmdbcat=WORK.Reg6_DMDB
+721892     maxlevel = 513
+721893     ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=WORK.EM_DMREG dmdbcat=WORK.Reg6_DMDB maxlevel = 513 
+;
+MPRINT(EM_DIAGRAM):   class
+721894     class %DMDBClass;
+MPRINT(DMDBCLASS):   DepVar(DESC)
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   var
+721895     var %DMDBVar;
+MPRINT(DMDBVAR):   PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 
+PC_6 PC_7 PC_8 PC_9 Year_Birth
+MPRINT(EM_DIAGRAM):  ;
+721896     target
+721897     DepVar
+721898     ;
+MPRINT(EM_DIAGRAM):   target DepVar ;
+721899     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2374   Memory used = 511K.
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: View WORK.EM_DMREG.VIEW used (Total process time):
+      real time           0.17 seconds
+      cpu time            0.18 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PRINCOMP_TRAIN.
+NOTE: There were 2374 observations read from the data set WORK.EM_DMREG.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.20 seconds
+      cpu time            0.20 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+721900     quit;
+721901     *--- end code ---*;
+
+721902     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+721903     * Reg6: Run DMREG procedure;
+MPRINT(EM_DIAGRAM):   * Reg6: Run DMREG procedure;
+721904     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+721905     proc dmreg data=EM_DMREG dmdbcat=WORK.Reg6_DMDB
+721906     validata = EMWS8.PRINCOMP_VALIDATE
+721907     outest = EMWS8.Reg6_EMESTIMATE
+721908     outterms = EMWS8.Reg6_OUTTERMS
+721909     outmap= EMWS8.Reg6_MAPDS namelen=200
+721910     ;
+MPRINT(EM_DIAGRAM):   proc dmreg data=EM_DMREG dmdbcat=WORK.Reg6_DMDB validata = 
+EMWS8.PRINCOMP_VALIDATE outest = EMWS8.Reg6_EMESTIMATE outterms = EMWS8.Reg6_OUTTERMS outmap= 
+EMWS8.Reg6_MAPDS namelen=200 ;
+721911     class
+721912     DepVar
+721913     ;
+MPRINT(EM_DIAGRAM):   class DepVar ;
+721914     model DepVar =
+721915     PC_1
+721916     PC_10
+721917     PC_11
+721918     PC_12
+721919     PC_13
+721920     PC_14
+721921     PC_15
+721922     PC_16
+721923     PC_17
+721924     PC_2
+721925     PC_3
+721926     PC_4
+721927     PC_5
+721928     PC_6
+721929     PC_7
+721930     PC_8
+721931     PC_9
+721932     Year_Birth
+721933     /error=binomial link=PROBIT
+721934     coding=DEVIATION
+721935     nodesignprint
+721936     selection=STEPWISE choose=NONE
+721937     Hierarchy=CLASS
+721938     Rule=NONE
+721939     ;
+MPRINT(EM_DIAGRAM):   model DepVar = PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 
+PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9 Year_Birth /error=binomial link=PROBIT coding=DEVIATION 
+nodesignprint selection=STEPWISE choose=NONE Hierarchy=CLASS Rule=NONE ;
+721940     ;
+MPRINT(EM_DIAGRAM):   ;
+721941     code file="C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMPUBLISHSCORE.sas"
+721942     group=Reg6
+721943     ;
+MPRINT(EM_DIAGRAM):   code 
+file="C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMPUBLISHSCORE.sas" group=Reg6 ;
+721944     code file="C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMFLOWSCORE.sas"
+721945     group=Reg6
+721946     residual
+721947     ;
+MPRINT(EM_DIAGRAM):   code 
+file="C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMFLOWSCORE.sas" group=Reg6 residual 
+;
+721948     run;
+MPRINT(EM_DIAGRAM):   run;
+
+
+NOTE: PROC DMREG is modeling the probability that DepVar='1'.
+NOTE: Convergence criterion (ABSGCONV=0.00001) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: Convergence criterion (GCONV=1E-6) satisfied.
+NOTE: External file C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMPUBLISHSCORE.sas 
+      opened.
+NOTE: External file C:\\predictive-models-project\Workspaces\EMWS8\Reg6\EMFLOWSCORE.sas opened.
+NOTE: View EMWS8.PRINCOMP_VALIDATE.VIEW used (Total process time):
+      real time           2.08 seconds
+      cpu time            2.09 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: View WORK.EM_DMREG.VIEW used (Total process time):
+      real time           2.18 seconds
+      cpu time            2.18 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PRINCOMP_TRAIN.
+NOTE: There were 2374 observations read from the data set WORK.EM_DMREG.
+NOTE: There were 1018 observations read from the data set EMWS8.PRINCOMP_VALIDATE.
+NOTE: The data set EMWS8.REG6_EMESTIMATE has 54 observations and 55 variables.
+NOTE: The data set EMWS8.REG6_OUTTERMS has 17 observations and 5 variables.
+NOTE: The data set EMWS8.REG6_MAPDS has 2 observations and 20 variables.
+NOTE: The PROCEDURE DMREG printed pages 619-636.
+NOTE: PROCEDURE DMREG used (Total process time):
+      real time           2.24 seconds
+      cpu time            2.23 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+721949     quit;
+
+721950     proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):    proc datasets lib=WORK nolist;
+721951     delete Reg6_DMDB;
+MPRINT(EM_DIAGRAM):   delete Reg6_DMDB;
+721952     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The file WORK.REG6_DMDB (memtype=DATA) was not found, but appears on a DELETE statement.
+721953     quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+721954     proc datasets lib=WORK nolist;
+MPRINT(EM_DIAGRAM):    proc datasets lib=WORK nolist;
+721955     delete Reg6_DMDB / memtype=catalog;
+MPRINT(EM_DIAGRAM):   delete Reg6_DMDB / memtype=catalog;
+721956     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.REG6_DMDB (memtype=CATALOG).
+721957     quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.07 seconds
+      cpu time            0.07 seconds
+      
+
+721958     data WORK.ESTIMATE;
+MPRINT(EM_DIAGRAM):    data WORK.ESTIMATE;
+721959     length _NAME_ $32;
+MPRINT(EM_DIAGRAM):   length _NAME_ $32;
+721960     set EMWS8.Reg6_EMESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_EMESTIMATE;
+721961     drop _AIC_--_VMISC_;
+MPRINT(EM_DIAGRAM):   drop _AIC_--_VMISC_;
+721962     where _CHOSEN_ ne '' and _TYPE_ in('PARMS', 'T', 'P');
+MPRINT(EM_DIAGRAM):   where _CHOSEN_ ne '' and _TYPE_ in('PARMS', 'T', 'P');
+721963     drop _STEP_ _CHOSEN_;
+MPRINT(EM_DIAGRAM):   drop _STEP_ _CHOSEN_;
+721964     select(_TYPE_);
+MPRINT(EM_DIAGRAM):   select(_TYPE_);
+721965     when('PARMS') _NAME_='Coefficient';
+MPRINT(EM_DIAGRAM):   when('PARMS') _NAME_='Coefficient';
+721966     when('T') _NAME_='tValue';
+MPRINT(EM_DIAGRAM):   when('T') _NAME_='tValue';
+721967     when('P') _NAME_='PValue';
+MPRINT(EM_DIAGRAM):   when('P') _NAME_='PValue';
+721968     otherwise;
+MPRINT(EM_DIAGRAM):   otherwise;
+721969     end;
+MPRINT(EM_DIAGRAM):   end;
+721970     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set EMWS8.REG6_EMESTIMATE.
+      WHERE (_CHOSEN_ not = ' ') and _TYPE_ in ('P', 'PARMS', 'T');
+NOTE: The data set WORK.ESTIMATE has 3 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+721971     proc transpose data=WORK.ESTIMATE out=WORK.ESTIMATE(rename=(_NAME_=Effect));
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK.ESTIMATE 
+out=WORK.ESTIMATE(rename=(_NAME_=Effect));
+721972     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set WORK.ESTIMATE.
+NOTE: The data set WORK.ESTIMATE has 19 observations and 5 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+721973     proc transpose data=EMWS8.Reg6_MAPDS out=WORK.MAP(rename=(_NAME_=Effect
+721973   ! INPUT=Variable
+721974     ));
+MPRINT(EM_DIAGRAM):   proc transpose data=EMWS8.Reg6_MAPDS out=WORK.MAP(rename=(_NAME_=Effect 
+INPUT=Variable ));
+721975     var 'PC_1'n--'Year_Birth'n;
+MPRINT(EM_DIAGRAM):   var 'PC_1'n--'Year_Birth'n;
+721976     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.REG6_MAPDS.
+NOTE: The data set WORK.MAP has 18 observations and 4 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+721977     proc sort data=WORK.MAP;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK.MAP;
+721978     by Effect;
+MPRINT(EM_DIAGRAM):   by Effect;
+721979     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK.MAP.
+NOTE: The data set WORK.MAP has 18 observations and 4 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+721980     proc sort data=WORK.ESTIMATE;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK.ESTIMATE;
+721981     by Effect;
+MPRINT(EM_DIAGRAM):   by Effect;
+721982     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set WORK.ESTIMATE.
+NOTE: The data set WORK.ESTIMATE has 19 observations and 5 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+721983     data EMWS8.Reg6_EFFECTS(rename=(_LABEL_=EffectLabel));
+MPRINT(EM_DIAGRAM):   data EMWS8.Reg6_EFFECTS(rename=(_LABEL_=EffectLabel));
+721984     length Variable ClassLevel $32;
+MPRINT(EM_DIAGRAM):   length Variable ClassLevel $32;
+721985     merge WORK.ESTIMATE WORK.MAP;
+MPRINT(EM_DIAGRAM):   merge WORK.ESTIMATE WORK.MAP;
+721986     by Effect;
+MPRINT(EM_DIAGRAM):   by Effect;
+721987     label Effect = "%sysfunc(sasmsg(sashelp.dmine, rpt_effect_vlabel, NOQUOTE))"
+721987   ! Variable = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" Sign =
+721987   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_sign_vlabel, NOQUOTE))" ClassLevel =
+721988        "%sysfunc(sasmsg(sashelp.dmine, rpt_level_vlabel, NOQUOTE))" Abscoefficient =
+721988   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_abscoefficient_vlabel, NOQUOTE))" Coefficient =
+721988   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_coefficient_vlabel, NOQUOTE))" _LABEL_ =
+721989        "%sysfunc(sasmsg(sashelp.dmine, rpt_effectLabel_vlabel, NOQUOTE))" CODE =
+721989   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_scorecodevar_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label Effect = "Effect" Variable = "Variable" Sign = "Sign" ClassLevel = 
+"Level" Abscoefficient = "Absolute Coefficient" Coefficient = "Coefficient" _LABEL_ = "Effect 
+Label" CODE = "Score Code Variable";
+721990     label tvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_tvalue_vlabel,         NOQUOTE))"
+721990   !  abstvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_absoluteTvalue_vlabel, NOQUOTE))"
+721990   ! PValue = "%sysfunc(sasmsg(sashelp.dmine, rpt_pvalue_vlabel,         NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label tvalue = "T-value" abstvalue = "Absolute T-value" PValue = "P 
+Value";
+721991     abstvalue = abs(tValue);
+MPRINT(EM_DIAGRAM):   abstvalue = abs(tValue);
+721992     if index(Effect, 'Intercept') then do;
+MPRINT(EM_DIAGRAM):   if index(Effect, 'Intercept') then do;
+721993     variable = 'Intercept';
+MPRINT(EM_DIAGRAM):   variable = 'Intercept';
+721994     classLevel = scan(_LABEL_, 2, '=');
+MPRINT(EM_DIAGRAM):   classLevel = scan(_LABEL_, 2, '=');
+721995     end;
+MPRINT(EM_DIAGRAM):   end;
+721996     if ^indexc(variable, '*') then do;
+MPRINT(EM_DIAGRAM):   if ^indexc(variable, '*') then do;
+721997     if length(effect)>length(variable) then classlevel = substr(Effect,
+721997   ! length(variable)+1);
+MPRINT(EM_DIAGRAM):   if length(effect)>length(variable) then classlevel = substr(Effect, 
+length(variable)+1);
+721998     end;
+MPRINT(EM_DIAGRAM):   end;
+721999     if Effect eq '' then Effect = Variable;
+MPRINT(EM_DIAGRAM):   if Effect eq '' then Effect = Variable;
+722000     if coefficient < 0 then sign = '-';
+MPRINT(EM_DIAGRAM):   if coefficient < 0 then sign = '-';
+722001     else sign = '+';
+MPRINT(EM_DIAGRAM):   else sign = '+';
+722002     abscoefficient = abs(coefficient);
+MPRINT(EM_DIAGRAM):   abscoefficient = abs(coefficient);
+722003     if _LABEL_ = '' then _LABEL_ = Effect;
+MPRINT(EM_DIAGRAM):   if _LABEL_ = '' then _LABEL_ = Effect;
+722004     if coefficient ne . then output;
+MPRINT(EM_DIAGRAM):   if coefficient ne . then output;
+722005     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Missing values were generated as a result of performing an operation on missing values.
+      Each place is given by: (Number of times) at (Line):(Column).
+      2 at 721991:13   2 at 722002:18   
+NOTE: There were 19 observations read from the data set WORK.ESTIMATE.
+NOTE: There were 18 observations read from the data set WORK.MAP.
+NOTE: The data set EMWS8.REG6_EFFECTS has 17 observations and 11 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+722006     proc sort data =EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):    proc sort data =EMWS8.Reg6_EFFECTS;
+722007     by
+722008     descending abstvalue;
+MPRINT(EM_DIAGRAM):   by descending abstvalue;
+722009     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 17 observations read from the data set EMWS8.REG6_EFFECTS.
+NOTE: The data set EMWS8.REG6_EFFECTS has 17 observations and 11 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+722010     data EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):   data EMWS8.Reg6_EFFECTS;
+722011     set EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_EFFECTS;
+722012     format TEffectNum 3.;
+MPRINT(EM_DIAGRAM):   format TEffectNum 3.;
+722013     label TEffectNum = "%sysfunc(sasmsg(sashelp.dmine, rpt_teffectnum_vlabel, NOQUOTE))"
+722013   ! ;
+MPRINT(EM_DIAGRAM):   label TEffectNum = "TScore Number";
+722014     retain TEffectNum;
+MPRINT(EM_DIAGRAM):   retain TEffectNum;
+722015     TEffectNum = _N_;
+MPRINT(EM_DIAGRAM):   TEffectNum = _N_;
+722016     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 17 observations read from the data set EMWS8.REG6_EFFECTS.
+NOTE: The data set EMWS8.REG6_EFFECTS has 17 observations and 12 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+722017     proc sort data =EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):    proc sort data =EMWS8.Reg6_EFFECTS;
+722018     by
+722019     descending absCoefficient;
+MPRINT(EM_DIAGRAM):   by descending absCoefficient;
+722020     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 17 observations read from the data set EMWS8.REG6_EFFECTS.
+NOTE: The data set EMWS8.REG6_EFFECTS has 17 observations and 12 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+722021     data EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):   data EMWS8.Reg6_EFFECTS;
+722022     set EMWS8.Reg6_EFFECTS;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_EFFECTS;
+722023     format EffectNum 3.;
+MPRINT(EM_DIAGRAM):   format EffectNum 3.;
+722024     label EffectNum = "%sysfunc(sasmsg(sashelp.dmine, rpt_effectnum_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label EffectNum = "Effect Number";
+722025     retain EffectNum;
+MPRINT(EM_DIAGRAM):   retain EffectNum;
+722026     EffectNum = _N_;
+MPRINT(EM_DIAGRAM):   EffectNum = _N_;
+722027     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 17 observations read from the data set EMWS8.REG6_EFFECTS.
+NOTE: The data set EMWS8.REG6_EFFECTS has 17 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+722028     proc transpose data=EMWS8.Reg6_EMESTIMATE
+722028   ! out=EMWS8.Reg6_ESTIMATEGRID(rename=(PARMS=Coefficient T=TValue _NAME_=Effect
+722028   ! _LABEL_=EffectLabel));
+MPRINT(EM_DIAGRAM):    proc transpose data=EMWS8.Reg6_EMESTIMATE 
+out=EMWS8.Reg6_ESTIMATEGRID(rename=(PARMS=Coefficient T=TValue _NAME_=Effect 
+_LABEL_=EffectLabel));
+722029     where _CHOSEN_ eq '' and _TYPE_ in('PARMS', 'T', 'P');
+MPRINT(EM_DIAGRAM):   where _CHOSEN_ eq '' and _TYPE_ in('PARMS', 'T', 'P');
+722030     var 'PC_1'n--'Year_Birth'n;
+MPRINT(EM_DIAGRAM):   var 'PC_1'n--'Year_Birth'n;
+722031     by _STEP_;
+MPRINT(EM_DIAGRAM):   by _STEP_;
+722032     id _TYPE_;
+MPRINT(EM_DIAGRAM):   id _TYPE_;
+722033     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 51 observations read from the data set EMWS8.REG6_EMESTIMATE.
+      WHERE (_CHOSEN_=' ') and _TYPE_ in ('P', 'PARMS', 'T');
+NOTE: The data set EMWS8.REG6_ESTIMATEGRID has 306 observations and 6 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+722034     data EMWS8.Reg6_ESTIMATEGRID;
+MPRINT(EM_DIAGRAM):    data EMWS8.Reg6_ESTIMATEGRID;
+722035     set EMWS8.Reg6_ESTIMATEGRID;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg6_ESTIMATEGRID;
+722036     if EffectLabel eq '' then EffectLabel = Effect;
+MPRINT(EM_DIAGRAM):   if EffectLabel eq '' then EffectLabel = Effect;
+722037     label EffectLabel = "%sysfunc(sasmsg(sashelp.dmine, rpt_effectLabel_vlabel,
+722037   ! NOQUOTE))" Effect = "%sysfunc(sasmsg(sashelp.dmine, rpt_effect_vlabel, NOQUOTE))"
+722037   ! Abscoefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_abscoefficient_vlabel,
+722037   ! NOQUOTE))"
+722038        Coefficient = "%sysfunc(sasmsg(sashelp.dmine, rpt_coefficient_vlabel, NOQUOTE))"
+722038   ! tvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_tvalue_vlabel,         NOQUOTE))"
+722038   ! abstvalue = "%sysfunc(sasmsg(sashelp.dmine, rpt_absoluteTvalue_vlabel, NOQUOTE))"
+722038   ! PValue =
+722039        "%sysfunc(sasmsg(sashelp.dmine, rpt_pvalue_vlabel,         NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label EffectLabel = "Effect Label" Effect = "Effect" Abscoefficient = 
+"Absolute Coefficient" Coefficient = "Coefficient" tvalue = "T-value" abstvalue = "Absolute 
+T-value" PValue = "P Value";
+722040     AbsCoefficient = abs(Coefficient);
+MPRINT(EM_DIAGRAM):   AbsCoefficient = abs(Coefficient);
+722041     AbsTValue = abs(TValue);
+MPRINT(EM_DIAGRAM):   AbsTValue = abs(TValue);
+722042     where coefficient ne .;
+MPRINT(EM_DIAGRAM):   where coefficient ne .;
+722043     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Variable PValue is uninitialized.
+NOTE: There were 136 observations read from the data set EMWS8.REG6_ESTIMATEGRID.
+      WHERE coefficient not = .;
+NOTE: The data set EMWS8.REG6_ESTIMATEGRID has 136 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

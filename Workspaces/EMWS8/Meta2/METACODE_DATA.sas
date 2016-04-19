@@ -1,0 +1,15 @@
+*------------------------------------------------------------*;
+* Metadata Changes;
+*------------------------------------------------------------*;
+if upcase(NAME) = "ACCEPTEDCMPTOTAL" then ROLE="REJECTED";
+if upcase(NAME) = "AGE" then ROLE="REJECTED";
+if upcase(NAME) = "FRQ" then ROLE="REJECTED";
+if upcase(NAME) = "HIGHEREDUCATION" then ROLE="REJECTED";
+if upcase(NAME) = "HIGHEREDUCATION" then delete;
+if upcase(NAME) = "HIGHEREDUCATIONBINARY" then ROLE="REJECTED";
+if upcase(NAME) = "MNT" then ROLE="REJECTED";
+if upcase(NAME) = "MONTHSASCUSTOMER" then ROLE="REJECTED";
+if upcase(NAME) = "NUMDISTPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "RFMSTAT" then ROLE="REJECTED";
+if upcase(NAME) = "RMNTFRQ" then ROLE="REJECTED";
+if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";

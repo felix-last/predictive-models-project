@@ -34,8 +34,8 @@ run;
 quit;
 data EM_Neural14;
 set EMWS8.PRINCOMP_TRAIN(keep=
-DepVar PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2
-PC_20 PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9 );
+DepVar PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4
+PC_5 PC_6 PC_7 PC_8 PC_9 Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Neural14: DMDBClass Macro ;
@@ -47,8 +47,8 @@ run;
 * Neural14: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+   PC_7 PC_8 PC_9 Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural14: Create DMDB;
@@ -68,8 +68,8 @@ quit;
 * Neural14: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_18 PC_19 PC_2 PC_20
-   PC_3 PC_4 PC_5 PC_6 PC_7 PC_8 PC_9
+    PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+   PC_7 PC_8 PC_9 Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural14: Binary Inputs Macro ;
@@ -108,7 +108,7 @@ target DepVar / level=NOMINAL id=DepVar
 bias
 ;
 arch MLP
-Hidden=2
+Hidden=3
 ;
 Prelim 5 preiter=10
 pretime=3600

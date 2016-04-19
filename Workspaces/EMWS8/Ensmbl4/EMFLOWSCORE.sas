@@ -1,7 +1,7 @@
 *------------------------------------------------------------*;
 * Ensmbl4: Combine model for DepVar;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 1 of 9;
+* Ensmbl4: Scoring Code of model 1 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Extension Class;
@@ -83,7 +83,7 @@ label G_Marital_Status="Grouped Levels for Marital_Status";
 *------------------------------------------------------------*;
 * TOOL: Neural;
 * TYPE: MODEL;
-* NODE: Neural25;
+* NODE: Neural29;
 *------------------------------------------------------------*;
 ***********************************;
 *** Begin Scoring Code for Neural;
@@ -130,8 +130,6 @@ LENGTH _WARN_ $4
       label G_Marital_Status1 = 'Dummy: G_Marital_Status=1' ;
 
       label H11 = 'Hidden: H1=1' ;
-
-      label H12 = 'Hidden: H1=2' ;
 
       label I_DepVar = 'Into: DepVar' ;
 
@@ -270,36 +268,22 @@ END;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =    -0.23012961341552 * S_AcceptedCmpTotal  +     0.46196798170863 *
-        S_Frq  +     0.10792957007496 * S_Income  +     0.01598495816724 *
-        S_Mnt  +     0.04110199082094 * S_MntFruits  +    -0.03861520815517 *
-        S_MntGoldProds  +    -0.21282606264093 * S_MntMeatProducts
-          +     0.01715600461602 * S_MntSweetProducts
-          +    -0.23329547812839 * S_NumCatalogPurchases
-          +    -0.11507537772092 * S_NumWebPurchases
-          +    -0.03410149182919 * S_RFMstat  +     0.14966504694497 *
-        S_RMntFrq  +     0.28566269847001 * S_Recency ;
-   H12  =     0.05540254918167 * S_AcceptedCmpTotal  +     1.29235531722682 *
-        S_Frq  +     0.06366828093255 * S_Income  +    -0.26947825948002 *
-        S_Mnt  +     0.21714508305015 * S_MntFruits  +     0.26812345284438 *
-        S_MntGoldProds  +    -4.04479521582802 * S_MntMeatProducts
-          +     0.04792709763034 * S_MntSweetProducts
-          +    -1.08549455020763 * S_NumCatalogPurchases
-          +    -0.48337305556946 * S_NumWebPurchases
-          +    -0.22222278831599 * S_RFMstat  +    -0.23407358569927 *
-        S_RMntFrq  +    -0.01186280761112 * S_Recency ;
-   H11  = H11  +    -0.14627707216264 * G_Marital_Status0
-          +    -0.05689581037738 * G_Marital_Status1 ;
-   H12  = H12  +     0.20389328110579 * G_Marital_Status0
-          +     0.12863423712687 * G_Marital_Status1 ;
-   H11  =     0.26937694072834 + H11 ;
-   H12  =    -3.07173299704836 + H12 ;
+   H11  =     0.07081605827454 * S_AcceptedCmpTotal  +    -0.06698977764548 *
+        S_Frq  +    -0.03430870177464 * S_Income  +    -0.11360176415097 *
+        S_Mnt  +    -0.01238418440333 * S_MntFruits  +     0.01232617973423 *
+        S_MntGoldProds  +     0.07483946106207 * S_MntMeatProducts
+          +     -0.0079701278424 * S_MntSweetProducts
+          +     0.08585038786425 * S_NumCatalogPurchases
+          +     0.04419619029921 * S_NumWebPurchases
+          +     0.01256447914587 * S_RFMstat  +     0.04947774665638 *
+        S_RMntFrq  +    -0.08738179516843 * S_Recency ;
+   H11  = H11  +     0.02930876660681 * G_Marital_Status0
+          +     0.00712629273648 * G_Marital_Status1 ;
+   H11  =    -0.46602666061325 + H11 ;
    H11  = TANH(H11 );
-   H12  = TANH(H12 );
 END;
 ELSE DO;
    H11  = .;
-   H12  = .;
 END;
 *** *************************;
 *** Writing the Node DepVar ;
@@ -330,8 +314,8 @@ else do;
    end;
 end;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -8.61120981649634 * H11  +    -5.72570140806215 * H12 ;
-   P_DepVar1  =    -4.82159913495753 + P_DepVar1 ;
+   P_DepVar1  =      25.813843010399 * H11 ;
+   P_DepVar1  =     8.06674391252456 + P_DepVar1 ;
    P_DepVar0  = 0;
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.;
@@ -373,25 +357,24 @@ END;
 ********************************;
 drop
 H11
-H12
 ;
 drop S_:;
-* Renaming variables for Neural25;
+* Renaming variables for Neural29;
 *------------------------------------------------------------*;
-* Renaming Posterior variables for Neural25;
+* Renaming Posterior variables for Neural29;
 *------------------------------------------------------------*;
-drop Neural25_P_DepVar1;
-Neural25_P_DepVar1 = P_DepVar1;
-drop Neural25_P_DepVar0;
-Neural25_P_DepVar0 = P_DepVar0;
+drop Neural29_P_DepVar1;
+Neural29_P_DepVar1 = P_DepVar1;
+drop Neural29_P_DepVar0;
+Neural29_P_DepVar0 = P_DepVar0;
 *------------------------------------------------------------*;
-* Renaming _WARN_ variable for Neural25;
+* Renaming _WARN_ variable for Neural29;
 *------------------------------------------------------------*;
-length Neural25_WARN_ $4;
-drop Neural25_WARN_;
-Neural25_WARN_ = _WARN_;
+length Neural29_WARN_ $4;
+drop Neural29_WARN_;
+Neural29_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 2 of 9;
+* Ensmbl4: Scoring Code of model 2 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -704,12 +687,12 @@ length Neural24_WARN_ $4;
 drop Neural24_WARN_;
 Neural24_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 3 of 9;
+* Ensmbl4: Scoring Code of model 3 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
 * TYPE: MODEL;
-* NODE: Neural29;
+* NODE: Neural25;
 *------------------------------------------------------------*;
 ***********************************;
 *** Begin Scoring Code for Neural;
@@ -756,6 +739,10 @@ LENGTH _WARN_ $4
       label G_Marital_Status1 = 'Dummy: G_Marital_Status=1' ;
 
       label H11 = 'Hidden: H1=1' ;
+
+      label H12 = 'Hidden: H1=2' ;
+
+      label H13 = 'Hidden: H1=3' ;
 
       label I_DepVar = 'Into: DepVar' ;
 
@@ -894,22 +881,50 @@ END;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =     0.07081605827454 * S_AcceptedCmpTotal  +    -0.06698977764548 *
-        S_Frq  +    -0.03430870177464 * S_Income  +    -0.11360176415097 *
-        S_Mnt  +    -0.01238418440333 * S_MntFruits  +     0.01232617973423 *
-        S_MntGoldProds  +     0.07483946106207 * S_MntMeatProducts
-          +     -0.0079701278424 * S_MntSweetProducts
-          +     0.08585038786425 * S_NumCatalogPurchases
-          +     0.04419619029921 * S_NumWebPurchases
-          +     0.01256447914587 * S_RFMstat  +     0.04947774665638 *
-        S_RMntFrq  +    -0.08738179516843 * S_Recency ;
-   H11  = H11  +     0.02930876660681 * G_Marital_Status0
-          +     0.00712629273648 * G_Marital_Status1 ;
-   H11  =    -0.46602666061325 + H11 ;
+   H11  =    -0.29033160943141 * S_AcceptedCmpTotal  +     1.65008720168986 *
+        S_Frq  +     0.06251288055572 * S_Income  +      0.0668512722962 *
+        S_Mnt  +     0.03892214147304 * S_MntFruits  +     0.20062210213612 *
+        S_MntGoldProds  +    -3.11480309420656 * S_MntMeatProducts
+          +    -0.04673959319989 * S_MntSweetProducts
+          +    -1.21625330274707 * S_NumCatalogPurchases
+          +     -0.4971041829957 * S_NumWebPurchases
+          +    -0.17470099705144 * S_RFMstat  +    -0.53358474622759 *
+        S_RMntFrq  +     0.38389131134706 * S_Recency ;
+   H12  =     0.45303153795041 * S_AcceptedCmpTotal  +    -0.78996479450613 *
+        S_Frq  +    -0.58298284968136 * S_Income  +     0.14918533356272 *
+        S_Mnt  +    -0.40559802868396 * S_MntFruits  +     0.11972304240892 *
+        S_MntGoldProds  +     0.31356670313089 * S_MntMeatProducts
+          +    -0.14032278714215 * S_MntSweetProducts
+          +     0.13835096224468 * S_NumCatalogPurchases
+          +     0.13800491118955 * S_NumWebPurchases
+          +     0.10506847679186 * S_RFMstat  +    -0.29903179406638 *
+        S_RMntFrq  +    -0.52813041903353 * S_Recency ;
+   H13  =    -0.60990818976997 * S_AcceptedCmpTotal  +     0.78563794151057 *
+        S_Frq  +    -0.67740326666919 * S_Income  +     0.64266139486854 *
+        S_Mnt  +    -0.14912060810947 * S_MntFruits  +    -0.06683180032017 *
+        S_MntGoldProds  +    -1.00660670853382 * S_MntMeatProducts
+          +     0.01239684835876 * S_MntSweetProducts
+          +    -1.19356791317323 * S_NumCatalogPurchases
+          +    -0.62897909821994 * S_NumWebPurchases
+          +      -0.010489589719 * S_RFMstat  +      0.1434960860838 *
+        S_RMntFrq  +     1.20335007293573 * S_Recency ;
+   H11  = H11  +    -0.02749612145805 * G_Marital_Status0
+          +     0.04851614991645 * G_Marital_Status1 ;
+   H12  = H12  +     0.25900717859534 * G_Marital_Status0
+          +    -0.00514755509392 * G_Marital_Status1 ;
+   H13  = H13  +    -0.74074264175662 * G_Marital_Status0
+          +    -0.23517796339687 * G_Marital_Status1 ;
+   H11  =    -1.76667308717451 + H11 ;
+   H12  =    -0.06899369466405 + H12 ;
+   H13  =     4.22583207425873 + H13 ;
    H11  = TANH(H11 );
+   H12  = TANH(H12 );
+   H13  = TANH(H13 );
 END;
 ELSE DO;
    H11  = .;
+   H12  = .;
+   H13  = .;
 END;
 *** *************************;
 *** Writing the Node DepVar ;
@@ -940,8 +955,9 @@ else do;
    end;
 end;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =      25.813843010399 * H11 ;
-   P_DepVar1  =     8.06674391252456 + P_DepVar1 ;
+   P_DepVar1  =    -4.70859697618201 * H11  +     3.63900660721997 * H12
+          +    -4.60310081273681 * H13 ;
+   P_DepVar1  =     -0.6194274413348 + P_DepVar1 ;
    P_DepVar0  = 0;
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.;
@@ -983,24 +999,26 @@ END;
 ********************************;
 drop
 H11
+H12
+H13
 ;
 drop S_:;
-* Renaming variables for Neural29;
+* Renaming variables for Neural25;
 *------------------------------------------------------------*;
-* Renaming Posterior variables for Neural29;
+* Renaming Posterior variables for Neural25;
 *------------------------------------------------------------*;
-drop Neural29_P_DepVar1;
-Neural29_P_DepVar1 = P_DepVar1;
-drop Neural29_P_DepVar0;
-Neural29_P_DepVar0 = P_DepVar0;
+drop Neural25_P_DepVar1;
+Neural25_P_DepVar1 = P_DepVar1;
+drop Neural25_P_DepVar0;
+Neural25_P_DepVar0 = P_DepVar0;
 *------------------------------------------------------------*;
-* Renaming _WARN_ variable for Neural29;
+* Renaming _WARN_ variable for Neural25;
 *------------------------------------------------------------*;
-length Neural29_WARN_ $4;
-drop Neural29_WARN_;
-Neural29_WARN_ = _WARN_;
+length Neural25_WARN_ $4;
+drop Neural25_WARN_;
+Neural25_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 4 of 9;
+* Ensmbl4: Scoring Code of model 4 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -1348,597 +1366,7 @@ length Neural26_WARN_ $4;
 drop Neural26_WARN_;
 Neural26_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 5 of 9;
-*------------------------------------------------------------*;
-*------------------------------------------------------------*;
-* TOOL: Decision Tree;
-* TYPE: MODEL;
-* NODE: Tree4;
-*------------------------------------------------------------*;
-****************************************************************;
-******             DECISION TREE SCORING CODE             ******;
-****************************************************************;
-
-******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
-LENGTH F_DepVar  $   12;
-LENGTH I_DepVar  $   12;
-LENGTH _WARN_  $    4;
-
-******              LABELS FOR NEW VARIABLES              ******;
-LABEL _NODE_  = 'Node' ;
-LABEL _LEAF_  = 'Leaf' ;
-LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
-LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
-LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
-LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
-LABEL V_DepVar0  = 'Validated: DepVar=0' ;
-LABEL V_DepVar1  = 'Validated: DepVar=1' ;
-LABEL R_DepVar0  = 'Residual: DepVar=0' ;
-LABEL R_DepVar1  = 'Residual: DepVar=1' ;
-LABEL F_DepVar  = 'From: DepVar' ;
-LABEL I_DepVar  = 'Into: DepVar' ;
-LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
-LABEL _WARN_  = 'Warnings' ;
-
-
-******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
-LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
-_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
-
-
-_ARBFMT_12 = PUT( DepVar , BEST.);
- %DMNORMCP( _ARBFMT_12, F_DepVar );
-
-******             ASSIGN OBSERVATION TO NODE             ******;
-IF  NOT MISSING(AcceptedCmpTotal ) AND
-                   0.5 <= AcceptedCmpTotal  THEN DO;
-  IF  NOT MISSING(Recency ) AND
-    Recency  <                 38.5 THEN DO;
-    IF  NOT MISSING(AcceptedCmpTotal ) AND
-                       1.5 <= AcceptedCmpTotal  THEN DO;
-      _NODE_  =                   13;
-      _LEAF_  =                   10;
-      P_DepVar0  =     0.05263157894736;
-      P_DepVar1  =     0.94736842105263;
-      Q_DepVar0  =     0.05263157894736;
-      Q_DepVar1  =     0.94736842105263;
-      V_DepVar0  =                    0;
-      V_DepVar1  =                    1;
-      I_DepVar  = '1' ;
-      U_DepVar  =                    1;
-      END;
-    ELSE DO;
-      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-       %DMNORMIP( _ARBFMT_12);
-      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-        _NODE_  =                   22;
-        _LEAF_  =                    6;
-        P_DepVar0  =      0.2258064516129;
-        P_DepVar1  =     0.77419354838709;
-        Q_DepVar0  =      0.2258064516129;
-        Q_DepVar1  =     0.77419354838709;
-        V_DepVar0  =     0.41935483870967;
-        V_DepVar1  =     0.58064516129032;
-        I_DepVar  = '1' ;
-        U_DepVar  =                    1;
-        END;
-      ELSE DO;
-        IF  NOT MISSING(Recency ) AND
-          Recency  <                 15.5 THEN DO;
-          _NODE_  =                   40;
-          _LEAF_  =                    7;
-          P_DepVar0  =     0.35714285714285;
-          P_DepVar1  =     0.64285714285714;
-          Q_DepVar0  =     0.35714285714285;
-          Q_DepVar1  =     0.64285714285714;
-          V_DepVar0  =               0.4375;
-          V_DepVar1  =               0.5625;
-          I_DepVar  = '1' ;
-          U_DepVar  =                    1;
-          END;
-        ELSE DO;
-          IF  NOT MISSING(RFMstat ) AND
-            RFMstat  <     259.685185185185 THEN DO;
-            _NODE_  =                   52;
-            _LEAF_  =                    8;
-            P_DepVar0  =     0.35294117647058;
-            P_DepVar1  =     0.64705882352941;
-            Q_DepVar0  =     0.35294117647058;
-            Q_DepVar1  =     0.64705882352941;
-            V_DepVar0  =                0.375;
-            V_DepVar1  =                0.625;
-            I_DepVar  = '1' ;
-            U_DepVar  =                    1;
-            END;
-          ELSE DO;
-            _NODE_  =                   53;
-            _LEAF_  =                    9;
-            P_DepVar0  =     0.83333333333333;
-            P_DepVar1  =     0.16666666666666;
-            Q_DepVar0  =     0.83333333333333;
-            Q_DepVar1  =     0.16666666666666;
-            V_DepVar0  =     0.73684210526315;
-            V_DepVar1  =     0.26315789473684;
-            I_DepVar  = '0' ;
-            U_DepVar  =                    0;
-            END;
-          END;
-        END;
-      END;
-    END;
-  ELSE DO;
-    IF  NOT MISSING(AcceptedCmpTotal ) AND
-                       2.5 <= AcceptedCmpTotal  THEN DO;
-      _NODE_  =                   15;
-      _LEAF_  =                   16;
-      P_DepVar0  =      0.3103448275862;
-      P_DepVar1  =     0.68965517241379;
-      Q_DepVar0  =      0.3103448275862;
-      Q_DepVar1  =     0.68965517241379;
-      V_DepVar0  =     0.33333333333333;
-      V_DepVar1  =     0.66666666666666;
-      I_DepVar  = '1' ;
-      U_DepVar  =                    1;
-      END;
-    ELSE DO;
-      IF  NOT MISSING(NumCatalogPurchases ) AND
-                        10.5 <= NumCatalogPurchases  THEN DO;
-        IF  NOT MISSING(Frq ) AND
-                          25.5 <= Frq  THEN DO;
-          _NODE_  =                   45;
-          _LEAF_  =                   15;
-          P_DepVar0  =     0.71428571428571;
-          P_DepVar1  =     0.28571428571428;
-          Q_DepVar0  =     0.71428571428571;
-          Q_DepVar1  =     0.28571428571428;
-          V_DepVar0  =                    1;
-          V_DepVar1  =                    0;
-          I_DepVar  = '0' ;
-          U_DepVar  =                    0;
-          END;
-        ELSE DO;
-          _NODE_  =                   44;
-          _LEAF_  =                   14;
-          P_DepVar0  =                    0;
-          P_DepVar1  =                    1;
-          Q_DepVar0  =                    0;
-          Q_DepVar1  =                    1;
-          V_DepVar0  =                    1;
-          V_DepVar1  =                    0;
-          I_DepVar  = '1' ;
-          U_DepVar  =                    1;
-          END;
-        END;
-      ELSE DO;
-        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-         %DMNORMIP( _ARBFMT_12);
-        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-          IF  NOT MISSING(MntMeatProducts ) AND
-                           596.5 <= MntMeatProducts  THEN DO;
-            _NODE_  =                   55;
-            _LEAF_  =                   12;
-            P_DepVar0  =                  0.2;
-            P_DepVar1  =                  0.8;
-            Q_DepVar0  =                  0.2;
-            Q_DepVar1  =                  0.8;
-            V_DepVar0  =                  0.4;
-            V_DepVar1  =                  0.6;
-            I_DepVar  = '1' ;
-            U_DepVar  =                    1;
-            END;
-          ELSE DO;
-            _NODE_  =                   54;
-            _LEAF_  =                   11;
-            P_DepVar0  =     0.81818181818181;
-            P_DepVar1  =     0.18181818181818;
-            Q_DepVar0  =     0.81818181818181;
-            Q_DepVar1  =     0.18181818181818;
-            V_DepVar0  =     0.70588235294117;
-            V_DepVar1  =     0.29411764705882;
-            I_DepVar  = '0' ;
-            U_DepVar  =                    0;
-            END;
-          END;
-        ELSE DO;
-          _NODE_  =                   43;
-          _LEAF_  =                   13;
-          P_DepVar0  =     0.90532544378698;
-          P_DepVar1  =     0.09467455621301;
-          Q_DepVar0  =     0.90532544378698;
-          Q_DepVar1  =     0.09467455621301;
-          V_DepVar0  =     0.90588235294117;
-          V_DepVar1  =     0.09411764705882;
-          I_DepVar  = '0' ;
-          U_DepVar  =                    0;
-          END;
-        END;
-      END;
-    END;
-  END;
-ELSE DO;
-  IF  NOT MISSING(Recency ) AND
-    Recency  <                 32.5 THEN DO;
-    IF  NOT MISSING(NumCatalogPurchases ) AND
-                       5.5 <= NumCatalogPurchases  THEN DO;
-      IF  NOT MISSING(Recency ) AND
-                          19 <= Recency  THEN DO;
-        IF  NOT MISSING(MntMeatProducts ) AND
-                         370.5 <= MntMeatProducts  THEN DO;
-          _NODE_  =                   33;
-          _LEAF_  =                    4;
-          P_DepVar0  =     0.36363636363636;
-          P_DepVar1  =     0.63636363636363;
-          Q_DepVar0  =     0.36363636363636;
-          Q_DepVar1  =     0.63636363636363;
-          V_DepVar0  =     0.44444444444444;
-          V_DepVar1  =     0.55555555555555;
-          I_DepVar  = '1' ;
-          U_DepVar  =                    1;
-          END;
-        ELSE DO;
-          _NODE_  =                   32;
-          _LEAF_  =                    3;
-          P_DepVar0  =                    1;
-          P_DepVar1  =                    0;
-          Q_DepVar0  =                    1;
-          Q_DepVar1  =                    0;
-          V_DepVar0  =     0.85714285714285;
-          V_DepVar1  =     0.14285714285714;
-          I_DepVar  = '0' ;
-          U_DepVar  =                    0;
-          END;
-        END;
-      ELSE DO;
-        _NODE_  =                   18;
-        _LEAF_  =                    2;
-        P_DepVar0  =                 0.25;
-        P_DepVar1  =                 0.75;
-        Q_DepVar0  =                 0.25;
-        Q_DepVar1  =                 0.75;
-        V_DepVar0  =     0.44444444444444;
-        V_DepVar1  =     0.55555555555555;
-        I_DepVar  = '1' ;
-        U_DepVar  =                    1;
-        END;
-      END;
-    ELSE DO;
-      _NODE_  =                    8;
-      _LEAF_  =                    1;
-      P_DepVar0  =     0.84285714285714;
-      P_DepVar1  =     0.15714285714285;
-      Q_DepVar0  =     0.84285714285714;
-      Q_DepVar1  =     0.15714285714285;
-      V_DepVar0  =     0.81048387096774;
-      V_DepVar1  =     0.18951612903225;
-      I_DepVar  = '0' ;
-      U_DepVar  =                    0;
-      END;
-    END;
-  ELSE DO;
-    _NODE_  =                    5;
-    _LEAF_  =                    5;
-    P_DepVar0  =     0.98042414355628;
-    P_DepVar1  =     0.01957585644371;
-    Q_DepVar0  =     0.98042414355628;
-    Q_DepVar1  =     0.01957585644371;
-    V_DepVar0  =     0.98795180722891;
-    V_DepVar1  =     0.01204819277108;
-    I_DepVar  = '0' ;
-    U_DepVar  =                    0;
-    END;
-  END;
-
-*****  RESIDUALS R_ *************;
-IF  F_DepVar  NE '0'
-AND F_DepVar  NE '1'  THEN DO;
-        R_DepVar0  = .;
-        R_DepVar1  = .;
- END;
- ELSE DO;
-       R_DepVar0  =  -P_DepVar0 ;
-       R_DepVar1  =  -P_DepVar1 ;
-       SELECT( F_DepVar  );
-          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
-          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
-       END;
- END;
-
-****************************************************************;
-******          END OF DECISION TREE SCORING CODE         ******;
-****************************************************************;
-drop _LEAF_;
-* Renaming variables for Tree4;
-*------------------------------------------------------------*;
-* Renaming Posterior variables for Tree4;
-*------------------------------------------------------------*;
-drop Tree4_P_DepVar1;
-Tree4_P_DepVar1 = P_DepVar1;
-drop Tree4_P_DepVar0;
-Tree4_P_DepVar0 = P_DepVar0;
-*------------------------------------------------------------*;
-* Renaming _WARN_ variable for Tree4;
-*------------------------------------------------------------*;
-length Tree4_WARN_ $4;
-drop Tree4_WARN_;
-Tree4_WARN_ = _WARN_;
-*------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 6 of 9;
-*------------------------------------------------------------*;
-*------------------------------------------------------------*;
-* TOOL: Regression;
-* TYPE: MODEL;
-* NODE: Reg4;
-*------------------------------------------------------------*;
-*************************************;
-*** begin scoring code for regression;
-*************************************;
-
-length _WARN_ $4;
-label _WARN_ = 'Warnings' ;
-
-length I_DepVar $ 12;
-label I_DepVar = 'Into: DepVar' ;
-*** Target Values;
-array REG4DRF [2] $12 _temporary_ ('1' '0' );
-label U_DepVar = 'Unnormalized Into: DepVar' ;
-format U_DepVar BEST.;
-*** Unnormalized target values;
-ARRAY REG4DRU[2]  _TEMPORARY_ (1 0);
-
-*** Generate dummy variables for DepVar ;
-drop _Y ;
-label F_DepVar = 'From: DepVar' ;
-length F_DepVar $ 12;
-F_DepVar = put( DepVar , BEST. );
-%DMNORMIP( F_DepVar )
-if missing( DepVar ) then do;
-   _Y = .;
-end;
-else do;
-   if F_DepVar = '0'  then do;
-      _Y = 1;
-   end;
-   else if F_DepVar = '1'  then do;
-      _Y = 0;
-   end;
-   else do;
-      _Y = .;
-   end;
-end;
-
-drop _DM_BAD;
-_DM_BAD=0;
-
-*** Check AcceptedCmpTotal for missing values ;
-if missing( AcceptedCmpTotal ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check Frq for missing values ;
-if missing( Frq ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check Income for missing values ;
-if missing( Income ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check Mnt for missing values ;
-if missing( Mnt ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check MntFruits for missing values ;
-if missing( MntFruits ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check MntGoldProds for missing values ;
-if missing( MntGoldProds ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check MntMeatProducts for missing values ;
-if missing( MntMeatProducts ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check NumCatalogPurchases for missing values ;
-if missing( NumCatalogPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check NumWebPurchases for missing values ;
-if missing( NumWebPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check RFMstat for missing values ;
-if missing( RFMstat ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check RMntFrq for missing values ;
-if missing( RMntFrq ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check Recency for missing values ;
-if missing( Recency ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Generate dummy variables for G_Marital_Status ;
-drop _1_0 _1_1 ;
-if missing( G_Marital_Status ) then do;
-   _1_0 = .;
-   _1_1 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( G_Marital_Status , BEST12. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '2'  then do;
-      _1_0 = -1;
-      _1_1 = -1;
-   end;
-   else if _dm12 = '0'  then do;
-      _1_0 = 1;
-      _1_1 = 0;
-   end;
-   else if _dm12 = '1'  then do;
-      _1_0 = 0;
-      _1_1 = 1;
-   end;
-   else do;
-      _1_0 = .;
-      _1_1 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** If missing inputs, use averages;
-if _DM_BAD > 0 then do;
-   _P0 = 0.151221567;
-   _P1 = 0.848778433;
-   goto REG4DR1;
-end;
-
-*** Compute Linear Predictor;
-drop _TEMP;
-drop _LP0;
-_LP0 = 0;
-
-***  Effect: AcceptedCmpTotal ;
-_TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (    2.40018327652155 * _TEMP);
-
-***  Effect: Frq ;
-_TEMP = Frq ;
-_LP0 = _LP0 + (   -0.21673510532954 * _TEMP);
-
-***  Effect: G_Marital_Status ;
-_TEMP = 1;
-_LP0 = _LP0 + (    0.64180357562788) * _TEMP * _1_0;
-_LP0 = _LP0 + (    0.16431128010113) * _TEMP * _1_1;
-
-***  Effect: Income ;
-_TEMP = Income ;
-_LP0 = _LP0 + (   -0.00003686881561 * _TEMP);
-
-***  Effect: Mnt ;
-_TEMP = Mnt ;
-_LP0 = _LP0 + (   -0.00434744593089 * _TEMP);
-
-***  Effect: MntFruits ;
-_TEMP = MntFruits ;
-_LP0 = _LP0 + (   -0.00828741579845 * _TEMP);
-
-***  Effect: MntGoldProds ;
-_TEMP = MntGoldProds ;
-_LP0 = _LP0 + (    0.00530468850331 * _TEMP);
-
-***  Effect: MntMeatProducts ;
-_TEMP = MntMeatProducts ;
-_LP0 = _LP0 + (    0.00775743174762 * _TEMP);
-
-***  Effect: NumCatalogPurchases ;
-_TEMP = NumCatalogPurchases ;
-_LP0 = _LP0 + (    0.70059514546632 * _TEMP);
-
-***  Effect: NumWebPurchases ;
-_TEMP = NumWebPurchases ;
-_LP0 = _LP0 + (    0.39070014327883 * _TEMP);
-
-***  Effect: RFMstat ;
-_TEMP = RFMstat ;
-_LP0 = _LP0 + (    0.00018898206939 * _TEMP);
-
-***  Effect: RMntFrq ;
-_TEMP = RMntFrq ;
-_LP0 = _LP0 + (    0.03694284437431 * _TEMP);
-
-***  Effect: Recency ;
-_TEMP = Recency ;
-_LP0 = _LP0 + (   -0.06739289968934 * _TEMP);
-
-*** Naive Posterior Probabilities;
-drop _MAXP _IY _P0 _P1;
-_TEMP =     0.42102377735904 + _LP0;
-if (_TEMP < 0) then do;
-   _TEMP = exp(_TEMP);
-   _P0 = _TEMP / (1 + _TEMP);
-end;
-else _P0 = 1 / (1 + exp(-_TEMP));
-_P1 = 1.0 - _P0;
-
-REG4DR1:
-
-*** Residuals;
-if (_Y = .) then do;
-   R_DepVar1 = .;
-   R_DepVar0 = .;
-end;
-else do;
-    label R_DepVar1 = 'Residual: DepVar=1' ;
-    label R_DepVar0 = 'Residual: DepVar=0' ;
-   R_DepVar1 = - _P0;
-   R_DepVar0 = - _P1;
-   select( _Y );
-      when (0)  R_DepVar1 = R_DepVar1 + 1;
-      when (1)  R_DepVar0 = R_DepVar0 + 1;
-   end;
-end;
-
-*** Posterior Probabilities and Predicted Level;
-label P_DepVar1 = 'Predicted: DepVar=1' ;
-label P_DepVar0 = 'Predicted: DepVar=0' ;
-P_DepVar1 = _P0;
-_MAXP = _P0;
-_IY = 1;
-P_DepVar0 = _P1;
-if (_P1 >  _MAXP + 1E-8) then do;
-   _MAXP = _P1;
-   _IY = 2;
-end;
-I_DepVar = REG4DRF[_IY];
-U_DepVar = REG4DRU[_IY];
-
-*************************************;
-***** end scoring code for regression;
-*************************************;
-* Renaming variables for Reg4;
-*------------------------------------------------------------*;
-* Renaming Posterior variables for Reg4;
-*------------------------------------------------------------*;
-drop Reg4_P_DepVar1;
-Reg4_P_DepVar1 = P_DepVar1;
-drop Reg4_P_DepVar0;
-Reg4_P_DepVar0 = P_DepVar0;
-*------------------------------------------------------------*;
-* Renaming _WARN_ variable for Reg4;
-*------------------------------------------------------------*;
-length Reg4_WARN_ $4;
-drop Reg4_WARN_;
-Reg4_WARN_ = _WARN_;
-*------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 7 of 9;
+* Ensmbl4: Scoring Code of model 5 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -2304,7 +1732,7 @@ length Neural27_WARN_ $4;
 drop Neural27_WARN_;
 Neural27_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 8 of 9;
+* Ensmbl4: Scoring Code of model 6 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -2687,7 +2115,7 @@ length Neural28_WARN_ $4;
 drop Neural28_WARN_;
 Neural28_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Scoring Code of model 9 of 9;
+* Ensmbl4: Scoring Code of model 7 of 10;
 *------------------------------------------------------------*;
 *------------------------------------------------------------*;
 * TOOL: Neural;
@@ -3088,30 +2516,893 @@ length Neural8_WARN_ $4;
 drop Neural8_WARN_;
 Neural8_WARN_ = _WARN_;
 *------------------------------------------------------------*;
-* Ensmbl4: Average Posteriors of 9 models;
+* Ensmbl4: Scoring Code of model 8 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Decision Tree;
+* TYPE: MODEL;
+* NODE: Tree4;
+*------------------------------------------------------------*;
+****************************************************************;
+******             DECISION TREE SCORING CODE             ******;
+****************************************************************;
+
+******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+LENGTH F_DepVar  $   12;
+LENGTH I_DepVar  $   12;
+LENGTH _WARN_  $    4;
+
+******              LABELS FOR NEW VARIABLES              ******;
+LABEL _NODE_  = 'Node' ;
+LABEL _LEAF_  = 'Leaf' ;
+LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
+LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
+LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
+LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
+LABEL V_DepVar0  = 'Validated: DepVar=0' ;
+LABEL V_DepVar1  = 'Validated: DepVar=1' ;
+LABEL R_DepVar0  = 'Residual: DepVar=0' ;
+LABEL R_DepVar1  = 'Residual: DepVar=1' ;
+LABEL F_DepVar  = 'From: DepVar' ;
+LABEL I_DepVar  = 'Into: DepVar' ;
+LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
+LABEL _WARN_  = 'Warnings' ;
+
+
+******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
+LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
+_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
+
+
+_ARBFMT_12 = PUT( DepVar , BEST.);
+ %DMNORMCP( _ARBFMT_12, F_DepVar );
+
+******             ASSIGN OBSERVATION TO NODE             ******;
+IF  NOT MISSING(AcceptedCmpTotal ) AND
+                   0.5 <= AcceptedCmpTotal  THEN DO;
+  IF  NOT MISSING(Recency ) AND
+    Recency  <                 38.5 THEN DO;
+    IF  NOT MISSING(AcceptedCmpTotal ) AND
+                       1.5 <= AcceptedCmpTotal  THEN DO;
+      _NODE_  =                   13;
+      _LEAF_  =                   10;
+      P_DepVar0  =     0.05263157894736;
+      P_DepVar1  =     0.94736842105263;
+      Q_DepVar0  =     0.05263157894736;
+      Q_DepVar1  =     0.94736842105263;
+      V_DepVar0  =                    0;
+      V_DepVar1  =                    1;
+      I_DepVar  = '1' ;
+      U_DepVar  =                    1;
+      END;
+    ELSE DO;
+      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+       %DMNORMIP( _ARBFMT_12);
+      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+        _NODE_  =                   22;
+        _LEAF_  =                    6;
+        P_DepVar0  =      0.2258064516129;
+        P_DepVar1  =     0.77419354838709;
+        Q_DepVar0  =      0.2258064516129;
+        Q_DepVar1  =     0.77419354838709;
+        V_DepVar0  =     0.41935483870967;
+        V_DepVar1  =     0.58064516129032;
+        I_DepVar  = '1' ;
+        U_DepVar  =                    1;
+        END;
+      ELSE DO;
+        IF  NOT MISSING(Recency ) AND
+          Recency  <                 15.5 THEN DO;
+          _NODE_  =                   40;
+          _LEAF_  =                    7;
+          P_DepVar0  =     0.35714285714285;
+          P_DepVar1  =     0.64285714285714;
+          Q_DepVar0  =     0.35714285714285;
+          Q_DepVar1  =     0.64285714285714;
+          V_DepVar0  =               0.4375;
+          V_DepVar1  =               0.5625;
+          I_DepVar  = '1' ;
+          U_DepVar  =                    1;
+          END;
+        ELSE DO;
+          IF  NOT MISSING(RFMstat ) AND
+            RFMstat  <     259.685185185185 THEN DO;
+            _NODE_  =                   52;
+            _LEAF_  =                    8;
+            P_DepVar0  =     0.35294117647058;
+            P_DepVar1  =     0.64705882352941;
+            Q_DepVar0  =     0.35294117647058;
+            Q_DepVar1  =     0.64705882352941;
+            V_DepVar0  =                0.375;
+            V_DepVar1  =                0.625;
+            I_DepVar  = '1' ;
+            U_DepVar  =                    1;
+            END;
+          ELSE DO;
+            _NODE_  =                   53;
+            _LEAF_  =                    9;
+            P_DepVar0  =     0.83333333333333;
+            P_DepVar1  =     0.16666666666666;
+            Q_DepVar0  =     0.83333333333333;
+            Q_DepVar1  =     0.16666666666666;
+            V_DepVar0  =     0.73684210526315;
+            V_DepVar1  =     0.26315789473684;
+            I_DepVar  = '0' ;
+            U_DepVar  =                    0;
+            END;
+          END;
+        END;
+      END;
+    END;
+  ELSE DO;
+    IF  NOT MISSING(AcceptedCmpTotal ) AND
+                       2.5 <= AcceptedCmpTotal  THEN DO;
+      _NODE_  =                   15;
+      _LEAF_  =                   16;
+      P_DepVar0  =      0.3103448275862;
+      P_DepVar1  =     0.68965517241379;
+      Q_DepVar0  =      0.3103448275862;
+      Q_DepVar1  =     0.68965517241379;
+      V_DepVar0  =     0.33333333333333;
+      V_DepVar1  =     0.66666666666666;
+      I_DepVar  = '1' ;
+      U_DepVar  =                    1;
+      END;
+    ELSE DO;
+      IF  NOT MISSING(NumCatalogPurchases ) AND
+                        10.5 <= NumCatalogPurchases  THEN DO;
+        IF  NOT MISSING(Frq ) AND
+                          25.5 <= Frq  THEN DO;
+          _NODE_  =                   45;
+          _LEAF_  =                   15;
+          P_DepVar0  =     0.71428571428571;
+          P_DepVar1  =     0.28571428571428;
+          Q_DepVar0  =     0.71428571428571;
+          Q_DepVar1  =     0.28571428571428;
+          V_DepVar0  =                    1;
+          V_DepVar1  =                    0;
+          I_DepVar  = '0' ;
+          U_DepVar  =                    0;
+          END;
+        ELSE DO;
+          _NODE_  =                   44;
+          _LEAF_  =                   14;
+          P_DepVar0  =                    0;
+          P_DepVar1  =                    1;
+          Q_DepVar0  =                    0;
+          Q_DepVar1  =                    1;
+          V_DepVar0  =                    1;
+          V_DepVar1  =                    0;
+          I_DepVar  = '1' ;
+          U_DepVar  =                    1;
+          END;
+        END;
+      ELSE DO;
+        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+         %DMNORMIP( _ARBFMT_12);
+        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+          IF  NOT MISSING(MntMeatProducts ) AND
+                           596.5 <= MntMeatProducts  THEN DO;
+            _NODE_  =                   55;
+            _LEAF_  =                   12;
+            P_DepVar0  =                  0.2;
+            P_DepVar1  =                  0.8;
+            Q_DepVar0  =                  0.2;
+            Q_DepVar1  =                  0.8;
+            V_DepVar0  =                  0.4;
+            V_DepVar1  =                  0.6;
+            I_DepVar  = '1' ;
+            U_DepVar  =                    1;
+            END;
+          ELSE DO;
+            _NODE_  =                   54;
+            _LEAF_  =                   11;
+            P_DepVar0  =     0.81818181818181;
+            P_DepVar1  =     0.18181818181818;
+            Q_DepVar0  =     0.81818181818181;
+            Q_DepVar1  =     0.18181818181818;
+            V_DepVar0  =     0.70588235294117;
+            V_DepVar1  =     0.29411764705882;
+            I_DepVar  = '0' ;
+            U_DepVar  =                    0;
+            END;
+          END;
+        ELSE DO;
+          _NODE_  =                   43;
+          _LEAF_  =                   13;
+          P_DepVar0  =     0.90532544378698;
+          P_DepVar1  =     0.09467455621301;
+          Q_DepVar0  =     0.90532544378698;
+          Q_DepVar1  =     0.09467455621301;
+          V_DepVar0  =     0.90588235294117;
+          V_DepVar1  =     0.09411764705882;
+          I_DepVar  = '0' ;
+          U_DepVar  =                    0;
+          END;
+        END;
+      END;
+    END;
+  END;
+ELSE DO;
+  IF  NOT MISSING(Recency ) AND
+    Recency  <                 32.5 THEN DO;
+    IF  NOT MISSING(NumCatalogPurchases ) AND
+                       5.5 <= NumCatalogPurchases  THEN DO;
+      IF  NOT MISSING(Recency ) AND
+                          19 <= Recency  THEN DO;
+        IF  NOT MISSING(MntMeatProducts ) AND
+                         370.5 <= MntMeatProducts  THEN DO;
+          _NODE_  =                   33;
+          _LEAF_  =                    4;
+          P_DepVar0  =     0.36363636363636;
+          P_DepVar1  =     0.63636363636363;
+          Q_DepVar0  =     0.36363636363636;
+          Q_DepVar1  =     0.63636363636363;
+          V_DepVar0  =     0.44444444444444;
+          V_DepVar1  =     0.55555555555555;
+          I_DepVar  = '1' ;
+          U_DepVar  =                    1;
+          END;
+        ELSE DO;
+          _NODE_  =                   32;
+          _LEAF_  =                    3;
+          P_DepVar0  =                    1;
+          P_DepVar1  =                    0;
+          Q_DepVar0  =                    1;
+          Q_DepVar1  =                    0;
+          V_DepVar0  =     0.85714285714285;
+          V_DepVar1  =     0.14285714285714;
+          I_DepVar  = '0' ;
+          U_DepVar  =                    0;
+          END;
+        END;
+      ELSE DO;
+        _NODE_  =                   18;
+        _LEAF_  =                    2;
+        P_DepVar0  =                 0.25;
+        P_DepVar1  =                 0.75;
+        Q_DepVar0  =                 0.25;
+        Q_DepVar1  =                 0.75;
+        V_DepVar0  =     0.44444444444444;
+        V_DepVar1  =     0.55555555555555;
+        I_DepVar  = '1' ;
+        U_DepVar  =                    1;
+        END;
+      END;
+    ELSE DO;
+      _NODE_  =                    8;
+      _LEAF_  =                    1;
+      P_DepVar0  =     0.84285714285714;
+      P_DepVar1  =     0.15714285714285;
+      Q_DepVar0  =     0.84285714285714;
+      Q_DepVar1  =     0.15714285714285;
+      V_DepVar0  =     0.81048387096774;
+      V_DepVar1  =     0.18951612903225;
+      I_DepVar  = '0' ;
+      U_DepVar  =                    0;
+      END;
+    END;
+  ELSE DO;
+    _NODE_  =                    5;
+    _LEAF_  =                    5;
+    P_DepVar0  =     0.98042414355628;
+    P_DepVar1  =     0.01957585644371;
+    Q_DepVar0  =     0.98042414355628;
+    Q_DepVar1  =     0.01957585644371;
+    V_DepVar0  =     0.98795180722891;
+    V_DepVar1  =     0.01204819277108;
+    I_DepVar  = '0' ;
+    U_DepVar  =                    0;
+    END;
+  END;
+
+*****  RESIDUALS R_ *************;
+IF  F_DepVar  NE '0'
+AND F_DepVar  NE '1'  THEN DO;
+        R_DepVar0  = .;
+        R_DepVar1  = .;
+ END;
+ ELSE DO;
+       R_DepVar0  =  -P_DepVar0 ;
+       R_DepVar1  =  -P_DepVar1 ;
+       SELECT( F_DepVar  );
+          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
+          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
+       END;
+ END;
+
+****************************************************************;
+******          END OF DECISION TREE SCORING CODE         ******;
+****************************************************************;
+drop _LEAF_;
+* Renaming variables for Tree4;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Tree4;
+*------------------------------------------------------------*;
+drop Tree4_P_DepVar1;
+Tree4_P_DepVar1 = P_DepVar1;
+drop Tree4_P_DepVar0;
+Tree4_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Tree4;
+*------------------------------------------------------------*;
+length Tree4_WARN_ $4;
+drop Tree4_WARN_;
+Tree4_WARN_ = _WARN_;
+*------------------------------------------------------------*;
+* Ensmbl4: Scoring Code of model 9 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Regression;
+* TYPE: MODEL;
+* NODE: Reg4;
+*------------------------------------------------------------*;
+*************************************;
+*** begin scoring code for regression;
+*************************************;
+
+length _WARN_ $4;
+label _WARN_ = 'Warnings' ;
+
+length I_DepVar $ 12;
+label I_DepVar = 'Into: DepVar' ;
+*** Target Values;
+array REG4DRF [2] $12 _temporary_ ('1' '0' );
+label U_DepVar = 'Unnormalized Into: DepVar' ;
+format U_DepVar BEST.;
+*** Unnormalized target values;
+ARRAY REG4DRU[2]  _TEMPORARY_ (1 0);
+
+*** Generate dummy variables for DepVar ;
+drop _Y ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   _Y = .;
+end;
+else do;
+   if F_DepVar = '0'  then do;
+      _Y = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      _Y = 0;
+   end;
+   else do;
+      _Y = .;
+   end;
+end;
+
+drop _DM_BAD;
+_DM_BAD=0;
+
+*** Check AcceptedCmpTotal for missing values ;
+if missing( AcceptedCmpTotal ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Frq for missing values ;
+if missing( Frq ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Income for missing values ;
+if missing( Income ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Mnt for missing values ;
+if missing( Mnt ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntFruits for missing values ;
+if missing( MntFruits ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntGoldProds for missing values ;
+if missing( MntGoldProds ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntMeatProducts for missing values ;
+if missing( MntMeatProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumWebPurchases for missing values ;
+if missing( NumWebPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check RFMstat for missing values ;
+if missing( RFMstat ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check RMntFrq for missing values ;
+if missing( RMntFrq ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Recency for missing values ;
+if missing( Recency ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Generate dummy variables for G_Marital_Status ;
+drop _1_0 _1_1 ;
+if missing( G_Marital_Status ) then do;
+   _1_0 = .;
+   _1_1 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( G_Marital_Status , BEST12. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '2'  then do;
+      _1_0 = -1;
+      _1_1 = -1;
+   end;
+   else if _dm12 = '0'  then do;
+      _1_0 = 1;
+      _1_1 = 0;
+   end;
+   else if _dm12 = '1'  then do;
+      _1_0 = 0;
+      _1_1 = 1;
+   end;
+   else do;
+      _1_0 = .;
+      _1_1 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** If missing inputs, use averages;
+if _DM_BAD > 0 then do;
+   _P0 = 0.151221567;
+   _P1 = 0.848778433;
+   goto REG4DR1;
+end;
+
+*** Compute Linear Predictor;
+drop _TEMP;
+drop _LP0;
+_LP0 = 0;
+
+***  Effect: AcceptedCmpTotal ;
+_TEMP = AcceptedCmpTotal ;
+_LP0 = _LP0 + (    2.40018327652155 * _TEMP);
+
+***  Effect: Frq ;
+_TEMP = Frq ;
+_LP0 = _LP0 + (   -0.21673510532954 * _TEMP);
+
+***  Effect: G_Marital_Status ;
+_TEMP = 1;
+_LP0 = _LP0 + (    0.64180357562788) * _TEMP * _1_0;
+_LP0 = _LP0 + (    0.16431128010113) * _TEMP * _1_1;
+
+***  Effect: Income ;
+_TEMP = Income ;
+_LP0 = _LP0 + (   -0.00003686881561 * _TEMP);
+
+***  Effect: Mnt ;
+_TEMP = Mnt ;
+_LP0 = _LP0 + (   -0.00434744593089 * _TEMP);
+
+***  Effect: MntFruits ;
+_TEMP = MntFruits ;
+_LP0 = _LP0 + (   -0.00828741579845 * _TEMP);
+
+***  Effect: MntGoldProds ;
+_TEMP = MntGoldProds ;
+_LP0 = _LP0 + (    0.00530468850331 * _TEMP);
+
+***  Effect: MntMeatProducts ;
+_TEMP = MntMeatProducts ;
+_LP0 = _LP0 + (    0.00775743174762 * _TEMP);
+
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (    0.70059514546632 * _TEMP);
+
+***  Effect: NumWebPurchases ;
+_TEMP = NumWebPurchases ;
+_LP0 = _LP0 + (    0.39070014327883 * _TEMP);
+
+***  Effect: RFMstat ;
+_TEMP = RFMstat ;
+_LP0 = _LP0 + (    0.00018898206939 * _TEMP);
+
+***  Effect: RMntFrq ;
+_TEMP = RMntFrq ;
+_LP0 = _LP0 + (    0.03694284437431 * _TEMP);
+
+***  Effect: Recency ;
+_TEMP = Recency ;
+_LP0 = _LP0 + (   -0.06739289968934 * _TEMP);
+
+*** Naive Posterior Probabilities;
+drop _MAXP _IY _P0 _P1;
+_TEMP =     0.42102377735904 + _LP0;
+if (_TEMP < 0) then do;
+   _TEMP = exp(_TEMP);
+   _P0 = _TEMP / (1 + _TEMP);
+end;
+else _P0 = 1 / (1 + exp(-_TEMP));
+_P1 = 1.0 - _P0;
+
+REG4DR1:
+
+*** Residuals;
+if (_Y = .) then do;
+   R_DepVar1 = .;
+   R_DepVar0 = .;
+end;
+else do;
+    label R_DepVar1 = 'Residual: DepVar=1' ;
+    label R_DepVar0 = 'Residual: DepVar=0' ;
+   R_DepVar1 = - _P0;
+   R_DepVar0 = - _P1;
+   select( _Y );
+      when (0)  R_DepVar1 = R_DepVar1 + 1;
+      when (1)  R_DepVar0 = R_DepVar0 + 1;
+   end;
+end;
+
+*** Posterior Probabilities and Predicted Level;
+label P_DepVar1 = 'Predicted: DepVar=1' ;
+label P_DepVar0 = 'Predicted: DepVar=0' ;
+P_DepVar1 = _P0;
+_MAXP = _P0;
+_IY = 1;
+P_DepVar0 = _P1;
+if (_P1 >  _MAXP + 1E-8) then do;
+   _MAXP = _P1;
+   _IY = 2;
+end;
+I_DepVar = REG4DRF[_IY];
+U_DepVar = REG4DRU[_IY];
+
+*************************************;
+***** end scoring code for regression;
+*************************************;
+* Renaming variables for Reg4;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Reg4;
+*------------------------------------------------------------*;
+drop Reg4_P_DepVar1;
+Reg4_P_DepVar1 = P_DepVar1;
+drop Reg4_P_DepVar0;
+Reg4_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Reg4;
+*------------------------------------------------------------*;
+length Reg4_WARN_ $4;
+drop Reg4_WARN_;
+Reg4_WARN_ = _WARN_;
+*------------------------------------------------------------*;
+* Ensmbl4: Scoring Code of model 10 of 10;
+*------------------------------------------------------------*;
+*------------------------------------------------------------*;
+* TOOL: Regression;
+* TYPE: MODEL;
+* NODE: Reg8;
+*------------------------------------------------------------*;
+*************************************;
+*** begin scoring code for regression;
+*************************************;
+
+length _WARN_ $4;
+label _WARN_ = 'Warnings' ;
+
+length I_DepVar $ 12;
+label I_DepVar = 'Into: DepVar' ;
+*** Target Values;
+array REG8DRF [2] $12 _temporary_ ('1' '0' );
+label U_DepVar = 'Unnormalized Into: DepVar' ;
+format U_DepVar BEST.;
+*** Unnormalized target values;
+ARRAY REG8DRU[2]  _TEMPORARY_ (1 0);
+
+*** Generate dummy variables for DepVar ;
+drop _Y ;
+label F_DepVar = 'From: DepVar' ;
+length F_DepVar $ 12;
+F_DepVar = put( DepVar , BEST. );
+%DMNORMIP( F_DepVar )
+if missing( DepVar ) then do;
+   _Y = .;
+end;
+else do;
+   if F_DepVar = '0'  then do;
+      _Y = 1;
+   end;
+   else if F_DepVar = '1'  then do;
+      _Y = 0;
+   end;
+   else do;
+      _Y = .;
+   end;
+end;
+
+drop _DM_BAD;
+_DM_BAD=0;
+
+*** Check AcceptedCmpTotal for missing values ;
+if missing( AcceptedCmpTotal ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Frq for missing values ;
+if missing( Frq ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Income for missing values ;
+if missing( Income ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Mnt for missing values ;
+if missing( Mnt ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntFruits for missing values ;
+if missing( MntFruits ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntGoldProds for missing values ;
+if missing( MntGoldProds ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check MntMeatProducts for missing values ;
+if missing( MntMeatProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumWebPurchases for missing values ;
+if missing( NumWebPurchases ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check RFMstat for missing values ;
+if missing( RFMstat ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check RMntFrq for missing values ;
+if missing( RMntFrq ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check Recency for missing values ;
+if missing( Recency ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Generate dummy variables for G_Marital_Status ;
+drop _1_0 _1_1 ;
+if missing( G_Marital_Status ) then do;
+   _1_0 = .;
+   _1_1 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( G_Marital_Status , BEST12. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '2'  then do;
+      _1_0 = -1;
+      _1_1 = -1;
+   end;
+   else if _dm12 = '0'  then do;
+      _1_0 = 1;
+      _1_1 = 0;
+   end;
+   else if _dm12 = '1'  then do;
+      _1_0 = 0;
+      _1_1 = 1;
+   end;
+   else do;
+      _1_0 = .;
+      _1_1 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** If missing inputs, use averages;
+if _DM_BAD > 0 then do;
+   _P0 = 0.151221567;
+   _P1 = 0.848778433;
+   goto REG8DR1;
+end;
+
+*** Compute Linear Predictor;
+drop _TEMP;
+drop _LP0;
+_LP0 = 0;
+
+***  Effect: AcceptedCmpTotal ;
+_TEMP = AcceptedCmpTotal ;
+_LP0 = _LP0 + (    1.30282761826006 * _TEMP);
+
+***  Effect: Frq ;
+_TEMP = Frq ;
+_LP0 = _LP0 + (   -0.12461246583448 * _TEMP);
+
+***  Effect: G_Marital_Status ;
+_TEMP = 1;
+_LP0 = _LP0 + (    0.35055822679312) * _TEMP * _1_0;
+_LP0 = _LP0 + (    0.06578421633721) * _TEMP * _1_1;
+
+***  Effect: Income ;
+_TEMP = Income ;
+_LP0 = _LP0 + (   -0.00001965833893 * _TEMP);
+
+***  Effect: Mnt ;
+_TEMP = Mnt ;
+_LP0 = _LP0 + (   -0.00237919371816 * _TEMP);
+
+***  Effect: MntFruits ;
+_TEMP = MntFruits ;
+_LP0 = _LP0 + (   -0.00490441121869 * _TEMP);
+
+***  Effect: MntGoldProds ;
+_TEMP = MntGoldProds ;
+_LP0 = _LP0 + (     0.0027445180197 * _TEMP);
+
+***  Effect: MntMeatProducts ;
+_TEMP = MntMeatProducts ;
+_LP0 = _LP0 + (    0.00427794030308 * _TEMP);
+
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (    0.38768279900123 * _TEMP);
+
+***  Effect: NumWebPurchases ;
+_TEMP = NumWebPurchases ;
+_LP0 = _LP0 + (    0.21939343331463 * _TEMP);
+
+***  Effect: RFMstat ;
+_TEMP = RFMstat ;
+_LP0 = _LP0 + (    0.00011370233217 * _TEMP);
+
+***  Effect: RMntFrq ;
+_TEMP = RMntFrq ;
+_LP0 = _LP0 + (    0.02046669609103 * _TEMP);
+
+***  Effect: Recency ;
+_TEMP = Recency ;
+_LP0 = _LP0 + (   -0.03547597645545 * _TEMP);
+
+*** Naive Posterior Probabilities;
+drop _MAXP _IY _P0 _P1;
+_P0 = probnorm((    0.18495497784379) + _LP0);
+_P1 = 1.0 - _P0;
+
+REG8DR1:
+
+*** Residuals;
+if (_Y = .) then do;
+   R_DepVar1 = .;
+   R_DepVar0 = .;
+end;
+else do;
+    label R_DepVar1 = 'Residual: DepVar=1' ;
+    label R_DepVar0 = 'Residual: DepVar=0' ;
+   R_DepVar1 = - _P0;
+   R_DepVar0 = - _P1;
+   select( _Y );
+      when (0)  R_DepVar1 = R_DepVar1 + 1;
+      when (1)  R_DepVar0 = R_DepVar0 + 1;
+   end;
+end;
+
+*** Posterior Probabilities and Predicted Level;
+label P_DepVar1 = 'Predicted: DepVar=1' ;
+label P_DepVar0 = 'Predicted: DepVar=0' ;
+P_DepVar1 = _P0;
+_MAXP = _P0;
+_IY = 1;
+P_DepVar0 = _P1;
+if (_P1 >  _MAXP + 1E-8) then do;
+   _MAXP = _P1;
+   _IY = 2;
+end;
+I_DepVar = REG8DRF[_IY];
+U_DepVar = REG8DRU[_IY];
+
+*************************************;
+***** end scoring code for regression;
+*************************************;
+* Renaming variables for Reg8;
+*------------------------------------------------------------*;
+* Renaming Posterior variables for Reg8;
+*------------------------------------------------------------*;
+drop Reg8_P_DepVar1;
+Reg8_P_DepVar1 = P_DepVar1;
+drop Reg8_P_DepVar0;
+Reg8_P_DepVar0 = P_DepVar0;
+*------------------------------------------------------------*;
+* Renaming _WARN_ variable for Reg8;
+*------------------------------------------------------------*;
+length Reg8_WARN_ $4;
+drop Reg8_WARN_;
+Reg8_WARN_ = _WARN_;
+*------------------------------------------------------------*;
+* Ensmbl4: Average Posteriors of 10 models;
 *------------------------------------------------------------*;
 P_DepVar1 = (
-Neural25_P_DepVar1 +
-Neural24_P_DepVar1 +
 Neural29_P_DepVar1 +
+Neural24_P_DepVar1 +
+Neural25_P_DepVar1 +
 Neural26_P_DepVar1 +
-Tree4_P_DepVar1 +
-Reg4_P_DepVar1 +
 Neural27_P_DepVar1 +
 Neural28_P_DepVar1 +
-Neural8_P_DepVar1
-)/9;
+Neural8_P_DepVar1 +
+Tree4_P_DepVar1 +
+Reg4_P_DepVar1 +
+Reg8_P_DepVar1
+)/10;
 P_DepVar0 = (
-Neural25_P_DepVar0 +
-Neural24_P_DepVar0 +
 Neural29_P_DepVar0 +
+Neural24_P_DepVar0 +
+Neural25_P_DepVar0 +
 Neural26_P_DepVar0 +
-Tree4_P_DepVar0 +
-Reg4_P_DepVar0 +
 Neural27_P_DepVar0 +
 Neural28_P_DepVar0 +
-Neural8_P_DepVar0
-)/9;
+Neural8_P_DepVar0 +
+Tree4_P_DepVar0 +
+Reg4_P_DepVar0 +
+Reg8_P_DepVar0
+)/10;
 *------------------------------------------------------------*;
 * Ensmbl4: Computing Classification Vars;
 *------------------------------------------------------------*;
@@ -3144,30 +3435,22 @@ if I_DepVar = '0' then U_DepVar = 0;
 length _WARN_ $4;
 label _WARN_ = 'Warnings';
 _WARN_ = '';
-if index(NEURAL25_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(NEURAL25_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(NEURAL25_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(NEURAL25_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
-if index(NEURAL24_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(NEURAL24_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(NEURAL24_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(NEURAL24_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(NEURAL29_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(NEURAL29_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL29_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL29_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL24_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL24_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL24_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL24_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(NEURAL25_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(NEURAL25_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(NEURAL25_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(NEURAL25_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(NEURAL26_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(NEURAL26_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL26_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL26_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
-if index(TREE4_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(TREE4_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(TREE4_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(TREE4_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
-if index(REG4_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
-if index(REG4_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
-if index(REG4_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
-if index(REG4_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 if index(NEURAL27_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
 if index(NEURAL27_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL27_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
@@ -3180,6 +3463,18 @@ if index(NEURAL8_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) =
 if index(NEURAL8_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
 if index(NEURAL8_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
 if index(NEURAL8_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(TREE4_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(TREE4_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(TREE4_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(TREE4_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(REG4_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(REG4_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(REG4_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(REG4_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
+if index(REG8_WARN_, 'M') and ^index(_WARN_, 'M') then substr(_WARN_, 1, 1) ='M';
+if index(REG8_WARN_, 'U') and ^index(_WARN_, 'U') then substr(_WARN_, 2, 1) ='U';
+if index(REG8_WARN_, 'P') and ^index(_WARN_, 'P') then substr(_WARN_, 3, 1) ='P';
+if index(REG8_WARN_, 'C') and ^index(_WARN_, 'C') then substr(_WARN_, 4, 1) ='C';
 *------------------------------------------------------------*;
 * Ensmbl4: Computing Residual Vars;
 *------------------------------------------------------------*;

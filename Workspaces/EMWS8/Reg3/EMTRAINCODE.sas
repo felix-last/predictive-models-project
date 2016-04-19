@@ -36,7 +36,8 @@ data EM_DMREG / view=EM_DMREG;
 set EMWS8.BINNING_TRAIN(keep=
 DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
 GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency );
+GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Reg3: DMDBClass Macro ;
@@ -51,7 +52,7 @@ run;
 * Reg3: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-
+    Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg3: Create DMDB;
@@ -108,6 +109,7 @@ GRP_NumWebPurchases
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
+Year_Birth
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint

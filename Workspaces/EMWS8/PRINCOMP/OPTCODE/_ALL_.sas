@@ -144,7 +144,7 @@ else _D11=(MntSweetProducts-27.0804549283909)/39.2356363442449;
 if MntWines=. then _D12 = 0;
 else _D12=(MntWines-310.929233361415)/341.695699656276;
 if MonthsAsCustomer=. then _D13 = 0;
-else _D13=(MonthsAsCustomer-83.24599831508)/16.9420859404964;
+else _D13=(MonthsAsCustomer-83.4953664700926)/16.9441392661404;
 if NumCatalogPurchases=. then _D14 = 0;
 else _D14=(NumCatalogPurchases-2.64448188711036)/2.77214051734809;
 if NumDealsPurchases=. then _D15 = 0;
@@ -165,8 +165,6 @@ if Recency=. then _D22 = 0;
 else _D22=(Recency-48.7742207245156)/28.8224799181808;
 if Teenhome=. then _D23 = 0;
 else _D23=(Teenhome-0.48652064026958)/0.55047336656954;
-if Year_Birth=. then _D24 = 0;
-else _D24=(Year_Birth-1968.79401853412)/12.063294849345;
 ;
 DROP _FORMAT _NORMFMT
 AcceptedCmp1_1_
@@ -216,5 +214,4 @@ _D20
 _D21
 _D22
 _D23
-_D24
 ;

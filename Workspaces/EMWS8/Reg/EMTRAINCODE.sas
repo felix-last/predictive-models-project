@@ -35,27 +35,28 @@ quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Meta_TRAIN(keep=
 AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-AcceptedCmpTotal Complain DepVar HigherEducationBinary Kidhome Marital_Status
-Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts
-MntWines NumCatalogPurchases NumDealsPurchases NumDistPurchases
-NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat Recency Teenhome );
+AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
+Kidhome Marital_Status Mnt MntFishProducts MntFruits MntGoldProds
+MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
+NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases
+NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome );
 run;
 *------------------------------------------------------------* ;
 * Reg: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
     AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) HigherEducationBinary(ASC)
-   Marital_Status(ASC)
+   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
+   HigherEducationBinary(ASC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Kidhome Mnt MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat
-   Recency Teenhome
+    AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
+   MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer
+   NumCatalogPurchases NumDealsPurchases NumDistPurchases NumStorePurchases
+   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg: Create DMDB;
@@ -88,6 +89,7 @@ AcceptedCmp3
 AcceptedCmp4
 AcceptedCmp5
 Complain
+Education
 HigherEducationBinary
 Marital_Status
 ;
@@ -98,8 +100,12 @@ AcceptedCmp3
 AcceptedCmp4
 AcceptedCmp5
 AcceptedCmpTotal
+Age
 Complain
+Education
+Frq
 HigherEducationBinary
+Income
 Kidhome
 Marital_Status
 Mnt
@@ -109,6 +115,7 @@ MntGoldProds
 MntMeatProducts
 MntSweetProducts
 MntWines
+MonthsAsCustomer
 NumCatalogPurchases
 NumDealsPurchases
 NumDistPurchases
@@ -116,6 +123,7 @@ NumStorePurchases
 NumWebPurchases
 NumWebVisitsMonth
 RFMstat
+RMntFrq
 Recency
 Teenhome
 /error=binomial link=LOGIT

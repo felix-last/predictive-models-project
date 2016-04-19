@@ -471,26 +471,6 @@ _LABEL_='1<= Teenhome';
 UB=.;
 end;
  
-if DISPLAY_VAR='Year_Birth' and _GROUP_ = 2 then do;
-_LABEL_='Year_Birth< 1959';
-UB=1959;
-end;
-else
-if DISPLAY_VAR='Year_Birth' and _GROUP_ = 3 then do;
-_LABEL_='1959<= Year_Birth< 1970';
-UB=1970;
-end;
-else
-if DISPLAY_VAR='Year_Birth' and _GROUP_ = 4 then do;
-_LABEL_='1970<= Year_Birth< 1978';
-UB=1978;
-end;
-else
-if DISPLAY_VAR='Year_Birth' and _GROUP_ = 5 then do;
-_LABEL_='1978<= Year_Birth';
-UB=.;
-end;
- 
 if DISPLAY_VAR='Complain' and _GROUP_ = 2 then
 _LABEL_='0';
 else

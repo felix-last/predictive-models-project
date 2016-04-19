@@ -36,7 +36,8 @@ data EM_Neural19;
 set EMWS8.BINNING_TRAIN(keep=
 DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
 GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency );
+GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Neural19: DMDBClass Macro ;
@@ -51,7 +52,7 @@ run;
 * Neural19: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-
+    Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural19: Create DMDB;
@@ -71,7 +72,7 @@ quit;
 * Neural19: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-
+    Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural19: Binary Inputs Macro ;
@@ -106,6 +107,8 @@ nloptions
 performance alldetails noutilfile;
 netopts
 decay=0;
+input %INTINPUTS / level=interval id=intvl
+;
 input %NOMINPUTS / level=nominal id=nom
 ;
 target DepVar / level=NOMINAL id=DepVar

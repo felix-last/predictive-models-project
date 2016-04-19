@@ -12,6 +12,11 @@ if upcase(name) = 'GRP_NUMCATALOGPURCHASES' then role = 'INPUT';
 else
 if upcase(name) = 'GRP_MNTWINES' then role = 'INPUT';
 else
+if upcase(name) = 'GRP_MNTMEATPRODUCTS' then do;
+role = 'REJECTED';
+comment = "Tree3: TREELOWIMPORTANCE";
+end;
+else
 if upcase(name) = 'GRP_INCOME' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
@@ -22,12 +27,12 @@ role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'GRP_MNTMEATPRODUCTS' then do;
+if upcase(name) = 'GRP_NUMWEBPURCHASES' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'GRP_MNT' then do;
+if upcase(name) = 'YEAR_BIRTH' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
@@ -42,17 +47,17 @@ role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'GRP_NUMWEBPURCHASES' then do;
+if upcase(name) = 'GRP_RMNTFRQ' then do;
+role = 'REJECTED';
+comment = "Tree3: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'GRP_MNT' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
 if upcase(name) = 'GRP_MNTGOLDPRODS' then do;
-role = 'REJECTED';
-comment = "Tree3: TREELOWIMPORTANCE";
-end;
-else
-if upcase(name) = 'GRP_RMNTFRQ' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;

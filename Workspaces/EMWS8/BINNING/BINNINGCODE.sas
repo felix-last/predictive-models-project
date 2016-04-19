@@ -158,13 +158,6 @@ if Teenhome < 0 then BIN_Teenhome=1;
 else if Teenhome < 1 then BIN_Teenhome=2;
 else if Teenhome >= 1 then BIN_Teenhome=3;
 end;
-if Year_Birth eq . then BIN_Year_Birth= .;
-else do;
-if Year_Birth < 1959 then BIN_Year_Birth=1;
-else if Year_Birth < 1970 then BIN_Year_Birth=2;
-else if Year_Birth < 1978 then BIN_Year_Birth=3;
-else if Year_Birth >= 1978 then BIN_Year_Birth=4;
-end;
 drop
 AcceptedCmpTotal
 Age
@@ -189,5 +182,4 @@ RFMstat
 RMntFrq
 Recency
 Teenhome
-Year_Birth
 ;

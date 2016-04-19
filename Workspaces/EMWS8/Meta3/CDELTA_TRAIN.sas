@@ -1,0 +1,13 @@
+*------------------------------------------------------------*;
+* Metadata Changes;
+*------------------------------------------------------------*;
+if upcase(NAME) = "HIGHEREDUCATION" then ROLE="REJECTED";
+if upcase(NAME) = "HIGHEREDUCATION" then delete;
+if upcase(NAME) = "MNT" then ROLE="REJECTED";
+if upcase(NAME) = "MNTMEATPRODUCTS" then ROLE="REJECTED";
+if upcase(NAME) = "MNTWINES" then ROLE="REJECTED";
+if upcase(NAME) = "NUMCATALOGPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "NUMDISTPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "NUMSTOREPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "NUMWEBPURCHASES" then ROLE="REJECTED";
+if upcase(NAME) = "YEAR_BIRTH" then ROLE="REJECTED";

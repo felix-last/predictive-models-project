@@ -13,6 +13,12 @@ LENGTH _WARN_ $4
 ;
       label S_AcceptedCmpTotal = 'Standard: AcceptedCmpTotal' ;
 
+      label S_Age = 'Standard: Age' ;
+
+      label S_Frq = 'Standard: Frq' ;
+
+      label S_Income = 'Standard: Income' ;
+
       label S_Kidhome = 'Standard: Kidhome' ;
 
       label S_Mnt = 'Standard: Mnt' ;
@@ -29,6 +35,8 @@ LENGTH _WARN_ $4
 
       label S_MntWines = 'Standard: MntWines' ;
 
+      label S_MonthsAsCustomer = 'Standard: MonthsAsCustomer' ;
+
       label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
 
       label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
@@ -42,6 +50,8 @@ LENGTH _WARN_ $4
       label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
 
       label S_RFMstat = 'Standard: RFMstat' ;
+
+      label S_RMntFrq = 'Standard: RMntFrq' ;
 
       label S_Recency = 'Standard: Recency' ;
 
@@ -60,6 +70,14 @@ LENGTH _WARN_ $4
       label Complain0 = 'Dummy: Complain=0' ;
 
       label HigherEducationBinary0 = 'Dummy: HigherEducationBinary=0' ;
+
+      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
+
+      label EducationBasic = 'Dummy: Education=Basic' ;
+
+      label EducationGraduation = 'Dummy: Education=Graduation' ;
+
+      label EducationMaster = 'Dummy: Education=Master' ;
 
       label H11 = 'Hidden: H1=1' ;
 
@@ -241,12 +259,62 @@ else do;
    end;
 end;
 
+*** Generate dummy variables for Education ;
+drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
+*** encoding is sparse, initialize to zero;
+Education2n_Cycle = 0;
+EducationBasic = 0;
+EducationGraduation = 0;
+EducationMaster = 0;
+if missing( Education ) then do;
+   Education2n_Cycle = .;
+   EducationBasic = .;
+   EducationGraduation = .;
+   EducationMaster = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm10 $ 10; drop _dm10 ;
+   _dm10 = put( Education , $10. );
+   %DMNORMIP( _dm10 )
+   if _dm10 = 'GRADUATION'  then do;
+      EducationGraduation = 1;
+   end;
+   else if _dm10 = 'PHD'  then do;
+      Education2n_Cycle = -1;
+      EducationBasic = -1;
+      EducationGraduation = -1;
+      EducationMaster = -1;
+   end;
+   else if _dm10 = 'MASTER'  then do;
+      EducationMaster = 1;
+   end;
+   else if _dm10 = '2N CYCLE'  then do;
+      Education2n_Cycle = 1;
+   end;
+   else if _dm10 = 'BASIC'  then do;
+      EducationBasic = 1;
+   end;
+   else do;
+      Education2n_Cycle = .;
+      EducationBasic = .;
+      EducationGraduation = .;
+      EducationMaster = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
 *** *************************;
 *** Checking missing input Interval
 *** *************************;
 
 IF NMISS(
    AcceptedCmpTotal , 
+   Age , 
+   Frq , 
+   Income , 
    Kidhome , 
    Mnt , 
    MntFishProducts , 
@@ -255,6 +323,7 @@ IF NMISS(
    MntMeatProducts , 
    MntSweetProducts , 
    MntWines , 
+   MonthsAsCustomer , 
    NumCatalogPurchases , 
    NumDealsPurchases , 
    NumDistPurchases , 
@@ -262,6 +331,7 @@ IF NMISS(
    NumWebPurchases , 
    NumWebVisitsMonth , 
    RFMstat , 
+   RMntFrq , 
    Recency , 
    Teenhome   ) THEN DO;
    SUBSTR(_WARN_, 1, 1) = 'M';
@@ -274,6 +344,9 @@ END;
 IF _DM_BAD EQ 0 THEN DO;
    S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 * 
         AcceptedCmpTotal ;
+   S_Age  =    -3.91319138389466 +     0.08289609202857 * Age ;
+   S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
+   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
    S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
    S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 * 
@@ -286,6 +359,8 @@ IF _DM_BAD EQ 0 THEN DO;
    S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 * 
         MntSweetProducts ;
    S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   S_MonthsAsCustomer  =    -4.92768414840297 +     0.05901745637787 * 
+        MonthsAsCustomer ;
    S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 * 
         NumCatalogPurchases ;
    S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 * 
@@ -299,6 +374,7 @@ IF _DM_BAD EQ 0 THEN DO;
    S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 * 
         NumWebVisitsMonth ;
    S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
+   S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
    S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
 END;
@@ -306,6 +382,12 @@ ELSE DO;
    IF MISSING( AcceptedCmpTotal ) THEN S_AcceptedCmpTotal  = . ;
    ELSE S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 * 
         AcceptedCmpTotal ;
+   IF MISSING( Age ) THEN S_Age  = . ;
+   ELSE S_Age  =    -3.91319138389466 +     0.08289609202857 * Age ;
+   IF MISSING( Frq ) THEN S_Frq  = . ;
+   ELSE S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
+   IF MISSING( Income ) THEN S_Income  = . ;
+   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
    ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
    IF MISSING( Mnt ) THEN S_Mnt  = . ;
@@ -327,6 +409,9 @@ ELSE DO;
         MntSweetProducts ;
    IF MISSING( MntWines ) THEN S_MntWines  = . ;
    ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   IF MISSING( MonthsAsCustomer ) THEN S_MonthsAsCustomer  = . ;
+   ELSE S_MonthsAsCustomer  =    -4.92768414840297 +     0.05901745637787 * 
+        MonthsAsCustomer ;
    IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
    ELSE S_NumCatalogPurchases
           =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
@@ -348,6 +433,8 @@ ELSE DO;
         NumWebVisitsMonth ;
    IF MISSING( RFMstat ) THEN S_RFMstat  = . ;
    ELSE S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
+   IF MISSING( RMntFrq ) THEN S_RMntFrq  = . ;
+   ELSE S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    IF MISSING( Recency ) THEN S_Recency  = . ;
    ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
    IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
@@ -357,28 +444,38 @@ END;
 *** Writing the Node bin ;
 *** *************************;
 *** *************************;
+*** Writing the Node nom ;
+*** *************************;
+*** *************************;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =     0.05683042207498 * S_AcceptedCmpTotal  +     0.01103749863785 * 
-        S_Kidhome  +      0.0668028452714 * S_Mnt  +     0.02967520347091 * 
-        S_MntFishProducts  +     0.01858045039368 * S_MntFruits
-          +    -0.02635078317954 * S_MntGoldProds  +    -0.25780271539024 * 
-        S_MntMeatProducts  +     0.01453133061011 * S_MntSweetProducts
-          +     0.07702251699374 * S_MntWines  +    -0.28646346184321 * 
-        S_NumCatalogPurchases  +    -0.12552585628838 * S_NumDealsPurchases
-          +     0.09149172977308 * S_NumDistPurchases
-          +      0.1286379510771 * S_NumStorePurchases
-          +     0.04601789983748 * S_NumWebPurchases
-          +    -0.21551517718316 * S_NumWebVisitsMonth
-          +    -0.05297005877428 * S_RFMstat  +     0.30037503125852 * 
-        S_Recency  +     0.04585774296716 * S_Teenhome ;
-   H11  = H11  +     0.19703919058259 * AcceptedCmp10
-          +     0.17114050759001 * AcceptedCmp20  +     0.20648038431009 * 
-        AcceptedCmp30  +     0.19476699920944 * AcceptedCmp40
-          +     0.26437935662252 * AcceptedCmp50  +    -0.03285342631116 * 
-        Complain0  +     0.02557620526354 * HigherEducationBinary0 ;
-   H11  =    -0.45597910153862 + H11 ;
+   H11  =     0.17253933153192 * S_AcceptedCmpTotal  +    -0.00905682786307 * 
+        S_Age  +    -0.16189506426877 * S_Frq  +     0.04747866165156 * 
+        S_Income  +    -0.01003321974643 * S_Kidhome
+          +      0.0295763599492 * S_Mnt  +    -0.01546318303003 * 
+        S_MntFishProducts  +    -0.01410665119089 * S_MntFruits
+          +     0.00082923441873 * S_MntGoldProds  +     0.05549346930482 * 
+        S_MntMeatProducts  +    -0.01049992237931 * S_MntSweetProducts
+          +    -0.07013234205633 * S_MntWines  +    -0.00721146825499 * 
+        S_MonthsAsCustomer  +     0.12264425658747 * S_NumCatalogPurchases
+          +     0.04789435683014 * S_NumDealsPurchases
+          +     0.03156899683016 * S_NumDistPurchases
+          +     0.02920310465753 * S_NumStorePurchases
+          +     -0.0008553015476 * S_NumWebPurchases
+          +     0.09480487235301 * S_NumWebVisitsMonth
+          +     0.01508383637372 * S_RFMstat  +     0.01456375884416 * 
+        S_RMntFrq  +    -0.10511528420774 * S_Recency
+          +      -0.023971907884 * S_Teenhome ;
+   H11  = H11  +     0.07798877961888 * AcceptedCmp10
+          +     0.08545224835311 * AcceptedCmp20  +     0.07286185961898 * 
+        AcceptedCmp30  +     0.08445406170559 * AcceptedCmp40
+          +     0.06102198752605 * AcceptedCmp50  +     0.01824734417591 * 
+        Complain0  +    -0.00626869897647 * HigherEducationBinary0 ;
+   H11  = H11  +     0.00812441674075 * Education2n_Cycle
+          +    -0.01198925622737 * EducationBasic  +     0.00714615715672 * 
+        EducationGraduation  +    -0.00200978992401 * EducationMaster ;
+   H11  =     -0.3576236510542 + H11 ;
    H11  = TANH(H11 );
 END;
 ELSE DO;
@@ -388,8 +485,8 @@ END;
 *** Writing the Node DepVar ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -8.59083580950057 * H11 ;
-   P_DepVar1  =    -1.22832072210597 + P_DepVar1 ;
+   P_DepVar1  =     25.9968153762534 * H11 ;
+   P_DepVar1  =    -4.91742031612348 + P_DepVar1 ;
    P_DepVar0  = 0; 
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.; 

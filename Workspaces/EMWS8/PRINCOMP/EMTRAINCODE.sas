@@ -13,7 +13,7 @@
     AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits
    MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer
    NumCatalogPurchases NumDealsPurchases NumDistPurchases NumStorePurchases
-   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome Year_Birth
+   NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * EM: Create DMDB;
@@ -35,7 +35,7 @@ quit;
    Kidhome Marital_Status Mnt MntFishProducts MntFruits MntGoldProds
    MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases
    NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases
-   NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome Year_Birth
+   NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
 %mend INPUTS;
 proc dmneurl data=EMWS8.Part_TRAIN dmdbcat=WORK.EM_DMDB
 outstat=EMWS8.PRINCOMP_OUTSTAT outclass=EMWS8.PRINCOMP_OUTCLASS

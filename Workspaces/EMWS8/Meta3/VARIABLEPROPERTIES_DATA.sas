@@ -1,0 +1,13 @@
+*------------------------------------------------------------*;
+* Variable Attributes for DATA;
+*------------------------------------------------------------*;
+if upcase(NAME) = "HIGHEREDUCATION" then NEWROLE="REJECTED";
+if upcase(NAME) = "HIGHEREDUCATION" then HIDE="Y";
+if upcase(NAME) = "MNT" then NEWROLE="REJECTED";
+if upcase(NAME) = "MNTMEATPRODUCTS" then NEWROLE="REJECTED";
+if upcase(NAME) = "MNTWINES" then NEWROLE="REJECTED";
+if upcase(NAME) = "NUMCATALOGPURCHASES" then NEWROLE="REJECTED";
+if upcase(NAME) = "NUMDISTPURCHASES" then NEWROLE="REJECTED";
+if upcase(NAME) = "NUMSTOREPURCHASES" then NEWROLE="REJECTED";
+if upcase(NAME) = "NUMWEBPURCHASES" then NEWROLE="REJECTED";
+if upcase(NAME) = "YEAR_BIRTH" then NEWROLE="REJECTED";

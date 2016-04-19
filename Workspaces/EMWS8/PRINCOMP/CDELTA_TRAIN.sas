@@ -126,7 +126,3 @@ if name='Teenhome' then do;
 role = 'REJECTED';
 comment = "PRINCOMP: PRINREJECTED";
 end;
-if name='Year_Birth' then do;
-role = 'REJECTED';
-comment = "PRINCOMP: PRINREJECTED";
-end;
