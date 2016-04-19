@@ -1,0 +1,755 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "13.30 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                19. April 2016
+Time:                13.30 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O0U30JS7 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O0U30JS7 new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "13.30 Uhr" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_7PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.03.01M2P081512";
+MPRINT(EM_DIAGRAM):   put "EM Version:          12.1";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "13.30 Uhr" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\Ensmbl29\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+(FREQ=(WHERE='ROLE = "FREQ"' DEFAULT='Y' RULE=(RULE1=(DESCRIPTION='USEATMOST1FREQ' 
+VALUES=(VALUE1='Y' )[95519] MAX=1 EXCEEDMAXVALUE='' )[95523] )[95517] 
+VALIDCHOICES=(CHOICE1='Y' )[95521] )[94877] INPUTREJECT=(WHERE='ROLE in("INPUT", "REJECTED")' 
+DEFAULT='D' VALIDCHOICES=(CHOICE1='D' )[95527] 
+RULE=(RULE1=(DESCRIPTION='USEATLEAST1INPUTREJECT' WHERE='(ROLE = "INPUT" and USE in("Y" "D")) 
+or (ROLE = "REJECTED" and USE = "Y")' MIN=. )[95531] )[95529] )[95525] TARGET=(WHERE='ROLE = 
+"TARGET"' DEFAULT='Y' VALIDCHOICES=(CHOICE1='Y' CHOICE2='N' )[95535] 
+RULE=(RULE1=(DESCRIPTION='METADATA.USE1TARGET' VALUES=(VALUE1='Y' )[95541] MIN=1 MAX=1 
+EXCEEDMAXVALUE='N' )[95539] )[95537] )[95533] )[95515] 
+425947     proc freq data=EMWS8.Ensmbl29_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS8.Ensmbl29_VariableSet noprint;
+425948     table ROLE*LEVEL/out=WORK.Ensmbl29META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.Ensmbl29META;
+425949     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 34 observations read from the data set EMWS8.ENSMBL29_VARIABLESET.
+NOTE: The data set WORK.ENSMBL29META has 5 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+425950     proc print data=WORK.Ensmbl29META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Ensmbl29META label noobs;
+425951     var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+425952     label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+425952   ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+425952   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+425953     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+425954     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+425955     run;
+
+NOTE: There were 5 observations read from the data set WORK.ENSMBL29META.
+NOTE: The PROCEDURE PRINT printed page 224.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+425956     title10;
+MPRINT(EM_DIAGRAM):   title10;
+425957     %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS8.Neural_TRAIN EMWS8.Neural_TRAIN 
+EMWS8.Neural_TRAIN EMWS8.Neural_TRAIN EMWS8 Neural_TRAIN 
+EMWS8.Neural_TRAIN EMWS8.Neural_TRAIN 
+EMWS8.Neural_TRAIN EMWS8.Neural_TRAIN EMWS8 Neural_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS8.Neural_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    proc sort data=EMWS8.Neural_DepVar_DD out=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+425986     data WORK.Ensmbl29_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.Ensmbl29_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS 
+ORDER);
+425987     length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+425988     label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+425988   ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+425988   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+425989        "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+425989   ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+425989   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+425990     set EMWS8.NEURAL_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS8.NEURAL_DEPVAR_DM( where=(_TYPE_="TARGET"));
+425991     NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+425992     select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+425993     when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+425994     when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+425995     when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+425996     when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+425997     otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+425998     end;
+MPRINT(EM_DIAGRAM):   end;
+425999     output;
+MPRINT(EM_DIAGRAM):   output;
+426000     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.NEURAL_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.ENSMBL29_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426001     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+426002     proc print data=WORK.Ensmbl29_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Ensmbl29_EVENT noobs label;
+426003     var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+426004     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+426005     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+426006     run;
+
+NOTE: There were 1 observations read from the data set WORK.ENSMBL29_EVENT.
+NOTE: The PROCEDURE PRINT printed page 225.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426007     title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+426008     proc print data = EMWS8.Neural_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS8.Neural_DepVar_DM noobs label;
+426009     var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+426010     where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+426011     label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+426011   ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+426011   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+426012     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+426013     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+426014     run;
+
+NOTE: There were 7 observations read from the data set EMWS8.NEURAL_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 226.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426015     title10;
+MPRINT(EM_DIAGRAM):   title10;
+426016     %let groupid =;
+426017     %let endGroupid =;
+426018     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426019     set EMWS8.Neural_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural_EMINFO;
+426020     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426020   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426021     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426022     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426023     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426024     %let groupid =;
+426025     %let endGroupid =;
+426026     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426027     set EMWS8.Neural2_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural2_EMINFO;
+426028     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426028   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426029     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426030     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426031     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL2_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426032     %let groupid =;
+426033     %let endGroupid =;
+426034     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426035     set EMWS8.Neural3_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural3_EMINFO;
+426036     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426036   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426037     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426038     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426039     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL3_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426040     %let groupid =;
+426041     %let endGroupid =;
+426042     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426043     set EMWS8.Neural4_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural4_EMINFO;
+426044     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426044   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426045     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426046     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426047     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL4_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426048     %let groupid =;
+426049     %let endGroupid =;
+426050     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426051     set EMWS8.Neural7_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural7_EMINFO;
+426052     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426052   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426053     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426054     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426055     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL7_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426056     %let groupid =;
+426057     %let endGroupid =;
+426058     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426059     set EMWS8.Neural9_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural9_EMINFO;
+426060     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426060   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426061     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426062     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426063     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL9_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426064     %let groupid =;
+426065     %let endGroupid =;
+426066     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426067     set EMWS8.Neural10_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural10_EMINFO;
+426068     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426068   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426069     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426070     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426071     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.NEURAL10_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426072     %let groupid =;
+426073     %let endGroupid =;
+426074     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426075     set EMWS8.Tree_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Tree_EMINFO;
+426076     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426076   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426077     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426078     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426079     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.TREE_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426080     %let groupid =;
+426081     %let endGroupid =;
+426082     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426083     set EMWS8.Reg_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg_EMINFO;
+426084     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426084   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426085     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426086     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426087     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.REG_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426088     %let groupid =;
+426089     %let endGroupid =;
+426090     data _null_;
+MPRINT(EM_DIAGRAM):    data _null_;
+426091     set EMWS8.Reg5_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Reg5_EMINFO;
+426092     where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 'TARGETINFO',
+426092   ! 'INDEXINFO');
+MPRINT(EM_DIAGRAM):   where key in('ENDGROUP', 'GROUPINFO', 'BOOSTINFO', 'BAGINFO', 
+'TARGETINFO', 'INDEXINFO');
+426093     if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+MPRINT(EM_DIAGRAM):   if key = 'ENDGROUP' then call symput('endGroupId', DATA);
+426094     else call symput('groupId', DATA);
+MPRINT(EM_DIAGRAM):   else call symput('groupId', DATA);
+426095     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.REG5_EMINFO.
+      WHERE key in ('BAGINFO', 'BOOSTINFO', 'ENDGROUP', 'GROUPINFO', 'INDEXINFO', 
+      'TARGETINFO');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426096     data WORK.Ensmbl29;
+MPRINT(EM_DIAGRAM):    data WORK.Ensmbl29;
+426097     length NodeId $32 Model $64;
+MPRINT(EM_DIAGRAM):   length NodeId $32 Model $64;
+426098     label Nodeid = "%sysfunc(sasmsg(sashelp.dmine, rpt_nodeId_vlabel,  NOQUOTE))" Model
+426098   ! = "%sysfunc(sasmsg(sashelp.dmine, rpt_modeltype,      NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label Nodeid = "Node Id" Model = "rpt_modeltype";
+426099     nodeid="NEURAL";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL";
+426100     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426101     output;
+MPRINT(EM_DIAGRAM):   output;
+426102     nodeid="NEURAL2";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL2";
+426103     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426104     output;
+MPRINT(EM_DIAGRAM):   output;
+426105     nodeid="NEURAL3";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL3";
+426106     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426107     output;
+MPRINT(EM_DIAGRAM):   output;
+426108     nodeid="NEURAL4";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL4";
+426109     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426110     output;
+MPRINT(EM_DIAGRAM):   output;
+426111     nodeid="NEURAL7";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL7";
+426112     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426113     output;
+MPRINT(EM_DIAGRAM):   output;
+426114     nodeid="NEURAL9";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL9";
+426115     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426116     output;
+MPRINT(EM_DIAGRAM):   output;
+426117     nodeid="NEURAL10";
+MPRINT(EM_DIAGRAM):   nodeid="NEURAL10";
+426118     model="Neural";
+MPRINT(EM_DIAGRAM):   model="Neural";
+426119     output;
+MPRINT(EM_DIAGRAM):   output;
+426120     nodeid="TREE";
+MPRINT(EM_DIAGRAM):   nodeid="TREE";
+426121     model="Decision Tree";
+MPRINT(EM_DIAGRAM):   model="Decision Tree";
+426122     output;
+MPRINT(EM_DIAGRAM):   output;
+426123     nodeid="REG";
+MPRINT(EM_DIAGRAM):   nodeid="REG";
+426124     model="Regression";
+MPRINT(EM_DIAGRAM):   model="Regression";
+426125     output;
+MPRINT(EM_DIAGRAM):   output;
+426126     nodeid="REG5";
+MPRINT(EM_DIAGRAM):   nodeid="REG5";
+426127     model="Regression";
+MPRINT(EM_DIAGRAM):   model="Regression";
+426128     output;
+MPRINT(EM_DIAGRAM):   output;
+426129     ;
+MPRINT(EM_DIAGRAM):   ;
+426130     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK.ENSMBL29 has 10 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426131     title;
+MPRINT(EM_DIAGRAM):   title;
+426132     proc print data=WORK.Ensmbl29 label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.Ensmbl29 label noobs;
+426133     title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_combinemodels_title,  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title9 "Imported Models to be Combined";
+426134     title10 "Probability Function: Voting";
+MPRINT(EM_DIAGRAM):   title10 "Probability Function: Voting";
+MPRINT(EM_DIAGRAM):   run;
+426135     run;
+
+NOTE: There were 10 observations read from the data set WORK.ENSMBL29.
+NOTE: The PROCEDURE PRINT printed page 227.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426136     title9;
+MPRINT(EM_DIAGRAM):   title9;
+426137     title10;
+MPRINT(EM_DIAGRAM):   title10;
+426138     data WORK.M26UEL8V;
+MPRINT(EM_DIAGRAM):    data WORK.M26UEL8V;
+426139     set WORK.M26UEL8V;
+MPRINT(EM_DIAGRAM):   set WORK.M26UEL8V;
+426140     where NAME = "DepVar";
+MPRINT(EM_DIAGRAM):   where NAME = "DepVar";
+426141     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.M26UEL8V.
+      WHERE NAME='DepVar';
+NOTE: The data set WORK.M26UEL8V has 1 observations and 22 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+426142     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+426143     * EM: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   * EM: DMDBClass Macro ;
+426144     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+426145     %macro DMDBClass;
+426146         DepVar(DESC)
+426147     %mend DMDBClass;
+426148     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+426149     * EM: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * EM: DMDBVar Macro ;
+426150     *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+426151     %macro DMDBVar;
+426152     
+426153     %mend DMDBVar;
+426154     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+426155     * EM: Create DMDB;
+MPRINT(EM_DIAGRAM):   * EM: Create DMDB;
+426156     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+426157     proc dmdb batch data=EMWS8.Neural_TRAIN
+426158     dmdbcat=WORK.EM_DMDB
+426159     maxlevel = 513
+426160     ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS8.Neural_TRAIN dmdbcat=WORK.EM_DMDB maxlevel = 
+513 ;
+MPRINT(EM_DIAGRAM):   class
+426161     class %DMDBClass;
+MPRINT(DMDBCLASS):   DepVar(DESC)
+MPRINT(EM_DIAGRAM):  ;
+426162     target
+426163     DepVar
+426164     ;
+MPRINT(EM_DIAGRAM):   target DepVar ;
+426165     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2374   Memory used = 511K.
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: View EMWS8.NEURAL_TRAIN.VIEW used (Total process time):
+      real time           0.04 seconds
+      cpu time            0.04 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.META_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.NEURAL_TRAIN.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+426166     quit;
+426167     *--- end code ---*;
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;
