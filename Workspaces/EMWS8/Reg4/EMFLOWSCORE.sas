@@ -62,12 +62,6 @@ if missing( Mnt ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check MntFruits for missing values ;
-if missing( MntFruits ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
 *** Check MntGoldProds for missing values ;
 if missing( MntGoldProds ) then do;
    substr(_warn_,1,1) = 'M';
@@ -80,14 +74,14 @@ if missing( MntMeatProducts ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check NumCatalogPurchases for missing values ;
-if missing( NumCatalogPurchases ) then do;
+*** Check MntWines for missing values ;
+if missing( MntWines ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
 
-*** Check NumWebPurchases for missing values ;
-if missing( NumWebPurchases ) then do;
+*** Check NumDistPurchases for missing values ;
+if missing( NumDistPurchases ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -156,60 +150,56 @@ _LP0 = 0;
 
 ***  Effect: AcceptedCmpTotal ;
 _TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (    2.40018327652155 * _TEMP);
+_LP0 = _LP0 + (     2.3101146636742 * _TEMP);
 
 ***  Effect: Frq ;
 _TEMP = Frq ;
-_LP0 = _LP0 + (   -0.21673510532954 * _TEMP);
+_LP0 = _LP0 + (   -0.24397863929446 * _TEMP);
 
 ***  Effect: G_Marital_Status ;
 _TEMP = 1;
-_LP0 = _LP0 + (    0.64180357562788) * _TEMP * _1_0;
-_LP0 = _LP0 + (    0.16431128010113) * _TEMP * _1_1;
+_LP0 = _LP0 + (    0.62662142005613) * _TEMP * _1_0;
+_LP0 = _LP0 + (    0.16948281370783) * _TEMP * _1_1;
 
 ***  Effect: Income ;
 _TEMP = Income ;
-_LP0 = _LP0 + (   -0.00003686881561 * _TEMP);
+_LP0 = _LP0 + (   -0.00002912500869 * _TEMP);
 
 ***  Effect: Mnt ;
 _TEMP = Mnt ;
-_LP0 = _LP0 + (   -0.00434744593089 * _TEMP);
-
-***  Effect: MntFruits ;
-_TEMP = MntFruits ;
-_LP0 = _LP0 + (   -0.00828741579845 * _TEMP);
+_LP0 = _LP0 + (   -0.00725366255775 * _TEMP);
 
 ***  Effect: MntGoldProds ;
 _TEMP = MntGoldProds ;
-_LP0 = _LP0 + (    0.00530468850331 * _TEMP);
+_LP0 = _LP0 + (    0.00966782899986 * _TEMP);
 
 ***  Effect: MntMeatProducts ;
 _TEMP = MntMeatProducts ;
-_LP0 = _LP0 + (    0.00775743174762 * _TEMP);
+_LP0 = _LP0 + (    0.01188232167165 * _TEMP);
 
-***  Effect: NumCatalogPurchases ;
-_TEMP = NumCatalogPurchases ;
-_LP0 = _LP0 + (    0.70059514546632 * _TEMP);
+***  Effect: MntWines ;
+_TEMP = MntWines ;
+_LP0 = _LP0 + (      0.003639907135 * _TEMP);
 
-***  Effect: NumWebPurchases ;
-_TEMP = NumWebPurchases ;
-_LP0 = _LP0 + (    0.39070014327883 * _TEMP);
+***  Effect: NumDistPurchases ;
+_TEMP = NumDistPurchases ;
+_LP0 = _LP0 + (    0.52674791091038 * _TEMP);
 
 ***  Effect: RFMstat ;
 _TEMP = RFMstat ;
-_LP0 = _LP0 + (    0.00018898206939 * _TEMP);
+_LP0 = _LP0 + (      0.000175187797 * _TEMP);
 
 ***  Effect: RMntFrq ;
 _TEMP = RMntFrq ;
-_LP0 = _LP0 + (    0.03694284437431 * _TEMP);
+_LP0 = _LP0 + (    0.02790898517022 * _TEMP);
 
 ***  Effect: Recency ;
 _TEMP = Recency ;
-_LP0 = _LP0 + (   -0.06739289968934 * _TEMP);
+_LP0 = _LP0 + (   -0.06390893610641 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =     0.42102377735904 + _LP0;
+_TEMP =     0.12264575618785 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

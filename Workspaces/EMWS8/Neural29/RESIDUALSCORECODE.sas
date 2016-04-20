@@ -20,17 +20,13 @@ LENGTH _WARN_ $4
 
       label S_Mnt = 'Standard: Mnt' ;
 
-      label S_MntFruits = 'Standard: MntFruits' ;
-
       label S_MntGoldProds = 'Standard: MntGoldProds' ;
 
       label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
 
-      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
+      label S_MntWines = 'Standard: MntWines' ;
 
-      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
-
-      label S_NumWebPurchases = 'Standard: NumWebPurchases' ;
+      label S_NumDistPurchases = 'Standard: NumDistPurchases' ;
 
       label S_RFMstat = 'Standard: RFMstat' ;
 
@@ -101,12 +97,10 @@ IF NMISS(
    Frq , 
    Income , 
    Mnt , 
-   MntFruits , 
    MntGoldProds , 
    MntMeatProducts , 
-   MntSweetProducts , 
-   NumCatalogPurchases , 
-   NumWebPurchases , 
+   MntWines , 
+   NumDistPurchases , 
    RFMstat , 
    RMntFrq , 
    Recency   ) THEN DO;
@@ -123,17 +117,13 @@ IF _DM_BAD EQ 0 THEN DO;
    S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
    S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
    S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 * 
         MntGoldProds ;
    S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 * 
         MntMeatProducts ;
-   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 * 
-        MntSweetProducts ;
-   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 * 
-        NumCatalogPurchases ;
-   S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 * 
-        NumWebPurchases ;
+   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   S_NumDistPurchases  =    -1.46347520602971 +     0.21729252230374 * 
+        NumDistPurchases ;
    S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
    S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
@@ -148,25 +138,17 @@ ELSE DO;
    ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    IF MISSING( Mnt ) THEN S_Mnt  = . ;
    ELSE S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
-   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
-         ;
    IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
    ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 * 
         MntGoldProds ;
    IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
    ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 * 
         MntMeatProducts ;
-   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
-   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 * 
-        MntSweetProducts ;
-   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
-   ELSE S_NumCatalogPurchases
-          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
-         ;
-   IF MISSING( NumWebPurchases ) THEN S_NumWebPurchases  = . ;
-   ELSE S_NumWebPurchases  =    -1.56492430992034 +     0.38256928346729 * 
-        NumWebPurchases ;
+   IF MISSING( MntWines ) THEN S_MntWines  = . ;
+   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
+   IF MISSING( NumDistPurchases ) THEN S_NumDistPurchases  = . ;
+   ELSE S_NumDistPurchases  =    -1.46347520602971 +     0.21729252230374 * 
+        NumDistPurchases ;
    IF MISSING( RFMstat ) THEN S_RFMstat  = . ;
    ELSE S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
    IF MISSING( RMntFrq ) THEN S_RMntFrq  = . ;
@@ -181,18 +163,17 @@ END;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =     0.07081605827454 * S_AcceptedCmpTotal  +    -0.06698977764548 * 
-        S_Frq  +    -0.03430870177464 * S_Income  +    -0.11360176415097 * 
-        S_Mnt  +    -0.01238418440333 * S_MntFruits  +     0.01232617973423 * 
-        S_MntGoldProds  +     0.07483946106207 * S_MntMeatProducts
-          +     -0.0079701278424 * S_MntSweetProducts
-          +     0.08585038786425 * S_NumCatalogPurchases
-          +     0.04419619029921 * S_NumWebPurchases
-          +     0.01256447914587 * S_RFMstat  +     0.04947774665638 * 
-        S_RMntFrq  +    -0.08738179516843 * S_Recency ;
-   H11  = H11  +     0.02930876660681 * G_Marital_Status0
-          +     0.00712629273648 * G_Marital_Status1 ;
-   H11  =    -0.46602666061325 + H11 ;
+   H11  =     0.07956052778938 * S_AcceptedCmpTotal  +    -0.08976709439294 * 
+        S_Frq  +    -0.03136979020873 * S_Income  +    -0.22580432887576 * 
+        S_Mnt  +     0.02561890499238 * S_MntGoldProds
+          +     0.13232754556656 * S_MntMeatProducts
+          +     0.06392654003348 * S_MntWines  +      0.1248896909569 * 
+        S_NumDistPurchases  +     0.01403367352534 * S_RFMstat
+          +     0.04307139255267 * S_RMntFrq  +     -0.0953931758746 * 
+        S_Recency ;
+   H11  = H11  +     0.03232715649764 * G_Marital_Status0
+          +     0.00903998969594 * G_Marital_Status1 ;
+   H11  =    -0.20824058516839 + H11 ;
    H11  = TANH(H11 );
 END;
 ELSE DO;
@@ -227,8 +208,8 @@ else do;
    end;
 end;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =      25.813843010399 * H11 ;
-   P_DepVar1  =     8.06674391252456 + P_DepVar1 ;
+   P_DepVar1  =     19.4855317610714 * H11 ;
+   P_DepVar1  =     0.94239569093187 + P_DepVar1 ;
    P_DepVar0  = 0; 
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.; 

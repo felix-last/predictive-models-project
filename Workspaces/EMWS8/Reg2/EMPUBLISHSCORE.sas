@@ -120,67 +120,67 @@ _LP0 = 0;
 
 ***  Effect: PC_1 ;
 _TEMP = PC_1 ;
-_LP0 = _LP0 + (    0.26588047366542 * _TEMP);
+_LP0 = _LP0 + (     0.2659387609761 * _TEMP);
 
 ***  Effect: PC_10 ;
 _TEMP = PC_10 ;
-_LP0 = _LP0 + (   -0.66919261648431 * _TEMP);
+_LP0 = _LP0 + (   -0.66867149446429 * _TEMP);
 
 ***  Effect: PC_11 ;
 _TEMP = PC_11 ;
-_LP0 = _LP0 + (    0.24414650462815 * _TEMP);
+_LP0 = _LP0 + (    0.24398644120169 * _TEMP);
 
 ***  Effect: PC_13 ;
 _TEMP = PC_13 ;
-_LP0 = _LP0 + (   -1.07436868401794 * _TEMP);
+_LP0 = _LP0 + (   -1.07521496815602 * _TEMP);
 
 ***  Effect: PC_14 ;
 _TEMP = PC_14 ;
-_LP0 = _LP0 + (    0.44251390953597 * _TEMP);
+_LP0 = _LP0 + (    0.44352573219574 * _TEMP);
 
 ***  Effect: PC_15 ;
 _TEMP = PC_15 ;
-_LP0 = _LP0 + (   -0.26512634322926 * _TEMP);
+_LP0 = _LP0 + (   -0.26499771802243 * _TEMP);
 
 ***  Effect: PC_16 ;
 _TEMP = PC_16 ;
-_LP0 = _LP0 + (    0.28971609982801 * _TEMP);
+_LP0 = _LP0 + (    0.29177584924392 * _TEMP);
 
 ***  Effect: PC_2 ;
 _TEMP = PC_2 ;
-_LP0 = _LP0 + (   -0.49528883857799 * _TEMP);
+_LP0 = _LP0 + (   -0.49562816594847 * _TEMP);
 
 ***  Effect: PC_3 ;
 _TEMP = PC_3 ;
-_LP0 = _LP0 + (   -0.10447517157595 * _TEMP);
+_LP0 = _LP0 + (   -0.10438604453353 * _TEMP);
 
 ***  Effect: PC_4 ;
 _TEMP = PC_4 ;
-_LP0 = _LP0 + (    0.13678148584551 * _TEMP);
+_LP0 = _LP0 + (    0.13672343015302 * _TEMP);
 
 ***  Effect: PC_5 ;
 _TEMP = PC_5 ;
-_LP0 = _LP0 + (   -0.35151849887767 * _TEMP);
+_LP0 = _LP0 + (   -0.35162369882366 * _TEMP);
 
 ***  Effect: PC_6 ;
 _TEMP = PC_6 ;
-_LP0 = _LP0 + (     0.1612221904472 * _TEMP);
+_LP0 = _LP0 + (    0.16089667397431 * _TEMP);
 
 ***  Effect: PC_7 ;
 _TEMP = PC_7 ;
-_LP0 = _LP0 + (    0.13756842141361 * _TEMP);
+_LP0 = _LP0 + (    0.13759555983088 * _TEMP);
 
 ***  Effect: PC_8 ;
 _TEMP = PC_8 ;
-_LP0 = _LP0 + (    0.33565116397792 * _TEMP);
+_LP0 = _LP0 + (    0.33547495517164 * _TEMP);
 
 ***  Effect: PC_9 ;
 _TEMP = PC_9 ;
-_LP0 = _LP0 + (    0.46160039482548 * _TEMP);
+_LP0 = _LP0 + (    0.46305952318055 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =    -2.76146098736578 + _LP0;
+_TEMP =    -2.76220028311134 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

@@ -3,8 +3,8 @@ MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
 MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   data _null_;
-MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "19. April 2016" );
-MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17.27 Uhr" );
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "20. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "17.24 Uhr" );
 MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
 MPRINT(EM_DIAGRAM):   put "* Score Log";
 MPRINT(EM_DIAGRAM):   put nldate;
@@ -13,1248 +13,1084 @@ MPRINT(EM_DIAGRAM):   put "*----------------------------------------------------
 MPRINT(EM_DIAGRAM):   run;
 *------------------------------------------------------------*
 * Score Log
-Date:                19. April 2016
-Time:                17.27 Uhr
+Date:                20. April 2016
+Time:                17.24 Uhr
 *------------------------------------------------------------*
-MPRINT(EM_DIAGRAM):    filename O10W8JS7 
+MPRINT(EM_DIAGRAM):    filename O262F2KN 
 "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMSCORE.out" encoding="UTF-8" NOBOM;
-MPRINT(EM_DIAGRAM):   proc printto print=O10W8JS7 new;
+MPRINT(EM_DIAGRAM):   proc printto print=O262F2KN new;
 MPRINT(EM_DIAGRAM):   run;
-911834     filename emflow
-911834   ! "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
+492430     filename emflow
+492430   ! "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):    filename emflow 
 "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * Tree4: Scoring DATA data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-911835     *------------------------------------------------------------*;
-911836     * Tree4: Scoring DATA data;
-911837     *------------------------------------------------------------*;
-911838     data EMWS8.Tree4_TRAIN
-911839     / view=EMWS8.Tree4_TRAIN
-911840     ;
+492431     *------------------------------------------------------------*;
+492432     * Tree4: Scoring DATA data;
+492433     *------------------------------------------------------------*;
+492434     data EMWS8.Tree4_TRAIN
+492435     / view=EMWS8.Tree4_TRAIN
+492436     ;
 MPRINT(EM_DIAGRAM):   data EMWS8.Tree4_TRAIN / view=EMWS8.Tree4_TRAIN ;
-911841     set EMWS8.Varsel_TRAIN
-911842     ;
+492437     set EMWS8.Varsel_TRAIN
+492438     ;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_TRAIN ;
-911843     %inc emflow;
+492439     %inc emflow;
 NOTE: %INCLUDE (level 1) file EMFLOW is file 
       C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas.
-911844    +****************************************************************;
+492440    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-911845    +******             DECISION TREE SCORING CODE             ******;
+492441    +******             DECISION TREE SCORING CODE             ******;
 MPRINT(EM_DIAGRAM):   ****** DECISION TREE SCORING CODE ******;
-911846    +****************************************************************;
+492442    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-911847    +
-911848    +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+492443    +
+492444    +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
 MPRINT(EM_DIAGRAM):   ****** LENGTHS OF NEW CHARACTER VARIABLES ******;
-911849    +LENGTH F_DepVar  $   12;
+492445    +LENGTH F_DepVar  $   12;
 MPRINT(EM_DIAGRAM):   LENGTH F_DepVar $ 12;
-911850    +LENGTH I_DepVar  $   12;
+492446    +LENGTH I_DepVar  $   12;
 MPRINT(EM_DIAGRAM):   LENGTH I_DepVar $ 12;
-911851    +LENGTH _WARN_  $    4;
+492447    +LENGTH _WARN_  $    4;
 MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $ 4;
-911852    +
-911853    +******              LABELS FOR NEW VARIABLES              ******;
+492448    +
+492449    +******              LABELS FOR NEW VARIABLES              ******;
 MPRINT(EM_DIAGRAM):   ****** LABELS FOR NEW VARIABLES ******;
-911854    +LABEL _NODE_  = 'Node' ;
+492450    +LABEL _NODE_  = 'Node' ;
 MPRINT(EM_DIAGRAM):   LABEL _NODE_ = 'Node' ;
-911855    +LABEL _LEAF_  = 'Leaf' ;
+492451    +LABEL _LEAF_  = 'Leaf' ;
 MPRINT(EM_DIAGRAM):   LABEL _LEAF_ = 'Leaf' ;
-911856    +LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
+492452    +LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL P_DepVar0 = 'Predicted: DepVar=0' ;
-911857    +LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
+492453    +LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL P_DepVar1 = 'Predicted: DepVar=1' ;
-911858    +LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
+492454    +LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL Q_DepVar0 = 'Unadjusted P: DepVar=0' ;
-911859    +LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
+492455    +LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL Q_DepVar1 = 'Unadjusted P: DepVar=1' ;
-911860    +LABEL V_DepVar0  = 'Validated: DepVar=0' ;
+492456    +LABEL V_DepVar0  = 'Validated: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL V_DepVar0 = 'Validated: DepVar=0' ;
-911861    +LABEL V_DepVar1  = 'Validated: DepVar=1' ;
+492457    +LABEL V_DepVar1  = 'Validated: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL V_DepVar1 = 'Validated: DepVar=1' ;
-911862    +LABEL R_DepVar0  = 'Residual: DepVar=0' ;
+492458    +LABEL R_DepVar0  = 'Residual: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL R_DepVar0 = 'Residual: DepVar=0' ;
-911863    +LABEL R_DepVar1  = 'Residual: DepVar=1' ;
+492459    +LABEL R_DepVar1  = 'Residual: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL R_DepVar1 = 'Residual: DepVar=1' ;
-911864    +LABEL F_DepVar  = 'From: DepVar' ;
+492460    +LABEL F_DepVar  = 'From: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL F_DepVar = 'From: DepVar' ;
-911865    +LABEL I_DepVar  = 'Into: DepVar' ;
+492461    +LABEL I_DepVar  = 'Into: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL I_DepVar = 'Into: DepVar' ;
-911866    +LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
+492462    +LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL U_DepVar = 'Unnormalized Into: DepVar' ;
-911867    +LABEL _WARN_  = 'Warnings' ;
+492463    +LABEL _WARN_  = 'Warnings' ;
 MPRINT(EM_DIAGRAM):   LABEL _WARN_ = 'Warnings' ;
-911868    +
-911869    +
-911870    +******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
+492464    +
+492465    +
+492466    +******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
 MPRINT(EM_DIAGRAM):   ****** TEMPORARY VARIABLES FOR FORMATTED VALUES ******;
-911871    +LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
+492467    +LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
 MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_12 $ 12;
 MPRINT(EM_DIAGRAM):   DROP _ARBFMT_12;
-911872    +_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
+492468    +_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = ' ';
-911873    +
-911874    +
-911875    +_ARBFMT_12 = PUT( DepVar , BEST.);
+492469    +
+492470    +
+492471    +_ARBFMT_12 = PUT( DepVar , BEST.);
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( DepVar , BEST.);
-911876    + %DMNORMCP( _ARBFMT_12, F_DepVar );
+492472    + %DMNORMCP( _ARBFMT_12, F_DepVar );
 MPRINT(DMNORMCP):   F_DepVar=dmnorm(_ARBFMT_12,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMCP):  );
 MPRINT(EM_DIAGRAM):  ;
-911877    +
-911878    +******             ASSIGN OBSERVATION TO NODE             ******;
+492473    +
+492474    +******             ASSIGN OBSERVATION TO NODE             ******;
 MPRINT(EM_DIAGRAM):   ****** ASSIGN OBSERVATION TO NODE ******;
-911879    +IF  NOT MISSING(AcceptedCmpTotal ) AND
-911880    +                   0.5 <= AcceptedCmpTotal  THEN DO;
+492475    +IF  NOT MISSING(AcceptedCmpTotal ) AND
+492476    +                   0.5 <= AcceptedCmpTotal  THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 0.5 <= AcceptedCmpTotal THEN DO;
-911881    +  IF  NOT MISSING(Recency ) AND
-911882    +    Recency  <                 38.5 THEN DO;
+492477    +  IF  NOT MISSING(Recency ) AND
+492478    +    Recency  <                 38.5 THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 38.5 THEN DO;
-911883    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
-911884    +                       1.5 <= AcceptedCmpTotal  THEN DO;
+492479    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
+492480    +                       1.5 <= AcceptedCmpTotal  THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 1.5 <= AcceptedCmpTotal THEN DO;
-911885    +      _NODE_  =                   13;
+492481    +      _NODE_  =                   13;
 MPRINT(EM_DIAGRAM):   _NODE_ = 13;
-911886    +      _LEAF_  =                   10;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 10;
-911887    +      P_DepVar0  =     0.05263157894736;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05263157894736;
-911888    +      P_DepVar1  =     0.94736842105263;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94736842105263;
-911889    +      Q_DepVar0  =     0.05263157894736;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05263157894736;
-911890    +      Q_DepVar1  =     0.94736842105263;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94736842105263;
-911891    +      V_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
-911892    +      V_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
-911893    +      I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911894    +      U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911895    +      END;
-MPRINT(EM_DIAGRAM):   END;
-911896    +    ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911897    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-911898    +       %DMNORMIP( _ARBFMT_12);
-MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
-MPRINT(DMNORLEN):  32
-MPRINT(DMNORMIP):  );
-MPRINT(EM_DIAGRAM):  ;
-911899    +      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-911900    +        _NODE_  =                   22;
-MPRINT(EM_DIAGRAM):   _NODE_ = 22;
-911901    +        _LEAF_  =                    6;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 6;
-911902    +        P_DepVar0  =      0.2258064516129;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2258064516129;
-911903    +        P_DepVar1  =     0.77419354838709;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.77419354838709;
-911904    +        Q_DepVar0  =      0.2258064516129;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2258064516129;
-911905    +        Q_DepVar1  =     0.77419354838709;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.77419354838709;
-911906    +        V_DepVar0  =     0.41935483870967;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.41935483870967;
-911907    +        V_DepVar1  =     0.58064516129032;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.58064516129032;
-911908    +        I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911909    +        U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911910    +        END;
-MPRINT(EM_DIAGRAM):   END;
-911911    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911912    +        IF  NOT MISSING(Recency ) AND
-911913    +          Recency  <                 15.5 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 15.5 THEN DO;
-911914    +          _NODE_  =                   40;
-MPRINT(EM_DIAGRAM):   _NODE_ = 40;
-911915    +          _LEAF_  =                    7;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 7;
-911916    +          P_DepVar0  =     0.35714285714285;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.35714285714285;
-911917    +          P_DepVar1  =     0.64285714285714;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.64285714285714;
-911918    +          Q_DepVar0  =     0.35714285714285;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.35714285714285;
-911919    +          Q_DepVar1  =     0.64285714285714;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.64285714285714;
-911920    +          V_DepVar0  =               0.4375;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4375;
-911921    +          V_DepVar1  =               0.5625;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.5625;
-911922    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911923    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911924    +          END;
-MPRINT(EM_DIAGRAM):   END;
-911925    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911926    +          IF  NOT MISSING(RFMstat ) AND
-911927    +            RFMstat  <     259.685185185185 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(RFMstat ) AND RFMstat < 259.685185185185 THEN DO;
-911928    +            _NODE_  =                   52;
-MPRINT(EM_DIAGRAM):   _NODE_ = 52;
-911929    +            _LEAF_  =                    8;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 8;
-911930    +            P_DepVar0  =     0.35294117647058;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.35294117647058;
-911931    +            P_DepVar1  =     0.64705882352941;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.64705882352941;
-911932    +            Q_DepVar0  =     0.35294117647058;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.35294117647058;
-911933    +            Q_DepVar1  =     0.64705882352941;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.64705882352941;
-911934    +            V_DepVar0  =                0.375;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.375;
-911935    +            V_DepVar1  =                0.625;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.625;
-911936    +            I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911937    +            U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911938    +            END;
-MPRINT(EM_DIAGRAM):   END;
-911939    +          ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911940    +            _NODE_  =                   53;
-MPRINT(EM_DIAGRAM):   _NODE_ = 53;
-911941    +            _LEAF_  =                    9;
+492482    +      _LEAF_  =                    9;
 MPRINT(EM_DIAGRAM):   _LEAF_ = 9;
-911942    +            P_DepVar0  =     0.83333333333333;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.83333333333333;
-911943    +            P_DepVar1  =     0.16666666666666;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.16666666666666;
-911944    +            Q_DepVar0  =     0.83333333333333;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.83333333333333;
-911945    +            Q_DepVar1  =     0.16666666666666;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.16666666666666;
-911946    +            V_DepVar0  =     0.73684210526315;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.73684210526315;
-911947    +            V_DepVar1  =     0.26315789473684;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.26315789473684;
-911948    +            I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-911949    +            U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-911950    +            END;
-MPRINT(EM_DIAGRAM):   END;
-911951    +          END;
-MPRINT(EM_DIAGRAM):   END;
-911952    +        END;
-MPRINT(EM_DIAGRAM):   END;
-911953    +      END;
-MPRINT(EM_DIAGRAM):   END;
-911954    +    END;
-MPRINT(EM_DIAGRAM):   END;
-911955    +  ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911956    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
-911957    +                       2.5 <= AcceptedCmpTotal  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 2.5 <= AcceptedCmpTotal THEN DO;
-911958    +      _NODE_  =                   15;
-MPRINT(EM_DIAGRAM):   _NODE_ = 15;
-911959    +      _LEAF_  =                   16;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 16;
-911960    +      P_DepVar0  =      0.3103448275862;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.3103448275862;
-911961    +      P_DepVar1  =     0.68965517241379;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.68965517241379;
-911962    +      Q_DepVar0  =      0.3103448275862;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.3103448275862;
-911963    +      Q_DepVar1  =     0.68965517241379;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.68965517241379;
-911964    +      V_DepVar0  =     0.33333333333333;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.33333333333333;
-911965    +      V_DepVar1  =     0.66666666666666;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.66666666666666;
-911966    +      I_DepVar  = '1' ;
+492483    +      P_DepVar0  =     0.05263157894736;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05263157894736;
+492484    +      P_DepVar1  =     0.94736842105263;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94736842105263;
+492485    +      Q_DepVar0  =     0.05263157894736;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05263157894736;
+492486    +      Q_DepVar1  =     0.94736842105263;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94736842105263;
+492487    +      V_DepVar0  =                    0;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
+492488    +      V_DepVar1  =                    1;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
+492489    +      I_DepVar  = '1' ;
 MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911967    +      U_DepVar  =                    1;
+492490    +      U_DepVar  =                    1;
 MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911968    +      END;
+492491    +      END;
 MPRINT(EM_DIAGRAM):   END;
-911969    +    ELSE DO;
+492492    +    ELSE DO;
 MPRINT(EM_DIAGRAM):   ELSE DO;
-911970    +      IF  NOT MISSING(NumCatalogPurchases ) AND
-911971    +                        10.5 <= NumCatalogPurchases  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 10.5 <= NumCatalogPurchases 
-THEN DO;
-911972    +        IF  NOT MISSING(Frq ) AND
-911973    +                          25.5 <= Frq  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Frq ) AND 25.5 <= Frq THEN DO;
-911974    +          _NODE_  =                   45;
-MPRINT(EM_DIAGRAM):   _NODE_ = 45;
-911975    +          _LEAF_  =                   15;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 15;
-911976    +          P_DepVar0  =     0.71428571428571;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.71428571428571;
-911977    +          P_DepVar1  =     0.28571428571428;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.28571428571428;
-911978    +          Q_DepVar0  =     0.71428571428571;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.71428571428571;
-911979    +          Q_DepVar1  =     0.28571428571428;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.28571428571428;
-911980    +          V_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 1;
-911981    +          V_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0;
-911982    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-911983    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-911984    +          END;
-MPRINT(EM_DIAGRAM):   END;
-911985    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911986    +          _NODE_  =                   44;
-MPRINT(EM_DIAGRAM):   _NODE_ = 44;
-911987    +          _LEAF_  =                   14;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 14;
-911988    +          P_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0;
-911989    +          P_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 1;
-911990    +          Q_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0;
-911991    +          Q_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 1;
-911992    +          V_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 1;
-911993    +          V_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0;
-911994    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-911995    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-911996    +          END;
-MPRINT(EM_DIAGRAM):   END;
-911997    +        END;
-MPRINT(EM_DIAGRAM):   END;
-911998    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-911999    +        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492493    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-912000    +         %DMNORMIP( _ARBFMT_12);
+492494    +       %DMNORMIP( _ARBFMT_12);
 MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMIP):  );
 MPRINT(EM_DIAGRAM):  ;
-912001    +        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+492495    +      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
 MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-912002    +          IF  NOT MISSING(MntMeatProducts ) AND
-912003    +                           596.5 <= MntMeatProducts  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 596.5 <= MntMeatProducts THEN DO;
-912004    +            _NODE_  =                   55;
-MPRINT(EM_DIAGRAM):   _NODE_ = 55;
-912005    +            _LEAF_  =                   12;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 12;
-912006    +            P_DepVar0  =                  0.2;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2;
-912007    +            P_DepVar1  =                  0.8;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.8;
-912008    +            Q_DepVar0  =                  0.2;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2;
-912009    +            Q_DepVar1  =                  0.8;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.8;
-912010    +            V_DepVar0  =                  0.4;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4;
-912011    +            V_DepVar1  =                  0.6;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.6;
-912012    +            I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912013    +            U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912014    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912015    +          ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912016    +            _NODE_  =                   54;
-MPRINT(EM_DIAGRAM):   _NODE_ = 54;
-912017    +            _LEAF_  =                   11;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 11;
-912018    +            P_DepVar0  =     0.81818181818181;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.81818181818181;
-912019    +            P_DepVar1  =     0.18181818181818;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.18181818181818;
-912020    +            Q_DepVar0  =     0.81818181818181;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.81818181818181;
-912021    +            Q_DepVar1  =     0.18181818181818;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.18181818181818;
-912022    +            V_DepVar0  =     0.70588235294117;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.70588235294117;
-912023    +            V_DepVar1  =     0.29411764705882;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.29411764705882;
-912024    +            I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912025    +            U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912026    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912027    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912028    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912029    +          _NODE_  =                   43;
-MPRINT(EM_DIAGRAM):   _NODE_ = 43;
-912030    +          _LEAF_  =                   13;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 13;
-912031    +          P_DepVar0  =     0.90532544378698;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.90532544378698;
-912032    +          P_DepVar1  =     0.09467455621301;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.09467455621301;
-912033    +          Q_DepVar0  =     0.90532544378698;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.90532544378698;
-912034    +          Q_DepVar1  =     0.09467455621301;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.09467455621301;
-912035    +          V_DepVar0  =     0.90588235294117;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.90588235294117;
-912036    +          V_DepVar1  =     0.09411764705882;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.09411764705882;
-912037    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912038    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912039    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912040    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912041    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912042    +    END;
-MPRINT(EM_DIAGRAM):   END;
-912043    +  END;
-MPRINT(EM_DIAGRAM):   END;
-912044    +ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912045    +  IF  NOT MISSING(Recency ) AND
-912046    +    Recency  <                 32.5 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 32.5 THEN DO;
-912047    +    IF  NOT MISSING(NumCatalogPurchases ) AND
-912048    +                       5.5 <= NumCatalogPurchases  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 5.5 <= NumCatalogPurchases THEN 
-DO;
-912049    +      IF  NOT MISSING(Recency ) AND
-912050    +                          19 <= Recency  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND 19 <= Recency THEN DO;
-912051    +        IF  NOT MISSING(MntMeatProducts ) AND
-912052    +                         370.5 <= MntMeatProducts  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 370.5 <= MntMeatProducts THEN DO;
-912053    +          _NODE_  =                   33;
-MPRINT(EM_DIAGRAM):   _NODE_ = 33;
-912054    +          _LEAF_  =                    4;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 4;
-912055    +          P_DepVar0  =     0.36363636363636;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.36363636363636;
-912056    +          P_DepVar1  =     0.63636363636363;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.63636363636363;
-912057    +          Q_DepVar0  =     0.36363636363636;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.36363636363636;
-912058    +          Q_DepVar1  =     0.63636363636363;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.63636363636363;
-912059    +          V_DepVar0  =     0.44444444444444;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.44444444444444;
-912060    +          V_DepVar1  =     0.55555555555555;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.55555555555555;
-912061    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912062    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912063    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912064    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912065    +          _NODE_  =                   32;
-MPRINT(EM_DIAGRAM):   _NODE_ = 32;
-912066    +          _LEAF_  =                    3;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 3;
-912067    +          P_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 1;
-912068    +          P_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0;
-912069    +          Q_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 1;
-912070    +          Q_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0;
-912071    +          V_DepVar0  =     0.85714285714285;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.85714285714285;
-912072    +          V_DepVar1  =     0.14285714285714;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.14285714285714;
-912073    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912074    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912075    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912076    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912077    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912078    +        _NODE_  =                   18;
-MPRINT(EM_DIAGRAM):   _NODE_ = 18;
-912079    +        _LEAF_  =                    2;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 2;
-912080    +        P_DepVar0  =                 0.25;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.25;
-912081    +        P_DepVar1  =                 0.75;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75;
-912082    +        Q_DepVar0  =                 0.25;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.25;
-912083    +        Q_DepVar1  =                 0.75;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75;
-912084    +        V_DepVar0  =     0.44444444444444;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.44444444444444;
-912085    +        V_DepVar1  =     0.55555555555555;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.55555555555555;
-912086    +        I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912087    +        U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912088    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912089    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912090    +    ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912091    +      _NODE_  =                    8;
-MPRINT(EM_DIAGRAM):   _NODE_ = 8;
-912092    +      _LEAF_  =                    1;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 1;
-912093    +      P_DepVar0  =     0.84285714285714;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84285714285714;
-912094    +      P_DepVar1  =     0.15714285714285;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15714285714285;
-912095    +      Q_DepVar0  =     0.84285714285714;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84285714285714;
-912096    +      Q_DepVar1  =     0.15714285714285;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15714285714285;
-912097    +      V_DepVar0  =     0.81048387096774;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.81048387096774;
-912098    +      V_DepVar1  =     0.18951612903225;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.18951612903225;
-912099    +      I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912100    +      U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912101    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912102    +    END;
-MPRINT(EM_DIAGRAM):   END;
-912103    +  ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912104    +    _NODE_  =                    5;
-MPRINT(EM_DIAGRAM):   _NODE_ = 5;
-912105    +    _LEAF_  =                    5;
+492496    +        _NODE_  =                   22;
+MPRINT(EM_DIAGRAM):   _NODE_ = 22;
+492497    +        _LEAF_  =                    5;
 MPRINT(EM_DIAGRAM):   _LEAF_ = 5;
-912106    +    P_DepVar0  =     0.98042414355628;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.98042414355628;
-912107    +    P_DepVar1  =     0.01957585644371;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.01957585644371;
-912108    +    Q_DepVar0  =     0.98042414355628;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.98042414355628;
-912109    +    Q_DepVar1  =     0.01957585644371;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.01957585644371;
-912110    +    V_DepVar0  =     0.98795180722891;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.98795180722891;
-912111    +    V_DepVar1  =     0.01204819277108;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.01204819277108;
-912112    +    I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912113    +    U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912114    +    END;
+492498    +        P_DepVar0  =      0.2258064516129;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2258064516129;
+492499    +        P_DepVar1  =     0.77419354838709;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.77419354838709;
+492500    +        Q_DepVar0  =      0.2258064516129;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2258064516129;
+492501    +        Q_DepVar1  =     0.77419354838709;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.77419354838709;
+492502    +        V_DepVar0  =     0.41935483870967;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.41935483870967;
+492503    +        V_DepVar1  =     0.58064516129032;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.58064516129032;
+492504    +        I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492505    +        U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492506    +        END;
 MPRINT(EM_DIAGRAM):   END;
-912115    +  END;
-MPRINT(EM_DIAGRAM):   END;
-912116    +
-912117    +*****  RESIDUALS R_ *************;
-MPRINT(EM_DIAGRAM):   ***** RESIDUALS R_ *************;
-912118    +IF  F_DepVar  NE '0'
-912119    +AND F_DepVar  NE '1'  THEN DO;
-MPRINT(EM_DIAGRAM):   IF F_DepVar NE '0' AND F_DepVar NE '1' THEN DO;
-912120    +        R_DepVar0  = .;
-MPRINT(EM_DIAGRAM):   R_DepVar0 = .;
-912121    +        R_DepVar1  = .;
-MPRINT(EM_DIAGRAM):   R_DepVar1 = .;
-912122    + END;
-MPRINT(EM_DIAGRAM):   END;
-912123    + ELSE DO;
+492507    +      ELSE DO;
 MPRINT(EM_DIAGRAM):   ELSE DO;
-912124    +       R_DepVar0  =  -P_DepVar0 ;
+492508    +        IF  NOT MISSING(MntWines ) AND
+492509    +          MntWines  <                  169 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntWines ) AND MntWines < 169 THEN DO;
+492510    +          _NODE_  =                   42;
+MPRINT(EM_DIAGRAM):   _NODE_ = 42;
+492511    +          _LEAF_  =                    6;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 6;
+492512    +          P_DepVar0  =     0.24137931034482;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.24137931034482;
+492513    +          P_DepVar1  =     0.75862068965517;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75862068965517;
+492514    +          Q_DepVar0  =     0.24137931034482;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.24137931034482;
+492515    +          Q_DepVar1  =     0.75862068965517;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75862068965517;
+492516    +          V_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.25;
+492517    +          V_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.75;
+492518    +          I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492519    +          U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492520    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492521    +        ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492522    +          IF  NOT MISSING(RFMstat ) AND
+492523    +                2448.04945054945 <= RFMstat  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(RFMstat ) AND 2448.04945054945 <= RFMstat THEN DO;
+492524    +            _NODE_  =                   55;
+MPRINT(EM_DIAGRAM):   _NODE_ = 55;
+492525    +            _LEAF_  =                    8;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 8;
+492526    +            P_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.25;
+492527    +            P_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75;
+492528    +            Q_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.25;
+492529    +            Q_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75;
+492530    +            V_DepVar0  =     0.42857142857142;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.42857142857142;
+492531    +            V_DepVar1  =     0.57142857142857;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.57142857142857;
+492532    +            I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492533    +            U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492534    +            END;
+MPRINT(EM_DIAGRAM):   END;
+492535    +          ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492536    +            _NODE_  =                   54;
+MPRINT(EM_DIAGRAM):   _NODE_ = 54;
+492537    +            _LEAF_  =                    7;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 7;
+492538    +            P_DepVar0  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84615384615384;
+492539    +            P_DepVar1  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15384615384615;
+492540    +            Q_DepVar0  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84615384615384;
+492541    +            Q_DepVar1  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15384615384615;
+492542    +            V_DepVar0  =     0.67857142857142;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.67857142857142;
+492543    +            V_DepVar1  =     0.32142857142857;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.32142857142857;
+492544    +            I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492545    +            U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492546    +            END;
+MPRINT(EM_DIAGRAM):   END;
+492547    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492548    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492549    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492550    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492551    +  ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492552    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
+492553    +                       2.5 <= AcceptedCmpTotal  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 2.5 <= AcceptedCmpTotal THEN DO;
+492554    +      _NODE_  =                   15;
+MPRINT(EM_DIAGRAM):   _NODE_ = 15;
+492555    +      _LEAF_  =                   13;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 13;
+492556    +      P_DepVar0  =      0.3103448275862;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.3103448275862;
+492557    +      P_DepVar1  =     0.68965517241379;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.68965517241379;
+492558    +      Q_DepVar0  =      0.3103448275862;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.3103448275862;
+492559    +      Q_DepVar1  =     0.68965517241379;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.68965517241379;
+492560    +      V_DepVar0  =     0.33333333333333;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.33333333333333;
+492561    +      V_DepVar1  =     0.66666666666666;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.66666666666666;
+492562    +      I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492563    +      U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492564    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492565    +    ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492566    +      IF  NOT MISSING(MntMeatProducts ) AND
+492567    +                         598 <= MntMeatProducts  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 598 <= MntMeatProducts THEN DO;
+492568    +        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492569    +         %DMNORMIP( _ARBFMT_12);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+492570    +        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+492571    +          _NODE_  =                   47;
+MPRINT(EM_DIAGRAM):   _NODE_ = 47;
+492572    +          _LEAF_  =                   12;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 12;
+492573    +          P_DepVar0  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.15384615384615;
+492574    +          P_DepVar1  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.84615384615384;
+492575    +          Q_DepVar0  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.15384615384615;
+492576    +          Q_DepVar1  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.84615384615384;
+492577    +          V_DepVar0  =                  0.4;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4;
+492578    +          V_DepVar1  =                  0.6;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.6;
+492579    +          I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492580    +          U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492581    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492582    +        ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492583    +          _NODE_  =                   46;
+MPRINT(EM_DIAGRAM):   _NODE_ = 46;
+492584    +          _LEAF_  =                   11;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 11;
+492585    +          P_DepVar0  =                 0.76;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.76;
+492586    +          P_DepVar1  =                 0.24;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.24;
+492587    +          Q_DepVar0  =                 0.76;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.76;
+492588    +          Q_DepVar1  =                 0.24;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.24;
+492589    +          V_DepVar0  =     0.83333333333333;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.83333333333333;
+492590    +          V_DepVar1  =     0.16666666666666;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.16666666666666;
+492591    +          I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492592    +          U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492593    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492594    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492595    +      ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492596    +        _NODE_  =                   26;
+MPRINT(EM_DIAGRAM):   _NODE_ = 26;
+492597    +        _LEAF_  =                   10;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 10;
+492598    +        P_DepVar0  =     0.86831275720164;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.86831275720164;
+492599    +        P_DepVar1  =     0.13168724279835;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.13168724279835;
+492600    +        Q_DepVar0  =     0.86831275720164;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.86831275720164;
+492601    +        Q_DepVar1  =     0.13168724279835;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.13168724279835;
+492602    +        V_DepVar0  =     0.85576923076923;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.85576923076923;
+492603    +        V_DepVar1  =     0.14423076923076;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.14423076923076;
+492604    +        I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492605    +        U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492606    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492607    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492608    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492609    +  END;
+MPRINT(EM_DIAGRAM):   END;
+492610    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492611    +  IF  NOT MISSING(Recency ) AND
+492612    +    Recency  <                 32.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 32.5 THEN DO;
+492613    +    IF  NOT MISSING(MntMeatProducts ) AND
+492614    +                       431 <= MntMeatProducts  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 431 <= MntMeatProducts THEN DO;
+492615    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492616    +       %DMNORMIP( _ARBFMT_12);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+492617    +      IF _ARBFMT_12 IN ('2' ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('2' ) THEN DO;
+492618    +        _NODE_  =                   19;
+MPRINT(EM_DIAGRAM):   _NODE_ = 19;
+492619    +        _LEAF_  =                    3;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 3;
+492620    +        P_DepVar0  =     0.65853658536585;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.65853658536585;
+492621    +        P_DepVar1  =     0.34146341463414;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.34146341463414;
+492622    +        Q_DepVar0  =     0.65853658536585;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.65853658536585;
+492623    +        Q_DepVar1  =     0.34146341463414;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.34146341463414;
+492624    +        V_DepVar0  =               0.6875;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.6875;
+492625    +        V_DepVar1  =               0.3125;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.3125;
+492626    +        I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492627    +        U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492628    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492629    +      ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492630    +        _NODE_  =                   18;
+MPRINT(EM_DIAGRAM):   _NODE_ = 18;
+492631    +        _LEAF_  =                    2;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 2;
+492632    +        P_DepVar0  =     0.05555555555555;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05555555555555;
+492633    +        P_DepVar1  =     0.94444444444444;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94444444444444;
+492634    +        Q_DepVar0  =     0.05555555555555;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05555555555555;
+492635    +        Q_DepVar1  =     0.94444444444444;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94444444444444;
+492636    +        V_DepVar0  =                    0;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
+492637    +        V_DepVar1  =                    1;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
+492638    +        I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492639    +        U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492640    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492641    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492642    +    ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492643    +      _NODE_  =                    8;
+MPRINT(EM_DIAGRAM):   _NODE_ = 8;
+492644    +      _LEAF_  =                    1;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 1;
+492645    +      P_DepVar0  =     0.84257602862254;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84257602862254;
+492646    +      P_DepVar1  =     0.15742397137745;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15742397137745;
+492647    +      Q_DepVar0  =     0.84257602862254;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84257602862254;
+492648    +      Q_DepVar1  =     0.15742397137745;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15742397137745;
+492649    +      V_DepVar0  =               0.8125;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.8125;
+492650    +      V_DepVar1  =               0.1875;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.1875;
+492651    +      I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492652    +      U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492653    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492654    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492655    +  ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492656    +    _NODE_  =                    5;
+MPRINT(EM_DIAGRAM):   _NODE_ = 5;
+492657    +    _LEAF_  =                    4;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 4;
+492658    +    P_DepVar0  =     0.98042414355628;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.98042414355628;
+492659    +    P_DepVar1  =     0.01957585644371;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.01957585644371;
+492660    +    Q_DepVar0  =     0.98042414355628;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.98042414355628;
+492661    +    Q_DepVar1  =     0.01957585644371;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.01957585644371;
+492662    +    V_DepVar0  =     0.98795180722891;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.98795180722891;
+492663    +    V_DepVar1  =     0.01204819277108;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.01204819277108;
+492664    +    I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492665    +    U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492666    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492667    +  END;
+MPRINT(EM_DIAGRAM):   END;
+492668    +
+492669    +*****  RESIDUALS R_ *************;
+MPRINT(EM_DIAGRAM):   ***** RESIDUALS R_ *************;
+492670    +IF  F_DepVar  NE '0'
+492671    +AND F_DepVar  NE '1'  THEN DO;
+MPRINT(EM_DIAGRAM):   IF F_DepVar NE '0' AND F_DepVar NE '1' THEN DO;
+492672    +        R_DepVar0  = .;
+MPRINT(EM_DIAGRAM):   R_DepVar0 = .;
+492673    +        R_DepVar1  = .;
+MPRINT(EM_DIAGRAM):   R_DepVar1 = .;
+492674    + END;
+MPRINT(EM_DIAGRAM):   END;
+492675    + ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492676    +       R_DepVar0  =  -P_DepVar0 ;
 MPRINT(EM_DIAGRAM):   R_DepVar0 = -P_DepVar0 ;
-912125    +       R_DepVar1  =  -P_DepVar1 ;
+492677    +       R_DepVar1  =  -P_DepVar1 ;
 MPRINT(EM_DIAGRAM):   R_DepVar1 = -P_DepVar1 ;
-912126    +       SELECT( F_DepVar  );
+492678    +       SELECT( F_DepVar  );
 MPRINT(EM_DIAGRAM):   SELECT( F_DepVar );
-912127    +          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
+492679    +          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
 MPRINT(EM_DIAGRAM):   WHEN( '0' ) R_DepVar0 = R_DepVar0 +1;
-912128    +          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
+492680    +          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
 MPRINT(EM_DIAGRAM):   WHEN( '1' ) R_DepVar1 = R_DepVar1 +1;
-912129    +       END;
+492681    +       END;
 MPRINT(EM_DIAGRAM):   END;
-912130    + END;
+492682    + END;
 MPRINT(EM_DIAGRAM):   END;
-912131    +
-912132    +****************************************************************;
+492683    +
+492684    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912133    +******          END OF DECISION TREE SCORING CODE         ******;
+492685    +******          END OF DECISION TREE SCORING CODE         ******;
 MPRINT(EM_DIAGRAM):   ****** END OF DECISION TREE SCORING CODE ******;
-912134    +****************************************************************;
+492686    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912135    +drop _LEAF_;
+492687    +drop _LEAF_;
 MPRINT(EM_DIAGRAM):   drop _LEAF_;
 NOTE: %INCLUDE (level 1) ending.
 MPRINT(EM_DIAGRAM):   run;
-912136     run;
+492688     run;
 
 NOTE: DATA STEP view saved on file EMWS8.TREE4_TRAIN.
 NOTE: A stored DATA STEP view cannot run under a different operating system.
 NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.03 seconds
+      real time           0.33 seconds
+      cpu time            0.01 seconds
       
 NOTE: DATA statement used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.03 seconds
+      real time           0.33 seconds
+      cpu time            0.01 seconds
       
 
 MPRINT(EM_DIAGRAM):   quit;
-912137     quit;
-912138     filename emflow;
+492689     quit;
+492690     filename emflow;
 MPRINT(EM_DIAGRAM):   filename emflow;
 NOTE: Fileref EMFLOW has been deassigned.
-912139     filename emflow
-912139   ! "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
+492691     filename emflow
+492691   ! "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):    filename emflow 
 "C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas";
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * Tree4: Scoring VALIDATE data;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-912140     *------------------------------------------------------------*;
-912141     * Tree4: Scoring VALIDATE data;
-912142     *------------------------------------------------------------*;
-912143     data EMWS8.Tree4_VALIDATE
-912144     / view=EMWS8.Tree4_VALIDATE
-912145     ;
+492692     *------------------------------------------------------------*;
+492693     * Tree4: Scoring VALIDATE data;
+492694     *------------------------------------------------------------*;
+492695     data EMWS8.Tree4_VALIDATE
+492696     / view=EMWS8.Tree4_VALIDATE
+492697     ;
 MPRINT(EM_DIAGRAM):   data EMWS8.Tree4_VALIDATE / view=EMWS8.Tree4_VALIDATE ;
-912146     set EMWS8.Varsel_VALIDATE
-912147     ;
+492698     set EMWS8.Varsel_VALIDATE
+492699     ;
 MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_VALIDATE ;
-912148     %inc emflow;
+492700     %inc emflow;
 NOTE: %INCLUDE (level 1) file EMFLOW is file 
       C:\\predictive-models-project\Workspaces\EMWS8\Tree4\EMFLOWSCORE.sas.
-912149    +****************************************************************;
+492701    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912150    +******             DECISION TREE SCORING CODE             ******;
+492702    +******             DECISION TREE SCORING CODE             ******;
 MPRINT(EM_DIAGRAM):   ****** DECISION TREE SCORING CODE ******;
-912151    +****************************************************************;
+492703    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912152    +
-912153    +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
+492704    +
+492705    +******         LENGTHS OF NEW CHARACTER VARIABLES         ******;
 MPRINT(EM_DIAGRAM):   ****** LENGTHS OF NEW CHARACTER VARIABLES ******;
-912154    +LENGTH F_DepVar  $   12;
+492706    +LENGTH F_DepVar  $   12;
 MPRINT(EM_DIAGRAM):   LENGTH F_DepVar $ 12;
-912155    +LENGTH I_DepVar  $   12;
+492707    +LENGTH I_DepVar  $   12;
 MPRINT(EM_DIAGRAM):   LENGTH I_DepVar $ 12;
-912156    +LENGTH _WARN_  $    4;
+492708    +LENGTH _WARN_  $    4;
 MPRINT(EM_DIAGRAM):   LENGTH _WARN_ $ 4;
-912157    +
-912158    +******              LABELS FOR NEW VARIABLES              ******;
+492709    +
+492710    +******              LABELS FOR NEW VARIABLES              ******;
 MPRINT(EM_DIAGRAM):   ****** LABELS FOR NEW VARIABLES ******;
-912159    +LABEL _NODE_  = 'Node' ;
+492711    +LABEL _NODE_  = 'Node' ;
 MPRINT(EM_DIAGRAM):   LABEL _NODE_ = 'Node' ;
-912160    +LABEL _LEAF_  = 'Leaf' ;
+492712    +LABEL _LEAF_  = 'Leaf' ;
 MPRINT(EM_DIAGRAM):   LABEL _LEAF_ = 'Leaf' ;
-912161    +LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
+492713    +LABEL P_DepVar0  = 'Predicted: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL P_DepVar0 = 'Predicted: DepVar=0' ;
-912162    +LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
+492714    +LABEL P_DepVar1  = 'Predicted: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL P_DepVar1 = 'Predicted: DepVar=1' ;
-912163    +LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
+492715    +LABEL Q_DepVar0  = 'Unadjusted P: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL Q_DepVar0 = 'Unadjusted P: DepVar=0' ;
-912164    +LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
+492716    +LABEL Q_DepVar1  = 'Unadjusted P: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL Q_DepVar1 = 'Unadjusted P: DepVar=1' ;
-912165    +LABEL V_DepVar0  = 'Validated: DepVar=0' ;
+492717    +LABEL V_DepVar0  = 'Validated: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL V_DepVar0 = 'Validated: DepVar=0' ;
-912166    +LABEL V_DepVar1  = 'Validated: DepVar=1' ;
+492718    +LABEL V_DepVar1  = 'Validated: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL V_DepVar1 = 'Validated: DepVar=1' ;
-912167    +LABEL R_DepVar0  = 'Residual: DepVar=0' ;
+492719    +LABEL R_DepVar0  = 'Residual: DepVar=0' ;
 MPRINT(EM_DIAGRAM):   LABEL R_DepVar0 = 'Residual: DepVar=0' ;
-912168    +LABEL R_DepVar1  = 'Residual: DepVar=1' ;
+492720    +LABEL R_DepVar1  = 'Residual: DepVar=1' ;
 MPRINT(EM_DIAGRAM):   LABEL R_DepVar1 = 'Residual: DepVar=1' ;
-912169    +LABEL F_DepVar  = 'From: DepVar' ;
+492721    +LABEL F_DepVar  = 'From: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL F_DepVar = 'From: DepVar' ;
-912170    +LABEL I_DepVar  = 'Into: DepVar' ;
+492722    +LABEL I_DepVar  = 'Into: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL I_DepVar = 'Into: DepVar' ;
-912171    +LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
+492723    +LABEL U_DepVar  = 'Unnormalized Into: DepVar' ;
 MPRINT(EM_DIAGRAM):   LABEL U_DepVar = 'Unnormalized Into: DepVar' ;
-912172    +LABEL _WARN_  = 'Warnings' ;
+492724    +LABEL _WARN_  = 'Warnings' ;
 MPRINT(EM_DIAGRAM):   LABEL _WARN_ = 'Warnings' ;
-912173    +
-912174    +
-912175    +******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
+492725    +
+492726    +
+492727    +******      TEMPORARY VARIABLES FOR FORMATTED VALUES      ******;
 MPRINT(EM_DIAGRAM):   ****** TEMPORARY VARIABLES FOR FORMATTED VALUES ******;
-912176    +LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
+492728    +LENGTH _ARBFMT_12 $     12; DROP _ARBFMT_12;
 MPRINT(EM_DIAGRAM):   LENGTH _ARBFMT_12 $ 12;
 MPRINT(EM_DIAGRAM):   DROP _ARBFMT_12;
-912177    +_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
+492729    +_ARBFMT_12 = ' '; /* Initialize to avoid warning. */
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = ' ';
-912178    +
-912179    +
-912180    +_ARBFMT_12 = PUT( DepVar , BEST.);
+492730    +
+492731    +
+492732    +_ARBFMT_12 = PUT( DepVar , BEST.);
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( DepVar , BEST.);
-912181    + %DMNORMCP( _ARBFMT_12, F_DepVar );
+492733    + %DMNORMCP( _ARBFMT_12, F_DepVar );
 MPRINT(DMNORMCP):   F_DepVar=dmnorm(_ARBFMT_12,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMCP):  );
 MPRINT(EM_DIAGRAM):  ;
-912182    +
-912183    +******             ASSIGN OBSERVATION TO NODE             ******;
+492734    +
+492735    +******             ASSIGN OBSERVATION TO NODE             ******;
 MPRINT(EM_DIAGRAM):   ****** ASSIGN OBSERVATION TO NODE ******;
-912184    +IF  NOT MISSING(AcceptedCmpTotal ) AND
-912185    +                   0.5 <= AcceptedCmpTotal  THEN DO;
+492736    +IF  NOT MISSING(AcceptedCmpTotal ) AND
+492737    +                   0.5 <= AcceptedCmpTotal  THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 0.5 <= AcceptedCmpTotal THEN DO;
-912186    +  IF  NOT MISSING(Recency ) AND
-912187    +    Recency  <                 38.5 THEN DO;
+492738    +  IF  NOT MISSING(Recency ) AND
+492739    +    Recency  <                 38.5 THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 38.5 THEN DO;
-912188    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
-912189    +                       1.5 <= AcceptedCmpTotal  THEN DO;
+492740    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
+492741    +                       1.5 <= AcceptedCmpTotal  THEN DO;
 MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 1.5 <= AcceptedCmpTotal THEN DO;
-912190    +      _NODE_  =                   13;
+492742    +      _NODE_  =                   13;
 MPRINT(EM_DIAGRAM):   _NODE_ = 13;
-912191    +      _LEAF_  =                   10;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 10;
-912192    +      P_DepVar0  =     0.05263157894736;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05263157894736;
-912193    +      P_DepVar1  =     0.94736842105263;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94736842105263;
-912194    +      Q_DepVar0  =     0.05263157894736;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05263157894736;
-912195    +      Q_DepVar1  =     0.94736842105263;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94736842105263;
-912196    +      V_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
-912197    +      V_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
-912198    +      I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912199    +      U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912200    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912201    +    ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912202    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-912203    +       %DMNORMIP( _ARBFMT_12);
-MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
-MPRINT(DMNORLEN):  32
-MPRINT(DMNORMIP):  );
-MPRINT(EM_DIAGRAM):  ;
-912204    +      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-912205    +        _NODE_  =                   22;
-MPRINT(EM_DIAGRAM):   _NODE_ = 22;
-912206    +        _LEAF_  =                    6;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 6;
-912207    +        P_DepVar0  =      0.2258064516129;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2258064516129;
-912208    +        P_DepVar1  =     0.77419354838709;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.77419354838709;
-912209    +        Q_DepVar0  =      0.2258064516129;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2258064516129;
-912210    +        Q_DepVar1  =     0.77419354838709;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.77419354838709;
-912211    +        V_DepVar0  =     0.41935483870967;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.41935483870967;
-912212    +        V_DepVar1  =     0.58064516129032;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.58064516129032;
-912213    +        I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912214    +        U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912215    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912216    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912217    +        IF  NOT MISSING(Recency ) AND
-912218    +          Recency  <                 15.5 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 15.5 THEN DO;
-912219    +          _NODE_  =                   40;
-MPRINT(EM_DIAGRAM):   _NODE_ = 40;
-912220    +          _LEAF_  =                    7;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 7;
-912221    +          P_DepVar0  =     0.35714285714285;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.35714285714285;
-912222    +          P_DepVar1  =     0.64285714285714;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.64285714285714;
-912223    +          Q_DepVar0  =     0.35714285714285;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.35714285714285;
-912224    +          Q_DepVar1  =     0.64285714285714;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.64285714285714;
-912225    +          V_DepVar0  =               0.4375;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4375;
-912226    +          V_DepVar1  =               0.5625;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.5625;
-912227    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912228    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912229    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912230    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912231    +          IF  NOT MISSING(RFMstat ) AND
-912232    +            RFMstat  <     259.685185185185 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(RFMstat ) AND RFMstat < 259.685185185185 THEN DO;
-912233    +            _NODE_  =                   52;
-MPRINT(EM_DIAGRAM):   _NODE_ = 52;
-912234    +            _LEAF_  =                    8;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 8;
-912235    +            P_DepVar0  =     0.35294117647058;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.35294117647058;
-912236    +            P_DepVar1  =     0.64705882352941;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.64705882352941;
-912237    +            Q_DepVar0  =     0.35294117647058;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.35294117647058;
-912238    +            Q_DepVar1  =     0.64705882352941;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.64705882352941;
-912239    +            V_DepVar0  =                0.375;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.375;
-912240    +            V_DepVar1  =                0.625;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.625;
-912241    +            I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912242    +            U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912243    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912244    +          ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912245    +            _NODE_  =                   53;
-MPRINT(EM_DIAGRAM):   _NODE_ = 53;
-912246    +            _LEAF_  =                    9;
+492743    +      _LEAF_  =                    9;
 MPRINT(EM_DIAGRAM):   _LEAF_ = 9;
-912247    +            P_DepVar0  =     0.83333333333333;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.83333333333333;
-912248    +            P_DepVar1  =     0.16666666666666;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.16666666666666;
-912249    +            Q_DepVar0  =     0.83333333333333;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.83333333333333;
-912250    +            Q_DepVar1  =     0.16666666666666;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.16666666666666;
-912251    +            V_DepVar0  =     0.73684210526315;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.73684210526315;
-912252    +            V_DepVar1  =     0.26315789473684;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.26315789473684;
-912253    +            I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912254    +            U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912255    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912256    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912257    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912258    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912259    +    END;
-MPRINT(EM_DIAGRAM):   END;
-912260    +  ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912261    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
-912262    +                       2.5 <= AcceptedCmpTotal  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 2.5 <= AcceptedCmpTotal THEN DO;
-912263    +      _NODE_  =                   15;
-MPRINT(EM_DIAGRAM):   _NODE_ = 15;
-912264    +      _LEAF_  =                   16;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 16;
-912265    +      P_DepVar0  =      0.3103448275862;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.3103448275862;
-912266    +      P_DepVar1  =     0.68965517241379;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.68965517241379;
-912267    +      Q_DepVar0  =      0.3103448275862;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.3103448275862;
-912268    +      Q_DepVar1  =     0.68965517241379;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.68965517241379;
-912269    +      V_DepVar0  =     0.33333333333333;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.33333333333333;
-912270    +      V_DepVar1  =     0.66666666666666;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.66666666666666;
-912271    +      I_DepVar  = '1' ;
+492744    +      P_DepVar0  =     0.05263157894736;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05263157894736;
+492745    +      P_DepVar1  =     0.94736842105263;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94736842105263;
+492746    +      Q_DepVar0  =     0.05263157894736;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05263157894736;
+492747    +      Q_DepVar1  =     0.94736842105263;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94736842105263;
+492748    +      V_DepVar0  =                    0;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
+492749    +      V_DepVar1  =                    1;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
+492750    +      I_DepVar  = '1' ;
 MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912272    +      U_DepVar  =                    1;
+492751    +      U_DepVar  =                    1;
 MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912273    +      END;
+492752    +      END;
 MPRINT(EM_DIAGRAM):   END;
-912274    +    ELSE DO;
+492753    +    ELSE DO;
 MPRINT(EM_DIAGRAM):   ELSE DO;
-912275    +      IF  NOT MISSING(NumCatalogPurchases ) AND
-912276    +                        10.5 <= NumCatalogPurchases  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 10.5 <= NumCatalogPurchases 
-THEN DO;
-912277    +        IF  NOT MISSING(Frq ) AND
-912278    +                          25.5 <= Frq  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Frq ) AND 25.5 <= Frq THEN DO;
-912279    +          _NODE_  =                   45;
-MPRINT(EM_DIAGRAM):   _NODE_ = 45;
-912280    +          _LEAF_  =                   15;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 15;
-912281    +          P_DepVar0  =     0.71428571428571;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.71428571428571;
-912282    +          P_DepVar1  =     0.28571428571428;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.28571428571428;
-912283    +          Q_DepVar0  =     0.71428571428571;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.71428571428571;
-912284    +          Q_DepVar1  =     0.28571428571428;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.28571428571428;
-912285    +          V_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 1;
-912286    +          V_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0;
-912287    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912288    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912289    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912290    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912291    +          _NODE_  =                   44;
-MPRINT(EM_DIAGRAM):   _NODE_ = 44;
-912292    +          _LEAF_  =                   14;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 14;
-912293    +          P_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0;
-912294    +          P_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 1;
-912295    +          Q_DepVar0  =                    0;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0;
-912296    +          Q_DepVar1  =                    1;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 1;
-912297    +          V_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 1;
-912298    +          V_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0;
-912299    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912300    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912301    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912302    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912303    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912304    +        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492754    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+The SAS System
+
 MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
-912305    +         %DMNORMIP( _ARBFMT_12);
+492755    +       %DMNORMIP( _ARBFMT_12);
 MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
 MPRINT(DMNORLEN):  32
 MPRINT(DMNORMIP):  );
 MPRINT(EM_DIAGRAM):  ;
-912306    +        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+492756    +      IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
 MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
-912307    +          IF  NOT MISSING(MntMeatProducts ) AND
-912308    +                           596.5 <= MntMeatProducts  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 596.5 <= MntMeatProducts THEN DO;
-912309    +            _NODE_  =                   55;
-MPRINT(EM_DIAGRAM):   _NODE_ = 55;
-912310    +            _LEAF_  =                   12;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 12;
-912311    +            P_DepVar0  =                  0.2;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2;
-912312    +            P_DepVar1  =                  0.8;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.8;
-912313    +            Q_DepVar0  =                  0.2;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2;
-912314    +            Q_DepVar1  =                  0.8;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.8;
-912315    +            V_DepVar0  =                  0.4;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4;
-912316    +            V_DepVar1  =                  0.6;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.6;
-912317    +            I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912318    +            U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912319    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912320    +          ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912321    +            _NODE_  =                   54;
-MPRINT(EM_DIAGRAM):   _NODE_ = 54;
-912322    +            _LEAF_  =                   11;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 11;
-912323    +            P_DepVar0  =     0.81818181818181;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.81818181818181;
-912324    +            P_DepVar1  =     0.18181818181818;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.18181818181818;
-912325    +            Q_DepVar0  =     0.81818181818181;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.81818181818181;
-912326    +            Q_DepVar1  =     0.18181818181818;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.18181818181818;
-912327    +            V_DepVar0  =     0.70588235294117;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.70588235294117;
-912328    +            V_DepVar1  =     0.29411764705882;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.29411764705882;
-912329    +            I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912330    +            U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912331    +            END;
-MPRINT(EM_DIAGRAM):   END;
-912332    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912333    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912334    +          _NODE_  =                   43;
-MPRINT(EM_DIAGRAM):   _NODE_ = 43;
-912335    +          _LEAF_  =                   13;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 13;
-912336    +          P_DepVar0  =     0.90532544378698;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.90532544378698;
-912337    +          P_DepVar1  =     0.09467455621301;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.09467455621301;
-912338    +          Q_DepVar0  =     0.90532544378698;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.90532544378698;
-912339    +          Q_DepVar1  =     0.09467455621301;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.09467455621301;
-912340    +          V_DepVar0  =     0.90588235294117;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.90588235294117;
-912341    +          V_DepVar1  =     0.09411764705882;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.09411764705882;
-912342    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912343    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912344    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912345    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912346    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912347    +    END;
-MPRINT(EM_DIAGRAM):   END;
-912348    +  END;
-MPRINT(EM_DIAGRAM):   END;
-912349    +ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912350    +  IF  NOT MISSING(Recency ) AND
-912351    +    Recency  <                 32.5 THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 32.5 THEN DO;
-912352    +    IF  NOT MISSING(NumCatalogPurchases ) AND
-912353    +                       5.5 <= NumCatalogPurchases  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(NumCatalogPurchases ) AND 5.5 <= NumCatalogPurchases THEN 
-DO;
-912354    +      IF  NOT MISSING(Recency ) AND
-912355    +                          19 <= Recency  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND 19 <= Recency THEN DO;
-912356    +        IF  NOT MISSING(MntMeatProducts ) AND
-912357    +                         370.5 <= MntMeatProducts  THEN DO;
-MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 370.5 <= MntMeatProducts THEN DO;
-912358    +          _NODE_  =                   33;
-MPRINT(EM_DIAGRAM):   _NODE_ = 33;
-912359    +          _LEAF_  =                    4;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 4;
-912360    +          P_DepVar0  =     0.36363636363636;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.36363636363636;
-912361    +          P_DepVar1  =     0.63636363636363;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.63636363636363;
-912362    +          Q_DepVar0  =     0.36363636363636;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.36363636363636;
-912363    +          Q_DepVar1  =     0.63636363636363;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.63636363636363;
-912364    +          V_DepVar0  =     0.44444444444444;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.44444444444444;
-912365    +          V_DepVar1  =     0.55555555555555;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.55555555555555;
-912366    +          I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912367    +          U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912368    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912369    +        ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912370    +          _NODE_  =                   32;
-MPRINT(EM_DIAGRAM):   _NODE_ = 32;
-912371    +          _LEAF_  =                    3;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 3;
-912372    +          P_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 1;
-912373    +          P_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0;
-912374    +          Q_DepVar0  =                    1;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 1;
-912375    +          Q_DepVar1  =                    0;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0;
-912376    +          V_DepVar0  =     0.85714285714285;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.85714285714285;
-912377    +          V_DepVar1  =     0.14285714285714;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.14285714285714;
-912378    +          I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912379    +          U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912380    +          END;
-MPRINT(EM_DIAGRAM):   END;
-912381    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912382    +      ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912383    +        _NODE_  =                   18;
-MPRINT(EM_DIAGRAM):   _NODE_ = 18;
-912384    +        _LEAF_  =                    2;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 2;
-912385    +        P_DepVar0  =                 0.25;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.25;
-912386    +        P_DepVar1  =                 0.75;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75;
-912387    +        Q_DepVar0  =                 0.25;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.25;
-912388    +        Q_DepVar1  =                 0.75;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75;
-912389    +        V_DepVar0  =     0.44444444444444;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.44444444444444;
-912390    +        V_DepVar1  =     0.55555555555555;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.55555555555555;
-912391    +        I_DepVar  = '1' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
-912392    +        U_DepVar  =                    1;
-MPRINT(EM_DIAGRAM):   U_DepVar = 1;
-912393    +        END;
-MPRINT(EM_DIAGRAM):   END;
-912394    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912395    +    ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912396    +      _NODE_  =                    8;
-MPRINT(EM_DIAGRAM):   _NODE_ = 8;
-912397    +      _LEAF_  =                    1;
-MPRINT(EM_DIAGRAM):   _LEAF_ = 1;
-912398    +      P_DepVar0  =     0.84285714285714;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84285714285714;
-912399    +      P_DepVar1  =     0.15714285714285;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15714285714285;
-912400    +      Q_DepVar0  =     0.84285714285714;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84285714285714;
-912401    +      Q_DepVar1  =     0.15714285714285;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15714285714285;
-912402    +      V_DepVar0  =     0.81048387096774;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.81048387096774;
-912403    +      V_DepVar1  =     0.18951612903225;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.18951612903225;
-912404    +      I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912405    +      U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912406    +      END;
-MPRINT(EM_DIAGRAM):   END;
-912407    +    END;
-MPRINT(EM_DIAGRAM):   END;
-912408    +  ELSE DO;
-MPRINT(EM_DIAGRAM):   ELSE DO;
-912409    +    _NODE_  =                    5;
-MPRINT(EM_DIAGRAM):   _NODE_ = 5;
-912410    +    _LEAF_  =                    5;
+492757    +        _NODE_  =                   22;
+MPRINT(EM_DIAGRAM):   _NODE_ = 22;
+492758    +        _LEAF_  =                    5;
 MPRINT(EM_DIAGRAM):   _LEAF_ = 5;
-912411    +    P_DepVar0  =     0.98042414355628;
-MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.98042414355628;
-912412    +    P_DepVar1  =     0.01957585644371;
-MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.01957585644371;
-912413    +    Q_DepVar0  =     0.98042414355628;
-MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.98042414355628;
-912414    +    Q_DepVar1  =     0.01957585644371;
-MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.01957585644371;
-912415    +    V_DepVar0  =     0.98795180722891;
-MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.98795180722891;
-912416    +    V_DepVar1  =     0.01204819277108;
-MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.01204819277108;
-912417    +    I_DepVar  = '0' ;
-MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
-912418    +    U_DepVar  =                    0;
-MPRINT(EM_DIAGRAM):   U_DepVar = 0;
-912419    +    END;
+492759    +        P_DepVar0  =      0.2258064516129;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.2258064516129;
+492760    +        P_DepVar1  =     0.77419354838709;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.77419354838709;
+492761    +        Q_DepVar0  =      0.2258064516129;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.2258064516129;
+492762    +        Q_DepVar1  =     0.77419354838709;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.77419354838709;
+492763    +        V_DepVar0  =     0.41935483870967;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.41935483870967;
+492764    +        V_DepVar1  =     0.58064516129032;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.58064516129032;
+492765    +        I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492766    +        U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492767    +        END;
 MPRINT(EM_DIAGRAM):   END;
-912420    +  END;
-MPRINT(EM_DIAGRAM):   END;
-912421    +
-912422    +*****  RESIDUALS R_ *************;
-MPRINT(EM_DIAGRAM):   ***** RESIDUALS R_ *************;
-912423    +IF  F_DepVar  NE '0'
-912424    +AND F_DepVar  NE '1'  THEN DO;
-MPRINT(EM_DIAGRAM):   IF F_DepVar NE '0' AND F_DepVar NE '1' THEN DO;
-912425    +        R_DepVar0  = .;
-MPRINT(EM_DIAGRAM):   R_DepVar0 = .;
-912426    +        R_DepVar1  = .;
-MPRINT(EM_DIAGRAM):   R_DepVar1 = .;
-912427    + END;
-MPRINT(EM_DIAGRAM):   END;
-912428    + ELSE DO;
+492768    +      ELSE DO;
 MPRINT(EM_DIAGRAM):   ELSE DO;
-912429    +       R_DepVar0  =  -P_DepVar0 ;
+492769    +        IF  NOT MISSING(MntWines ) AND
+492770    +          MntWines  <                  169 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntWines ) AND MntWines < 169 THEN DO;
+492771    +          _NODE_  =                   42;
+MPRINT(EM_DIAGRAM):   _NODE_ = 42;
+492772    +          _LEAF_  =                    6;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 6;
+492773    +          P_DepVar0  =     0.24137931034482;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.24137931034482;
+492774    +          P_DepVar1  =     0.75862068965517;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75862068965517;
+492775    +          Q_DepVar0  =     0.24137931034482;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.24137931034482;
+492776    +          Q_DepVar1  =     0.75862068965517;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75862068965517;
+492777    +          V_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.25;
+492778    +          V_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.75;
+492779    +          I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492780    +          U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492781    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492782    +        ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492783    +          IF  NOT MISSING(RFMstat ) AND
+492784    +                2448.04945054945 <= RFMstat  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(RFMstat ) AND 2448.04945054945 <= RFMstat THEN DO;
+492785    +            _NODE_  =                   55;
+MPRINT(EM_DIAGRAM):   _NODE_ = 55;
+492786    +            _LEAF_  =                    8;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 8;
+492787    +            P_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.25;
+492788    +            P_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.75;
+492789    +            Q_DepVar0  =                 0.25;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.25;
+492790    +            Q_DepVar1  =                 0.75;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.75;
+492791    +            V_DepVar0  =     0.42857142857142;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.42857142857142;
+492792    +            V_DepVar1  =     0.57142857142857;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.57142857142857;
+492793    +            I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492794    +            U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492795    +            END;
+MPRINT(EM_DIAGRAM):   END;
+492796    +          ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492797    +            _NODE_  =                   54;
+MPRINT(EM_DIAGRAM):   _NODE_ = 54;
+492798    +            _LEAF_  =                    7;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 7;
+492799    +            P_DepVar0  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84615384615384;
+492800    +            P_DepVar1  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15384615384615;
+492801    +            Q_DepVar0  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84615384615384;
+492802    +            Q_DepVar1  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15384615384615;
+492803    +            V_DepVar0  =     0.67857142857142;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.67857142857142;
+492804    +            V_DepVar1  =     0.32142857142857;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.32142857142857;
+492805    +            I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492806    +            U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492807    +            END;
+MPRINT(EM_DIAGRAM):   END;
+492808    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492809    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492810    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492811    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492812    +  ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492813    +    IF  NOT MISSING(AcceptedCmpTotal ) AND
+492814    +                       2.5 <= AcceptedCmpTotal  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(AcceptedCmpTotal ) AND 2.5 <= AcceptedCmpTotal THEN DO;
+492815    +      _NODE_  =                   15;
+MPRINT(EM_DIAGRAM):   _NODE_ = 15;
+492816    +      _LEAF_  =                   13;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 13;
+492817    +      P_DepVar0  =      0.3103448275862;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.3103448275862;
+492818    +      P_DepVar1  =     0.68965517241379;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.68965517241379;
+492819    +      Q_DepVar0  =      0.3103448275862;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.3103448275862;
+492820    +      Q_DepVar1  =     0.68965517241379;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.68965517241379;
+492821    +      V_DepVar0  =     0.33333333333333;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.33333333333333;
+492822    +      V_DepVar1  =     0.66666666666666;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.66666666666666;
+492823    +      I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492824    +      U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492825    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492826    +    ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492827    +      IF  NOT MISSING(MntMeatProducts ) AND
+492828    +                         598 <= MntMeatProducts  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 598 <= MntMeatProducts THEN DO;
+492829    +        _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492830    +         %DMNORMIP( _ARBFMT_12);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+492831    +        IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('0' ,'1' ) THEN DO;
+492832    +          _NODE_  =                   47;
+MPRINT(EM_DIAGRAM):   _NODE_ = 47;
+492833    +          _LEAF_  =                   12;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 12;
+492834    +          P_DepVar0  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.15384615384615;
+492835    +          P_DepVar1  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.84615384615384;
+492836    +          Q_DepVar0  =     0.15384615384615;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.15384615384615;
+492837    +          Q_DepVar1  =     0.84615384615384;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.84615384615384;
+492838    +          V_DepVar0  =                  0.4;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.4;
+492839    +          V_DepVar1  =                  0.6;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.6;
+492840    +          I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492841    +          U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492842    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492843    +        ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492844    +          _NODE_  =                   46;
+MPRINT(EM_DIAGRAM):   _NODE_ = 46;
+492845    +          _LEAF_  =                   11;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 11;
+492846    +          P_DepVar0  =                 0.76;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.76;
+492847    +          P_DepVar1  =                 0.24;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.24;
+492848    +          Q_DepVar0  =                 0.76;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.76;
+492849    +          Q_DepVar1  =                 0.24;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.24;
+492850    +          V_DepVar0  =     0.83333333333333;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.83333333333333;
+492851    +          V_DepVar1  =     0.16666666666666;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.16666666666666;
+492852    +          I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492853    +          U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492854    +          END;
+MPRINT(EM_DIAGRAM):   END;
+492855    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492856    +      ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492857    +        _NODE_  =                   26;
+MPRINT(EM_DIAGRAM):   _NODE_ = 26;
+492858    +        _LEAF_  =                   10;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 10;
+492859    +        P_DepVar0  =     0.86831275720164;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.86831275720164;
+492860    +        P_DepVar1  =     0.13168724279835;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.13168724279835;
+492861    +        Q_DepVar0  =     0.86831275720164;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.86831275720164;
+492862    +        Q_DepVar1  =     0.13168724279835;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.13168724279835;
+492863    +        V_DepVar0  =     0.85576923076923;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.85576923076923;
+492864    +        V_DepVar1  =     0.14423076923076;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.14423076923076;
+492865    +        I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492866    +        U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492867    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492868    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492869    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492870    +  END;
+MPRINT(EM_DIAGRAM):   END;
+492871    +ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492872    +  IF  NOT MISSING(Recency ) AND
+492873    +    Recency  <                 32.5 THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(Recency ) AND Recency < 32.5 THEN DO;
+492874    +    IF  NOT MISSING(MntMeatProducts ) AND
+492875    +                       431 <= MntMeatProducts  THEN DO;
+MPRINT(EM_DIAGRAM):   IF NOT MISSING(MntMeatProducts ) AND 431 <= MntMeatProducts THEN DO;
+492876    +      _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+MPRINT(EM_DIAGRAM):   _ARBFMT_12 = PUT( G_Marital_Status , BEST12.);
+492877    +       %DMNORMIP( _ARBFMT_12);
+MPRINT(DMNORMIP):   call dmnorm(_ARBFMT_12,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+492878    +      IF _ARBFMT_12 IN ('2' ) THEN DO;
+MPRINT(EM_DIAGRAM):   IF _ARBFMT_12 IN ('2' ) THEN DO;
+492879    +        _NODE_  =                   19;
+MPRINT(EM_DIAGRAM):   _NODE_ = 19;
+492880    +        _LEAF_  =                    3;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 3;
+492881    +        P_DepVar0  =     0.65853658536585;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.65853658536585;
+492882    +        P_DepVar1  =     0.34146341463414;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.34146341463414;
+492883    +        Q_DepVar0  =     0.65853658536585;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.65853658536585;
+492884    +        Q_DepVar1  =     0.34146341463414;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.34146341463414;
+492885    +        V_DepVar0  =               0.6875;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.6875;
+492886    +        V_DepVar1  =               0.3125;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.3125;
+492887    +        I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492888    +        U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492889    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492890    +      ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492891    +        _NODE_  =                   18;
+MPRINT(EM_DIAGRAM):   _NODE_ = 18;
+492892    +        _LEAF_  =                    2;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 2;
+492893    +        P_DepVar0  =     0.05555555555555;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.05555555555555;
+492894    +        P_DepVar1  =     0.94444444444444;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.94444444444444;
+492895    +        Q_DepVar0  =     0.05555555555555;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.05555555555555;
+492896    +        Q_DepVar1  =     0.94444444444444;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.94444444444444;
+492897    +        V_DepVar0  =                    0;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0;
+492898    +        V_DepVar1  =                    1;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 1;
+492899    +        I_DepVar  = '1' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '1' ;
+492900    +        U_DepVar  =                    1;
+MPRINT(EM_DIAGRAM):   U_DepVar = 1;
+492901    +        END;
+MPRINT(EM_DIAGRAM):   END;
+492902    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492903    +    ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492904    +      _NODE_  =                    8;
+MPRINT(EM_DIAGRAM):   _NODE_ = 8;
+492905    +      _LEAF_  =                    1;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 1;
+492906    +      P_DepVar0  =     0.84257602862254;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84257602862254;
+492907    +      P_DepVar1  =     0.15742397137745;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15742397137745;
+492908    +      Q_DepVar0  =     0.84257602862254;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.84257602862254;
+492909    +      Q_DepVar1  =     0.15742397137745;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.15742397137745;
+492910    +      V_DepVar0  =               0.8125;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.8125;
+492911    +      V_DepVar1  =               0.1875;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.1875;
+492912    +      I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492913    +      U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492914    +      END;
+MPRINT(EM_DIAGRAM):   END;
+492915    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492916    +  ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492917    +    _NODE_  =                    5;
+MPRINT(EM_DIAGRAM):   _NODE_ = 5;
+492918    +    _LEAF_  =                    4;
+MPRINT(EM_DIAGRAM):   _LEAF_ = 4;
+492919    +    P_DepVar0  =     0.98042414355628;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.98042414355628;
+492920    +    P_DepVar1  =     0.01957585644371;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.01957585644371;
+492921    +    Q_DepVar0  =     0.98042414355628;
+MPRINT(EM_DIAGRAM):   Q_DepVar0 = 0.98042414355628;
+492922    +    Q_DepVar1  =     0.01957585644371;
+MPRINT(EM_DIAGRAM):   Q_DepVar1 = 0.01957585644371;
+492923    +    V_DepVar0  =     0.98795180722891;
+MPRINT(EM_DIAGRAM):   V_DepVar0 = 0.98795180722891;
+492924    +    V_DepVar1  =     0.01204819277108;
+MPRINT(EM_DIAGRAM):   V_DepVar1 = 0.01204819277108;
+492925    +    I_DepVar  = '0' ;
+MPRINT(EM_DIAGRAM):   I_DepVar = '0' ;
+492926    +    U_DepVar  =                    0;
+MPRINT(EM_DIAGRAM):   U_DepVar = 0;
+492927    +    END;
+MPRINT(EM_DIAGRAM):   END;
+492928    +  END;
+MPRINT(EM_DIAGRAM):   END;
+492929    +
+492930    +*****  RESIDUALS R_ *************;
+MPRINT(EM_DIAGRAM):   ***** RESIDUALS R_ *************;
+492931    +IF  F_DepVar  NE '0'
+492932    +AND F_DepVar  NE '1'  THEN DO;
+MPRINT(EM_DIAGRAM):   IF F_DepVar NE '0' AND F_DepVar NE '1' THEN DO;
+492933    +        R_DepVar0  = .;
+MPRINT(EM_DIAGRAM):   R_DepVar0 = .;
+492934    +        R_DepVar1  = .;
+MPRINT(EM_DIAGRAM):   R_DepVar1 = .;
+492935    + END;
+MPRINT(EM_DIAGRAM):   END;
+492936    + ELSE DO;
+MPRINT(EM_DIAGRAM):   ELSE DO;
+492937    +       R_DepVar0  =  -P_DepVar0 ;
 MPRINT(EM_DIAGRAM):   R_DepVar0 = -P_DepVar0 ;
-912430    +       R_DepVar1  =  -P_DepVar1 ;
+492938    +       R_DepVar1  =  -P_DepVar1 ;
 MPRINT(EM_DIAGRAM):   R_DepVar1 = -P_DepVar1 ;
-912431    +       SELECT( F_DepVar  );
+492939    +       SELECT( F_DepVar  );
 MPRINT(EM_DIAGRAM):   SELECT( F_DepVar );
-912432    +          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
+492940    +          WHEN( '0'  ) R_DepVar0  = R_DepVar0  +1;
 MPRINT(EM_DIAGRAM):   WHEN( '0' ) R_DepVar0 = R_DepVar0 +1;
-912433    +          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
+492941    +          WHEN( '1'  ) R_DepVar1  = R_DepVar1  +1;
 MPRINT(EM_DIAGRAM):   WHEN( '1' ) R_DepVar1 = R_DepVar1 +1;
-912434    +       END;
+492942    +       END;
 MPRINT(EM_DIAGRAM):   END;
-912435    + END;
+492943    + END;
 MPRINT(EM_DIAGRAM):   END;
-912436    +
-912437    +****************************************************************;
+492944    +
+492945    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912438    +******          END OF DECISION TREE SCORING CODE         ******;
+492946    +******          END OF DECISION TREE SCORING CODE         ******;
 MPRINT(EM_DIAGRAM):   ****** END OF DECISION TREE SCORING CODE ******;
-912439    +****************************************************************;
+492947    +****************************************************************;
 MPRINT(EM_DIAGRAM):   ****************************************************************;
-912440    +drop _LEAF_;
+492948    +drop _LEAF_;
 MPRINT(EM_DIAGRAM):   drop _LEAF_;
 NOTE: %INCLUDE (level 1) ending.
 MPRINT(EM_DIAGRAM):   run;
-912441     run;
+492949     run;
 
 NOTE: DATA STEP view saved on file EMWS8.TREE4_VALIDATE.
 NOTE: A stored DATA STEP view cannot run under a different operating system.
 NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
-      real time           0.03 seconds
+      real time           0.02 seconds
       cpu time            0.03 seconds
       
 NOTE: DATA statement used (Total process time):
-      real time           0.04 seconds
-      cpu time            0.04 seconds
+      real time           0.02 seconds
+      cpu time            0.03 seconds
       
 
 MPRINT(EM_DIAGRAM):   quit;
-912442     quit;
-912443     filename emflow;
+492950     quit;
+492951     filename emflow;
 MPRINT(EM_DIAGRAM):   filename emflow;
 NOTE: Fileref EMFLOW has been deassigned.
-912444     *------------------------------------------------------------*;
+492952     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
-912445     * Tree4: Computing metadata for TRAIN data;
+492953     * Tree4: Computing metadata for TRAIN data;
 MPRINT(EM_DIAGRAM):   * Tree4: Computing metadata for TRAIN data;
-912446     *------------------------------------------------------------*;
+492954     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 
 NOTE: View EMWS8.TREE4_TRAIN.VIEW used (Total process time):
-      real time           0.03 seconds
+      real time           0.02 seconds
       cpu time            0.03 seconds
       
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
@@ -1276,13 +1112,13 @@ MPRINT(EMADVISECOLUMNS):   call symput('_engineTable', attrc(dsid, 'ENGINE'));
 MPRINT(EMADVISECOLUMNS):   dsid = close(dsid);
 MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Tree4_TRAIN out=WORK.M2_BDTLK noprint;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Tree4_TRAIN out=WORK.M0L761PQ noprint;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M2_BDTLK;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0L761PQ;
 MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 
 INDEX $ 1 INDEXTYPE $ 9;
 MPRINT(EMADVISECOLUMNS):   label NAME =;
-MPRINT(EMADVISECOLUMNS):   set WORK.M2_BDTLK(keep=name type length label format formatl 
+MPRINT(EMADVISECOLUMNS):   set WORK.M0L761PQ(keep=name type length label format formatl 
 formatd informat informl informd idxusage rename=(type=itype));
 MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
 MPRINT(EMADVISECOLUMNS):   else type = 'C';
@@ -1305,21 +1141,21 @@ MPRINT(EMADVISECOLUMNS):   else index = "Y";
 MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
 MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M2_BDTLK;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0L761PQ;
 MPRINT(EMADVISECOLUMNS):   length UNAME $64;
-MPRINT(EMADVISECOLUMNS):   set WORK.M2_BDTLK;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0L761PQ;
 MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M0HQ7PR7 NOTHREADS;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M228G_9P NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by UNAME;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):    data WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   drop UNAME;
-MPRINT(EMADVISECOLUMNS):   set WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):   set WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M2R0FRDS(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):    data WORK.M2D17K9E(keep=NAME ATTR);
 MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
-MPRINT(EMADVISECOLUMNS):   set WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):   set WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
 MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
@@ -1354,11 +1190,11 @@ MPRINT(EMADVISECOLUMNS):   run;
 MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by attr;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):    data WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 
 FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
 MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
-MPRINT(EMADVISECOLUMNS):   set WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):   set WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
@@ -1511,8 +1347,8 @@ MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
 MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M0HQ7PR7;
-MPRINT(EMADVISECOLUMNS):   set WORK.M0HQ7PR7;
+MPRINT(EMADVISECOLUMNS):    data WORK.M228G_9P;
+MPRINT(EMADVISECOLUMNS):   set WORK.M228G_9P;
 MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= 
 "Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= 
 "Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower limit" UPPERLIMIT= 
@@ -1564,16 +1400,11 @@ MPRINT(EM_DIAGRAM):   level = 'NOMINAL';
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   if upcase(name) = 'ACCEPTEDCMPTOTAL' then role = 'INPUT';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RECENCY' then role = 'INPUT';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMCATALOGPURCHASES' then role = 'INPUT';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTMEATPRODUCTS' then role = 'INPUT';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'G_MARITAL_STATUS' then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTMEATPRODUCTS' then role = 'INPUT';
 MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RFMSTAT' then role = 'INPUT';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'FRQ' then role = 'INPUT';
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTSWEETPRODUCTS' then do;
-MPRINT(EM_DIAGRAM):   role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
-MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNT' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTWINES' then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'INCOME' then do;
 MPRINT(EM_DIAGRAM):   role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
 MPRINT(EM_DIAGRAM):   end;
@@ -1581,11 +1412,15 @@ MPRINT(EM_DIAGRAM):   else if upcase(name) = 'RMNTFRQ' then do;
 MPRINT(EM_DIAGRAM):   role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMWEBPURCHASES' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'NUMDISTPURCHASES' then do;
 MPRINT(EM_DIAGRAM):   role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'INCOME' then do;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'FRQ' then do;
+MPRINT(EM_DIAGRAM):   role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNT' then do;
 MPRINT(EM_DIAGRAM):   role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
 MPRINT(EM_DIAGRAM):   end;
@@ -1593,22 +1428,18 @@ MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTGOLDPRODS' then do;
 MPRINT(EM_DIAGRAM):   role = 'REJECTED';
 MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
 MPRINT(EM_DIAGRAM):   end;
-MPRINT(EM_DIAGRAM):   else if upcase(name) = 'MNTFRUITS' then do;
-MPRINT(EM_DIAGRAM):   role = 'REJECTED';
-MPRINT(EM_DIAGRAM):   comment = "Tree4: TREELOWIMPORTANCE";
-MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   if upcase(name) = 'Q_DepVar1' then role = "ASSESS";
 MPRINT(EM_DIAGRAM):   if upcase(name) = 'Q_DepVar0' then role = "ASSESS";
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   filename _delta;
-912812     data WORK.MODELTEMP_INFO;
+493313     data WORK.MODELTEMP_INFO;
 MPRINT(EM_DIAGRAM):    data WORK.MODELTEMP_INFO;
-912813     set EMWS8.Tree4_EMINFO;
+493314     set EMWS8.Tree4_EMINFO;
 MPRINT(EM_DIAGRAM):   set EMWS8.Tree4_EMINFO;
-912814     where DATA='Tree4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+493315     where DATA='Tree4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
 MPRINT(EM_DIAGRAM):   where DATA='Tree4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 
 'MODEL');
-912815     run;
+493316     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 0 observations read from the data set EMWS8.TREE4_EMINFO.
@@ -1616,16 +1447,16 @@ NOTE: There were 0 observations read from the data set EMWS8.TREE4_EMINFO.
 NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-912816     data EMWS8.Tree4_EMINFO;
+493317     data EMWS8.Tree4_EMINFO;
 MPRINT(EM_DIAGRAM):    data EMWS8.Tree4_EMINFO;
-912817     length TARGET KEY $32 DATA $43;
+493318     length TARGET KEY $32 DATA $43;
 MPRINT(EM_DIAGRAM):   length TARGET KEY $32 DATA $43;
-912818     input TARGET KEY DATA $;
+493319     input TARGET KEY DATA $;
 MPRINT(EM_DIAGRAM):   input TARGET KEY DATA $;
-912819     cards;
+493320     cards;
 MPRINT(EM_DIAGRAM):   cards;
 
 NOTE: The data set EMWS8.TREE4_EMINFO has 3 observations and 3 variables.
@@ -1635,12 +1466,12 @@ NOTE: DATA statement used (Total process time):
       
 
 MPRINT(EM_DIAGRAM):   run;
-912823     run;
-912824     data EMWS8.Tree4_EMINFO;
+493324     run;
+493325     data EMWS8.Tree4_EMINFO;
 MPRINT(EM_DIAGRAM):   data EMWS8.Tree4_EMINFO;
-912825     set EMWS8.Tree4_EMINFO WORK.MODELTEMP_INFO;
+493326     set EMWS8.Tree4_EMINFO WORK.MODELTEMP_INFO;
 MPRINT(EM_DIAGRAM):   set EMWS8.Tree4_EMINFO WORK.MODELTEMP_INFO;
-912826     run;
+493327     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 3 observations read from the data set EMWS8.TREE4_EMINFO.
@@ -1651,39 +1482,39 @@ NOTE: DATA statement used (Total process time):
       cpu time            0.00 seconds
       
 
-912827     proc sort data = EMWS8.Tree4_EMINFO NOTHREADS;
+493328     proc sort data = EMWS8.Tree4_EMINFO NOTHREADS;
 MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.Tree4_EMINFO NOTHREADS;
-912828     by TARGET KEY;
+493329     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-912829     run;
+493330     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 3 observations read from the data set EMWS8.TREE4_EMINFO.
 NOTE: The data set EMWS8.TREE4_EMINFO has 3 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-912830     proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+493331     proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
 MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
-912831     by TARGET KEY;
+493332     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-912832     run;
+493333     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 1 observations read from the data set EMWS8.FIMPORT_EMINFO.
 NOTE: The data set WORK.SORTEDEMINFO has 1 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
+      real time           0.00 seconds
+      cpu time            0.00 seconds
       
 
-912833     proc sort data = EMWS8.Tree4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+493334     proc sort data = EMWS8.Tree4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
 MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.Tree4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
-912834     by TARGET KEY;
+493335     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-912835     run;
+493336     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: Input data set is already sorted; it has been copied to the output data set.
@@ -1694,13 +1525,13 @@ NOTE: PROCEDURE SORT used (Total process time):
       cpu time            0.00 seconds
       
 
-912836     data EMWS8.Tree4_EMINFO;
+493337     data EMWS8.Tree4_EMINFO;
 MPRINT(EM_DIAGRAM):   data EMWS8.Tree4_EMINFO;
-912837     merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+493338     merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
 MPRINT(EM_DIAGRAM):   merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
-912838     by TARGET KEY;
+493339     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-912839     run;
+493340     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 1 observations read from the data set WORK.SORTEDEMINFO.
@@ -1708,32 +1539,32 @@ NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
 NOTE: The data set EMWS8.TREE4_EMINFO has 4 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-912840     proc datasets lib=work nolist;
+493341     proc datasets lib=work nolist;
 MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
-912841     delete TEMP_INFO SORTEDEMINFO;
+493342     delete TEMP_INFO SORTEDEMINFO;
 MPRINT(EM_DIAGRAM):   delete TEMP_INFO SORTEDEMINFO;
-912842     run;
+493343     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
 NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
-912843     quit;
+493344     quit;
 MPRINT(EM_DIAGRAM):   quit;
 
 NOTE: PROCEDURE DATASETS used (Total process time):
-      real time           0.03 seconds
-      cpu time            0.03 seconds
+      real time           0.02 seconds
+      cpu time            0.01 seconds
       
 
 NOTE: View EMWS8.TREE4_TRAIN.VIEW used (Total process time):
-      real time           0.01 seconds
-      cpu time            0.01 seconds
+      real time           0.02 seconds
+      cpu time            0.03 seconds
       
 NOTE: View EMWS8.TREE4_VALIDATE.VIEW used (Total process time):
-      real time           0.03 seconds
+      real time           0.02 seconds
       cpu time            0.03 seconds
       
 MPRINT(EM_DIAGRAM):    proc printto;

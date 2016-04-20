@@ -9,118 +9,118 @@ Traverser: Beginning flow traversal
 *------------------------------------------------------------* 
 * 
 * FIMPORT : Beginning Update 
-* datetime : 19APR2016:16:35:13 
+* datetime : 20APR2016:16:08:56 
 * 
 *------------------------------------------------------------* 
-48669      %let emexceptionString =;
-48670      %let EMEXCEPTIONSTRING=;
-48671      *------------------------------------------------------------*;
-48672      * UPDATE: FIMPORT;
-48673      *------------------------------------------------------------*;
-48674      %let EM_ACTION = UPDATE;
-48675      %let syscc = 0;
-48676      /* Fimport.source */
-48677      %macro main;
-48678            %if %upcase(&EM_ACTION) = CREATE %then %do;
-48679               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-48680               %include temp;
-48681               filename temp;
-48682               %create;
-48683            %end;
-48684            %else
-48685            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-48686               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-48687               %include temp;
-48688               filename temp;
-48689               %train;
-48690            %end;
-48691            %else
-48692            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-48693               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-48694               %include temp;
-48695               filename temp;
-48696               %update;
-48697            %end;
-48698            %else
-48699            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-48700               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-48701               %include temp;
-48702               filename temp;
-48703               %property;
-48704            %end;
-48705             %else
-48706            %if %upcase(&EM_ACTION) = SCORE %then %do;
-48707               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-48708               %include temp;
-48709               filename temp;
-48710               %score;
-48711            %end;
-48712            %else
-48713            %if %upcase(&EM_ACTION) = REPORT %then %do;
-48714               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-48715               %include temp;
-48716               filename temp;
-48717               %report;
-48718            %end;
-48719            %else
-48720            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-48721               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-48722               %include temp;
-48723               filename temp;
-48724               %openvariableset;
-48725            %end;
-48726            %else
-48727            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-48728               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-48729               %include temp;
-48730               filename temp;
-48731               %closevariableset;
-48732            %end;
-48733      %mend main;
-48734      %main;
+53611      %let emexceptionString =;
+53612      %let EMEXCEPTIONSTRING=;
+53613      *------------------------------------------------------------*;
+53614      * UPDATE: FIMPORT;
+53615      *------------------------------------------------------------*;
+53616      %let EM_ACTION = UPDATE;
+53617      %let syscc = 0;
+53618      /* Fimport.source */
+53619      %macro main;
+53620            %if %upcase(&EM_ACTION) = CREATE %then %do;
+53621               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
+53622               %include temp;
+53623               filename temp;
+53624               %create;
+53625            %end;
+53626            %else
+53627            %if %upcase(&EM_ACTION) = TRAIN %then %do;
+53628               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
+53629               %include temp;
+53630               filename temp;
+53631               %train;
+53632            %end;
+53633            %else
+53634            %if %upcase(&EM_ACTION) = UPDATE %then %do;
+53635               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
+53636               %include temp;
+53637               filename temp;
+53638               %update;
+53639            %end;
+53640            %else
+53641            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
+53642               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+53643               %include temp;
+53644               filename temp;
+53645               %property;
+53646            %end;
+53647             %else
+53648            %if %upcase(&EM_ACTION) = SCORE %then %do;
+53649               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
+53650               %include temp;
+53651               filename temp;
+53652               %score;
+53653            %end;
+53654            %else
+53655            %if %upcase(&EM_ACTION) = REPORT %then %do;
+53656               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
+53657               %include temp;
+53658               filename temp;
+53659               %report;
+53660            %end;
+53661            %else
+53662            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
+53663               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+53664               %include temp;
+53665               filename temp;
+53666               %openvariableset;
+53667            %end;
+53668            %else
+53669            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
+53670               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
+53671               %include temp;
+53672               filename temp;
+53673               %closevariableset;
+53674            %end;
+53675      %mend main;
+53676      %main;
 NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-48735     +%macro update;
-48736     +    %let oldrole = %str();
-48737     +    data _null_;
-48738     +       set &em_data_exportset;
-48739     +       where NODEPORT='TRAIN';
-48740     +       call symput('oldrole', ROLE);
-48741     +    run;
-48742     +    %if &oldrole ne &em_property_role %then %do;
-48743     +        data &em_data_exportset;
-48744     +           set &em_data_exportset;
-48745     +           if NODEPORT='TRAIN' then do;
-48746     +              ROLE="&em_property_role";
-48747     +              NEEDUPDATE='Y';
-48748     +              EXPORT='Y';
-48749     +           end;
-48750     +        run;
-48751     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-48752     +        data _null_;
-48753     +           file x;
-48754     +           put ' ';
-48755     +        run;
-48756     +        filename x;
-48757     +    %end;
-48758     +    %else %do;
-48759     +        data &em_data_exportset;
-48760     +           set &em_data_exportset;
-48761     +           if NODEPORT='TRAIN' then do;
-48762     +              ROLE="&em_property_role";
-48763     +              NEEDUPDATE='Y';
-48764     +              EXPORT='Y';
-48765     +           end;
-48766     +        run;
-48767     +    %end;
-48769     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-48770     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-48771     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-48772     +           set &em_user_emcmetadefault;
-48773     +           drop DROP;
-48774     +           where DROP='N';
-48775     +        run;
-48776     +    %end;
-48778     +%mend update;
+53677     +%macro update;
+53678     +    %let oldrole = %str();
+53679     +    data _null_;
+53680     +       set &em_data_exportset;
+53681     +       where NODEPORT='TRAIN';
+53682     +       call symput('oldrole', ROLE);
+53683     +    run;
+53684     +    %if &oldrole ne &em_property_role %then %do;
+53685     +        data &em_data_exportset;
+53686     +           set &em_data_exportset;
+53687     +           if NODEPORT='TRAIN' then do;
+53688     +              ROLE="&em_property_role";
+53689     +              NEEDUPDATE='Y';
+53690     +              EXPORT='Y';
+53691     +           end;
+53692     +        run;
+53693     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
+53694     +        data _null_;
+53695     +           file x;
+53696     +           put ' ';
+53697     +        run;
+53698     +        filename x;
+53699     +    %end;
+53700     +    %else %do;
+53701     +        data &em_data_exportset;
+53702     +           set &em_data_exportset;
+53703     +           if NODEPORT='TRAIN' then do;
+53704     +              ROLE="&em_property_role";
+53705     +              NEEDUPDATE='Y';
+53706     +              EXPORT='Y';
+53707     +           end;
+53708     +        run;
+53709     +    %end;
+53711     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
+53712     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
+53713     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
+53714     +           set &em_user_emcmetadefault;
+53715     +           drop DROP;
+53716     +           where DROP='N';
+53717     +        run;
+53718     +    %end;
+53720     +%mend update;
 NOTE: %INCLUDE (level 1) ending.
 NOTE: Fileref TEMP has been deassigned.
 
@@ -136,455 +136,134 @@ NOTE: There were 6 observations read from the data set EMWS8.FIMPORT_EXPORTSET.
 NOTE: The data set EMWS8.FIMPORT_EXPORTSET has 6 observations and 18 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-48783      *------------------------------------------------------------*;
-48784      * End UPDATE: FIMPORT;
-48785      *------------------------------------------------------------*;
+53725      *------------------------------------------------------------*;
+53726      * End UPDATE: FIMPORT;
+53727      *------------------------------------------------------------*;
 
-48786      %em_delMacro;
+53728      %em_delMacro;
 
 *------------------------------------------------------------* 
 * 
 * FIMPORT : End Update 
-* datetime : 19APR2016:16:35:13 
+* datetime : 20APR2016:16:08:56 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
 Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* FIMPORT2 : Beginning Update 
-* datetime : 19APR2016:16:35:13 
-* 
-*------------------------------------------------------------* 
-48989      %let emexceptionString =;
-48990      %let EMEXCEPTIONSTRING=;
-48991      *------------------------------------------------------------*;
-48992      * UPDATE: FIMPORT2;
-48993      *------------------------------------------------------------*;
-48994      %let EM_ACTION = UPDATE;
-48995      %let syscc = 0;
-48996      /* Fimport.source */
-48997      %macro main;
-48998            %if %upcase(&EM_ACTION) = CREATE %then %do;
-48999               filename temp catalog 'sashelp.emsamp.Fimport_create.source';
-49000               %include temp;
-49001               filename temp;
-49002               %create;
-49003            %end;
-49004            %else
-49005            %if %upcase(&EM_ACTION) = TRAIN %then %do;
-49006               filename temp catalog 'sashelp.emsamp.Fimport_train.source';
-49007               %include temp;
-49008               filename temp;
-49009               %train;
-49010            %end;
-49011            %else
-49012            %if %upcase(&EM_ACTION) = UPDATE %then %do;
-49013               filename temp catalog 'sashelp.emsamp.Fimport_update.source';
-49014               %include temp;
-49015               filename temp;
-49016               %update;
-49017            %end;
-49018            %else
-49019            %if %upcase(&EM_ACTION) = PROPERTY %then %do;
-49020               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-49021               %include temp;
-49022               filename temp;
-49023               %property;
-49024            %end;
-49025             %else
-49026            %if %upcase(&EM_ACTION) = SCORE %then %do;
-49027               filename temp catalog 'sashelp.emsamp.Fimport_score.source';
-49028               %include temp;
-49029               filename temp;
-49030               %score;
-49031            %end;
-49032            %else
-49033            %if %upcase(&EM_ACTION) = REPORT %then %do;
-49034               filename temp catalog 'sashelp.emsamp.Fimport_report.source';
-49035               %include temp;
-49036               filename temp;
-49037               %report;
-49038            %end;
-49039            %else
-49040            %if %upcase(&EM_ACTION) = OPENVARIABLESET %then %do;
-49041               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-49042               %include temp;
-49043               filename temp;
-49044               %openvariableset;
-49045            %end;
-49046            %else
-49047            %if %upcase(&EM_ACTION) = CLOSEVARIABLESET %then %do;
-49048               filename temp catalog 'sashelp.emsamp.Fimport_actions.source';
-49049               %include temp;
-49050               filename temp;
-49051               %closevariableset;
-49052            %end;
-49053      %mend main;
-49054      %main;
-NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMSAMP.FIMPORT_UPDATE.SOURCE.
-49055     +%macro update;
-49056     +    %let oldrole = %str();
-49057     +    data _null_;
-49058     +       set &em_data_exportset;
-49059     +       where NODEPORT='TRAIN';
-49060     +       call symput('oldrole', ROLE);
-49061     +    run;
-49062     +    %if &oldrole ne &em_property_role %then %do;
-49063     +        data &em_data_exportset;
-49064     +           set &em_data_exportset;
-49065     +           if NODEPORT='TRAIN' then do;
-49066     +              ROLE="&em_property_role";
-49067     +              NEEDUPDATE='Y';
-49068     +              EXPORT='Y';
-49069     +           end;
-49070     +        run;
-49071     +        filename x "&EM_NODEDIR.&EM_DSEP._updatePath.st";
-49072     +        data _null_;
-49073     +           file x;
-49074     +           put ' ';
-49075     +        run;
-49076     +        filename x;
-49077     +    %end;
-49078     +    %else %do;
-49079     +        data &em_data_exportset;
-49080     +           set &em_data_exportset;
-49081     +           if NODEPORT='TRAIN' then do;
-49082     +              ROLE="&em_property_role";
-49083     +              NEEDUPDATE='Y';
-49084     +              EXPORT='Y';
-49085     +           end;
-49086     +        run;
-49087     +    %end;
-49089     +    %em_getname(key=EMCMETADEFAULT, type=DATA);
-49090     +    %if %sysfunc(exist(&em_user_emcmetadefault)) and ^%sysfunc(exist(&em_lib..&em_nodeid._CMETA_TRAIN)) %then %do;
-49091     +        data &em_lib..&em_nodeid._CMETA_TRAIN;
-49092     +           set &em_user_emcmetadefault;
-49093     +           drop DROP;
-49094     +           where DROP='N';
-49095     +        run;
-49096     +    %end;
-49098     +%mend update;
-NOTE: %INCLUDE (level 1) ending.
-NOTE: Fileref TEMP has been deassigned.
-
-NOTE: There were 1 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
-      WHERE NODEPORT='TRAIN';
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-
-NOTE: There were 6 observations read from the data set EMWS8.FIMPORT2_EXPORTSET.
-NOTE: The data set EMWS8.FIMPORT2_EXPORTSET has 6 observations and 18 variables.
-NOTE: DATA statement used (Total process time):
-      real time           0.00 seconds
-      cpu time            0.00 seconds
-      
-
-49103      *------------------------------------------------------------*;
-49104      * End UPDATE: FIMPORT2;
-49105      *------------------------------------------------------------*;
-
-49106      %em_delMacro;
-
-*------------------------------------------------------------* 
-* 
-* FIMPORT2 : End Update 
-* datetime : 19APR2016:16:35:14 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
-Traverser: WaitingNode "FILTER" 
-Traverser: WaitingNode "EMCODE4" 
-Traverser: WaitingNode "TRANS" 
-Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Stat : Beginning Update 
-* datetime : 19APR2016:16:35:14 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Stat : End Update 
-* datetime : 19APR2016:16:35:14 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
-Traverser: WaitingNode "FILTER" 
-Traverser: WaitingNode "EMCODE4" 
-Traverser: WaitingNode "TRANS" 
-Traverser: WaitingNode "PART" 
-Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Plot : Beginning Update 
-* datetime : 19APR2016:16:35:15 
+* datetime : 20APR2016:16:08:57 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Plot : End Update 
-* datetime : 19APR2016:16:35:15 
+* datetime : 20APR2016:16:08:57 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
+Traverser: WaitingNode "FILTER" 
 Traverser: WaitingNode "EMCODE4" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
 Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
+traverser_readyNode_note 
+*------------------------------------------------------------* 
+* 
+* Stat : Beginning Update 
+* datetime : 20APR2016:16:08:57 
+* 
+*------------------------------------------------------------* 
+*------------------------------------------------------------* 
+* 
+* Stat : End Update 
+* datetime : 20APR2016:16:08:57 
+* 
+*------------------------------------------------------------* 
+Traverser: WaitingNode "EMCODE4" 
+Traverser: WaitingNode "TRANS" 
+Traverser: WaitingNode "PART" 
+Traverser: WaitingNode "META" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Filter : Beginning Update 
-* datetime : 19APR2016:16:35:15 
+* datetime : 20APR2016:16:08:58 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Filter : End Update 
-* datetime : 19APR2016:16:35:15 
+* datetime : 20APR2016:16:08:58 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "TRANS" 
 Traverser: WaitingNode "PART" 
 Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : Beginning Update 
-* datetime : 19APR2016:16:35:16 
+* datetime : 20APR2016:16:08:58 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * EMCODE4 : End Update 
-* datetime : 19APR2016:16:35:16 
+* datetime : 20APR2016:16:08:59 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "PART" 
 Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Trans : Beginning Update 
-* datetime : 19APR2016:16:35:16 
+* datetime : 20APR2016:16:08:59 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Trans : End Update 
-* datetime : 19APR2016:16:35:16 
+* datetime : 20APR2016:16:08:59 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
 Traverser: WaitingNode "META" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Part : Beginning Update 
-* datetime : 19APR2016:16:35:17 
+* datetime : 20APR2016:16:09:00 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Part : End Update 
-* datetime : 19APR2016:16:35:17 
+* datetime : 20APR2016:16:09:00 
 * 
 *------------------------------------------------------------* 
-Traverser: WaitingNode "NEURAL10" 
-Traverser: WaitingNode "NEURAL9" 
-Traverser: WaitingNode "NEURAL3" 
-Traverser: WaitingNode "NEURAL2" 
-Traverser: WaitingNode "NEURAL4" 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
 traverser_readyNode_note 
 *------------------------------------------------------------* 
 * 
 * Meta : Beginning Update 
-* datetime : 19APR2016:16:35:17 
+* datetime : 20APR2016:16:09:00 
 * 
 *------------------------------------------------------------* 
 *------------------------------------------------------------* 
 * 
 * Meta : End Update 
-* datetime : 19APR2016:16:35:17 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Neural10 : Beginning Update 
-* datetime : 19APR2016:16:35:18 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Neural10 : End Update 
-* datetime : 19APR2016:16:35:18 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Neural9 : Beginning Update 
-* datetime : 19APR2016:16:35:18 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Neural9 : End Update 
-* datetime : 19APR2016:16:35:18 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Neural3 : Beginning Update 
-* datetime : 19APR2016:16:35:19 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Neural3 : End Update 
-* datetime : 19APR2016:16:35:19 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Neural2 : Beginning Update 
-* datetime : 19APR2016:16:35:19 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Neural2 : End Update 
-* datetime : 19APR2016:16:35:19 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "ENSMBL32" 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Neural4 : Beginning Update 
-* datetime : 19APR2016:16:35:20 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Neural4 : End Update 
-* datetime : 19APR2016:16:35:20 
-* 
-*------------------------------------------------------------* 
-Traverser: WaitingNode "SCORE" 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Ensmbl32 : Beginning Update 
-* datetime : 19APR2016:16:35:20 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Ensmbl32 : End Update 
-* datetime : 19APR2016:16:35:21 
-* 
-*------------------------------------------------------------* 
-traverser_readyNode_note 
-*------------------------------------------------------------* 
-* 
-* Score : Beginning Update 
-* datetime : 19APR2016:16:35:21 
-* 
-*------------------------------------------------------------* 
-*------------------------------------------------------------* 
-* 
-* Score : End Update 
-* datetime : 19APR2016:16:35:21 
+* datetime : 20APR2016:16:09:00 
 * 
 *------------------------------------------------------------* 
 Traverser: Run Completed 
-49438      proc printto;
-49439      run;
+53889      proc printto;
+53890      run;
 

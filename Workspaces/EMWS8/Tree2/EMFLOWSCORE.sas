@@ -34,15 +34,15 @@ _ARBFMT_12 = PUT( DepVar , BEST.);
 
 ******             ASSIGN OBSERVATION TO NODE             ******;
 IF  NOT MISSING(PC_1 ) AND
-      4.72890391929894 <= PC_1  THEN DO;
+      4.72878422069383 <= PC_1  THEN DO;
   IF  NOT MISSING(PC_13 ) AND
-         0.7934719529821 <= PC_13  THEN DO;
+        0.79363169103411 <= PC_13  THEN DO;
     IF  NOT MISSING(PC_3 ) AND
-      PC_3  <    -0.89919177649188 THEN DO;
+      PC_3  <    -0.89794675812557 THEN DO;
       IF  NOT MISSING(PC_14 ) AND
-        PC_14  <    -0.28662782595399 THEN DO;
+        PC_14  <    -0.28723498505293 THEN DO;
         _NODE_  =                   28;
-        _LEAF_  =                    9;
+        _LEAF_  =                   10;
         P_DepVar0  =      0.9090909090909;
         P_DepVar1  =     0.09090909090909;
         Q_DepVar0  =      0.9090909090909;
@@ -54,7 +54,7 @@ IF  NOT MISSING(PC_1 ) AND
         END;
       ELSE DO;
         _NODE_  =                   29;
-        _LEAF_  =                   10;
+        _LEAF_  =                   11;
         P_DepVar0  =     0.35714285714285;
         P_DepVar1  =     0.64285714285714;
         Q_DepVar0  =     0.35714285714285;
@@ -67,7 +67,7 @@ IF  NOT MISSING(PC_1 ) AND
       END;
     ELSE DO;
       _NODE_  =                   15;
-      _LEAF_  =                   11;
+      _LEAF_  =                   12;
       P_DepVar0  =                 0.92;
       P_DepVar1  =                 0.08;
       Q_DepVar0  =                 0.92;
@@ -80,23 +80,38 @@ IF  NOT MISSING(PC_1 ) AND
     END;
   ELSE DO;
     IF  NOT MISSING(PC_10 ) AND
-           2.8283843484414 <= PC_10  THEN DO;
-      _NODE_  =                   13;
-      _LEAF_  =                    8;
-      P_DepVar0  =     0.69444444444444;
-      P_DepVar1  =     0.30555555555555;
-      Q_DepVar0  =     0.69444444444444;
-      Q_DepVar1  =     0.30555555555555;
-      V_DepVar0  =     0.63157894736842;
-      V_DepVar1  =     0.36842105263157;
-      I_DepVar  = '0' ;
-      U_DepVar  =                    0;
+          2.82874016659239 <= PC_10  THEN DO;
+      IF  NOT MISSING(PC_16 ) AND
+            0.81679372073982 <= PC_16  THEN DO;
+        _NODE_  =                   27;
+        _LEAF_  =                    9;
+        P_DepVar0  =     0.16666666666666;
+        P_DepVar1  =     0.83333333333333;
+        Q_DepVar0  =     0.16666666666666;
+        Q_DepVar1  =     0.83333333333333;
+        V_DepVar0  =     0.33333333333333;
+        V_DepVar1  =     0.66666666666666;
+        I_DepVar  = '1' ;
+        U_DepVar  =                    1;
+        END;
+      ELSE DO;
+        _NODE_  =                   26;
+        _LEAF_  =                    8;
+        P_DepVar0  =     0.82758620689655;
+        P_DepVar1  =     0.17241379310344;
+        Q_DepVar0  =     0.82758620689655;
+        Q_DepVar1  =     0.17241379310344;
+        V_DepVar0  =     0.76923076923076;
+        V_DepVar1  =     0.23076923076923;
+        I_DepVar  = '0' ;
+        U_DepVar  =                    0;
+        END;
       END;
     ELSE DO;
       IF  NOT MISSING(PC_2 ) AND
-            0.57994817718225 <= PC_2  THEN DO;
+            0.58158049915286 <= PC_2  THEN DO;
         IF  NOT MISSING(PC_10 ) AND
-          PC_10  <    -1.00979078933032 THEN DO;
+          PC_10  <     -1.0078456532221 THEN DO;
           _NODE_  =                   44;
           _LEAF_  =                    6;
           P_DepVar0  =     0.14285714285714;
@@ -123,13 +138,13 @@ IF  NOT MISSING(PC_1 ) AND
         END;
       ELSE DO;
         IF  NOT MISSING(PC_9 ) AND
-          PC_9  <    -1.25942381578662 THEN DO;
+          PC_9  <    -1.25936854272766 THEN DO;
           _NODE_  =                   42;
           _LEAF_  =                    4;
-          P_DepVar0  =     0.53333333333333;
-          P_DepVar1  =     0.46666666666666;
-          Q_DepVar0  =     0.53333333333333;
-          Q_DepVar1  =     0.46666666666666;
+          P_DepVar0  =                  0.5;
+          P_DepVar1  =                  0.5;
+          Q_DepVar0  =                  0.5;
+          Q_DepVar1  =                  0.5;
           V_DepVar0  =                    1;
           V_DepVar1  =                    0;
           I_DepVar  = '0' ;
@@ -153,17 +168,17 @@ IF  NOT MISSING(PC_1 ) AND
   END;
 ELSE DO;
   IF  NOT MISSING(PC_10 ) AND
-    PC_10  <    -1.17632487738677 THEN DO;
+    PC_10  <    -1.17205781683619 THEN DO;
     IF  NOT MISSING(PC_13 ) AND
-      PC_13  <    -0.26517164611357 THEN DO;
+      PC_13  <    -0.26354743409489 THEN DO;
       _NODE_  =                    8;
       _LEAF_  =                    1;
       P_DepVar0  =                0.375;
       P_DepVar1  =                0.625;
       Q_DepVar0  =                0.375;
       Q_DepVar1  =                0.625;
-      V_DepVar0  =                  0.4;
-      V_DepVar1  =                  0.6;
+      V_DepVar0  =     0.38709677419354;
+      V_DepVar1  =     0.61290322580645;
       I_DepVar  = '1' ;
       U_DepVar  =                    1;
       END;
@@ -174,8 +189,8 @@ ELSE DO;
       P_DepVar1  =     0.24475524475524;
       Q_DepVar0  =     0.75524475524475;
       Q_DepVar1  =     0.24475524475524;
-      V_DepVar0  =     0.75675675675675;
-      V_DepVar1  =     0.24324324324324;
+      V_DepVar0  =                 0.76;
+      V_DepVar1  =                 0.24;
       I_DepVar  = '0' ;
       U_DepVar  =                    0;
       END;
@@ -187,8 +202,8 @@ ELSE DO;
     P_DepVar1  =      0.0761154855643;
     Q_DepVar0  =     0.92388451443569;
     Q_DepVar1  =      0.0761154855643;
-    V_DepVar0  =     0.91219512195121;
-    V_DepVar1  =     0.08780487804878;
+    V_DepVar0  =     0.91320293398533;
+    V_DepVar1  =     0.08679706601466;
     I_DepVar  = '0' ;
     U_DepVar  =                    0;
     END;

@@ -22,15 +22,19 @@ if upcase(name) = 'MARITAL_STATUS' then role = 'REJECTED';
 else
 if upcase(name) = 'MNTFISHPRODUCTS' then role = 'REJECTED';
 else
-if upcase(name) = 'MNTWINES' then role = 'REJECTED';
+if upcase(name) = 'MNTFRUITS' then role = 'REJECTED';
+else
+if upcase(name) = 'MNTSWEETPRODUCTS' then role = 'REJECTED';
 else
 if upcase(name) = 'MONTHSASCUSTOMER' then role = 'REJECTED';
 else
+if upcase(name) = 'NUMCATALOGPURCHASES' then role = 'REJECTED';
+else
 if upcase(name) = 'NUMDEALSPURCHASES' then role = 'REJECTED';
 else
-if upcase(name) = 'NUMDISTPURCHASES' then role = 'REJECTED';
-else
 if upcase(name) = 'NUMSTOREPURCHASES' then role = 'REJECTED';
+else
+if upcase(name) = 'NUMWEBPURCHASES' then role = 'REJECTED';
 else
 if upcase(name) = 'NUMWEBVISITSMONTH' then role = 'REJECTED';
 else

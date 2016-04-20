@@ -36,9 +36,8 @@ quit;
 * Tree4: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    AcceptedCmpTotal Frq G_Marital_Status Income Mnt MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat
-   RMntFrq Recency
+    AcceptedCmpTotal Frq G_Marital_Status Income Mnt MntGoldProds MntMeatProducts
+   MntWines NumDistPurchases RFMstat RMntFrq Recency
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree4: Tree Targets Macro ;
@@ -53,8 +52,8 @@ run;
 * Tree4: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+   NumDistPurchases RFMstat RMntFrq Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree4: Binary and Nominal Inputs Macro ;

@@ -144,7 +144,7 @@ else _D11=(MntSweetProducts-27.0804549283909)/39.2356363442449;
 if MntWines=. then _D12 = 0;
 else _D12=(MntWines-310.929233361415)/341.695699656276;
 if MonthsAsCustomer=. then _D13 = 0;
-else _D13=(MonthsAsCustomer-83.4953664700926)/16.9441392661404;
+else _D13=(MonthsAsCustomer-83.5724515585509)/16.947242674662;
 if NumCatalogPurchases=. then _D14 = 0;
 else _D14=(NumCatalogPurchases-2.64448188711036)/2.77214051734809;
 if NumDealsPurchases=. then _D15 = 0;

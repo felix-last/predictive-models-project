@@ -34,9 +34,8 @@ run;
 quit;
 data EM_Neural29;
 set EMWS8.Varsel_TRAIN(keep=
-AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntFruits MntGoldProds
-MntMeatProducts MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat
-RMntFrq Recency );
+AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntGoldProds
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency );
 run;
 *------------------------------------------------------------* ;
 * Neural29: DMDBClass Macro ;
@@ -48,8 +47,8 @@ run;
 * Neural29: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+   NumDistPurchases RFMstat RMntFrq Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural29: Create DMDB;
@@ -69,8 +68,8 @@ quit;
 * Neural29: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+   NumDistPurchases RFMstat RMntFrq Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural29: Binary Inputs Macro ;

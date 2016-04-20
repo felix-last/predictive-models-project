@@ -34,9 +34,8 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Varsel_TRAIN(keep=
-AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntFruits MntGoldProds
-MntMeatProducts MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat
-RMntFrq Recency );
+AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntGoldProds
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency );
 run;
 *------------------------------------------------------------* ;
 * Reg4: DMDBClass Macro ;
@@ -48,8 +47,8 @@ run;
 * Reg4: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Frq Income Mnt MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts NumCatalogPurchases NumWebPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+   NumDistPurchases RFMstat RMntFrq Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg4: Create DMDB;
@@ -84,12 +83,10 @@ Frq
 G_Marital_Status
 Income
 Mnt
-MntFruits
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-NumCatalogPurchases
-NumWebPurchases
+MntWines
+NumDistPurchases
 RFMstat
 RMntFrq
 Recency
