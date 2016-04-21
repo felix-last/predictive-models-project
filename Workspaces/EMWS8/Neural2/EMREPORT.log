@@ -3,8 +3,8 @@ MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
 MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   data _null_;
-MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "20. April 2016" );
-MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16.23 Uhr" );
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "21. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "18.28 Uhr" );
 MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
 MPRINT(EM_DIAGRAM):   put "* Report Log";
 MPRINT(EM_DIAGRAM):   put nldate;
@@ -13,12 +13,12 @@ MPRINT(EM_DIAGRAM):   put "*----------------------------------------------------
 MPRINT(EM_DIAGRAM):   run;
 *------------------------------------------------------------*
 * Report Log
-Date:                20. April 2016
-Time:                16.23 Uhr
+Date:                21. April 2016
+Time:                18.28 Uhr
 *------------------------------------------------------------*
-MPRINT(EM_DIAGRAM):    filename O3K74BDN 
+MPRINT(EM_DIAGRAM):    filename O1TG8EOR 
 "C:\\predictive-models-project\Workspaces\EMWS8\Neural2\EMREPORT.out" encoding="UTF-8" NOBOM;
-MPRINT(EM_DIAGRAM):   proc printto print=O3K74BDN new;
+MPRINT(EM_DIAGRAM):   proc printto print=O1TG8EOR new;
 MPRINT(EM_DIAGRAM):   run;
 233687     data EMWS8.Neural2_EMOUTFIT(rename=(_NAME_=TARGET));
 MPRINT(EM_DIAGRAM):    data EMWS8.Neural2_EMOUTFIT(rename=(_NAME_=TARGET));
@@ -88,7 +88,7 @@ NOTE: There were 21 observations read from the data set EMWS8.NEURAL2_EMREPORTFI
 NOTE: The data set EMWS8.NEURAL2_EMREPORTFIT has 21 observations and 7 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 233705     %let _EMwarndup = 0;
@@ -179,7 +179,7 @@ NOTE: There were 8 observations read from the data set EMWS8.NEURAL2_CMETA_TRAIN
 NOTE: The data set WORK.EM_TEMP_ASSESSMETA has 8 observations and 21 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 233730     data EM_temp_assessdata;
@@ -210,13 +210,13 @@ NOTE: There were 2374 observations read from the data set EMWS8.NEURAL2_TRAIN.
 NOTE: The data set WORK.EM_TEMP_ASSESSDATA has 2374 observations and 9 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.05 seconds
-      cpu time            0.06 seconds
+      cpu time            0.04 seconds
       
 
 MPRINT(EM_DIAGRAM):    proc freq data=EM_temp_assessdata noprint;
-MPRINT(EM_DIAGRAM):   table I_DepVar*F_DepVar / out = WORK.Neural2_1E6CP0C nocol norow outpct;
+MPRINT(EM_DIAGRAM):   table I_DepVar*F_DepVar / out = WORK.Neural2_0S4MFBJ nocol norow outpct;
 MPRINT(EM_DIAGRAM):   run;
-MPRINT(EM_DIAGRAM):    data WORK.Neural2_1E6CP0C;
+MPRINT(EM_DIAGRAM):    data WORK.Neural2_0S4MFBJ;
 MPRINT(EM_DIAGRAM):   length _TYPE_ $10 DATAROLE TARGET $32 TARGETLABEL $200 FROM INTO $32 
 CORRECTTEXT $40 ;
 MPRINT(EM_DIAGRAM):   label _TYPE_ = "Outcome Type";
@@ -231,7 +231,7 @@ MPRINT(EM_DIAGRAM):   label COUNT = "Frequency Count";
 MPRINT(EM_DIAGRAM):   label PERCENT = "Total Percentage";
 MPRINT(EM_DIAGRAM):   label CORRECTTEXT = "Correct Text";
 MPRINT(EM_DIAGRAM):   label CORRECT = "Correct";
-MPRINT(EM_DIAGRAM):   set WORK.Neural2_1E6CP0C(rename=(F_DepVar=FROM I_DepVar=INTO));
+MPRINT(EM_DIAGRAM):   set WORK.Neural2_0S4MFBJ(rename=(F_DepVar=FROM I_DepVar=INTO));
 MPRINT(EM_DIAGRAM):   retain _TYPE_ 'PREDICTION' DATAROLE "TRAIN" TARGET "DepVar";
 MPRINT(EM_DIAGRAM):   if upcase(TARGET) eq "DEPVAR" then TARGETLABEL = 'DepVar';
 MPRINT(EM_DIAGRAM):   if FROM eq INTO then do;
@@ -244,10 +244,10 @@ MPRINT(EM_DIAGRAM):   CORRECTTEXT="Incorrect";
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data EMWS8.Neural2_EMCLASSIFICATION;
-MPRINT(EM_DIAGRAM):   set WORK.Neural2_1E6CP0C;
+MPRINT(EM_DIAGRAM):   set WORK.Neural2_0S4MFBJ;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data WORK.MISCREPORT;
-MPRINT(EM_DIAGRAM):   set WORK.Neural2_1E6CP0C;
+MPRINT(EM_DIAGRAM):   set WORK.Neural2_0S4MFBJ;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data WORK.MISCREPORT(drop=INTO FROM _TYPE_);
 MPRINT(EM_DIAGRAM):   set WORK.MISCREPORT;
@@ -575,7 +575,7 @@ MPRINT(EM_ASSESS):   *;
 MPRINT(EM_ASSESS):   CALL SYMPUTX ("SUMRANK1", SUMRANK1);
 MPRINT(EM_ASSESS):   LENGTH DATAROLE $ 10;
 MPRINT(EM_ASSESS):   RETAIN DATAROLE "TRAIN" ;
-MPRINT(EM_ASSESS):   RETAIN OVLMIN 0.00019176 OVLMAX 0.9999996896 ;
+MPRINT(EM_ASSESS):   RETAIN OVLMIN 0.0001918739 OVLMAX 0.9999996858 ;
 MPRINT(EM_ASSESS):   DROP OVLMIN OVLMAX ;
 MPRINT(EM_ASSESS):   C_NUMOBS = 0;
 MPRINT(EM_ASSESS):   C_NUM_RESP = 0;
@@ -922,9 +922,9 @@ MPRINT(EM_ASSESS):   IF SCR_MAXPROB = 0 THEN SCR_MAXPROB = .;
 MPRINT(EM_ASSESS):   SCR_P_NONEVENTS = SCR_NUMNONEVENTS * 100 / _NNONEVENTS;
 MPRINT(EM_ASSESS):   SCR_CP_NONEVENTS = SUM (SCR_P_NONEVENTS, SCR_CP_NONEVENTS);
 MPRINT(EM_ASSESS):   PERCOBSINGROUP = NUMOBSINGROUP * 100 / 2374;
-MPRINT(EM_ASSESS):   C_PERCOBSINGROUP = SUM (C_PERCOBSINGROUP, PERCOBSINGROUP);
 The SAS System
 
+MPRINT(EM_ASSESS):   C_PERCOBSINGROUP = SUM (C_PERCOBSINGROUP, PERCOBSINGROUP);
 MPRINT(EM_ASSESS):   CALL SYMPUTX ("SCR_MINPROB" || LEFT (PUT (BIN, 3.)), LOWERPROB);
 MPRINT(EM_ASSESS):   CALL SYMPUTX ("SCR_MAXPROB" || LEFT (PUT (BIN, 3.)), UPPERPROB);
 MPRINT(EM_ASSESS):   BIN = 20 + 1 - 13;
@@ -1357,7 +1357,7 @@ NOTE: There were 8 observations read from the data set EMWS8.NEURAL2_CMETA_TRAIN
 NOTE: The data set WORK.EM_TEMP_ASSESSMETA has 8 observations and 21 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 238012     data EM_temp_assessdata;
@@ -1388,13 +1388,13 @@ NOTE: There were 1018 observations read from the data set EMWS8.NEURAL2_VALIDATE
 NOTE: The data set WORK.EM_TEMP_ASSESSDATA has 1018 observations and 9 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.05 seconds
-      cpu time            0.06 seconds
+      cpu time            0.04 seconds
       
 
 MPRINT(EM_DIAGRAM):    proc freq data=EM_temp_assessdata noprint;
-MPRINT(EM_DIAGRAM):   table I_DepVar*F_DepVar / out = WORK.Neural2_0DK_I50 nocol norow outpct;
+MPRINT(EM_DIAGRAM):   table I_DepVar*F_DepVar / out = WORK.Neural2_0TWEW05 nocol norow outpct;
 MPRINT(EM_DIAGRAM):   run;
-MPRINT(EM_DIAGRAM):    data WORK.Neural2_0DK_I50;
+MPRINT(EM_DIAGRAM):    data WORK.Neural2_0TWEW05;
 MPRINT(EM_DIAGRAM):   length _TYPE_ $10 DATAROLE TARGET $32 TARGETLABEL $200 FROM INTO $32 
 CORRECTTEXT $40 ;
 MPRINT(EM_DIAGRAM):   label _TYPE_ = "Outcome Type";
@@ -1409,7 +1409,7 @@ MPRINT(EM_DIAGRAM):   label COUNT = "Frequency Count";
 MPRINT(EM_DIAGRAM):   label PERCENT = "Total Percentage";
 MPRINT(EM_DIAGRAM):   label CORRECTTEXT = "Correct Text";
 MPRINT(EM_DIAGRAM):   label CORRECT = "Correct";
-MPRINT(EM_DIAGRAM):   set WORK.Neural2_0DK_I50(rename=(F_DepVar=FROM I_DepVar=INTO));
+MPRINT(EM_DIAGRAM):   set WORK.Neural2_0TWEW05(rename=(F_DepVar=FROM I_DepVar=INTO));
 MPRINT(EM_DIAGRAM):   retain _TYPE_ 'PREDICTION' DATAROLE "VALIDATE" TARGET "DepVar";
 MPRINT(EM_DIAGRAM):   if upcase(TARGET) eq "DEPVAR" then TARGETLABEL = 'DepVar';
 MPRINT(EM_DIAGRAM):   if FROM eq INTO then do;
@@ -1422,10 +1422,10 @@ MPRINT(EM_DIAGRAM):   CORRECTTEXT="Incorrect";
 MPRINT(EM_DIAGRAM):   end;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data EMWS8.Neural2_EMCLASSIFICATION;
-MPRINT(EM_DIAGRAM):   set EMWS8.Neural2_EMCLASSIFICATION WORK.Neural2_0DK_I50;
+MPRINT(EM_DIAGRAM):   set EMWS8.Neural2_EMCLASSIFICATION WORK.Neural2_0TWEW05;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data WORK.MISCREPORT;
-MPRINT(EM_DIAGRAM):   set WORK.Neural2_0DK_I50;
+MPRINT(EM_DIAGRAM):   set WORK.Neural2_0TWEW05;
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):    data WORK.MISCREPORT(drop=INTO FROM _TYPE_);
 MPRINT(EM_DIAGRAM):   set WORK.MISCREPORT;
@@ -1753,7 +1753,7 @@ MPRINT(EM_ASSESS):   *;
 MPRINT(EM_ASSESS):   CALL SYMPUTX ("SUMRANK1", SUMRANK1);
 MPRINT(EM_ASSESS):   LENGTH DATAROLE $ 10;
 MPRINT(EM_ASSESS):   RETAIN DATAROLE "VALIDATE" ;
-MPRINT(EM_ASSESS):   RETAIN OVLMIN 0.0001917693 OVLMAX 0.9999996862 ;
+MPRINT(EM_ASSESS):   RETAIN OVLMIN 0.0001918834 OVLMAX 0.9999996824 ;
 MPRINT(EM_ASSESS):   DROP OVLMIN OVLMAX ;
 MPRINT(EM_ASSESS):   C_NUMOBS = 0;
 MPRINT(EM_ASSESS):   C_NUM_RESP = 0;
@@ -2605,7 +2605,7 @@ NOTE: There were 8 observations read from the data set EMWS8.NEURAL2_EMCLASSIFIC
 NOTE: The PROCEDURE PRINT printed page 175.
 NOTE: PROCEDURE PRINT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 242330     title9;
@@ -2651,7 +2651,7 @@ NOTE: There were 2 observations read from the data set EMWS8.NEURAL2_EMEVENTREPO
 NOTE: The data set EMWS8.NEURAL2_EMEVENTREPORT has 2 observations and 7 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
 242346     proc print data=EMWS8.Neural2_EMEVENTREPORT noobs label;
@@ -2669,7 +2669,7 @@ NOTE: There were 2 observations read from the data set EMWS8.NEURAL2_EMEVENTREPO
 NOTE: The PROCEDURE PRINT printed page 176.
 NOTE: PROCEDURE PRINT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 242351     title10;
@@ -2694,7 +2694,7 @@ MPRINT(EM_DIAGRAM):   quit;
 
 NOTE: PROCEDURE DATASETS used (Total process time):
       real time           0.10 seconds
-      cpu time            0.10 seconds
+      cpu time            0.09 seconds
       
 
 242359     %let _cn = %sysfunc(getoption(CENTER));
@@ -2722,7 +2722,7 @@ NOTE: There were 40 observations read from the data set EMWS8.NEURAL2_EMRANK.
 NOTE: The PROCEDURE PRINT printed page 177.
 NOTE: PROCEDURE PRINT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
 242372     title10;
@@ -2747,7 +2747,7 @@ NOTE: MODIFY was successful for EMWS8.NEURAL2_EMSCOREDIST.DATA.
 MPRINT(EM_DIAGRAM):   quit;
 
 NOTE: PROCEDURE DATASETS used (Total process time):
-      real time           0.09 seconds
+      real time           0.10 seconds
       cpu time            0.09 seconds
       
 

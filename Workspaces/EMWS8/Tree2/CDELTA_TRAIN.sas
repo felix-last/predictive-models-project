@@ -12,13 +12,16 @@ if upcase(name) = 'PC_2' then role = 'INPUT';
 else
 if upcase(name) = 'PC_9' then role = 'INPUT';
 else
-if upcase(name) = 'PC_16' then role = 'INPUT';
-else
 if upcase(name) = 'PC_14' then role = 'INPUT';
 else
 if upcase(name) = 'PC_3' then role = 'INPUT';
 else
 if upcase(name) = 'PC_12' then do;
+role = 'REJECTED';
+comment = "Tree2: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'PC_16' then do;
 role = 'REJECTED';
 comment = "Tree2: TREELOWIMPORTANCE";
 end;
