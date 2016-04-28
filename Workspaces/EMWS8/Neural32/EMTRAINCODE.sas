@@ -34,26 +34,23 @@ run;
 quit;
 data EM_Neural32;
 set EMWS8.Meta2_TRAIN(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-DepVar Education Income Kidhome Marital_Status MntFishProducts MntFruits
-MntGoldProds MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases
-NumDealsPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency
-Teenhome );
+AcceptedCmpTotal DepVar Frq Income Marital_Status Mnt MntGoldProds
+MntMeatProducts NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat
+Recency Teenhome Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Neural32: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural32: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural32: Create DMDB;
@@ -73,21 +70,21 @@ quit;
 * Neural32: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural32: Binary Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro BININPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
+
 %mend BININPUTS;
 *------------------------------------------------------------* ;
 * Neural32: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education Marital_Status
+    Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural32: Ordinal Inputs Macro ;
@@ -109,8 +106,6 @@ performance alldetails noutilfile;
 netopts
 decay=0;
 input %INTINPUTS / level=interval id=intvl
-;
-input %BININPUTS / level=nominal id=bin
 ;
 input %NOMINPUTS / level=nominal id=nom
 ;

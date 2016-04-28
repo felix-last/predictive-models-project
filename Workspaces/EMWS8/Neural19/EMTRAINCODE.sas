@@ -34,19 +34,20 @@ run;
 quit;
 data EM_Neural19;
 set EMWS8.BINNING_TRAIN(keep=
-DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Year_Birth );
+DepVar GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Neural19: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural19: DMDBVar Macro ;
@@ -84,9 +85,10 @@ quit;
 * Neural19: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural19: Ordinal Inputs Macro ;

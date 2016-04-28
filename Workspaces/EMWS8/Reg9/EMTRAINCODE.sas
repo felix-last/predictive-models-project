@@ -34,26 +34,23 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Meta2_TRAIN(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-DepVar Education Income Kidhome Marital_Status MntFishProducts MntFruits
-MntGoldProds MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases
-NumDealsPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency
-Teenhome );
+AcceptedCmpTotal DepVar Frq Income Marital_Status Mnt MntGoldProds
+MntMeatProducts NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat
+Recency Teenhome Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Reg9: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg9: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg9: Create DMDB;
@@ -80,39 +77,23 @@ outmap= EMWS8.Reg9_MAPDS namelen=200
 ;
 class
 DepVar
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
 Marital_Status
 ;
 model DepVar =
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint

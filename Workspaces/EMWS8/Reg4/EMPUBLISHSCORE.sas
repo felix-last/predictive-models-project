@@ -23,26 +23,8 @@ if missing( AcceptedCmpTotal ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check Frq for missing values ;
-if missing( Frq ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check Income for missing values ;
-if missing( Income ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
 *** Check Mnt for missing values ;
 if missing( Mnt ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check MntGoldProds for missing values ;
-if missing( MntGoldProds ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -53,26 +35,8 @@ if missing( MntMeatProducts ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check MntWines for missing values ;
-if missing( MntWines ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check NumDistPurchases for missing values ;
-if missing( NumDistPurchases ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check RFMstat for missing values ;
-if missing( RFMstat ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
-*** Check RMntFrq for missing values ;
-if missing( RMntFrq ) then do;
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -82,39 +46,6 @@ if missing( Recency ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
-
-*** Generate dummy variables for G_Marital_Status ;
-drop _1_0 _1_1 ;
-if missing( G_Marital_Status ) then do;
-   _1_0 = .;
-   _1_1 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( G_Marital_Status , BEST12. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '2'  then do;
-      _1_0 = -1;
-      _1_1 = -1;
-   end;
-   else if _dm12 = '0'  then do;
-      _1_0 = 1;
-      _1_1 = 0;
-   end;
-   else if _dm12 = '1'  then do;
-      _1_0 = 0;
-      _1_1 = 1;
-   end;
-   else do;
-      _1_0 = .;
-      _1_1 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
 *** If missing inputs, use averages;
 if _DM_BAD > 0 then do;
    _P0 = 0.151221567;
@@ -129,56 +60,27 @@ _LP0 = 0;
 
 ***  Effect: AcceptedCmpTotal ;
 _TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (     2.3101146636742 * _TEMP);
-
-***  Effect: Frq ;
-_TEMP = Frq ;
-_LP0 = _LP0 + (   -0.24397863929446 * _TEMP);
-
-***  Effect: G_Marital_Status ;
-_TEMP = 1;
-_LP0 = _LP0 + (    0.62662142005613) * _TEMP * _1_0;
-_LP0 = _LP0 + (    0.16948281370783) * _TEMP * _1_1;
-
-***  Effect: Income ;
-_TEMP = Income ;
-_LP0 = _LP0 + (   -0.00002912500869 * _TEMP);
+_LP0 = _LP0 + (    2.00789364724285 * _TEMP);
 
 ***  Effect: Mnt ;
 _TEMP = Mnt ;
-_LP0 = _LP0 + (   -0.00725366255775 * _TEMP);
-
-***  Effect: MntGoldProds ;
-_TEMP = MntGoldProds ;
-_LP0 = _LP0 + (    0.00966782899986 * _TEMP);
+_LP0 = _LP0 + (   -0.00231480100931 * _TEMP);
 
 ***  Effect: MntMeatProducts ;
 _TEMP = MntMeatProducts ;
-_LP0 = _LP0 + (    0.01188232167165 * _TEMP);
+_LP0 = _LP0 + (    0.00541458399877 * _TEMP);
 
-***  Effect: MntWines ;
-_TEMP = MntWines ;
-_LP0 = _LP0 + (      0.003639907135 * _TEMP);
-
-***  Effect: NumDistPurchases ;
-_TEMP = NumDistPurchases ;
-_LP0 = _LP0 + (    0.52674791091038 * _TEMP);
-
-***  Effect: RFMstat ;
-_TEMP = RFMstat ;
-_LP0 = _LP0 + (      0.000175187797 * _TEMP);
-
-***  Effect: RMntFrq ;
-_TEMP = RMntFrq ;
-_LP0 = _LP0 + (    0.02790898517022 * _TEMP);
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (    0.27296047674952 * _TEMP);
 
 ***  Effect: Recency ;
 _TEMP = Recency ;
-_LP0 = _LP0 + (   -0.06390893610641 * _TEMP);
+_LP0 = _LP0 + (   -0.06059528031342 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =     0.12264575618785 + _LP0;
+_TEMP =     -0.8562875570684 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

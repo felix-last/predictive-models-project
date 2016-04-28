@@ -2,17 +2,28 @@ if name = '_NODE_' then do;
 role = 'SEGMENT';
 level = 'NOMINAL';
 end;
-if upcase(name) = 'GRP_RFMSTAT' then role = 'INPUT';
+if upcase(name) = 'GRP_RECENCY' then role = 'INPUT';
 else
 if upcase(name) = 'GRP_ACCEPTEDCMP5' then role = 'INPUT';
 else
-if upcase(name) = 'GRP_RECENCY' then role = 'INPUT';
+if upcase(name) = 'GRP_RFMSTAT' then role = 'INPUT';
 else
-if upcase(name) = 'GRP_NUMCATALOGPURCHASES' then role = 'INPUT';
+if upcase(name) = 'GRP_NUMCATALOGPURCHASES' then do;
+role = 'REJECTED';
+comment = "Tree3: TREELOWIMPORTANCE";
+end;
 else
-if upcase(name) = 'GRP_MNTWINES' then role = 'INPUT';
+if upcase(name) = 'GRP_MNTWINES' then do;
+role = 'REJECTED';
+comment = "Tree3: TREELOWIMPORTANCE";
+end;
 else
 if upcase(name) = 'GRP_MNTMEATPRODUCTS' then do;
+role = 'REJECTED';
+comment = "Tree3: TREELOWIMPORTANCE";
+end;
+else
+if upcase(name) = 'GRP_FRQ' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
@@ -22,7 +33,7 @@ role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
-if upcase(name) = 'GRP_FRQ' then do;
+if upcase(name) = 'GRP_MNTGOLDPRODS' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;
@@ -53,11 +64,6 @@ comment = "Tree3: TREELOWIMPORTANCE";
 end;
 else
 if upcase(name) = 'GRP_MNT' then do;
-role = 'REJECTED';
-comment = "Tree3: TREELOWIMPORTANCE";
-end;
-else
-if upcase(name) = 'GRP_MNTGOLDPRODS' then do;
 role = 'REJECTED';
 comment = "Tree3: TREELOWIMPORTANCE";
 end;

@@ -18,6 +18,8 @@ if upcase(name) = 'FRQ' then role = 'REJECTED';
 else
 if upcase(name) = 'HIGHEREDUCATIONBINARY' then role = 'REJECTED';
 else
+if upcase(name) = 'INCOME' then role = 'REJECTED';
+else
 if upcase(name) = 'KIDHOME' then role = 'REJECTED';
 else
 if upcase(name) = 'MARITAL_STATUS' then role = 'REJECTED';
@@ -28,17 +30,15 @@ if upcase(name) = 'MNTFRUITS' then role = 'REJECTED';
 else
 if upcase(name) = 'MNTGOLDPRODS' then role = 'REJECTED';
 else
-if upcase(name) = 'MNTMEATPRODUCTS' then role = 'REJECTED';
-else
 if upcase(name) = 'MNTSWEETPRODUCTS' then role = 'REJECTED';
 else
 if upcase(name) = 'MNTWINES' then role = 'REJECTED';
 else
 if upcase(name) = 'MONTHSASCUSTOMER' then role = 'REJECTED';
 else
-if upcase(name) = 'NUMCATALOGPURCHASES' then role = 'REJECTED';
-else
 if upcase(name) = 'NUMDEALSPURCHASES' then role = 'REJECTED';
+else
+if upcase(name) = 'NUMDISTPURCHASES' then role = 'REJECTED';
 else
 if upcase(name) = 'NUMSTOREPURCHASES' then role = 'REJECTED';
 else
@@ -46,7 +46,7 @@ if upcase(name) = 'NUMWEBPURCHASES' then role = 'REJECTED';
 else
 if upcase(name) = 'NUMWEBVISITSMONTH' then role = 'REJECTED';
 else
-if upcase(name) = 'RECENCY' then role = 'REJECTED';
+if upcase(name) = 'RMNTFRQ' then role = 'REJECTED';
 else
 if upcase(name) = 'TEENHOME' then role = 'REJECTED';
 else

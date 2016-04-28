@@ -36,16 +36,15 @@ quit;
 * Rule6: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Rule6: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule6: Create DMDB;
@@ -126,10 +125,9 @@ title9;
 * Rule6: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   Education Income Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Marital_Status Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Rule6: Tree Targets Macro ;
@@ -144,16 +142,15 @@ run;
 * Rule6: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Rule6: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   Education Marital_Status
+    Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Rule6: Ordinal Inputs Macro ;
@@ -187,19 +184,19 @@ measure=ASE
 ;
 MAKEMACRO NLEAVES=nleaves;
 save
-MODEL=WORK.OUTTREE_TREE_3WWL1DS
-SEQUENCE=WORK.OUTSEQ_TREE_3WWL1DS
-IMPORTANCE=WORK.OUTIMPORT_TREE_3WWL1DS
-NODESTAT=WORK.OUTNODES_TREE_3WWL1DS
-SUMMARY=WORK.OUTSUMMARY_TREE_3WWL1DS
-STATSBYNODE=WORK.OUTSTATS_TREE_3WWL1DS
-Pathlistnonmissing = WORK.OUTPATH_TREE_3WWL1DS
-Rules = WORK.OUTRULES_TREE_3WWL1DS
+MODEL=WORK.OUTTREE_TREE_05TSK61
+SEQUENCE=WORK.OUTSEQ_TREE_05TSK61
+IMPORTANCE=WORK.OUTIMPORT_TREE_05TSK61
+NODESTAT=WORK.OUTNODES_TREE_05TSK61
+SUMMARY=WORK.OUTSUMMARY_TREE_05TSK61
+STATSBYNODE=WORK.OUTSTATS_TREE_05TSK61
+Pathlistnonmissing = WORK.OUTPATH_TREE_05TSK61
+Rules = WORK.OUTRULES_TREE_05TSK61
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\RIP1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\RIP1.sas"
 group=Rule6
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
 group=Rule6
 residual
 ;
@@ -209,8 +206,8 @@ score data=EMWS8.Meta2_VALIDATE out=_pvalid
 ;
 run;
 quit;
-data WORK.OUTIMPORT_TREE_3WWL1DS;
-set WORK.OUTIMPORT_TREE_3WWL1DS;
+data WORK.OUTIMPORT_TREE_05TSK61;
+set WORK.OUTIMPORT_TREE_05TSK61;
 label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, noquote))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, noquote))" NRULES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nrules_vlabel, noquote))" IMPORTANCE =
    "%sysfunc(sasmsg(sashelp.dmine, rpt_importance_vlabel, noquote))" NSURROGATES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nsurrogates_vlabel, noquote))"
 VIMPORTANCE = "%sysfunc(sasmsg(sashelp.dmine, rpt_vimportance_vlabel, noquote))" RATIO = "%sysfunc(sasmsg(sashelp.dmine, rpt_ratio_vlabel, noquote))"
@@ -284,27 +281,23 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-DepVar Education Income Kidhome Marital_Status MntFishProducts MntFruits
-MntGoldProds MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases
-NumDealsPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency
-Teenhome _bin);
+AcceptedCmpTotal DepVar Frq Income Marital_Status Mnt MntGoldProds
+MntMeatProducts NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat
+Recency Teenhome Year_Birth _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule6: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(ASC) Education(ASC) Marital_Status(ASC)
-   _bin(DESC)
+    DepVar(ASC) Marital_Status(ASC) _bin(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Rule6: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule6: Create DMDB;
@@ -325,45 +318,29 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule6_DMDB
 validata = work._valid
-outest = WORK.DMREG_2Y7JP6P_OUTEST
-outterms = WORK.DMREG_2Y7JP6P_OUTTERMS
-outmap= WORK.DMREG_2Y7JP6P_MAP namelen=200
+outest = WORK.DMREG_2_6M9LU_OUTEST
+outterms = WORK.DMREG_2_6M9LU_OUTTERMS
+outmap= WORK.DMREG_2_6M9LU_MAP namelen=200
 ;
 class
 _bin
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
 Marital_Status
 ;
 model _bin =
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint
@@ -375,10 +352,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\BIN1.sas"
 group=Rule6_1
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
 group=Rule6_1
 residual
 ;
@@ -446,29 +423,20 @@ data _ptrain;
 set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 DepVar;
 run;
 * Extract misfit validation values;
@@ -477,29 +445,20 @@ data _pvalid;
 set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 DepVar;
 run;
 * Create training data set with binary target for modeling;
@@ -552,27 +511,23 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-DepVar Education Income Kidhome Marital_Status MntFishProducts MntFruits
-MntGoldProds MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases
-NumDealsPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency
-Teenhome _bin);
+AcceptedCmpTotal DepVar Frq Income Marital_Status Mnt MntGoldProds
+MntMeatProducts NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat
+Recency Teenhome Year_Birth _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule6: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(ASC) Education(ASC) Marital_Status(ASC)
-   _bin(DESC)
+    DepVar(ASC) Marital_Status(ASC) _bin(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Rule6: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule6: Create DMDB;
@@ -593,45 +548,29 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule6_DMDB
 validata = work._valid
-outest = WORK.DMREG_2ECTYSB_OUTEST
-outterms = WORK.DMREG_2ECTYSB_OUTTERMS
-outmap= WORK.DMREG_2ECTYSB_MAP namelen=200
+outest = WORK.DMREG_130MOT3_OUTEST
+outterms = WORK.DMREG_130MOT3_OUTTERMS
+outmap= WORK.DMREG_130MOT3_MAP namelen=200
 ;
 class
 _bin
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
 Marital_Status
 ;
 model _bin =
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint
@@ -643,10 +582,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN2.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\BIN2.sas"
 group=Rule6_2
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD11884_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
 group=Rule6_2
 residual
 ;
@@ -714,29 +653,20 @@ data _ptrain;
 set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 DepVar;
 run;
 * Extract misfit validation values;
@@ -745,29 +675,20 @@ data _pvalid;
 set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
+AcceptedCmpTotal
+Frq
 Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
+Mnt
 MntGoldProds
 MntMeatProducts
-MntSweetProducts
-MntWines
 NumCatalogPurchases
 NumDealsPurchases
-NumStorePurchases
-NumWebPurchases
 NumWebVisitsMonth
+RFMstat
 Recency
 Teenhome
+Year_Birth
 DepVar;
 run;
 data _train;

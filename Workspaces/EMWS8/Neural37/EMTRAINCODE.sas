@@ -34,27 +34,21 @@ run;
 quit;
 data EM_Neural37;
 set EMWS8.Meta3_TRAIN(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
-Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds MntSweetProducts
-MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat RMntFrq Recency
-Teenhome );
+AcceptedCmpTotal DepVar Frq Marital_Status Mnt MntMeatProducts
+NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth Recency );
 run;
 *------------------------------------------------------------* ;
 * Neural37: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural37: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural37: Create DMDB;
@@ -74,22 +68,20 @@ quit;
 * Neural37: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural37: Binary Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro BININPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   HigherEducationBinary
+
 %mend BININPUTS;
 *------------------------------------------------------------* ;
 * Neural37: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education Marital_Status
+    Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural37: Ordinal Inputs Macro ;
@@ -111,8 +103,6 @@ performance alldetails noutilfile;
 netopts
 decay=0;
 input %INTINPUTS / level=interval id=intvl
-;
-input %BININPUTS / level=nominal id=bin
 ;
 input %NOMINPUTS / level=nominal id=nom
 ;

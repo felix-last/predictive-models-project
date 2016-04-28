@@ -42,7 +42,7 @@ quit;
 * DMNeural5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * DMNeural5: Create DMDB;
@@ -62,11 +62,11 @@ quit;
 * DMNeural5: Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INPUTS;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend INPUTS;
 proc dmneurl data=EMWS8.Varsel_TRAIN dmdbcat=WORK.DMNeural5_DMDB
 outest=EMWS8.DMNeural5_ESTIMATE outfit=WORK._OUTFIT_DMNEURAL
-out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_0OBTDUN
+out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_0XME2PI
 optcrit=ACC maxcomp=6 maxstage=10 maxfunc=1000
 selcrit=SSE
 maxiter=400 maxvect=800 memsiz=8 stopr2=0.00005 cutoff=0.5 maxrows = 3000

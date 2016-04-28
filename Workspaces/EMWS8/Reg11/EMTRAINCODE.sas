@@ -34,27 +34,21 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Meta3_TRAIN(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
-Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds MntSweetProducts
-MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat RMntFrq Recency
-Teenhome );
+AcceptedCmpTotal DepVar Frq Marital_Status Mnt MntMeatProducts
+NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth Recency );
 run;
 *------------------------------------------------------------* ;
 * Reg11: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg11: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg11: Create DMDB;
@@ -81,42 +75,18 @@ outmap= EMWS8.Reg11_MAPDS namelen=200
 ;
 class
 DepVar
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
-Complain
-Education
-HigherEducationBinary
 Marital_Status
 ;
 model DepVar =
-AcceptedCmp1
-AcceptedCmp2
-AcceptedCmp3
-AcceptedCmp4
-AcceptedCmp5
 AcceptedCmpTotal
-Age
-Complain
-Education
 Frq
-HigherEducationBinary
-Income
-Kidhome
 Marital_Status
-MntFishProducts
-MntFruits
-MntGoldProds
-MntSweetProducts
-MonthsAsCustomer
+Mnt
+MntMeatProducts
+NumCatalogPurchases
 NumDealsPurchases
 NumWebVisitsMonth
-RFMstat
-RMntFrq
 Recency
-Teenhome
 /error=binomial link=PROBIT
 coding=DEVIATION
 nodesignprint

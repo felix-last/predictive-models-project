@@ -4,7 +4,7 @@ MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   data _null_;
 MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
-MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "10.07 Uhr" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "16.40 Uhr" );
 MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
 MPRINT(EM_DIAGRAM):   put "* Score Log";
 MPRINT(EM_DIAGRAM):   put nldate;
@@ -14,951 +14,949 @@ MPRINT(EM_DIAGRAM):   run;
 *------------------------------------------------------------*
 * Score Log
 Date:                28. April 2016
-Time:                10.07 Uhr
+Time:                16.40 Uhr
 *------------------------------------------------------------*
-MPRINT(EM_DIAGRAM):    filename O21_UUVP "C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMSCORE.out" encoding="UTF-8" NOBOM;
-MPRINT(EM_DIAGRAM):   proc printto print=O21_UUVP new;
+MPRINT(EM_DIAGRAM):    filename O11D31H4 "C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O11D31H4 new;
 MPRINT(EM_DIAGRAM):   run;
-2041724    %let EMEXCEPTIONSTRING=;
-2041725    *------------------------------------------------------------*;
+873627     %let EMEXCEPTIONSTRING=;
+873628     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
-2041726    * SCORE: SVM4;
+873629     * SCORE: SVM4;
 MPRINT(EM_DIAGRAM):   * SCORE: SVM4;
-2041727    *------------------------------------------------------------*;
+873630     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-2041728    %let EM_ACTION = SCORE;
-2041729    %let syscc = 0;
-2041730    %macro main;
-2041731    
-2041732       filename temp catalog 'sashelp.emmodl.svm_macros.source';
-2041733       %include temp;
-2041734       filename temp;
-2041735       %SetProperties;
-2041736       %if %upcase(&EM_ACTION) = CREATE %then %do;
-2041737           filename temp catalog 'sashelp.emmodl.svm_create.source';
-2041738           %include temp;
-2041739           filename temp;
-2041740           %create;
-2041741       %end;
-2041742       %else
-2041743       %if %upcase(&EM_ACTION) = TRAIN %then %do;
-2041744           filename temp catalog 'sashelp.emmodl.svm_train.source';
-2041745           %include temp;
-2041746           filename temp;
-2041747           %train;
-2041748       %end;
-2041749       %else
-2041750       %if %upcase(&EM_ACTION) = REPORT %then %do;
-2041751           filename temp catalog 'sashelp.emmodl.svm_report.source';
-2041752           %include temp;
-2041753           filename temp;
-2041754           %report;
-2041755       %end;
-2041756    
-2041757    %mend main;
-2041758    
-2041759    %main;
+873631     %let EM_ACTION = SCORE;
+873632     %let syscc = 0;
+873633     %macro main;
+873634     
+873635        filename temp catalog 'sashelp.emmodl.svm_macros.source';
+873636        %include temp;
+873637        filename temp;
+873638        %SetProperties;
+873639        %if %upcase(&EM_ACTION) = CREATE %then %do;
+873640            filename temp catalog 'sashelp.emmodl.svm_create.source';
+873641            %include temp;
+873642            filename temp;
+873643            %create;
+873644        %end;
+873645        %else
+873646        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+873647            filename temp catalog 'sashelp.emmodl.svm_train.source';
+873648            %include temp;
+873649            filename temp;
+873650            %train;
+873651        %end;
+873652        %else
+873653        %if %upcase(&EM_ACTION) = REPORT %then %do;
+873654            filename temp catalog 'sashelp.emmodl.svm_report.source';
+873655            %include temp;
+873656            filename temp;
+873657            %report;
+873658        %end;
+873659     
+873660     %mend main;
+873661     
+873662     %main;
 MPRINT(EM_DIAGRAM):    
 MPRINT(MAIN):   filename temp catalog 'sashelp.emmodl.svm_macros.source';
 NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.SVM_MACROS.SOURCE.
-2041761   +%macro SetProperties;
-2041762   +   %em_checkmacro(name=EM_PROPERTY_METHOD,  global=Y, value=DQP);
-2041763   +   %em_checkmacro(name=EM_PROPERTY_TUNINGMETHOD,  global=Y, value=POPT);
-2041764   +   %em_checkmacro(name=EM_PROPERTY_APPLYCV,  global=Y, value=N);
-2041765   +   %em_checkmacro(name=EM_PROPERTY_CVMETHOD,  global=Y, value=RANDOM);
-2041766   +   %em_checkmacro(name=EM_PROPERTY_CVFOLD, global=Y, value=Default);
-2041767   +   %em_checkmacro(name=EM_PROPERTY_CVALUE,    global=Y, value=TUNING);
-2041768   +   %em_checkmacro(name=EM_PROPERTY_USERCVALUE,    global=Y, value=0.1);
-2041769   +   %em_checkmacro(name=EM_PROPERTY_TUN_C_FROM,    global=Y, value=0.1);
-2041770   +   %em_checkmacro(name=EM_PROPERTY_TUN_C_TO,    global=Y, value=1);
-2041771   +   %em_checkmacro(name=EM_PROPERTY_TUN_C_BY,    global=Y, value=0.1);
-2041772   +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTION,    global=Y, value=DEFAULT);
-2041773   +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTHIST,    global=Y, value=N);
-2041774   +   %em_checkmacro(name=EM_PROPERTY_KERNEL,    global=Y, value=LINEAR);
-2041775   +   %em_checkmacro(name=EM_PROPERTY_POLY_K_PAR1,    global=Y, value=CONSTANT);
-2041776   +   %em_checkmacro(name=EM_PROPERTY_POLY_USERK_PAR1,    global=Y, value=2);
-2041777   +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_FROM,    global=Y, value=2);
-2041778   +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_TO,    global=Y, value=5);
-2041779   +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_BY,    global=Y, value=1);
-2041780   +   %em_checkmacro(name=EM_PROPERTY_RBF_K_PAR1,    global=Y, value=CONSTANT);
-2041781   +   %em_checkmacro(name=EM_PROPERTY_RBF_USERK_PAR1,    global=Y, value=1);
-2041782   +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_FROM,    global=Y, value=0.2);
-2041783   +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_TO,    global=Y, value=1);
-2041784   +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_BY,    global=Y, value=0.2);
-2041785   +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR1,    global=Y, value=CONSTANT);
-2041786   +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR1,    global=Y, value=1);
-2041787   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_FROM,    global=Y, value=0.1);
-2041788   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_TO,    global=Y, value=1);
-2041789   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_BY,    global=Y, value=0.1);
-2041790   +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR2,       global=Y, value=CONSTANT);
-2041791   +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR2,    global=Y, value=1);
-2041792   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_FROM,    global=Y, value=0.1);
-2041793   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_TO,    global=Y, value=1);
-2041794   +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_BY,    global=Y, value=0.1);
-2041795   +   %em_checkmacro(name=EM_PROPERTY_APPLYSAMPLING,     global=Y,  value=Y);
-2041796   +   %em_checkmacro(name=EM_PROPERTY_SAMPLESIZE,  global=Y,  value=1000);
-2041797   +   %em_checkmacro(name=EM_PROPERTY_SUPPRESSSAMPWARN,  global=Y,  value=N);
-2041798   +   %em_checkmacro(name=EM_PROPERTY_USEITERCG,  global=Y,  value=DEFAULT);
-2041799   +   %em_checkmacro(name=EM_PROPERTY_CGITER,    global=Y, value=400);
-2041800   +   %em_checkmacro(name=EM_PROPERTY_CGTOL,    global=Y,    value=0.000001);
-2041801   +   %em_checkmacro(name=EM_PROPERTY_EPSILON,  global=Y,  value=0.1);
-2041802   +   %em_checkmacro(name=EM_PROPERTY_QPSIZE,   global=Y,   value=100);
-2041803   +   %em_checkmacro(name=EM_PROPERTY_MAXITER,  global=Y,  value=200);
-2041804   +   %em_checkmacro(name=EM_PROPERTY_MAXFUNC,  global=Y,  value=500);
-2041805   +   %em_checkmacro(name=EM_PROPERTY_MEMSIZE,  global=Y,  value=8);
-2041806   +   %em_checkmacro(name=EM_PROPERTY_OUTITER,  global=Y,  value=10);
-2041807   +   %em_checkmacro(name=EM_PROPERTY_GCONV,    global=Y,  value=0.00000001);
-2041808   +   %em_checkmacro(name=EM_PROPERTY_ABSGCONV, global=Y,  value=0.0005);
-2041809   +   %em_checkmacro(name=EM_PROPERTY_XSCALE, global=Y,  value=Y);
-2041810   +   %em_checkmacro(name=EM_PROPERTY_XCONV,    global=Y,  value=0.00000001);
-2041811   +   %em_checkmacro(name=EM_PROPERTY_ABSXCONV, global=Y,  value=0.0005);
-2041813   +%mend SetProperties;
-2041816   +%macro make_dmdb(indata=, out=0, classout=WORK.DMDBCLASS, varout=WORK.DMDBVAR) ;
-2041818   +  %local emclassout emvarout;
-2041820   +   proc dmdb batch dmdbcat= _emdmdb
-2041822   +   %if &out ne 0 %then %do ;
-2041823   +       data=&indata out= _emdmdb &emclassout &emvarout;
-2041824   +   %end ;
-2041825   +   %else %do ;
-2041826   +       data=&indata &emclassout &emvarout;
-2041827   +   %end ;
-2041829   +   %if %em_interval ne  %then %do ; var %EM_INTERVAL ; %end ;
-2041830   +   %if %em_class   ne  %then %do ;
-2041831   +       class %EM_CLASS;
-2041832   +   %end ;
-2041833   +   /*%if %em_freq    ne  %then %do ; freq %em_freq   ; %end ;  */
-2041834   +   %if %em_target ne %then %do ;
-2041835   +          target %em_target ;
-2041836   +   %end ;
-2041837   +   run ;
-2041838   +%mend make_dmdb;
-2041841   +%macro svm_training(indata=,
-2041842   +                    task=,
-2041843   +                    classtask=,
-2041844   +                    method=,
-2041845   +                    outest =,
-2041846   +                    outclass =,
-2041847   +                    outfit =,
-2041848   +                    isValidationSet =,
-2041849   +                    testdata =,
-2041850   +                    testout =,
-2041851   +                    validSource=,
-2041852   +                    usecgbydefault=
-2041853   +                    );
-2041855   +%make_dmdb(indata=&indata, out=1);
-2041857   +options debug="nlpitermsg=2";
-2041859   +%if (&EM_PROPERTY_TUNINGMETHOD eq GRID) %then %do;
-2041860   +%EM_GETNAME(KEY=TUNINGCRIT, TYPE=DATA);
-2041861   +ods output tun_crt = &EM_USER_TUNINGCRIT;
-2041862   +%end;
-2041864   +%let _PROPERTY_USERCVALUE = %sysfunc(strip(&EM_PROPERTY_USERCVALUE));
-2041865   +%let _PROPERTY_TUN_C_FROM = %sysfunc(strip(&EM_PROPERTY_TUN_C_FROM));
-2041866   +%let _PROPERTY_TUN_C_TO = %sysfunc(strip(&EM_PROPERTY_TUN_C_TO));
-2041867   +%let _PROPERTY_TUN_C_BY = %sysfunc(strip(&EM_PROPERTY_TUN_C_BY));
-2041869   +%let _PROPERTY_POLY_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_POLY_USERK_PAR1));
-2041870   +%let _PROPERTY_POLY_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_FROM));
-2041871   +%let _PROPERTY_POLY_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_TO));
-2041872   +%let _PROPERTY_POLY_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_BY));
-2041875   +%let _PROPERTY_RBF_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_RBF_USERK_PAR1));
-2041876   +%let _PROPERTY_RBF_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_FROM));
-2041877   +%let _PROPERTY_RBF_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_TO));
-2041878   +%let _PROPERTY_RBF_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_BY));
-2041880   +%let _PROPERTY_SGMD_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR1));
-2041881   +%let _PROPERTY_SGMD_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_FROM));
-2041882   +%let _PROPERTY_SGMD_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_TO));
-2041883   +%let _PROPERTY_SGMD_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_BY));
-2041886   +%let _PROPERTY_SGMD_USERK_PAR2 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR2));
-2041887   +%let _PROPERTY_SGMD_TUN_KP2_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_FROM));
-2041888   +%let _PROPERTY_SGMD_TUN_KP2_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_TO));
-2041889   +%let _PROPERTY_SGMD_TUN_KP2_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_BY));
-2041892   +%let _PROPERTY_CGITER = %sysfunc(strip(&EM_PROPERTY_CGITER));
-2041893   +%let _PROPERTY_CGTOL  = %sysfunc(strip(&EM_PROPERTY_CGTOL));
-2041894   +%let _PROPERTY_QPSIZE =  %sysfunc(strip(&EM_PROPERTY_QPSIZE));
-2041895   +%let _PROPERTY_EPSILON =  %sysfunc(strip(&EM_PROPERTY_EPSILON));
-2041896   +%let _PROPERTY_MAXITER =  %sysfunc(strip(&EM_PROPERTY_MAXITER));
-2041897   +%let _PROPERTY_MAXFUNC =  %sysfunc(strip(&EM_PROPERTY_MAXFUNC));
-2041898   +%let _PROPERTY_MEMSIZE =  %sysfunc(strip(&EM_PROPERTY_MEMSIZE));
-2041899   +%let _PROPERTY_OUTITER =  %sysfunc(strip(&EM_PROPERTY_OUTITER));
-2041900   +%let _PROPERTY_GCONV   =  %sysfunc(strip(&EM_PROPERTY_GCONV));
-2041901   +%let _PROPERTY_ABSGCONV =  %sysfunc(strip(&EM_PROPERTY_ABSGCONV));
-2041902   +%let _PROPERTY_XCONV   =  %sysfunc(strip(&EM_PROPERTY_XCONV));
-2041903   +%let _PROPERTY_ABSXCONV =  %sysfunc(strip(&EM_PROPERTY_ABSXCONV));
-2041907   +proc svm data= _emdmdb
-2041908   +         dmdbcat= _emdmdb
-2041909   +         nomonitor
-2041910   +         outfit= &outfit
-2041911   +         outclass= &outclass
-2041912   +         outest= &outest
-2041913   +         out = _outtrain
-2041914   +         maxiter = &_PROPERTY_MAXITER
-2041915   +         maxfunc = &_PROPERTY_MAXFUNC
-2041916   +      /*   memsiz =  &_PROPERTY_MEMSIZE*/
-2041917   +         gconv =   &_PROPERTY_GCONV
-2041918   +         absgconv = &_PROPERTY_ABSGCONV
-2041919   +         xconv =   &_PROPERTY_XCONV
-2041920   +         absxconv = &_PROPERTY_ABSXCONV
-2041922   +    %if &EM_PROPERTY_KERNEL ne POLYNOM %then %do;
-2041923   +         %if &EM_PROPERTY_XSCALE eq Y  %then %do;
-2041924   +             xscale
-2041925   +         %end;
-2041926   +         %else %do;
-2041927   +             noscale
-2041928   +         %end;
-2041929   +    %end;
-2041930   +    %if &task eq CLASSIFICATION %then %do;
-2041931   +        %if &EM_PROPERTY_METHOD eq DEFAULT  %then %do;
-2041932   +         method= &method
-2041933   +        %end;
-2041934   +        %else %if &EM_PROPERTY_METHOD eq DQP %then %do;
-2041935   +         method= DQP   qpsize = &_PROPERTY_QPSIZE
-2041936   +        %end;
-2041937   +        %else %do;
-2041938   +         method= &EM_PROPERTY_METHOD
-2041939   +        %end;
-2041940   +    %end;
-2041941   +    %else %do;
-2041942   +         method= &method  task=&classtask
-2041943   +         /*%if &classtask eq EPS_REG %then %do; */
-2041944   +             esp=&_PROPERTY_EPSILON
-2041945   +         /*%end;*/
-2041946   +    %end;
-2041948   +    %if &EM_PROPERTY_KERNEL ne  %then %do;
-2041949   +         kernel = &EM_PROPERTY_KERNEL
-2041950   +    %end;
-2041951   +    %else %do;
-2041952   +         kernel = Linear
-2041953   +    %end;
-2041955   +    %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
-2041957   +        %if ( (&EM_PROPERTY_CVALUE eq TUNING)
-2041958   +            or  (&EM_PROPERTY_POLY_K_PAR1 eq TUNING)
-2041959   +            or  (&EM_PROPERTY_RBF_K_PAR1 eq TUNING)
-2041960   +            or  (&EM_PROPERTY_SGMD_K_PAR1 eq TUNING)
-2041961   +            or  (&EM_PROPERTY_SGMD_K_PAR2 eq TUNING) )  %then %do;
-2041962   +            tun = &EM_PROPERTY_TUNINGMETHOD
-2041963   +        %end;
-2041965   +    %end;
-2041967   +    %if &EM_PROPERTY_APPLYCV eq Y %then %do;
-2041968   +         CV  = &EM_PROPERTY_CVMETHOD
-2041969   +         %if &EM_PROPERTY_CVFOLD ne Default %then %do;
-2041970   +         fold = &EM_PROPERTY_CVFOLD
-2041971   +         %end;
-2041972   +         %if &EM_PROPERTY_CVMETHOD eq TESTSET %then %do;
-2041973   +                testdata = &testdata
-2041974   +         %end;
-2041975   +    %end;
-2041977   +    %if (&EM_PROPERTY_USEITERCG eq Y) or ( &usecgbydefault eq Y )  %then %do;
-2041978   +      cgiter = &_PROPERTY_CGITER  cgtol=&_PROPERTY_CGTOL
-2041979   +    %end;
-2041981   +    %if &EM_PROPERTY_PRINTOPTION ne DEFAULT  %then %do;
-2041982   +    &EM_PROPERTY_PRINTOPTION
-2041983   +    %end;
-2041985   +    %if &EM_PROPERTY_PRINTOPTHIST eq Y  %then %do;
-2041986   +    POPTHIS
-2041987   +    %end;
-2041988   +    ;
-2041989   +    var %EM_INPUT %EM_REJECTED;
-2041990   +    target %EM_TARGET;
-2041992   +     %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
-2041994   +         %if &EM_PROPERTY_CVALUE eq TUNING  %then %do;
-2041995   +             C  &_PROPERTY_TUN_C_FROM to &_PROPERTY_TUN_C_TO
-2041996   +             by &_PROPERTY_TUN_C_BY
-2041997   +             ;
-2041998   +         %end;
-2041999   +         %else %if &EM_PROPERTY_CVALUE eq CONSTANT  %then %do;
-2042000   +             C  &_PROPERTY_USERCVALUE ;
-2042001   +         %end;
-2042003   +     %end;
-2042004   +     %else %do;
-2042005   +           C  &_PROPERTY_USERCVALUE ;
-2042006   +     %end;
-2042009   +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
-2042011   +          %if &EM_PROPERTY_TUNINGMETHOD eq GRID  %then %do;
-2042012   +             %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
-2042013   +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM to &_PROPERTY_POLY_TUN_KP1_TO
-2042014   +                  by &_PROPERTY_POLY_TUN_KP1_BY
-2042015   +                ;
-2042016   +             %end;
-2042017   +             %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
-2042018   +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
-2042019   +             %end;
-2042020   +          %end;
-2042021   +          %else %if &EM_PROPERTY_TUNINGMETHOD eq POPT  %then %do;
-2042022   +              %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
-2042023   +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM ;
-2042024   +                ;
-2042025   +              %end;
-2042026   +              %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
-2042027   +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
-2042028   +              %end;
-2042029   +           %end;
-2042030   +           %else %do;
-2042031   +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
-2042032   +           %end;
-2042033   +    %end;
-2042035   +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
-2042036   +          %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
-2042037   +             %if &EM_PROPERTY_RBF_K_PAR1 eq TUNING  %then %do;
-2042038   +                  K_PAR  &_PROPERTY_RBF_TUN_KP1_FROM to &_PROPERTY_RBF_TUN_KP1_TO
-2042039   +                  by &_PROPERTY_RBF_TUN_KP1_BY
-2042040   +                  ;
-2042041   +              %end;
-2042042   +              %else %if &EM_PROPERTY_RBF_K_PAR1 eq CONSTANT  %then %do;
-2042043   +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
-2042044   +              %end;
-2042045   +          %end;
-2042046   +          %else %do;
-2042047   +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
-2042048   +          %end;
-2042049   +    %end;
-2042052   +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
-2042054   +         %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
-2042056   +             %if &EM_PROPERTY_SGMD_K_PAR1 eq TUNING  %then %do;
-2042057   +                K_PAR  &_PROPERTY_SGMD_TUN_KP1_FROM to &_PROPERTY_SGMD_TUN_KP1_TO
-2042058   +                by &_PROPERTY_SGMD_TUN_KP1_BY
-2042059   +             ;
-2042060   +             %end;
-2042061   +             %else %if &EM_PROPERTY_SGMD_K_PAR1 eq CONSTANT  %then %do;
-2042062   +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
-2042063   +             %end;
-2042065   +             %if &EM_PROPERTY_SGMD_K_PAR2 eq TUNING  %then %do;
-2042066   +                K_PAR2  &_PROPERTY_SGMD_TUN_KP2_FROM to &_PROPERTY_SGMD_TUN_KP2_TO
-2042067   +                by &_PROPERTY_SGMD_TUN_KP2_BY
-2042068   +             ;
-2042069   +             %end;
-2042070   +             %else %if &EM_PROPERTY_SGMD_K_PAR2 eq CONSTANT  %then %do;
-2042071   +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
-2042072   +             %end;
-2042073   +          %end;
-2042074   +          %else %do;
-2042075   +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
-2042076   +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
-2042077   +          %end;
-2042078   +    %end;
-2042080   +run;
-2042081   +%TRAINENDLINE:
-2042082   +quit;
-2042083   +%mend svm_training;
-2042085   +%macro svm_score(indata=,
-2042086   +                 inest=,
-2042087   +                 infit=,
-2042088   +                 inclass=,
-2042089   +                 outindata=,
-2042090   +                 outscore=,
-2042091   +                 targetLevel=
-2042092   +                 );
-2042095   +%if &TargetLevel eq BINARY %then %do;
-2042097   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
-2042099   +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
-2042100   +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
-2042101   +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
-2042102   +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
-2042105   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042106   +   %let TargetEvent = %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
-2042107   +    %let TargetVar =   %sysfunc(getvarc(&dsid, &vn_target_name));
-2042108   +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
-2042109   +   %let TargetType =  %sysfunc(getvarc(&dsid, &vn_target_type));
-2042110   +%end;
-2042112   +%let dsid = %sysfunc(close(&dsid));
-2042115   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
-2042116   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042118   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042119   +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042120   +%end;
-2042121   +%let dsid = %sysfunc(close(&dsid));
-2042123   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
-2042124   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042126   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042127   +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042128   +%end;
-2042129   +%let dsid = %sysfunc(close(&dsid));
-2042132   +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
-2042133   +              out=&outscore(rename=(_F_=&F_VAR _I_=&I_VAR));
-2042134   +run;
-2042136   +filename resifref  "&EM_NODEDIR&EM_DSEP.tmprescode.sas";
-2042137   +%makeResidualVars(target=&TargetVar, decmeta=&EM_DEC_DECMETA, fref=resifref); /* from a part of %EM_MODEL() macro */
-2042139   +data &outscore(drop=_P);
-2042140   +      set  &outscore;
-2042141   +     if (_P_ < -600) then _p =0;
-2042142   +     else _P = 1/(1+EXP((-1)*(_P_)));
-2042144   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
-2042145   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042146   +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
-2042148   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042149   +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
-2042150   +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
-2042151   +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
-2042152   +       &P_Var = _P;
-2042153   +   %end;
-2042154   +   %else %do;
-2042155   +       &P_Var = 1 - _P;
-2042156   +       %let targetNonEvent = &P_LEVEL;
-2042157   +   %end;
-2042158   +%end;
-2042159   +%let dsid = %sysfunc(close(&dsid));
-2042161   +%include resifref;
-2042163   +run;
-2042165   +filename resifref;
-2042167   +%end; /* the end of if - targetlevel eq binary */
-2042168   +%else %do;
-2042170   +/* ----     interval target  ------ */
-2042172   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
-2042173   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042175   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042176   +   %let P_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042177   +%end;
-2042178   +%let dsid = %sysfunc(close(&dsid));
-2042180   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
-2042181   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042183   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042184   +   %let R_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042185   +%end;
-2042187   +%let dsid = %sysfunc(close(&dsid));
-2042189   +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
-2042190   +              out=&outscore(rename=(_P_=&P_VAR _R_=&R_VAR));
-2042191   +run;
-2042193   +%end; /* end of targetlevel eq interval */
-2042196   +%mend svm_score;
-2042199   +%macro makeSVMFitStatDs();
-2042201   +data &EM_USER_SVMFITDS;
-2042202   +     set &EM_USER_SVMFITSTAT;
-2042203   +     Label _Bias_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_bias, noquote))";
-2042204   +     Label _K_PAR2_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par2, noquote))";
-2042205   +     Label _K_PAR3_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par3, noquote))";
-2042206   +     Label _K_PAR_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par, noquote))";
-2042207   +     Label _L1_        = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_l1, noquote))";
-2042208   +     Label _Margin_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_margin, noquote))";
-2042209   +     Label _NCLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nclev, noquote))";
-2042210   +     Label _NCV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_ncv, noquote))";
-2042211   +     Label _NIV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_niv, noquote))";
-2042212   +     Label _NLV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nlv, noquote))";
-2042213   +     Label _NOBS_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nobs, noquote))";
-2042214   +     Label _NSV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nsv, noquote))";
-2042215   +     Label _NTRAIN_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_ntrain, noquote))";
-2042216   +     Label _NYLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nylev, noquote))";
-2042217   +     Label _NormW_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_normw, noquote))";
-2042218   +     Label _OBJ_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_obj, noquote))";
-2042219   +     Label _Radius_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_radius, noquote))";
-2042220   +     Label _RegC_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_regc, noquote))";
-2042221   +     Label _SVOM_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_svom, noquote))";
-2042222   +     Label _VCDim_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_vcdim, noquote))";
-2042223   +    if _TYPE_ ='_ACCTAB_' then delete;
-2042224   +    %if &EM_PROPERTY_KERNEL eq LINEAR %then %do;
-2042225   +      _BIAS_= _K_PAR_;
-2042226   +      DROP _K_PAR_ _K_PAR2_ _K_PAR3_ _L1_;
-2042227   +    %end;
-2042228   +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
-2042229   +      DROP _K_PAR2_ _K_PAR3_  _L1_;
-2042230   +    %end;
-2042231   +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
-2042232   +      DROP _K_PAR2_ _K_PAR3_  _L1_;
-2042233   +    %end;
-2042234   +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
-2042235   +      DROP _K_PAR3_  _L1_;
-2042236   +    %end;
-2042237   +run;
-2042239   +proc transpose data =&EM_USER_SVMFITDS out =&EM_USER_SVMFITDS;
-2042240   +run;
-2042242   +data &EM_USER_SVMFITDS;
-2042243   +     set &EM_USER_SVMFITDS;
-2042244   +     Label _LABEL_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_label, noquote))";
-2042245   +     Label _NAME_  = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_name, noquote))";
-2042246   +     Label COL1 =  "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_trainstat, noquote))";
-2042247   +     Rename COL1 = Train;
-2042248   +     if _NAME_ = '_ACCU_' then delete;
-2042249   +run;
-2042251   +%mend makeSVMFitStatDs;
-2042253   +%macro svm_fitstat(validSource=);
-2042255   +%EM_FITSTAT(trainDs = work._tmp_scored_train,
-2042256   +            %if &_validSource= VALIDSET %then %do;
-2042257   +                validDs=work._tmp_scored_test,
-2042258   +                testDs=,
-2042259   +            %end;
-2042260   +            %else %if &_validSource= TESTSET %then %do;
-2042261   +                validDs=,
-2042262   +                testDs=work._tmp_scored_test,
-2042263   +            %end;
-2042264   +            decdata=&EM_DEC_DECDATA,
-2042265   +            decmeta=&EM_DEC_DECMETA,
-2042266   +            freqvar=, df=,
-2042267   +            outfit=&EM_DATA_EMOUTFIT);
-2042269   +data &EM_DATA_EMOUTFIT;
-2042270   +     set &EM_DATA_EMOUTFIT;
-2042271   +     DROP _DFM_    _DFE_    _MSE_    _RMSE_    _NW_    _FPE_    _RFPE_    _AIC_    _SBC_; /* Because of DF */
-2042272   +run;
-2042273   +%mend svm_fitstat;
-2042275   +/*---------------------------------------------------------------------------------------
-2042276   +   OUTEST data set
-2042278   +                                                       APRTMNT_  APRTMNT_   TELIND_   TELIND_
-2042279   + Obs  _TARGET_  _TYPE_   _NAME_   _MEAN_     _STDEV_       1_        2_        1_        2_
-2042281   +  1    GENDER   _MEAN_             .        .            0.93845   0.06155   0.02391   0.97609
-2042282   +  2    GENDER   _STDEV_            .        .            0.24039   0.24039   0.15280   0.15280
-2042283   +  3    GENDER   _PARMS_          -0.12089  -.006143769  -0.09083  -0.03005  -0.04778  -0.07311
-2042285   +=-------------------------------------------------------------------------------------*/
-2042286   +/* this is not used, generate score code directly for the case of linear svm */
-2042287   +%macro gen_score(File=, Outclass=, Outest=, DecMeta=, ColumnsMeta=, Cutoff=, Residual=);
-2042289   +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='TARGET'))));
-2042291   +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
-2042292   +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
-2042293   +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
-2042294   +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
-2042295   +%let vn_target_level = %sysfunc(varnum(&dsid, LEVEL));
-2042297   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042298   +   %let TargetEvent =  %sysfunc(getvarc(&dsid, &vn_event));
-2042299   +   %let TargetVar =    %sysfunc(getvarc(&dsid, &vn_target_name));
-2042300   +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
-2042301   +   %let TargetType =   %sysfunc(getvarc(&dsid, &vn_target_type));
-2042302   +   %let TargetLevel =  %sysfunc(getvarc(&dsid, &vn_target_level));
-2042303   +%end;
-2042304   +%let dsid = %sysfunc(close(&dsid));
-2042306   +data _cmeta;
-2042307   +    set &ColumnsMeta;
-2042308   +    NAME = upcase(strip(NAME));
-2042309   +run;
-2042311   +data _tmpclass;
-2042312   +       set &outclass;
-2042313   +   _VAR_ = upcase(strip(_VAR_));
-2042314   +run;
-2042316   +proc sql;
-2042317   +create table _outclass as
-2042318   +select _NAME_, _LEVEL_, _VAR_, FORMAT, TYPE, LEVEL, ROLE
-2042319   +  from  _tmpclass, _cmeta
-2042320   +  where _tmpclass._VAR_ = _cmeta.NAME;
-2042321   +run;
-2042323   +data _outclass;
-2042324   +    set _outclass;
-2042325   +    if (upcase(strip(LEVEL)) eq 'INTERVAL') or
-2042326   +       (upcase(strip(ROLE)) ne 'INPUT') then delete;
-2042327   +run;
-2042328   +data _meands;
-2042329   +    set &outest;
-2042330   +    if _TYPE_='_MEAN_';
-2042331   +run;
-2042333   +/*
-2042334   +data _null_;
-2042335   +    set &outest;
-2042336   +    if _TYPE_='_PARMS_';
-2042337   +    call symput('bias', _STDEV_ );
-2042338   +    call symput('intercept', _MEAN_ );
-2042339   +run;
-2042340   +*/
-2042342   +filename  _File_ "&File";
-2042343   +data _null_;
-2042344   +    FILE _File_;
-2042345   +    length _line $500;
-2042346   +    drop _line;
-2042348   +    put ' ';
-2042349   +    put '/*-------------------------------------------------*/';
-2042350   +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote))" '*/';
-2042351   +    put '/*-------------------------------------------------*/';
-2042352   +    put ' ';
-2042354   +    put 'length _warn_ $ 4;';
-The SAS System
-
-2042355   +    put 'label _warn_ = "Warnings";';
-2042356   +    put 'length _svm_uname $32;';
-2042357   +    put 'DROP _svm_uname ;';
-2042359   +  dsid = open("work._outclass");
-2042360   +    if dsid then do;
-2042361   +          oldvname ='';
-2042362   +          do while(not fetch(dsid));
-2042363   +             vname = upcase(strip(getvarc(dsid,varnum(dsid, '_VAR_'))));
-2042364   +             vlevel = upcase(strip(getvarc(dsid,varnum(dsid,'_LEVEL_'))));
-2042365   +             dummyname = strip(getvarc(dsid,varnum(dsid,'_NAME_')));
-2042366   +             vtype = strip(getvarc(dsid,varnum(dsid,'TYPE')));
-2042367   +             vformat = strip(getvarc(dsid,varnum(dsid,'FORMAT')));
-2042368   +             *put 'vtype =' vtype;
-2042369   +             *put 'vformat=' vformat;
-2042371   +             if oldname ne vname then do;
-2042372   +                 if vtype = 'N' then do;
-2042373   +                     if vformat eq ' ' then do;
-2042374   +                        put '_svm_uname = put(' vname ', Best12.);';
-2042375   +                     end; else do;
-2042376   +                        put '_svm_uname = put(' vname ',' vformat ');';
-2042377   +                     end;
-2042378   +                  end;
-2042379   +                  else do;
-2042380   +                     if vformat eq ' ' then do;
-2042381   +                        put '_svm_uname = ' vname ' ;';
-2042382   +                     end; else do;
-2042383   +                        put '_svm_uname = put(' vname ',' vformat ');';
-2042384   +                     end;
-2042385   +                  end;
-2042386   +                  put '%DMNORMIP(_svm_uname);';
-2042387   +              end; /* end of oldname ne vname */
-2042389   +              /*put 'if _svm_uname = strip("' vlevel '") then ' dummyname '=1 ;';*/
-2042390   +              _line = 'if _svm_uname =' || quote(strip(vlevel)) || ' then ';
-2042391   +              put _line;
-2042392   +              put ' ' dummyname  '= 1 ; else '  dummyname '=0 ; drop '  dummyname ' ;';
-2042393   +              oldname = vname;
-2042394   +          end;
-2042396   +     end;
-2042397   +rc=close(dsid);
-2042399   +dsid = open("&outest");
-2042400   +    if dsid then do;
-2042401   +          put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_predvalues, noquote))"  "------ */";
-2042402   +          ncol = attrn(dsid, 'NVARS');
-2042403   +          do i=4 to ncol;
-2042404   +             vname = upcase(trim(left(varname(dsid,i))));
-2042405   +              do while(not fetch(dsid));
-2042406   +                  type = strip(getvarc(dsid,2));
-2042407   +                  select(type);
-2042408   +                      when('_MEAN_')  mean =  getvarn(dsid, i);
-2042409   +                      when('_STDEV_') std  =  getvarn(dsid, i);
-2042410   +                      when('_PARMS_') coeff = getvarn(dsid, i);
-2042411   +                  otherwise;
-2042412   +                  end;
-2042413   +              end; /* end of do-while*/
-2042414   +              *put '+' coeff '*(' vname '-' mean ')/' std;
-2042415   +              if i=4 then  do; put '_P_ =(' coeff ; end;
-2042416   +              else if i=5 then do; put '+' coeff ');' ; end;
-2042417   +              else do;
-2042418   +                      tmpvar = '_TMPVAR'||strip(i);
-2042419   +                      put 'if ' vname '= . then ' tmpvar '=' mean ';';
-2042420   +                      put 'else ' tmpvar '=' vname ';';
-2042421   +                      put '_P_ = _P_+' coeff '*' tmpvar ';';
-2042422   +                      put 'drop  ' tmpvar ';';
-2042423   +              end;
-2042424   +              rc=rewind(dsid);
-2042425   +         end; /* end of  do i=6 to &nvars; */
-2042426   +         put ';';
-2042427   +     end;
-2042428   +    rc=close(dsid);
-2042429   + put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_map_predvalues, noquote))"  "------ */";
-2042431   +%if &TargetLevel eq BINARY %then %do;
-2042433   +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
-2042434   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042435   +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
-2042437   +   put ' if _P_ < -600 then _p =0; ';  /* to avoid the limit of EXP function */
-2042438   +   put ' else _P = 1/(1+EXP((-1)*(_P_)));' ;
-2042440   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042441   +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
-2042442   +   %let P_Level = %sysfunc(getvarc(&dsid, &vn_level));
-2042443   +   %if %nrbquote(&P_Level) = %nrbquote(&TargetEvent) %then %do;
-2042444   +       put " &P_Var = _P;";
-2042445   +   %end;
-2042446   +   %else %do;
-2042447   +       put " &P_Var = 1 - _P;";
-2042448   +   %let targetNonEvent = &P_LEVEL;
-2042449   +   %end;
-2042450   +%end;
-2042451   +%let dsid = %sysfunc(close(&dsid));
-2042453   +%if &Residual = Y %then %do;
-2042455   +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"  "------ */";
-2042457   +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
-2042458   +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042459   +   %let vn_level =%sysfunc(varnum(&dsid, LEVEL));
-2042461   +   %do %while(^ %sysfunc(fetch(&dsid)));
-2042462   +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
-2042463   +     %let R_Level = %sysfunc(getvarc(&dsid, &vn_level));
-2042464   +     %if %nrbquote(&R_Level) = %nrbquote(&TargetEvent) %then %do;
-2042465   +       put " &R_Var = 1 - _P;";
-2042466   +   %end;
-2042467   +   %else %do;
-2042468   +       put " &R_Var = 0 - (1 - _P);";
-2042469   +   %end;
-2042470   +   %end;
-2042471   +   %let dsid = %sysfunc(close(&dsid));
-2042472   +%end;
-2042473   +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_from, noquote))"  "------ */";
-2042475   +    put 'length _FORMAT_VAR $200;';
-2042476   +    put 'length _TARGNOR $%DMNORLEN; ';
-2042477   +    put 'DROP _FORMAT_VAR _TARGNOR;';
-2042478   +    %if &TargetFormat ne  %then %do;
-2042479   +    put "_FORMAT_VAR=PUT(&TargetVar, &TargetFormat);";
-2042480   +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR);';
-2042481   +    %end;
-2042482   +    %else %do;
-2042483   +    %if &TargetType  = N  %then %do;
-2042484   +    put "_FORMAT_VAR=PUT(&TargetVar, BEST12.);";
-2042485   +       %end;
-2042486   +       %else %do;
-2042487   +    put "_FORMAT_VAR= &TargetVar;";
-2042488   +       %end;
-2042489   +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR); ' ;
-2042490   +    %end;
-2042492   +    %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='FROM'))));
-2042493   +    %let vn_f_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042494   +    %let vn_f_varlabel =%sysfunc(varnum(&dsid, LABEL));
-2042496   +    %do %while(^ %sysfunc(fetch(&dsid)));
-2042497   +        %let F_var = %sysfunc(getvarc(&dsid, &vn_f_var));
-2042498   +        %let F_var_label = %sysfunc(getvarc(&dsid, &vn_f_varlabel));
-2042499   +        %let qF_var_label = %str(%"&F_var_label%");
-2042500   +    put "&F_var = _TARGNOR ;";
-2042501   +    put "label &F_var = &qF_Var_label;";
-2042502   +    %end;
-2042503   +    %let dsid = %sysfunc(close(&dsid));
-2042505   +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_into, noquote))"  "------ */";
-2042507   +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='INTO'))));
-2042508   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042509   +%let vn_I_varlabel =%sysfunc(varnum(&dsid, LABEL));
-2042511   +%do %while(^%sysfunc(fetch(&dsid)));
-2042512   +   %let I_var = %sysfunc(getvarc(&dsid, &vn_var));
-2042513   +   %let I_var_label = %sysfunc(getvarc(&dsid, &vn_I_varlabel));
-2042514   +   %let qI_var_label = %str(%"&I_var_label%");
-2042515   +   %let qTargetEvent = %str(%"&targetEvent%");
-2042516   +   %let qTargetNonEvent = %str(%"&targetNonEvent%");
-2042517   +       put " if _P  > &Cutoff  then &I_Var  = &qtargetEvent ;" ;
-2042518   +       put " else &I_Var  =  &qtargetNonEvent ;";
-2042519   +       put " label &I_var = &qI_var_label;";
-2042520   +%end;
-2042521   +%let dsid = %sysfunc(close(&dsid));
-2042523   +%end;  /* end of TargetLevel= Binary */
-2042525   +%else %if &TargetLevel eq INTERVAL %then %do;
-2042527   +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
-2042528   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042529   +%let vn_label =%sysfunc(varnum(&dsid, LABEL));
-2042531   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042532   +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
-2042533   +   %let P_label = %sysfunc(getvarc(&dsid, &vn_label));
-2042534   +   %let qP_label = %str(%"&P_label%");
-2042535   +    put " &P_Var = _P_;";
-2042536   +    put " label &P_Var = &qP_label;";
-2042537   +%end;
-2042538   +%let dsid = %sysfunc(close(&dsid));
-2042540   +%if &Residual = Y %then %do;
-2042542   +   put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"  "------ */";
-2042544   +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
-2042545   +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042546   +   %let vn_label =%sysfunc(varnum(&dsid, LABEL));
-2042548   +   %do %while(^ %sysfunc(fetch(&dsid)));
-2042549   +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
-2042550   +     %let R_label = %sysfunc(getvarc(&dsid, &vn_label));
-2042551   +     %let qR_label = %str(%"&R_label%");
-2042552   +       put " &R_Var = &TargetVar - &P_var;";
-2042553   +       put " label &R_Var = &qR_label;";
-2042554   +   %end;
-2042555   +   %let dsid = %sysfunc(close(&dsid));
-2042556   +%end;
-2042558   +%end;   /* end of TargetLevel= Interval */
-2042560   +  put "/*------------------------------------------------------------*/";
-2042561   +proc datasets lib=work nolist;
-2042562   + delete _tmpclass _cmeta _outclass;
-2042563   +run;
-2042564   +run;
-2042566   +filename  _File_;
-2042568   +%mend gen_score;
-2042570   +%Macro CheckBinaryTargetLevel(indata=, target=,  nLevel= );
-2042571   +%global &nLevel;
-2042572   +proc dmdb batch data=&indata
-2042573   +classout=_tmp_dmdbout;
-2042574   +class &target;
-2042575   +run;
-2042576   +data _tmp_dmdbout;
-2042577   +    set _tmp_dmdbout;
-2042578   +    if strip(TYPE) = 'N' and  strip(LEVEL) = '.' then delete;
-2042579   +    if strip(TYPE) = 'C' and  strip(LEVEL) = '' then delete;
-2042580   +run;
-2042581   +data _null_;
-2042582   +    %let dsid = %sysfunc(open(work._tmp_dmdbout));
-2042583   +    %let _obs = %sysfunc(attrn(&dsid, NOBS));
-2042584   +    %let dsid = %sysfunc(close(&dsid));
-2042585   +     call symput("&nLevel", put(&_obs, Best12.));
-2042586   +run;
-2042588   +proc datasets lib=work nolist;
-2042589   +     delete _tmp_dmdbout;
-2042590   +run;
-2042591   +quit;
-2042592   +%Mend CheckBinaryTargetLevel;
-2042595   +%macro getNObs(inds=, nobs=);
-2042596   +    %global &nobs;
-2042597   +    data _null_;
-2042598   +        set &inds end=eof;
-2042599   +        if eof then call symput("&nobs", _N_);
-2042600   +    run;
-2042601   +    quit;
-2042602   +%mend  getNObs;
-2042606   +%macro makeAlphaDs(target=, cmeta=);
-2042608   + %let isOBSIndex= N;
-2042609   + %let dsid = %sysfunc(open(&cmeta));
-2042610   + %let vn_name =%sysfunc(varnum(&dsid, NAME));
-2042611   + %do %while(^%sysfunc(fetch(&dsid)));
-2042612   +     %let _name = %sysfunc(getvarc(&dsid, &vn_name));
-2042613   +     %if %upcase(&_name) = _DATAOBS_  %then %do; %let isOBSIndex = Y;%end;
-2042614   + %end;
-2042615   + %let dsid = %sysfunc(close(&dsid));
-2042617   +data &EM_USER_OUTALPHA;
-2042618   +     set _sample_train;
-2042619   +     set _outtrain(keep=_ALPHA_ _BOUND_);
-2042620   +     %if &isOBSIndex= N %then %do;
-2042621   +     keep _OBS_ _ALPHA_ _BOUND_ &target;
-2042622   +     %end;
-2042623   +     %else %do;
-2042624   +     keep _OBS_ _dataobs_ _ALPHA_ _BOUND_ &target;
-2042625   +     %end;
-2042626   +run;
-2042628   +data &EM_EXPORT_TRAIN;
-2042629   +     length _OBS_ 8;
-2042630   +     set &EM_EXPORT_TRAIN;
-2042631   +     _OBS_ = _N_;
-2042632   +run;
-2042634   +data &EM_EXPORT_TRAIN(Drop=_OBS_);
-2042635   +     merge &EM_EXPORT_TRAIN  &EM_USER_OUTALPHA(drop=&target);
-2042636   +     by _OBS_;
-2042637   +     if _ALPHA_ =. then _ALPHA_=0;
-2042638   +     if _BOUND_ ="" then _BOUND_="_LBC";
-2042639   +run;
-2042641   +data &EM_USER_OUTALPHA;
-2042642   +   set &EM_USER_OUTALPHA;
-2042643   +   if _ALPHA_ = 0 then delete;
-2042644   +   %if &isOBSIndex= N %then %do;
-2042645   +   Label _OBS_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label, noquote))";
-2042646   +   rename _OBS_ = _dataobs_;
-2042647   +   %end;
-2042648   +   %else %do;
-2042649   +   drop _OBS_;
-2042650   +   Label _dataobs_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label, noquote))";
-2042651   +   %end;
-2042652   +   Label _ALPHA_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_alpha_label, noquote))";
-2042653   +   Label &target = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_target_label, noquote))";
-2042654   +   Label _BOUND_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_bound_label, noquote))";
-2042655   +   run;
-2042657   +%mend makeAlphaDs;
-2042660   +%macro makeTunData();
-2042661   +data &EM_USER_TUNINGCRIT;
-2042662   +    set &EM_USER_TUNINGCRIT;
-2042663   +    Drop N;
-2042664   +    Label C = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_c, noquote))";
-2042665   +    Label KF1 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf1, noquote))";
-2042666   +    Label KF2 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf2, noquote))";
-2042667   +    Label NMisc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_nmisc, noquote))";
-2042668   +    Label Perc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_perc, noquote))";
-2042669   +    Label ERROR = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_error, noquote))";
-2042670   +    Label TstError = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_tsterror, noquote))";
-2042671   +run;
-2042672   +%mend makeTunData;
-2042674   +/*------------------ Score Code Generation with Proc SVMScore    ----------------------  */
-2042677   +%macro score_code(TargetLevel=, type=);
-2042679   +%let _inoutest = WORK._inoutest ;
-2042680   +%let _inoutfit = WORK._inoutfit ;
-2042681   +%let _inoutclass = WORK._inoutclass;
-2042683   +%if &type eq FLOW %then %do;
-2042684   +    %let _inoutest = &EM_USER_OUTEST;
-2042685   +    %let _inoutfit = &EM_USER_SVMFITSTAT ;
-2042686   +    %let _inoutclass = &EM_USER_OUTCLASS;
-2042687   +%end;
-2042688   +%else %do;
-2042689   +%em_data2code(data=&EM_USER_OUTEST, outdata=&_inoutest, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
-2042690   +%em_data2code(data=&EM_USER_SVMFITSTAT, outdata=&_inoutfit, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
-2042691   +%em_data2code(data=&EM_USER_OUTCLASS, outdata=&_inoutclass, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
-2042692   +%end;
-2042694   +%let emscoreout = %str(&)%str(em_score_output);
-2042697   +%if &type eq FLOW %then %do;
-2042698   +filename  _File_ "&EM_FILE_EMFLOWSCORECODE";
-2042699   +%end;
-2042700   +%else %do;
-2042701   +filename  _File_ "&EM_FILE_EMPUBLISHSCORECODE";
-2042702   +%end;
-2042704   +data _null_;
-2042705   +    FILE _File_ MOD;
-2042707   +    put ' ';
-2042708   +    put '/*-------------------------------------------------*/';
-2042709   +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote)) " ' */';
-2042710   +    put '/*-------------------------------------------------*/';
-2042711   +    put ' ';
-2042713   +%if &TargetLevel eq BINARY %then %do;
-2042715   +/*%put &emscoreout;  */
-2042717   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
-2042718   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042720   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042721   +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042723   +%end;
-2042724   +%let dsid = %sysfunc(close(&dsid));
-2042726   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
-2042727   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042729   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042730   +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
-2042732   +%end;
-2042733   +%let dsid = %sysfunc(close(&dsid));
-2042736   +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit inclass=&_inoutclass";
-2042737   +    %if &type eq FLOW %then %do;
-2042738   +    put "              out = &emscoreout(rename=(_F_=&F_VAR _I_=&I_VAR))";
-2042739   +    %end;
-2042740   +    %else %do;
-2042741   +    put "              out = &emscoreout(rename=(_I_=&I_VAR))";
-2042742   +    %end;
-2042743   +    put ";";
-2042744   +    put "run;";
-2042747   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
-2042749   +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
-2042750   +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
-2042751   +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
-2042752   +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
-2042755   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042756   +   %let TargetEvent =   %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
-2042757   +   %let TargetVar   =   %sysfunc(getvarc(&dsid, &vn_target_name));
-2042758   +   %let TargetFormat =  %sysfunc(getvarc(&dsid, &vn_target_format));
-2042759   +   %let TargetType   =  %sysfunc(getvarc(&dsid, &vn_target_type));
-2042760   +%end;
-2042762   +%let dsid = %sysfunc(close(&dsid));
-2042764   +    put "data &emscoreout(drop=_P);";
-2042765   +    put "     set &emscoreout;";
-2042766   +    put "if (_P_ < -600) then _p =0;";    /* to avoid the limit of EXP function */
-2042767   +    put "else _P = 1/(1+EXP((-1)*(_P_)));";
-2042769   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
-2042770   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042771   +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
-2042773   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042774   +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
-2042775   +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
-2042776   +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
-2042777   +    put " &P_Var = _P ;";
-2042778   +   %end;
-2042779   +   %else %do;
-2042780   +    put " &P_Var = 1 - _P ;";
-2042781   +    %let targetNonEvent = &P_LEVEL;
-2042782   +   %end;
-2042783   +%end;
-2042784   +%let dsid = %sysfunc(close(&dsid));
-2042786   +%end; /* the end of if - targetlevel eq binary */
-2042787   +%else %do;
-2042789   +/* ----     interval target  ------ */
-2042791   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
-2042792   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042794   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042795   +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
-2042796   +%end;
-2042797   +%let dsid = %sysfunc(close(&dsid));
-2042799   +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
-2042800   +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
-2042801   +%do %while(^ %sysfunc(fetch(&dsid)));
-2042802   +   %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
-2042803   +%end;
-2042804   +%let dsid = %sysfunc(close(&dsid));
-2042806   +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit inclass=&_inoutclass ";
-2042807   +    %if &type eq FLOW %then %do;
-2042808   +    put "              out = &emscoreout(rename=(_P_ = &P_VAR _R_=&R_VAR))";
-2042809   +    %end;
-2042810   +    %else %do;
-2042811   +    put "              out = &emscoreout(rename=(_P_ = &P_VAR))";
-2042812   +    %end;
-2042813   +    put ";";
-2042815   +%end; /* end of targetlevel eq interval */
-2042817   +run;
-2042818   +filename  _File_;
-2042819   +%mend score_code;
-2042822   +%macro makeDeltaCode(TargetLevel=);
-2042823   +*--- Build Code to Modify Metadata ---*;
-2042824   +filename X "&EM_FILE_CDELTA_TRAIN";
-2042826   +/* modify columns meta */
-2042827   +data _null_;
-2042828   +    file X;
-2042829   +        put "if upcase(trim(left(NAME))) eq  '_Y_'  then ROLE='PREDICT';";
-2042830   +        put "if upcase(trim(left(NAME))) eq  '_R_'  then ROLE='RESIDUAL';";
-2042831   +        put "if upcase(trim(left(NAME))) eq  '_ALPHA_'  then ROLE='REJECTED';";
-2042832   +        put "if upcase(trim(left(NAME))) eq  '_BOUND_'  then ROLE='REJECTED';";
-2042833   +run;
-2042834   +%mend makeDeltaCode;
-2042836   +%macro  EM_DECIDECODE(data= , decdata= , decmeta= , noresfile=, resfile=);
-2042837   + %global m_data    m_decdata   m_decmeta  m_noresfile  m_resfile ;
-2042839   +    %do;
-2042840   +    %let m_data      = &data;
-2042841   +    %let m_decdata   = &decdata;
-2042842   +    %let m_decmeta   = &decmeta;
-2042843   +    %let m_noresfile = &noresfile;
-2042844   +    %let m_resfile   = &resfile;
-2042845   +    dm "afa c=sashelp.emutil.decidecode.scl";
-2042846   +  %end;
-2042847   +%mend EM_DECIDECODE;
+873664    +%macro SetProperties;
+873665    +   %em_checkmacro(name=EM_PROPERTY_METHOD,  global=Y, value=DQP);
+873666    +   %em_checkmacro(name=EM_PROPERTY_TUNINGMETHOD,  global=Y, value=POPT);
+873667    +   %em_checkmacro(name=EM_PROPERTY_APPLYCV,  global=Y, value=N);
+873668    +   %em_checkmacro(name=EM_PROPERTY_CVMETHOD,  global=Y, value=RANDOM);
+873669    +   %em_checkmacro(name=EM_PROPERTY_CVFOLD, global=Y, value=Default);
+873670    +   %em_checkmacro(name=EM_PROPERTY_CVALUE,    global=Y, value=TUNING);
+873671    +   %em_checkmacro(name=EM_PROPERTY_USERCVALUE,    global=Y, value=0.1);
+873672    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_FROM,    global=Y, value=0.1);
+873673    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_TO,    global=Y, value=1);
+873674    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_BY,    global=Y, value=0.1);
+873675    +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTION,    global=Y, value=DEFAULT);
+873676    +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTHIST,    global=Y, value=N);
+873677    +   %em_checkmacro(name=EM_PROPERTY_KERNEL,    global=Y, value=LINEAR);
+873678    +   %em_checkmacro(name=EM_PROPERTY_POLY_K_PAR1,    global=Y, value=CONSTANT);
+873679    +   %em_checkmacro(name=EM_PROPERTY_POLY_USERK_PAR1,    global=Y, value=2);
+873680    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_FROM,    global=Y, value=2);
+873681    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_TO,    global=Y, value=5);
+873682    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_BY,    global=Y, value=1);
+873683    +   %em_checkmacro(name=EM_PROPERTY_RBF_K_PAR1,    global=Y, value=CONSTANT);
+873684    +   %em_checkmacro(name=EM_PROPERTY_RBF_USERK_PAR1,    global=Y, value=1);
+873685    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_FROM,    global=Y, value=0.2);
+873686    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_TO,    global=Y, value=1);
+873687    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_BY,    global=Y, value=0.2);
+873688    +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR1,    global=Y, value=CONSTANT);
+873689    +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR1,    global=Y, value=1);
+873690    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_FROM,    global=Y, value=0.1);
+873691    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_TO,    global=Y, value=1);
+873692    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_BY,    global=Y, value=0.1);
+873693    +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR2,       global=Y, value=CONSTANT);
+873694    +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR2,    global=Y, value=1);
+873695    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_FROM,    global=Y, value=0.1);
+873696    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_TO,    global=Y, value=1);
+873697    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_BY,    global=Y, value=0.1);
+873698    +   %em_checkmacro(name=EM_PROPERTY_APPLYSAMPLING,     global=Y,  value=Y);
+873699    +   %em_checkmacro(name=EM_PROPERTY_SAMPLESIZE,  global=Y,  value=1000);
+873700    +   %em_checkmacro(name=EM_PROPERTY_SUPPRESSSAMPWARN,  global=Y,  value=N);
+873701    +   %em_checkmacro(name=EM_PROPERTY_USEITERCG,  global=Y,  value=DEFAULT);
+873702    +   %em_checkmacro(name=EM_PROPERTY_CGITER,    global=Y, value=400);
+873703    +   %em_checkmacro(name=EM_PROPERTY_CGTOL,    global=Y,    value=0.000001);
+873704    +   %em_checkmacro(name=EM_PROPERTY_EPSILON,  global=Y,  value=0.1);
+873705    +   %em_checkmacro(name=EM_PROPERTY_QPSIZE,   global=Y,   value=100);
+873706    +   %em_checkmacro(name=EM_PROPERTY_MAXITER,  global=Y,  value=200);
+873707    +   %em_checkmacro(name=EM_PROPERTY_MAXFUNC,  global=Y,  value=500);
+873708    +   %em_checkmacro(name=EM_PROPERTY_MEMSIZE,  global=Y,  value=8);
+873709    +   %em_checkmacro(name=EM_PROPERTY_OUTITER,  global=Y,  value=10);
+873710    +   %em_checkmacro(name=EM_PROPERTY_GCONV,    global=Y,  value=0.00000001);
+873711    +   %em_checkmacro(name=EM_PROPERTY_ABSGCONV, global=Y,  value=0.0005);
+873712    +   %em_checkmacro(name=EM_PROPERTY_XSCALE, global=Y,  value=Y);
+873713    +   %em_checkmacro(name=EM_PROPERTY_XCONV,    global=Y,  value=0.00000001);
+873714    +   %em_checkmacro(name=EM_PROPERTY_ABSXCONV, global=Y,  value=0.0005);
+873716    +%mend SetProperties;
+873719    +%macro make_dmdb(indata=, out=0, classout=WORK.DMDBCLASS, varout=WORK.DMDBVAR) ;
+873721    +  %local emclassout emvarout;
+873723    +   proc dmdb batch dmdbcat= _emdmdb
+873725    +   %if &out ne 0 %then %do ;
+873726    +       data=&indata out= _emdmdb &emclassout &emvarout;
+873727    +   %end ;
+873728    +   %else %do ;
+873729    +       data=&indata &emclassout &emvarout;
+873730    +   %end ;
+873732    +   %if %em_interval ne  %then %do ; var %EM_INTERVAL ; %end ;
+873733    +   %if %em_class   ne  %then %do ;
+873734    +       class %EM_CLASS;
+873735    +   %end ;
+873736    +   /*%if %em_freq    ne  %then %do ; freq %em_freq   ; %end ;  */
+873737    +   %if %em_target ne %then %do ;
+873738    +          target %em_target ;
+873739    +   %end ;
+873740    +   run ;
+873741    +%mend make_dmdb;
+873744    +%macro svm_training(indata=,
+873745    +                    task=,
+873746    +                    classtask=,
+873747    +                    method=,
+873748    +                    outest =,
+873749    +                    outclass =,
+873750    +                    outfit =,
+873751    +                    isValidationSet =,
+873752    +                    testdata =,
+873753    +                    testout =,
+873754    +                    validSource=,
+873755    +                    usecgbydefault=
+873756    +                    );
+873758    +%make_dmdb(indata=&indata, out=1);
+873760    +options debug="nlpitermsg=2";
+873762    +%if (&EM_PROPERTY_TUNINGMETHOD eq GRID) %then %do;
+873763    +%EM_GETNAME(KEY=TUNINGCRIT, TYPE=DATA);
+873764    +ods output tun_crt = &EM_USER_TUNINGCRIT;
+873765    +%end;
+873767    +%let _PROPERTY_USERCVALUE = %sysfunc(strip(&EM_PROPERTY_USERCVALUE));
+873768    +%let _PROPERTY_TUN_C_FROM = %sysfunc(strip(&EM_PROPERTY_TUN_C_FROM));
+873769    +%let _PROPERTY_TUN_C_TO = %sysfunc(strip(&EM_PROPERTY_TUN_C_TO));
+873770    +%let _PROPERTY_TUN_C_BY = %sysfunc(strip(&EM_PROPERTY_TUN_C_BY));
+873772    +%let _PROPERTY_POLY_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_POLY_USERK_PAR1));
+873773    +%let _PROPERTY_POLY_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_FROM));
+873774    +%let _PROPERTY_POLY_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_TO));
+873775    +%let _PROPERTY_POLY_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_BY));
+873778    +%let _PROPERTY_RBF_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_RBF_USERK_PAR1));
+873779    +%let _PROPERTY_RBF_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_FROM));
+873780    +%let _PROPERTY_RBF_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_TO));
+873781    +%let _PROPERTY_RBF_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_BY));
+873783    +%let _PROPERTY_SGMD_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR1));
+873784    +%let _PROPERTY_SGMD_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_FROM));
+873785    +%let _PROPERTY_SGMD_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_TO));
+873786    +%let _PROPERTY_SGMD_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_BY));
+873789    +%let _PROPERTY_SGMD_USERK_PAR2 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR2));
+873790    +%let _PROPERTY_SGMD_TUN_KP2_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_FROM));
+873791    +%let _PROPERTY_SGMD_TUN_KP2_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_TO));
+873792    +%let _PROPERTY_SGMD_TUN_KP2_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_BY));
+873795    +%let _PROPERTY_CGITER = %sysfunc(strip(&EM_PROPERTY_CGITER));
+873796    +%let _PROPERTY_CGTOL  = %sysfunc(strip(&EM_PROPERTY_CGTOL));
+873797    +%let _PROPERTY_QPSIZE =  %sysfunc(strip(&EM_PROPERTY_QPSIZE));
+873798    +%let _PROPERTY_EPSILON =  %sysfunc(strip(&EM_PROPERTY_EPSILON));
+873799    +%let _PROPERTY_MAXITER =  %sysfunc(strip(&EM_PROPERTY_MAXITER));
+873800    +%let _PROPERTY_MAXFUNC =  %sysfunc(strip(&EM_PROPERTY_MAXFUNC));
+873801    +%let _PROPERTY_MEMSIZE =  %sysfunc(strip(&EM_PROPERTY_MEMSIZE));
+873802    +%let _PROPERTY_OUTITER =  %sysfunc(strip(&EM_PROPERTY_OUTITER));
+873803    +%let _PROPERTY_GCONV   =  %sysfunc(strip(&EM_PROPERTY_GCONV));
+873804    +%let _PROPERTY_ABSGCONV =  %sysfunc(strip(&EM_PROPERTY_ABSGCONV));
+873805    +%let _PROPERTY_XCONV   =  %sysfunc(strip(&EM_PROPERTY_XCONV));
+873806    +%let _PROPERTY_ABSXCONV =  %sysfunc(strip(&EM_PROPERTY_ABSXCONV));
+873810    +proc svm data= _emdmdb
+873811    +         dmdbcat= _emdmdb
+873812    +         nomonitor
+873813    +         outfit= &outfit
+873814    +         outclass= &outclass
+873815    +         outest= &outest
+873816    +         out = _outtrain
+873817    +         maxiter = &_PROPERTY_MAXITER
+873818    +         maxfunc = &_PROPERTY_MAXFUNC
+873819    +      /*   memsiz =  &_PROPERTY_MEMSIZE*/
+873820    +         gconv =   &_PROPERTY_GCONV
+873821    +         absgconv = &_PROPERTY_ABSGCONV
+873822    +         xconv =   &_PROPERTY_XCONV
+873823    +         absxconv = &_PROPERTY_ABSXCONV
+873825    +    %if &EM_PROPERTY_KERNEL ne POLYNOM %then %do;
+873826    +         %if &EM_PROPERTY_XSCALE eq Y  %then %do;
+873827    +             xscale
+873828    +         %end;
+873829    +         %else %do;
+873830    +             noscale
+873831    +         %end;
+873832    +    %end;
+873833    +    %if &task eq CLASSIFICATION %then %do;
+873834    +        %if &EM_PROPERTY_METHOD eq DEFAULT  %then %do;
+873835    +         method= &method
+873836    +        %end;
+873837    +        %else %if &EM_PROPERTY_METHOD eq DQP %then %do;
+873838    +         method= DQP   qpsize = &_PROPERTY_QPSIZE
+873839    +        %end;
+873840    +        %else %do;
+873841    +         method= &EM_PROPERTY_METHOD
+873842    +        %end;
+873843    +    %end;
+873844    +    %else %do;
+873845    +         method= &method  task=&classtask
+873846    +         /*%if &classtask eq EPS_REG %then %do; */
+873847    +             esp=&_PROPERTY_EPSILON
+873848    +         /*%end;*/
+873849    +    %end;
+873851    +    %if &EM_PROPERTY_KERNEL ne  %then %do;
+873852    +         kernel = &EM_PROPERTY_KERNEL
+873853    +    %end;
+873854    +    %else %do;
+873855    +         kernel = Linear
+873856    +    %end;
+873858    +    %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+873860    +        %if ( (&EM_PROPERTY_CVALUE eq TUNING)
+873861    +            or  (&EM_PROPERTY_POLY_K_PAR1 eq TUNING)
+873862    +            or  (&EM_PROPERTY_RBF_K_PAR1 eq TUNING)
+873863    +            or  (&EM_PROPERTY_SGMD_K_PAR1 eq TUNING)
+873864    +            or  (&EM_PROPERTY_SGMD_K_PAR2 eq TUNING) )  %then %do;
+873865    +            tun = &EM_PROPERTY_TUNINGMETHOD
+873866    +        %end;
+873868    +    %end;
+873870    +    %if &EM_PROPERTY_APPLYCV eq Y %then %do;
+873871    +         CV  = &EM_PROPERTY_CVMETHOD
+873872    +         %if &EM_PROPERTY_CVFOLD ne Default %then %do;
+873873    +         fold = &EM_PROPERTY_CVFOLD
+873874    +         %end;
+873875    +         %if &EM_PROPERTY_CVMETHOD eq TESTSET %then %do;
+873876    +                testdata = &testdata
+873877    +         %end;
+873878    +    %end;
+873880    +    %if (&EM_PROPERTY_USEITERCG eq Y) or ( &usecgbydefault eq Y )  %then %do;
+873881    +      cgiter = &_PROPERTY_CGITER  cgtol=&_PROPERTY_CGTOL
+873882    +    %end;
+873884    +    %if &EM_PROPERTY_PRINTOPTION ne DEFAULT  %then %do;
+873885    +    &EM_PROPERTY_PRINTOPTION
+873886    +    %end;
+873888    +    %if &EM_PROPERTY_PRINTOPTHIST eq Y  %then %do;
+873889    +    POPTHIS
+873890    +    %end;
+873891    +    ;
+873892    +    var %EM_INPUT %EM_REJECTED;
+873893    +    target %EM_TARGET;
+873895    +     %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+873897    +         %if &EM_PROPERTY_CVALUE eq TUNING  %then %do;
+873898    +             C  &_PROPERTY_TUN_C_FROM to &_PROPERTY_TUN_C_TO
+873899    +             by &_PROPERTY_TUN_C_BY
+873900    +             ;
+873901    +         %end;
+873902    +         %else %if &EM_PROPERTY_CVALUE eq CONSTANT  %then %do;
+873903    +             C  &_PROPERTY_USERCVALUE ;
+873904    +         %end;
+873906    +     %end;
+873907    +     %else %do;
+873908    +           C  &_PROPERTY_USERCVALUE ;
+873909    +     %end;
+873912    +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
+873914    +          %if &EM_PROPERTY_TUNINGMETHOD eq GRID  %then %do;
+873915    +             %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
+873916    +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM to &_PROPERTY_POLY_TUN_KP1_TO
+873917    +                  by &_PROPERTY_POLY_TUN_KP1_BY
+873918    +                ;
+873919    +             %end;
+873920    +             %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
+873921    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+873922    +             %end;
+873923    +          %end;
+873924    +          %else %if &EM_PROPERTY_TUNINGMETHOD eq POPT  %then %do;
+873925    +              %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
+873926    +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM ;
+873927    +                ;
+873928    +              %end;
+873929    +              %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
+873930    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+873931    +              %end;
+873932    +           %end;
+873933    +           %else %do;
+873934    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+873935    +           %end;
+873936    +    %end;
+873938    +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
+873939    +          %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+873940    +             %if &EM_PROPERTY_RBF_K_PAR1 eq TUNING  %then %do;
+873941    +                  K_PAR  &_PROPERTY_RBF_TUN_KP1_FROM to &_PROPERTY_RBF_TUN_KP1_TO
+873942    +                  by &_PROPERTY_RBF_TUN_KP1_BY
+873943    +                  ;
+873944    +              %end;
+873945    +              %else %if &EM_PROPERTY_RBF_K_PAR1 eq CONSTANT  %then %do;
+873946    +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
+873947    +              %end;
+873948    +          %end;
+873949    +          %else %do;
+873950    +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
+873951    +          %end;
+873952    +    %end;
+873955    +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
+873957    +         %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+873959    +             %if &EM_PROPERTY_SGMD_K_PAR1 eq TUNING  %then %do;
+873960    +                K_PAR  &_PROPERTY_SGMD_TUN_KP1_FROM to &_PROPERTY_SGMD_TUN_KP1_TO
+873961    +                by &_PROPERTY_SGMD_TUN_KP1_BY
+873962    +             ;
+873963    +             %end;
+873964    +             %else %if &EM_PROPERTY_SGMD_K_PAR1 eq CONSTANT  %then %do;
+873965    +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
+873966    +             %end;
+873968    +             %if &EM_PROPERTY_SGMD_K_PAR2 eq TUNING  %then %do;
+873969    +                K_PAR2  &_PROPERTY_SGMD_TUN_KP2_FROM to &_PROPERTY_SGMD_TUN_KP2_TO
+873970    +                by &_PROPERTY_SGMD_TUN_KP2_BY
+873971    +             ;
+873972    +             %end;
+873973    +             %else %if &EM_PROPERTY_SGMD_K_PAR2 eq CONSTANT  %then %do;
+873974    +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
+873975    +             %end;
+873976    +          %end;
+873977    +          %else %do;
+873978    +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
+873979    +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
+873980    +          %end;
+873981    +    %end;
+873983    +run;
+873984    +%TRAINENDLINE:
+873985    +quit;
+873986    +%mend svm_training;
+873988    +%macro svm_score(indata=,
+873989    +                 inest=,
+873990    +                 infit=,
+873991    +                 inclass=,
+873992    +                 outindata=,
+873993    +                 outscore=,
+873994    +                 targetLevel=
+873995    +                 );
+873998    +%if &TargetLevel eq BINARY %then %do;
+874000    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
+874002    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+874003    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+874004    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+874005    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+874008    +%do %while(^ %sysfunc(fetch(&dsid)));
+874009    +   %let TargetEvent = %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
+874010    +    %let TargetVar =   %sysfunc(getvarc(&dsid, &vn_target_name));
+874011    +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
+874012    +   %let TargetType =  %sysfunc(getvarc(&dsid, &vn_target_type));
+874013    +%end;
+874015    +%let dsid = %sysfunc(close(&dsid));
+874018    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
+874019    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874021    +%do %while(^ %sysfunc(fetch(&dsid)));
+874022    +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874023    +%end;
+874024    +%let dsid = %sysfunc(close(&dsid));
+874026    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
+874027    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874029    +%do %while(^ %sysfunc(fetch(&dsid)));
+874030    +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874031    +%end;
+874032    +%let dsid = %sysfunc(close(&dsid));
+874035    +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
+874036    +              out=&outscore(rename=(_F_=&F_VAR _I_=&I_VAR));
+874037    +run;
+874039    +filename resifref  "&EM_NODEDIR&EM_DSEP.tmprescode.sas";
+874040    +%makeResidualVars(target=&TargetVar, decmeta=&EM_DEC_DECMETA, fref=resifref); /* from a part of %EM_MODEL() macro */
+874042    +data &outscore(drop=_P);
+874043    +      set  &outscore;
+874044    +     if (_P_ < -600) then _p =0;
+874045    +     else _P = 1/(1+EXP((-1)*(_P_)));
+874047    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+874048    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874049    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+874051    +%do %while(^ %sysfunc(fetch(&dsid)));
+874052    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+874053    +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
+874054    +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
+874055    +       &P_Var = _P;
+874056    +   %end;
+874057    +   %else %do;
+874058    +       &P_Var = 1 - _P;
+874059    +       %let targetNonEvent = &P_LEVEL;
+874060    +   %end;
+874061    +%end;
+874062    +%let dsid = %sysfunc(close(&dsid));
+874064    +%include resifref;
+874066    +run;
+874068    +filename resifref;
+874070    +%end; /* the end of if - targetlevel eq binary */
+874071    +%else %do;
+874073    +/* ----     interval target  ------ */
+874075    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+874076    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874078    +%do %while(^ %sysfunc(fetch(&dsid)));
+874079    +   %let P_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874080    +%end;
+874081    +%let dsid = %sysfunc(close(&dsid));
+874083    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
+874084    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874086    +%do %while(^ %sysfunc(fetch(&dsid)));
+874087    +   %let R_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874088    +%end;
+874090    +%let dsid = %sysfunc(close(&dsid));
+874092    +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
+874093    +              out=&outscore(rename=(_P_=&P_VAR _R_=&R_VAR));
+874094    +run;
+874096    +%end; /* end of targetlevel eq interval */
+874099    +%mend svm_score;
+874102    +%macro makeSVMFitStatDs();
+874104    +data &EM_USER_SVMFITDS;
+874105    +     set &EM_USER_SVMFITSTAT;
+874106    +     Label _Bias_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_bias, noquote))";
+874107    +     Label _K_PAR2_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par2, noquote))";
+874108    +     Label _K_PAR3_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par3, noquote))";
+874109    +     Label _K_PAR_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par, noquote))";
+874110    +     Label _L1_        = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_l1, noquote))";
+874111    +     Label _Margin_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_margin, noquote))";
+874112    +     Label _NCLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nclev, noquote))";
+874113    +     Label _NCV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_ncv, noquote))";
+874114    +     Label _NIV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_niv, noquote))";
+874115    +     Label _NLV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nlv, noquote))";
+874116    +     Label _NOBS_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nobs, noquote))";
+874117    +     Label _NSV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nsv, noquote))";
+874118    +     Label _NTRAIN_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_ntrain, noquote))";
+874119    +     Label _NYLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nylev, noquote))";
+874120    +     Label _NormW_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_normw, noquote))";
+874121    +     Label _OBJ_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_obj, noquote))";
+874122    +     Label _Radius_    = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_radius, noquote))";
+874123    +     Label _RegC_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_regc, noquote))";
+874124    +     Label _SVOM_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_svom, noquote))";
+874125    +     Label _VCDim_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_vcdim, noquote))";
+874126    +    if _TYPE_ ='_ACCTAB_' then delete;
+874127    +    %if &EM_PROPERTY_KERNEL eq LINEAR %then %do;
+874128    +      _BIAS_= _K_PAR_;
+874129    +      DROP _K_PAR_ _K_PAR2_ _K_PAR3_ _L1_;
+874130    +    %end;
+874131    +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
+874132    +      DROP _K_PAR2_ _K_PAR3_  _L1_;
+874133    +    %end;
+874134    +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
+874135    +      DROP _K_PAR2_ _K_PAR3_  _L1_;
+874136    +    %end;
+874137    +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
+874138    +      DROP _K_PAR3_  _L1_;
+874139    +    %end;
+874140    +run;
+874142    +proc transpose data =&EM_USER_SVMFITDS out =&EM_USER_SVMFITDS;
+874143    +run;
+874145    +data &EM_USER_SVMFITDS;
+874146    +     set &EM_USER_SVMFITDS;
+874147    +     Label _LABEL_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_label, noquote))";
+874148    +     Label _NAME_  = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_name, noquote))";
+874149    +     Label COL1 =  "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_trainstat, noquote))";
+874150    +     Rename COL1 = Train;
+874151    +     if _NAME_ = '_ACCU_' then delete;
+874152    +run;
+874154    +%mend makeSVMFitStatDs;
+874156    +%macro svm_fitstat(validSource=);
+874158    +%EM_FITSTAT(trainDs = work._tmp_scored_train,
+874159    +            %if &_validSource= VALIDSET %then %do;
+874160    +                validDs=work._tmp_scored_test,
+874161    +                testDs=,
+874162    +            %end;
+874163    +            %else %if &_validSource= TESTSET %then %do;
+874164    +                validDs=,
+874165    +                testDs=work._tmp_scored_test,
+874166    +            %end;
+874167    +            decdata=&EM_DEC_DECDATA,
+874168    +            decmeta=&EM_DEC_DECMETA,
+874169    +            freqvar=, df=,
+874170    +            outfit=&EM_DATA_EMOUTFIT);
+874172    +data &EM_DATA_EMOUTFIT;
+874173    +     set &EM_DATA_EMOUTFIT;
+874174    +     DROP _DFM_    _DFE_    _MSE_    _RMSE_    _NW_    _FPE_    _RFPE_    _AIC_    _SBC_; /* Because of DF */
+874175    +run;
+874176    +%mend svm_fitstat;
+874178    +/*---------------------------------------------------------------------------------------
+874179    +   OUTEST data set
+874181    +                                                       APRTMNT_  APRTMNT_   TELIND_   TELIND_
+874182    + Obs  _TARGET_  _TYPE_   _NAME_   _MEAN_     _STDEV_       1_        2_        1_        2_
+874184    +  1    GENDER   _MEAN_             .        .            0.93845   0.06155   0.02391   0.97609
+874185    +  2    GENDER   _STDEV_            .        .            0.24039   0.24039   0.15280   0.15280
+874186    +  3    GENDER   _PARMS_          -0.12089  -.006143769  -0.09083  -0.03005  -0.04778  -0.07311
+874188    +=-------------------------------------------------------------------------------------*/
+874189    +/* this is not used, generate score code directly for the case of linear svm */
+874190    +%macro gen_score(File=, Outclass=, Outest=, DecMeta=, ColumnsMeta=, Cutoff=, Residual=);
+874192    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='TARGET'))));
+874194    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+874195    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+874196    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+874197    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+874198    +%let vn_target_level = %sysfunc(varnum(&dsid, LEVEL));
+874200    +%do %while(^ %sysfunc(fetch(&dsid)));
+874201    +   %let TargetEvent =  %sysfunc(getvarc(&dsid, &vn_event));
+874202    +   %let TargetVar =    %sysfunc(getvarc(&dsid, &vn_target_name));
+874203    +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
+874204    +   %let TargetType =   %sysfunc(getvarc(&dsid, &vn_target_type));
+874205    +   %let TargetLevel =  %sysfunc(getvarc(&dsid, &vn_target_level));
+874206    +%end;
+874207    +%let dsid = %sysfunc(close(&dsid));
+874209    +data _cmeta;
+874210    +    set &ColumnsMeta;
+874211    +    NAME = upcase(strip(NAME));
+874212    +run;
+874214    +data _tmpclass;
+874215    +       set &outclass;
+874216    +   _VAR_ = upcase(strip(_VAR_));
+874217    +run;
+874219    +proc sql;
+874220    +create table _outclass as
+874221    +select _NAME_, _LEVEL_, _VAR_, FORMAT, TYPE, LEVEL, ROLE
+874222    +  from  _tmpclass, _cmeta
+874223    +  where _tmpclass._VAR_ = _cmeta.NAME;
+874224    +run;
+874226    +data _outclass;
+874227    +    set _outclass;
+874228    +    if (upcase(strip(LEVEL)) eq 'INTERVAL') or
+874229    +       (upcase(strip(ROLE)) ne 'INPUT') then delete;
+874230    +run;
+874231    +data _meands;
+874232    +    set &outest;
+874233    +    if _TYPE_='_MEAN_';
+874234    +run;
+874236    +/*
+874237    +data _null_;
+874238    +    set &outest;
+874239    +    if _TYPE_='_PARMS_';
+874240    +    call symput('bias', _STDEV_ );
+874241    +    call symput('intercept', _MEAN_ );
+874242    +run;
+874243    +*/
+874245    +filename  _File_ "&File";
+874246    +data _null_;
+874247    +    FILE _File_;
+874248    +    length _line $500;
+874249    +    drop _line;
+874251    +    put ' ';
+874252    +    put '/*-------------------------------------------------*/';
+874253    +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote))" '*/';
+874254    +    put '/*-------------------------------------------------*/';
+874255    +    put ' ';
+874257    +    put 'length _warn_ $ 4;';
+874258    +    put 'label _warn_ = "Warnings";';
+874259    +    put 'length _svm_uname $32;';
+874260    +    put 'DROP _svm_uname ;';
+874262    +  dsid = open("work._outclass");
+874263    +    if dsid then do;
+874264    +          oldvname ='';
+874265    +          do while(not fetch(dsid));
+874266    +             vname = upcase(strip(getvarc(dsid,varnum(dsid, '_VAR_'))));
+874267    +             vlevel = upcase(strip(getvarc(dsid,varnum(dsid,'_LEVEL_'))));
+874268    +             dummyname = strip(getvarc(dsid,varnum(dsid,'_NAME_')));
+874269    +             vtype = strip(getvarc(dsid,varnum(dsid,'TYPE')));
+874270    +             vformat = strip(getvarc(dsid,varnum(dsid,'FORMAT')));
+874271    +             *put 'vtype =' vtype;
+874272    +             *put 'vformat=' vformat;
+874274    +             if oldname ne vname then do;
+874275    +                 if vtype = 'N' then do;
+874276    +                     if vformat eq ' ' then do;
+874277    +                        put '_svm_uname = put(' vname ', Best12.);';
+874278    +                     end; else do;
+874279    +                        put '_svm_uname = put(' vname ',' vformat ');';
+874280    +                     end;
+874281    +                  end;
+874282    +                  else do;
+874283    +                     if vformat eq ' ' then do;
+874284    +                        put '_svm_uname = ' vname ' ;';
+874285    +                     end; else do;
+874286    +                        put '_svm_uname = put(' vname ',' vformat ');';
+874287    +                     end;
+874288    +                  end;
+874289    +                  put '%DMNORMIP(_svm_uname);';
+874290    +              end; /* end of oldname ne vname */
+874292    +              /*put 'if _svm_uname = strip("' vlevel '") then ' dummyname '=1 ;';*/
+874293    +              _line = 'if _svm_uname =' || quote(strip(vlevel)) || ' then ';
+874294    +              put _line;
+874295    +              put ' ' dummyname  '= 1 ; else '  dummyname '=0 ; drop '  dummyname ' ;';
+874296    +              oldname = vname;
+874297    +          end;
+874299    +     end;
+874300    +rc=close(dsid);
+874302    +dsid = open("&outest");
+874303    +    if dsid then do;
+874304    +          put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_predvalues, noquote))"  "------ */";
+874305    +          ncol = attrn(dsid, 'NVARS');
+874306    +          do i=4 to ncol;
+874307    +             vname = upcase(trim(left(varname(dsid,i))));
+874308    +              do while(not fetch(dsid));
+874309    +                  type = strip(getvarc(dsid,2));
+874310    +                  select(type);
+874311    +                      when('_MEAN_')  mean =  getvarn(dsid, i);
+874312    +                      when('_STDEV_') std  =  getvarn(dsid, i);
+874313    +                      when('_PARMS_') coeff = getvarn(dsid, i);
+874314    +                  otherwise;
+874315    +                  end;
+874316    +              end; /* end of do-while*/
+874317    +              *put '+' coeff '*(' vname '-' mean ')/' std;
+874318    +              if i=4 then  do; put '_P_ =(' coeff ; end;
+874319    +              else if i=5 then do; put '+' coeff ');' ; end;
+874320    +              else do;
+874321    +                      tmpvar = '_TMPVAR'||strip(i);
+874322    +                      put 'if ' vname '= . then ' tmpvar '=' mean ';';
+874323    +                      put 'else ' tmpvar '=' vname ';';
+874324    +                      put '_P_ = _P_+' coeff '*' tmpvar ';';
+874325    +                      put 'drop  ' tmpvar ';';
+874326    +              end;
+874327    +              rc=rewind(dsid);
+874328    +         end; /* end of  do i=6 to &nvars; */
+874329    +         put ';';
+874330    +     end;
+874331    +    rc=close(dsid);
+874332    + put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_map_predvalues, noquote))"  "------ */";
+874334    +%if &TargetLevel eq BINARY %then %do;
+874336    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
+874337    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874338    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+874340    +   put ' if _P_ < -600 then _p =0; ';  /* to avoid the limit of EXP function */
+874341    +   put ' else _P = 1/(1+EXP((-1)*(_P_)));' ;
+874343    +%do %while(^ %sysfunc(fetch(&dsid)));
+874344    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+874345    +   %let P_Level = %sysfunc(getvarc(&dsid, &vn_level));
+874346    +   %if %nrbquote(&P_Level) = %nrbquote(&TargetEvent) %then %do;
+874347    +       put " &P_Var = _P;";
+874348    +   %end;
+874349    +   %else %do;
+874350    +       put " &P_Var = 1 - _P;";
+874351    +   %let targetNonEvent = &P_LEVEL;
+874352    +   %end;
+874353    +%end;
+874354    +%let dsid = %sysfunc(close(&dsid));
+874356    +%if &Residual = Y %then %do;
+874358    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"  "------ */";
+874360    +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
+874361    +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874362    +   %let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+874364    +   %do %while(^ %sysfunc(fetch(&dsid)));
+874365    +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+874366    +     %let R_Level = %sysfunc(getvarc(&dsid, &vn_level));
+874367    +     %if %nrbquote(&R_Level) = %nrbquote(&TargetEvent) %then %do;
+874368    +       put " &R_Var = 1 - _P;";
+874369    +   %end;
+874370    +   %else %do;
+874371    +       put " &R_Var = 0 - (1 - _P);";
+874372    +   %end;
+874373    +   %end;
+874374    +   %let dsid = %sysfunc(close(&dsid));
+874375    +%end;
+874376    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_from, noquote))"  "------ */";
+874378    +    put 'length _FORMAT_VAR $200;';
+874379    +    put 'length _TARGNOR $%DMNORLEN; ';
+874380    +    put 'DROP _FORMAT_VAR _TARGNOR;';
+874381    +    %if &TargetFormat ne  %then %do;
+874382    +    put "_FORMAT_VAR=PUT(&TargetVar, &TargetFormat);";
+874383    +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR);';
+874384    +    %end;
+874385    +    %else %do;
+874386    +    %if &TargetType  = N  %then %do;
+874387    +    put "_FORMAT_VAR=PUT(&TargetVar, BEST12.);";
+874388    +       %end;
+874389    +       %else %do;
+874390    +    put "_FORMAT_VAR= &TargetVar;";
+874391    +       %end;
+874392    +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR); ' ;
+874393    +    %end;
+874395    +    %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='FROM'))));
+874396    +    %let vn_f_var =%sysfunc(varnum(&dsid, VARIABLE));
+874397    +    %let vn_f_varlabel =%sysfunc(varnum(&dsid, LABEL));
+874399    +    %do %while(^ %sysfunc(fetch(&dsid)));
+874400    +        %let F_var = %sysfunc(getvarc(&dsid, &vn_f_var));
+874401    +        %let F_var_label = %sysfunc(getvarc(&dsid, &vn_f_varlabel));
+874402    +        %let qF_var_label = %str(%"&F_var_label%");
+874403    +    put "&F_var = _TARGNOR ;";
+874404    +    put "label &F_var = &qF_Var_label;";
+874405    +    %end;
+874406    +    %let dsid = %sysfunc(close(&dsid));
+874408    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_into, noquote))"  "------ */";
+874410    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='INTO'))));
+874411    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874412    +%let vn_I_varlabel =%sysfunc(varnum(&dsid, LABEL));
+874414    +%do %while(^%sysfunc(fetch(&dsid)));
+874415    +   %let I_var = %sysfunc(getvarc(&dsid, &vn_var));
+874416    +   %let I_var_label = %sysfunc(getvarc(&dsid, &vn_I_varlabel));
+874417    +   %let qI_var_label = %str(%"&I_var_label%");
+874418    +   %let qTargetEvent = %str(%"&targetEvent%");
+874419    +   %let qTargetNonEvent = %str(%"&targetNonEvent%");
+874420    +       put " if _P  > &Cutoff  then &I_Var  = &qtargetEvent ;" ;
+874421    +       put " else &I_Var  =  &qtargetNonEvent ;";
+874422    +       put " label &I_var = &qI_var_label;";
+874423    +%end;
+874424    +%let dsid = %sysfunc(close(&dsid));
+874426    +%end;  /* end of TargetLevel= Binary */
+874428    +%else %if &TargetLevel eq INTERVAL %then %do;
+874430    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
+874431    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874432    +%let vn_label =%sysfunc(varnum(&dsid, LABEL));
+874434    +%do %while(^ %sysfunc(fetch(&dsid)));
+874435    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+874436    +   %let P_label = %sysfunc(getvarc(&dsid, &vn_label));
+874437    +   %let qP_label = %str(%"&P_label%");
+874438    +    put " &P_Var = _P_;";
+874439    +    put " label &P_Var = &qP_label;";
+874440    +%end;
+874441    +%let dsid = %sysfunc(close(&dsid));
+874443    +%if &Residual = Y %then %do;
+874445    +   put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"  "------ */";
+874447    +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
+874448    +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874449    +   %let vn_label =%sysfunc(varnum(&dsid, LABEL));
+874451    +   %do %while(^ %sysfunc(fetch(&dsid)));
+874452    +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+874453    +     %let R_label = %sysfunc(getvarc(&dsid, &vn_label));
+874454    +     %let qR_label = %str(%"&R_label%");
+874455    +       put " &R_Var = &TargetVar - &P_var;";
+874456    +       put " label &R_Var = &qR_label;";
+874457    +   %end;
+874458    +   %let dsid = %sysfunc(close(&dsid));
+874459    +%end;
+874461    +%end;   /* end of TargetLevel= Interval */
+874463    +  put "/*------------------------------------------------------------*/";
+874464    +proc datasets lib=work nolist;
+874465    + delete _tmpclass _cmeta _outclass;
+874466    +run;
+874467    +run;
+874469    +filename  _File_;
+874471    +%mend gen_score;
+874473    +%Macro CheckBinaryTargetLevel(indata=, target=,  nLevel= );
+874474    +%global &nLevel;
+874475    +proc dmdb batch data=&indata
+874476    +classout=_tmp_dmdbout;
+874477    +class &target;
+874478    +run;
+874479    +data _tmp_dmdbout;
+874480    +    set _tmp_dmdbout;
+874481    +    if strip(TYPE) = 'N' and  strip(LEVEL) = '.' then delete;
+874482    +    if strip(TYPE) = 'C' and  strip(LEVEL) = '' then delete;
+874483    +run;
+874484    +data _null_;
+874485    +    %let dsid = %sysfunc(open(work._tmp_dmdbout));
+874486    +    %let _obs = %sysfunc(attrn(&dsid, NOBS));
+874487    +    %let dsid = %sysfunc(close(&dsid));
+874488    +     call symput("&nLevel", put(&_obs, Best12.));
+874489    +run;
+874491    +proc datasets lib=work nolist;
+874492    +     delete _tmp_dmdbout;
+874493    +run;
+874494    +quit;
+874495    +%Mend CheckBinaryTargetLevel;
+874498    +%macro getNObs(inds=, nobs=);
+874499    +    %global &nobs;
+874500    +    data _null_;
+874501    +        set &inds end=eof;
+874502    +        if eof then call symput("&nobs", _N_);
+874503    +    run;
+874504    +    quit;
+874505    +%mend  getNObs;
+874509    +%macro makeAlphaDs(target=, cmeta=);
+874511    + %let isOBSIndex= N;
+874512    + %let dsid = %sysfunc(open(&cmeta));
+874513    + %let vn_name =%sysfunc(varnum(&dsid, NAME));
+874514    + %do %while(^%sysfunc(fetch(&dsid)));
+874515    +     %let _name = %sysfunc(getvarc(&dsid, &vn_name));
+874516    +     %if %upcase(&_name) = _DATAOBS_  %then %do; %let isOBSIndex = Y;%end;
+874517    + %end;
+874518    + %let dsid = %sysfunc(close(&dsid));
+874520    +data &EM_USER_OUTALPHA;
+874521    +     set _sample_train;
+874522    +     set _outtrain(keep=_ALPHA_ _BOUND_);
+874523    +     %if &isOBSIndex= N %then %do;
+874524    +     keep _OBS_ _ALPHA_ _BOUND_ &target;
+874525    +     %end;
+874526    +     %else %do;
+874527    +     keep _OBS_ _dataobs_ _ALPHA_ _BOUND_ &target;
+874528    +     %end;
+874529    +run;
+874531    +data &EM_EXPORT_TRAIN;
+874532    +     length _OBS_ 8;
+874533    +     set &EM_EXPORT_TRAIN;
+874534    +     _OBS_ = _N_;
+874535    +run;
+874537    +data &EM_EXPORT_TRAIN(Drop=_OBS_);
+874538    +     merge &EM_EXPORT_TRAIN  &EM_USER_OUTALPHA(drop=&target);
+874539    +     by _OBS_;
+874540    +     if _ALPHA_ =. then _ALPHA_=0;
+874541    +     if _BOUND_ ="" then _BOUND_="_LBC";
+874542    +run;
+874544    +data &EM_USER_OUTALPHA;
+874545    +   set &EM_USER_OUTALPHA;
+874546    +   if _ALPHA_ = 0 then delete;
+874547    +   %if &isOBSIndex= N %then %do;
+874548    +   Label _OBS_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label, noquote))";
+874549    +   rename _OBS_ = _dataobs_;
+874550    +   %end;
+874551    +   %else %do;
+874552    +   drop _OBS_;
+874553    +   Label _dataobs_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label, noquote))";
+874554    +   %end;
+874555    +   Label _ALPHA_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_alpha_label, noquote))";
+874556    +   Label &target = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_target_label, noquote))";
+874557    +   Label _BOUND_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_bound_label, noquote))";
+874558    +   run;
+874560    +%mend makeAlphaDs;
+874563    +%macro makeTunData();
+874564    +data &EM_USER_TUNINGCRIT;
+874565    +    set &EM_USER_TUNINGCRIT;
+874566    +    Drop N;
+874567    +    Label C = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_c, noquote))";
+874568    +    Label KF1 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf1, noquote))";
+874569    +    Label KF2 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf2, noquote))";
+874570    +    Label NMisc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_nmisc, noquote))";
+874571    +    Label Perc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_perc, noquote))";
+874572    +    Label ERROR = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_error, noquote))";
+874573    +    Label TstError = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_tsterror, noquote))";
+874574    +run;
+874575    +%mend makeTunData;
+874577    +/*------------------ Score Code Generation with Proc SVMScore    ----------------------  */
+874580    +%macro score_code(TargetLevel=, type=);
+874582    +%let _inoutest = WORK._inoutest ;
+874583    +%let _inoutfit = WORK._inoutfit ;
+874584    +%let _inoutclass = WORK._inoutclass;
+874586    +%if &type eq FLOW %then %do;
+874587    +    %let _inoutest = &EM_USER_OUTEST;
+874588    +    %let _inoutfit = &EM_USER_SVMFITSTAT ;
+874589    +    %let _inoutclass = &EM_USER_OUTCLASS;
+874590    +%end;
+874591    +%else %do;
+874592    +%em_data2code(data=&EM_USER_OUTEST, outdata=&_inoutest, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+874593    +%em_data2code(data=&EM_USER_SVMFITSTAT, outdata=&_inoutfit, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+874594    +%em_data2code(data=&EM_USER_OUTCLASS, outdata=&_inoutclass, outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+874595    +%end;
+874597    +%let emscoreout = %str(&)%str(em_score_output);
+874600    +%if &type eq FLOW %then %do;
+874601    +filename  _File_ "&EM_FILE_EMFLOWSCORECODE";
+874602    +%end;
+874603    +%else %do;
+874604    +filename  _File_ "&EM_FILE_EMPUBLISHSCORECODE";
+874605    +%end;
+874607    +data _null_;
+874608    +    FILE _File_ MOD;
+874610    +    put ' ';
+874611    +    put '/*-------------------------------------------------*/';
+874612    +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote)) " ' */';
+874613    +    put '/*-------------------------------------------------*/';
+874614    +    put ' ';
+874616    +%if &TargetLevel eq BINARY %then %do;
+874618    +/*%put &emscoreout;  */
+874620    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
+874621    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874623    +%do %while(^ %sysfunc(fetch(&dsid)));
+874624    +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874626    +%end;
+874627    +%let dsid = %sysfunc(close(&dsid));
+874629    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
+874630    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874632    +%do %while(^ %sysfunc(fetch(&dsid)));
+874633    +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+874635    +%end;
+874636    +%let dsid = %sysfunc(close(&dsid));
+874639    +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit inclass=&_inoutclass";
+874640    +    %if &type eq FLOW %then %do;
+874641    +    put "              out = &emscoreout(rename=(_F_=&F_VAR _I_=&I_VAR))";
+874642    +    %end;
+874643    +    %else %do;
+874644    +    put "              out = &emscoreout(rename=(_I_=&I_VAR))";
+874645    +    %end;
+874646    +    put ";";
+874647    +    put "run;";
+874650    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
+874652    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+874653    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+874654    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+874655    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+874658    +%do %while(^ %sysfunc(fetch(&dsid)));
+874659    +   %let TargetEvent =   %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
+874660    +   %let TargetVar   =   %sysfunc(getvarc(&dsid, &vn_target_name));
+874661    +   %let TargetFormat =  %sysfunc(getvarc(&dsid, &vn_target_format));
+874662    +   %let TargetType   =  %sysfunc(getvarc(&dsid, &vn_target_type));
+874663    +%end;
+874665    +%let dsid = %sysfunc(close(&dsid));
+874667    +    put "data &emscoreout(drop=_P);";
+874668    +    put "     set &emscoreout;";
+874669    +    put "if (_P_ < -600) then _p =0;";    /* to avoid the limit of EXP function */
+874670    +    put "else _P = 1/(1+EXP((-1)*(_P_)));";
+874672    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+874673    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874674    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+874676    +%do %while(^ %sysfunc(fetch(&dsid)));
+874677    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+874678    +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
+874679    +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
+874680    +    put " &P_Var = _P ;";
+874681    +   %end;
+874682    +   %else %do;
+874683    +    put " &P_Var = 1 - _P ;";
+874684    +    %let targetNonEvent = &P_LEVEL;
+874685    +   %end;
+874686    +%end;
+874687    +%let dsid = %sysfunc(close(&dsid));
+874689    +%end; /* the end of if - targetlevel eq binary */
+874690    +%else %do;
+874692    +/* ----     interval target  ------ */
+874694    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+874695    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874697    +%do %while(^ %sysfunc(fetch(&dsid)));
+874698    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+874699    +%end;
+874700    +%let dsid = %sysfunc(close(&dsid));
+874702    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
+874703    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+874704    +%do %while(^ %sysfunc(fetch(&dsid)));
+874705    +   %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+874706    +%end;
+874707    +%let dsid = %sysfunc(close(&dsid));
+874709    +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit inclass=&_inoutclass ";
+874710    +    %if &type eq FLOW %then %do;
+874711    +    put "              out = &emscoreout(rename=(_P_ = &P_VAR _R_=&R_VAR))";
+874712    +    %end;
+874713    +    %else %do;
+874714    +    put "              out = &emscoreout(rename=(_P_ = &P_VAR))";
+874715    +    %end;
+874716    +    put ";";
+874718    +%end; /* end of targetlevel eq interval */
+874720    +run;
+874721    +filename  _File_;
+874722    +%mend score_code;
+874725    +%macro makeDeltaCode(TargetLevel=);
+874726    +*--- Build Code to Modify Metadata ---*;
+874727    +filename X "&EM_FILE_CDELTA_TRAIN";
+874729    +/* modify columns meta */
+874730    +data _null_;
+874731    +    file X;
+874732    +        put "if upcase(trim(left(NAME))) eq  '_Y_'  then ROLE='PREDICT';";
+874733    +        put "if upcase(trim(left(NAME))) eq  '_R_'  then ROLE='RESIDUAL';";
+874734    +        put "if upcase(trim(left(NAME))) eq  '_ALPHA_'  then ROLE='REJECTED';";
+874735    +        put "if upcase(trim(left(NAME))) eq  '_BOUND_'  then ROLE='REJECTED';";
+874736    +run;
+874737    +%mend makeDeltaCode;
+874739    +%macro  EM_DECIDECODE(data= , decdata= , decmeta= , noresfile=, resfile=);
+874740    + %global m_data    m_decdata   m_decmeta  m_noresfile  m_resfile ;
+874742    +    %do;
+874743    +    %let m_data      = &data;
+874744    +    %let m_decdata   = &decdata;
+874745    +    %let m_decmeta   = &decmeta;
+874746    +    %let m_noresfile = &noresfile;
+874747    +    %let m_resfile   = &resfile;
+874748    +    dm "afa c=sashelp.emutil.decidecode.scl";
+874749    +  %end;
+874750    +%mend EM_DECIDECODE;
 NOTE: %INCLUDE (level 1) ending.
 MPRINT(MAIN):   filename temp;
 NOTE: Fileref TEMP has been deassigned.
@@ -1017,14 +1015,14 @@ MPRINT(EM_DIAGRAM):  ;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   * End SCORE: SVM4;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
-2042848    
-2042849    *------------------------------------------------------------*;
-2042850    * End SCORE: SVM4;
-2042851    *------------------------------------------------------------*;
+874751     
+874752     *------------------------------------------------------------*;
+874753     * End SCORE: SVM4;
+874754     *------------------------------------------------------------*;
 
-2042852    filename x "C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMFLOWSCORE.sas" MOD;
+874755     filename x "C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMFLOWSCORE.sas" MOD;
 MPRINT(EM_DIAGRAM):    filename x "C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMFLOWSCORE.sas" MOD;
-2042853    %makeResidualVars(target=DepVar, decmeta=EMWS8.SVM4_DepVar_DM, fref=X);
+874756     %makeResidualVars(target=DepVar, decmeta=EMWS8.SVM4_DepVar_DM, fref=X);
 MPRINT(MAKERESIDUALVARS):   data _null_;
 MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM4_DepVar_DM end=eof;
 MPRINT(MAKERESIDUALVARS):   where _TYPE_ in('TARGET', 'FROM');
@@ -1049,7 +1047,7 @@ NOTE: There were 2 observations read from the data set EMWS8.SVM4_DEPVAR_DM.
       WHERE _TYPE_='PREDICTED';
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
 MPRINT(MAKERESIDUALVARS):   data _null_;
@@ -1096,8 +1094,8 @@ MPRINT(MAKERESIDUALVARS):   run;
 NOTE: The file X is:
       Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM4\EMFLOWSCORE.sas,
       RECFM=V,LRECL=256,File Size (bytes)=506,
-      Last Modified=28. April 2016 10.07 Uhr,
-      Create Time=28. April 2016 10.07 Uhr
+      Last Modified=28. April 2016 16.40 Uhr,
+      Create Time=28. April 2016 16.40 Uhr
 
 NOTE: 21 records were written to the file X.
       The minimum record length was 3.
@@ -1108,7 +1106,7 @@ NOTE: DATA statement used (Total process time):
       
 
 MPRINT(EM_DIAGRAM):  ;
-2042854    filename x;
+874757     filename x;
 MPRINT(EM_DIAGRAM):   filename x;
 NOTE: Fileref X has been deassigned.
 MPRINT(EM_DIAGRAM):    
@@ -1201,9 +1199,9 @@ MPRINT(EM_DIAGRAM):   rename _WRONG_=_VWRONG_;
 MPRINT(EM_DIAGRAM):   data WORK.OUTFITDATA;
 MPRINT(EM_DIAGRAM):   merge WORK.OUTFITDATA _tmpdata_;
 MPRINT(EM_DIAGRAM):   run;
-2042915    proc append base=EMWS8.SVM4_EMOUTFIT data=WORK.OUTFITDATA force;
+874818     proc append base=EMWS8.SVM4_EMOUTFIT data=WORK.OUTFITDATA force;
 MPRINT(EM_DIAGRAM):    proc append base=EMWS8.SVM4_EMOUTFIT data=WORK.OUTFITDATA force;
-2042916    run;
+874819     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: Appending WORK.OUTFITDATA to EMWS8.SVM4_EMOUTFIT.
@@ -1212,14 +1210,14 @@ NOTE: There were 1 observations read from the data set WORK.OUTFITDATA.
 NOTE: The data set EMWS8.SVM4_EMOUTFIT has 1 observations and 19 variables.
 NOTE: PROCEDURE APPEND used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
-2042917    *------------------------------------------------------------*;
+874820     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
-2042918    * SVM4: Computing metadata for TRAIN data;
+874821     * SVM4: Computing metadata for TRAIN data;
 MPRINT(EM_DIAGRAM):   * SVM4: Computing metadata for TRAIN data;
-2042919    *------------------------------------------------------------*;
+874822     *------------------------------------------------------------*;
 MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
 
 MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
@@ -1248,12 +1246,12 @@ MPRINT(EMADVISECOLUMNS):   output;
 MPRINT(EMADVISECOLUMNS):   stop;
 MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.SVM4_TRAIN out=WORK.M1N0VUD3 noprint;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.SVM4_TRAIN out=WORK.M18DZLCP noprint;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1N0VUD3;
+MPRINT(EMADVISECOLUMNS):    data WORK.M18DZLCP;
 MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 INDEX $ 1 INDEXTYPE $ 9;
 MPRINT(EMADVISECOLUMNS):   label NAME =;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1N0VUD3(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
+MPRINT(EMADVISECOLUMNS):   set WORK.M18DZLCP(keep=name type length label format formatl formatd informat informl informd idxusage rename=(type=itype));
 MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
 MPRINT(EMADVISECOLUMNS):   else type = 'C';
 MPRINT(EMADVISECOLUMNS):   if formatl > 0 then do;
@@ -1271,21 +1269,21 @@ MPRINT(EMADVISECOLUMNS):   else index = "Y";
 MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
 MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1N0VUD3;
+MPRINT(EMADVISECOLUMNS):    data WORK.M18DZLCP;
 MPRINT(EMADVISECOLUMNS):   length UNAME $64;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1N0VUD3;
+MPRINT(EMADVISECOLUMNS):   set WORK.M18DZLCP;
 MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M1787RLU NOTHREADS;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M1ELJXX_ NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by UNAME;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):    data WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   drop UNAME;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):   set WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M3QYO_3X(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):    data WORK.M0FVTLQW(keep=NAME ATTR);
 MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):   set WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
 MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
@@ -1320,10 +1318,10 @@ MPRINT(EMADVISECOLUMNS):   run;
 MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
 MPRINT(EMADVISECOLUMNS):   by attr;
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):    data WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
 MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):   set WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
 MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
@@ -1429,6 +1427,8 @@ MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   else if name_prefix in('EP', 'BP', 'CP', 'EL', 'CL', 'BL', 'W', 'ROI', 'IC') then ROLE = 'ASSESS';
 MPRINT(EMADVISECOLUMNS):   else do;
 MPRINT(EMADVISECOLUMNS):   array _ROLE_ (19) $32 _TEMPORARY_ ('ASSESS','CLASSIFICATION','CENSOR', 'COST', 'CROSSID', 'DECISION', 'ID','INPUT', 'LABEL', 'MISSING','PREDICT','REFERRER','REJECTED', 'RESIDUAL','SEGMENT', 'SEQUENCE','TARGET', 'TEXT', 'TIMEID');
+The SAS System
+
 MPRINT(EMADVISECOLUMNS):   drop _found_ i;
 MPRINT(EMADVISECOLUMNS):   _found_=0;
 MPRINT(EMADVISECOLUMNS):   do i=1 to 19 until(_found_=1);
@@ -1461,8 +1461,8 @@ MPRINT(EMADVISECOLUMNS):   end;
 MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
 MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
 MPRINT(EMADVISECOLUMNS):   run;
-MPRINT(EMADVISECOLUMNS):    data WORK.M1787RLU;
-MPRINT(EMADVISECOLUMNS):   set WORK.M1787RLU;
+MPRINT(EMADVISECOLUMNS):    data WORK.M1ELJXX_;
+MPRINT(EMADVISECOLUMNS):   set WORK.M1ELJXX_;
 MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= "Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= "Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower 
 limit" UPPERLIMIT= "Upper Limit" REPORT= "Report" COMMENT= "Comment" INDEX= "Index" INDEXTYPE= "IndexType" LABEL= "Label" LENGTH= "Length";
 MPRINT(EMADVISECOLUMNS):   drop levelAssigned roleAssigned;
@@ -1507,30 +1507,30 @@ MPRINT(EM_DIAGRAM):   if upcase(trim(left(NAME))) eq '_ALPHA_' then ROLE='REJECT
 MPRINT(EM_DIAGRAM):   if upcase(trim(left(NAME))) eq '_BOUND_' then ROLE='REJECTED';
 MPRINT(EM_DIAGRAM):   run;
 MPRINT(EM_DIAGRAM):   filename _delta;
-2043240    data WORK.MODELTEMP_INFO;
+875143     data WORK.MODELTEMP_INFO;
 MPRINT(EM_DIAGRAM):    data WORK.MODELTEMP_INFO;
-2043241    set EMWS8.SVM4_EMINFO;
+875144     set EMWS8.SVM4_EMINFO;
 MPRINT(EM_DIAGRAM):   set EMWS8.SVM4_EMINFO;
-2043242    where DATA='SVM4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+875145     where DATA='SVM4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
 MPRINT(EM_DIAGRAM):   where DATA='SVM4' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
-2043243    run;
+875146     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 0 observations read from the data set EMWS8.SVM4_EMINFO.
       WHERE (DATA='SVM4') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
 NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
-      real time           0.01 seconds
+      real time           0.00 seconds
       cpu time            0.00 seconds
       
 
-2043244    data EMWS8.SVM4_EMINFO;
+875147     data EMWS8.SVM4_EMINFO;
 MPRINT(EM_DIAGRAM):    data EMWS8.SVM4_EMINFO;
-2043245    length TARGET KEY $32 DATA $43;
+875148     length TARGET KEY $32 DATA $43;
 MPRINT(EM_DIAGRAM):   length TARGET KEY $32 DATA $43;
-2043246    input TARGET KEY DATA $;
+875149     input TARGET KEY DATA $;
 MPRINT(EM_DIAGRAM):   input TARGET KEY DATA $;
-2043247    cards;
+875150     cards;
 MPRINT(EM_DIAGRAM):   cards;
 
 NOTE: The data set EMWS8.SVM4_EMINFO has 3 observations and 3 variables.
@@ -1540,12 +1540,12 @@ NOTE: DATA statement used (Total process time):
       
 
 MPRINT(EM_DIAGRAM):   run;
-2043251    run;
-2043252    data EMWS8.SVM4_EMINFO;
+875154     run;
+875155     data EMWS8.SVM4_EMINFO;
 MPRINT(EM_DIAGRAM):   data EMWS8.SVM4_EMINFO;
-2043253    set EMWS8.SVM4_EMINFO WORK.MODELTEMP_INFO;
+875156     set EMWS8.SVM4_EMINFO WORK.MODELTEMP_INFO;
 MPRINT(EM_DIAGRAM):   set EMWS8.SVM4_EMINFO WORK.MODELTEMP_INFO;
-2043254    run;
+875157     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 3 observations read from the data set EMWS8.SVM4_EMINFO.
@@ -1553,14 +1553,14 @@ NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
 NOTE: The data set EMWS8.SVM4_EMINFO has 3 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
-2043255    proc sort data = EMWS8.SVM4_EMINFO NOTHREADS;
+875158     proc sort data = EMWS8.SVM4_EMINFO NOTHREADS;
 MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.SVM4_EMINFO NOTHREADS;
-2043256    by TARGET KEY;
+875159     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-2043257    run;
+875160     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 3 observations read from the data set EMWS8.SVM4_EMINFO.
@@ -1570,11 +1570,11 @@ NOTE: PROCEDURE SORT used (Total process time):
       cpu time            0.01 seconds
       
 
-2043258    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+875161     proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
 MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
-2043259    by TARGET KEY;
+875162     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-2043260    run;
+875163     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 1 observations read from the data set EMWS8.FIMPORT_EMINFO.
@@ -1584,11 +1584,11 @@ NOTE: PROCEDURE SORT used (Total process time):
       cpu time            0.00 seconds
       
 
-2043261    proc sort data = EMWS8.SVM4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+875164     proc sort data = EMWS8.SVM4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
 MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.SVM4_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
-2043262    by TARGET KEY;
+875165     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-2043263    run;
+875166     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: Input data set is already sorted; it has been copied to the output data set.
@@ -1596,16 +1596,16 @@ NOTE: There were 3 observations read from the data set EMWS8.SVM4_EMINFO.
 NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
 NOTE: PROCEDURE SORT used (Total process time):
       real time           0.00 seconds
-      cpu time            0.00 seconds
+      cpu time            0.01 seconds
       
 
-2043264    data EMWS8.SVM4_EMINFO;
+875167     data EMWS8.SVM4_EMINFO;
 MPRINT(EM_DIAGRAM):   data EMWS8.SVM4_EMINFO;
-2043265    merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+875168     merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
 MPRINT(EM_DIAGRAM):   merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
-2043266    by TARGET KEY;
+875169     by TARGET KEY;
 MPRINT(EM_DIAGRAM):   by TARGET KEY;
-2043267    run;
+875170     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: There were 1 observations read from the data set WORK.SORTEDEMINFO.
@@ -1613,24 +1613,24 @@ NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
 NOTE: The data set EMWS8.SVM4_EMINFO has 4 observations and 3 variables.
 NOTE: DATA statement used (Total process time):
       real time           0.00 seconds
-      cpu time            0.01 seconds
+      cpu time            0.00 seconds
       
 
-2043268    proc datasets lib=work nolist;
+875171     proc datasets lib=work nolist;
 MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
-2043269    delete TEMP_INFO SORTEDEMINFO;
+875172     delete TEMP_INFO SORTEDEMINFO;
 MPRINT(EM_DIAGRAM):   delete TEMP_INFO SORTEDEMINFO;
-2043270    run;
+875173     run;
 MPRINT(EM_DIAGRAM):   run;
 
 NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
 NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
-2043271    quit;
+875174     quit;
 MPRINT(EM_DIAGRAM):   quit;
 
 NOTE: PROCEDURE DATASETS used (Total process time):
-      real time           0.07 seconds
-      cpu time            0.06 seconds
+      real time           0.03 seconds
+      cpu time            0.04 seconds
       
 
 MPRINT(EM_DIAGRAM):    proc printto;

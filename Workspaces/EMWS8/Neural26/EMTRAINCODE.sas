@@ -34,21 +34,20 @@ run;
 quit;
 data EM_Neural26;
 set EMWS8.Varsel_TRAIN(keep=
-AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntGoldProds
-MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency );
+AcceptedCmpTotal DepVar Mnt MntMeatProducts NumCatalogPurchases RFMstat
+Recency );
 run;
 *------------------------------------------------------------* ;
 * Neural26: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) G_Marital_Status(ASC)
+    DepVar(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Neural26: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
-   NumDistPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Neural26: Create DMDB;
@@ -68,8 +67,7 @@ quit;
 * Neural26: Interval Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
-   NumDistPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Neural26: Binary Inputs Macro ;
@@ -81,7 +79,7 @@ quit;
 * Neural26: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    G_Marital_Status
+
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Neural26: Ordinal Inputs Macro ;
@@ -103,8 +101,6 @@ performance alldetails noutilfile;
 netopts
 decay=0;
 input %INTINPUTS / level=interval id=intvl
-;
-input %NOMINPUTS / level=nominal id=nom
 ;
 target DepVar / level=NOMINAL id=DepVar
 bias

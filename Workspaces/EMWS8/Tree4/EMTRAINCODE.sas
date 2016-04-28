@@ -36,8 +36,7 @@ quit;
 * Tree4: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    AcceptedCmpTotal Frq G_Marital_Status Income Mnt MntGoldProds MntMeatProducts
-   MntWines NumDistPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree4: Tree Targets Macro ;
@@ -52,14 +51,13 @@ run;
 * Tree4: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
-   NumDistPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree4: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    G_Marital_Status
+
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Tree4: Ordinal Inputs Macro ;
@@ -70,39 +68,8 @@ run;
 *------------------------------------------------------------*;
 * Tree4: Run ARBOR procedure;
 *------------------------------------------------------------*;
-proc arbor data=EMWS8.EM_Tree4
-Leafsize=5
-Mincatsize = 5
-Maxbranch=2
-Maxdepth=6
-alpha = 0.2
-Padjust=
-CHAIDBEFORE
-DEPTH
-MAXRULES=5
-MAXSURRS=0
-Missing=USEINSEARCH
-Exhaustive=5000
-event='1'
-;
-;
-input %INTINPUTS
-/ level = interval;
-input %NOMINPUTS
-/ level=nominal;
-target DepVar / level=BINARY
-Criterion=PROBCHISQ
-;
-;
-Performance DISK
-NodeSize=20000
-;
-Assess
-Validata=EMWS8.Varsel_VALIDATE
-measure=MISC
-;
-SUBTREE BEST
-;
+proc arbor data=EMWS8.EM_Tree4 inmodel=EMWS8.Tree4_EMTREE refreshtrain;
+interact;
 MAKEMACRO NLEAVES=nleaves;
 save
 MODEL=EMWS8.Tree4_EMTREE

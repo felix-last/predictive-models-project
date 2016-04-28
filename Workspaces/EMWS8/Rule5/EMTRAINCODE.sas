@@ -42,7 +42,7 @@ quit;
 * Rule5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule5: Create DMDB;
@@ -123,7 +123,7 @@ title9;
 * Rule5: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Rule5: Tree Targets Macro ;
@@ -138,7 +138,7 @@ run;
 * Rule5: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Rule5: Binary and Nominal Inputs Macro ;
@@ -176,19 +176,19 @@ measure=ASE
 ;
 MAKEMACRO NLEAVES=nleaves;
 save
-MODEL=WORK.OUTTREE_TREE_1FK7MQ8
-SEQUENCE=WORK.OUTSEQ_TREE_1FK7MQ8
-IMPORTANCE=WORK.OUTIMPORT_TREE_1FK7MQ8
-NODESTAT=WORK.OUTNODES_TREE_1FK7MQ8
-SUMMARY=WORK.OUTSUMMARY_TREE_1FK7MQ8
-STATSBYNODE=WORK.OUTSTATS_TREE_1FK7MQ8
-Pathlistnonmissing = WORK.OUTPATH_TREE_1FK7MQ8
-Rules = WORK.OUTRULES_TREE_1FK7MQ8
+MODEL=WORK.OUTTREE_TREE_2HOM6N1
+SEQUENCE=WORK.OUTSEQ_TREE_2HOM6N1
+IMPORTANCE=WORK.OUTIMPORT_TREE_2HOM6N1
+NODESTAT=WORK.OUTNODES_TREE_2HOM6N1
+SUMMARY=WORK.OUTSUMMARY_TREE_2HOM6N1
+STATSBYNODE=WORK.OUTSTATS_TREE_2HOM6N1
+Pathlistnonmissing = WORK.OUTPATH_TREE_2HOM6N1
+Rules = WORK.OUTRULES_TREE_2HOM6N1
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\RIP1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\RIP1.sas"
 group=Rule5
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
 group=Rule5
 residual
 ;
@@ -198,8 +198,8 @@ score data=EMWS8.Varsel_VALIDATE out=_pvalid
 ;
 run;
 quit;
-data WORK.OUTIMPORT_TREE_1FK7MQ8;
-set WORK.OUTIMPORT_TREE_1FK7MQ8;
+data WORK.OUTIMPORT_TREE_2HOM6N1;
+set WORK.OUTIMPORT_TREE_2HOM6N1;
 label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, noquote))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, noquote))" NRULES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nrules_vlabel, noquote))" IMPORTANCE =
    "%sysfunc(sasmsg(sashelp.dmine, rpt_importance_vlabel, noquote))" NSURROGATES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nsurrogates_vlabel, noquote))"
 VIMPORTANCE = "%sysfunc(sasmsg(sashelp.dmine, rpt_vimportance_vlabel, noquote))" RATIO = "%sysfunc(sasmsg(sashelp.dmine, rpt_ratio_vlabel, noquote))"
@@ -273,7 +273,8 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-AcceptedCmpTotal DepVar Income Mnt NumDistPurchases RFMstat RMntFrq _bin);
+AcceptedCmpTotal DepVar Mnt MntMeatProducts NumCatalogPurchases RFMstat
+Recency _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule5: DMDBClass Macro ;
@@ -285,7 +286,7 @@ run;
 * Rule5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule5: Create DMDB;
@@ -306,20 +307,20 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule5_DMDB
 validata = work._valid
-outest = WORK.DMREG_0UBS7JQ_OUTEST
-outterms = WORK.DMREG_0UBS7JQ_OUTTERMS
-outmap= WORK.DMREG_0UBS7JQ_MAP namelen=200
+outest = WORK.DMREG_11M_F2C_OUTEST
+outterms = WORK.DMREG_11M_F2C_OUTTERMS
+outmap= WORK.DMREG_11M_F2C_MAP namelen=200
 ;
 class
 _bin
 ;
 model _bin =
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint
@@ -331,10 +332,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\BIN1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN1.sas"
 group=Rule5_1
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
 group=Rule5_1
 residual
 ;
@@ -403,11 +404,11 @@ set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 DepVar;
 run;
 * Extract misfit validation values;
@@ -417,11 +418,11 @@ set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 DepVar;
 run;
 * Create training data set with binary target for modeling;
@@ -474,7 +475,8 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-AcceptedCmpTotal DepVar Income Mnt NumDistPurchases RFMstat RMntFrq _bin);
+AcceptedCmpTotal DepVar Mnt MntMeatProducts NumCatalogPurchases RFMstat
+Recency _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule5: DMDBClass Macro ;
@@ -486,7 +488,7 @@ run;
 * Rule5: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Income Mnt NumDistPurchases RFMstat RMntFrq
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Rule5: Create DMDB;
@@ -507,20 +509,20 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule5_DMDB
 validata = work._valid
-outest = WORK.DMREG_1MMAKJM_OUTEST
-outterms = WORK.DMREG_1MMAKJM_OUTTERMS
-outmap= WORK.DMREG_1MMAKJM_MAP namelen=200
+outest = WORK.DMREG_1_ZBL8F_OUTEST
+outterms = WORK.DMREG_1_ZBL8F_OUTTERMS
+outmap= WORK.DMREG_1_ZBL8F_MAP namelen=200
 ;
 class
 _bin
 ;
 model _bin =
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 /error=binomial link=LOGIT
 coding=DEVIATION
 nodesignprint
@@ -532,10 +534,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\BIN2.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN2.sas"
 group=Rule5_2
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD16928_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
 group=Rule5_2
 residual
 ;
@@ -604,11 +606,11 @@ set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 DepVar;
 run;
 * Extract misfit validation values;
@@ -618,11 +620,11 @@ set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
 AcceptedCmpTotal
-Income
 Mnt
-NumDistPurchases
+MntMeatProducts
+NumCatalogPurchases
 RFMstat
-RMntFrq
+Recency
 DepVar;
 run;
 data _train;

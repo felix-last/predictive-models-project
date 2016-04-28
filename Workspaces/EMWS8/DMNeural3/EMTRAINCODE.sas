@@ -36,17 +36,14 @@ quit;
 * DMNeural3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * DMNeural3: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * DMNeural3: Create DMDB;
@@ -66,15 +63,12 @@ quit;
 * DMNeural3: Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-   AcceptedCmpTotal Age Complain Education Frq HigherEducationBinary Income
-   Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds MntSweetProducts
-   MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat RMntFrq Recency
-   Teenhome
+    AcceptedCmpTotal Frq Marital_Status Mnt MntMeatProducts NumCatalogPurchases
+   NumDealsPurchases NumWebVisitsMonth Recency
 %mend INPUTS;
 proc dmneurl data=EMWS8.Meta3_TRAIN dmdbcat=WORK.DMNeural3_DMDB
 outest=EMWS8.DMNeural3_ESTIMATE outfit=WORK._OUTFIT_DMNEURAL
-out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_2C5Q4GY
+out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_22F2_N5
 optcrit=ACC maxcomp=6 maxstage=10 maxfunc=1000
 selcrit=SSE
 maxiter=400 maxvect=800 memsiz=8 stopr2=0.00005 cutoff=0.5 maxrows = 3000

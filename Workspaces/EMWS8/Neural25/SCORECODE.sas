@@ -13,29 +13,15 @@ LENGTH _WARN_ $4
 ;
       label S_AcceptedCmpTotal = 'Standard: AcceptedCmpTotal' ;
 
-      label S_Frq = 'Standard: Frq' ;
-
-      label S_Income = 'Standard: Income' ;
-
       label S_Mnt = 'Standard: Mnt' ;
-
-      label S_MntGoldProds = 'Standard: MntGoldProds' ;
 
       label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
 
-      label S_MntWines = 'Standard: MntWines' ;
-
-      label S_NumDistPurchases = 'Standard: NumDistPurchases' ;
+      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
 
       label S_RFMstat = 'Standard: RFMstat' ;
 
-      label S_RMntFrq = 'Standard: RMntFrq' ;
-
       label S_Recency = 'Standard: Recency' ;
-
-      label G_Marital_Status0 = 'Dummy: G_Marital_Status=0' ;
-
-      label G_Marital_Status1 = 'Dummy: G_Marital_Status=1' ;
 
       label H11 = 'Hidden: H1=1' ;
 
@@ -53,53 +39,16 @@ LENGTH _WARN_ $4
 
       label  _WARN_ = "Warnings"; 
 
-*** Generate dummy variables for G_Marital_Status ;
-drop G_Marital_Status0 G_Marital_Status1 ;
-if missing( G_Marital_Status ) then do;
-   G_Marital_Status0 = .;
-   G_Marital_Status1 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( G_Marital_Status , BEST12. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '2'  then do;
-      G_Marital_Status0 = -1;
-      G_Marital_Status1 = -1;
-   end;
-   else if _dm12 = '0'  then do;
-      G_Marital_Status0 = 1;
-      G_Marital_Status1 = 0;
-   end;
-   else if _dm12 = '1'  then do;
-      G_Marital_Status0 = 0;
-      G_Marital_Status1 = 1;
-   end;
-   else do;
-      G_Marital_Status0 = .;
-      G_Marital_Status1 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
 *** *************************;
 *** Checking missing input Interval
 *** *************************;
 
 IF NMISS(
    AcceptedCmpTotal , 
-   Frq , 
-   Income , 
    Mnt , 
-   MntGoldProds , 
    MntMeatProducts , 
-   MntWines , 
-   NumDistPurchases , 
+   NumCatalogPurchases , 
    RFMstat , 
-   RMntFrq , 
    Recency   ) THEN DO;
    SUBSTR(_WARN_, 1, 1) = 'M';
 
@@ -111,88 +60,54 @@ END;
 IF _DM_BAD EQ 0 THEN DO;
    S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 * 
         AcceptedCmpTotal ;
-   S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
-   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 * 
-        MntGoldProds ;
    S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 * 
         MntMeatProducts ;
-   S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   S_NumDistPurchases  =    -1.46347520602971 +     0.21729252230374 * 
-        NumDistPurchases ;
+   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 * 
+        NumCatalogPurchases ;
    S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
-   S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
 END;
 ELSE DO;
    IF MISSING( AcceptedCmpTotal ) THEN S_AcceptedCmpTotal  = . ;
    ELSE S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 * 
         AcceptedCmpTotal ;
-   IF MISSING( Frq ) THEN S_Frq  = . ;
-   ELSE S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
-   IF MISSING( Income ) THEN S_Income  = . ;
-   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
    IF MISSING( Mnt ) THEN S_Mnt  = . ;
    ELSE S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
-   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
-   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 * 
-        MntGoldProds ;
    IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
    ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 * 
         MntMeatProducts ;
-   IF MISSING( MntWines ) THEN S_MntWines  = . ;
-   ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   IF MISSING( NumDistPurchases ) THEN S_NumDistPurchases  = . ;
-   ELSE S_NumDistPurchases  =    -1.46347520602971 +     0.21729252230374 * 
-        NumDistPurchases ;
+   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
+   ELSE S_NumCatalogPurchases
+          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
+         ;
    IF MISSING( RFMstat ) THEN S_RFMstat  = . ;
    ELSE S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
-   IF MISSING( RMntFrq ) THEN S_RMntFrq  = . ;
-   ELSE S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    IF MISSING( Recency ) THEN S_Recency  = . ;
    ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
 END;
 *** *************************;
-*** Writing the Node nom ;
-*** *************************;
-*** *************************;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =     0.20833273713311 * S_AcceptedCmpTotal  +    -1.28879417764689 * 
-        S_Frq  +    -0.14086556075478 * S_Income  +    -2.23301771255995 * 
-        S_Mnt  +     0.04592092677357 * S_MntGoldProds
-          +     1.62567194377193 * S_MntMeatProducts
-          +    -0.49127366492531 * S_MntWines  +     1.91685226043524 * 
-        S_NumDistPurchases  +    -0.04138556513564 * S_RFMstat
-          +    -0.13653085001127 * S_RMntFrq  +    -0.23945986763214 * 
+   H11  =     0.16004494725964 * S_AcceptedCmpTotal  +     0.08764696514306 * 
+        S_Mnt  +     0.04671340644634 * S_MntMeatProducts
+          +     0.11180400348723 * S_NumCatalogPurchases
+          +     0.01435436945304 * S_RFMstat  +    -0.31177422663756 * 
         S_Recency ;
-   H12  =    -0.34458302979772 * S_AcceptedCmpTotal  +     0.83835958311689 * 
-        S_Frq  +     0.58985038025342 * S_Income  +    -0.01368105632672 * 
-        S_Mnt  +      0.3019310576853 * S_MntGoldProds
-          +     0.07606634413103 * S_MntMeatProducts
-          +    -0.13247646610361 * S_MntWines  +    -0.50915989225259 * 
-        S_NumDistPurchases  +    -0.04564926690665 * S_RFMstat
-          +     0.55193961730225 * S_RMntFrq  +     0.39404724414688 * 
+   H12  =    -0.10031153045277 * S_AcceptedCmpTotal  +     0.55856689588407 * 
+        S_Mnt  +    -4.68366978276956 * S_MntMeatProducts
+          +    -0.85996675710654 * S_NumCatalogPurchases
+          +    -0.38366289564497 * S_RFMstat  +     0.14625736857605 * 
         S_Recency ;
-   H13  =    -0.26674190510231 * S_AcceptedCmpTotal  +    -0.06490296283402 * 
-        S_Frq  +    -0.00949495425001 * S_Income  +     0.37442854620852 * 
-        S_Mnt  +     -0.1257892331131 * S_MntGoldProds
-          +    -0.28812884998766 * S_MntMeatProducts
-          +    -0.20316845095305 * S_MntWines  +    -0.03921402518774 * 
-        S_NumDistPurchases  +    -0.03320245186228 * S_RFMstat
-          +    -0.30369395822298 * S_RMntFrq  +     0.46294177326732 * 
+   H13  =     0.77938326673184 * S_AcceptedCmpTotal  +    -4.34347066002433 * 
+        S_Mnt  +      2.1735558181371 * S_MntMeatProducts
+          +     0.46207163707769 * S_NumCatalogPurchases
+          +    -0.15696610884675 * S_RFMstat  +    -0.34884176051145 * 
         S_Recency ;
-   H11  = H11  +    -0.10367293898875 * G_Marital_Status0
-          +     0.15277764144522 * G_Marital_Status1 ;
-   H12  = H12  +     -0.7297577327843 * G_Marital_Status0
-          +    -1.01396607857406 * G_Marital_Status1 ;
-   H13  = H13  +     -0.1454175222715 * G_Marital_Status0
-          +     0.15056066026671 * G_Marital_Status1 ;
-   H11  =    -1.28493655880358 + H11 ;
-   H12  =     -2.3952804585862 + H12 ;
-   H13  =     0.99289226061194 + H13 ;
+   H11  =    -1.02828993708652 + H11 ;
+   H12  =    -4.13161245976812 + H12 ;
+   H13  =    -1.48883305271323 + H13 ;
    H11  = TANH(H11 );
    H12  = TANH(H12 );
    H13  = TANH(H13 );
@@ -206,9 +121,9 @@ END;
 *** Writing the Node DepVar ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =      3.9868350141384 * H11  +    -2.54575725573216 * H12
-          +    -5.97596011661307 * H13 ;
-   P_DepVar1  =     0.85313461945475 + P_DepVar1 ;
+   P_DepVar1  =     7.51048802894835 * H11  +    -5.86273895881122 * H12
+          +     2.78013699027723 * H13 ;
+   P_DepVar1  =    -1.09603166111275 + P_DepVar1 ;
    P_DepVar0  = 0; 
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.; 

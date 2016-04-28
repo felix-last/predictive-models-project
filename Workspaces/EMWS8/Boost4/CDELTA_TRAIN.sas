@@ -2,6 +2,10 @@ if upcase(NAME) = "GRP_ACCEPTEDCMP5" then do;
 ROLE = "REJECTED";
 end;
 else 
+if upcase(NAME) = "GRP_ACCEPTEDCMPTOTAL" then do;
+ROLE = "INPUT";
+end;
+else 
 if upcase(NAME) = "GRP_FRQ" then do;
 ROLE = "INPUT";
 end;
@@ -19,10 +23,14 @@ ROLE = "INPUT";
 end;
 else 
 if upcase(NAME) = "GRP_MNTGOLDPRODS" then do;
-ROLE = "INPUT";
+ROLE = "REJECTED";
 end;
 else 
 if upcase(NAME) = "GRP_MNTMEATPRODUCTS" then do;
+ROLE = "INPUT";
+end;
+else 
+if upcase(NAME) = "GRP_MNTSWEETPRODUCTS" then do;
 ROLE = "INPUT";
 end;
 else 
@@ -40,6 +48,10 @@ end;
 else 
 if upcase(NAME) = "GRP_NUMWEBPURCHASES" then do;
 ROLE = "REJECTED";
+end;
+else 
+if upcase(NAME) = "GRP_NUMWEBVISITSMONTH" then do;
+ROLE = "INPUT";
 end;
 else 
 if upcase(NAME) = "GRP_RECENCY" then do;

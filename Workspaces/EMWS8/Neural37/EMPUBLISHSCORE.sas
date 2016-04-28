@@ -13,57 +13,19 @@ LENGTH _WARN_ $4
 ;
       label S_AcceptedCmpTotal = 'Standard: AcceptedCmpTotal' ;
 
-      label S_Age = 'Standard: Age' ;
-
       label S_Frq = 'Standard: Frq' ;
 
-      label S_Income = 'Standard: Income' ;
+      label S_Mnt = 'Standard: Mnt' ;
 
-      label S_Kidhome = 'Standard: Kidhome' ;
+      label S_MntMeatProducts = 'Standard: MntMeatProducts' ;
 
-      label S_MntFishProducts = 'Standard: MntFishProducts' ;
-
-      label S_MntFruits = 'Standard: MntFruits' ;
-
-      label S_MntGoldProds = 'Standard: MntGoldProds' ;
-
-      label S_MntSweetProducts = 'Standard: MntSweetProducts' ;
-
-      label S_MonthsAsCustomer = 'Standard: MonthsAsCustomer' ;
+      label S_NumCatalogPurchases = 'Standard: NumCatalogPurchases' ;
 
       label S_NumDealsPurchases = 'Standard: NumDealsPurchases' ;
 
       label S_NumWebVisitsMonth = 'Standard: NumWebVisitsMonth' ;
 
-      label S_RFMstat = 'Standard: RFMstat' ;
-
-      label S_RMntFrq = 'Standard: RMntFrq' ;
-
       label S_Recency = 'Standard: Recency' ;
-
-      label S_Teenhome = 'Standard: Teenhome' ;
-
-      label AcceptedCmp10 = 'Dummy: AcceptedCmp1=0' ;
-
-      label AcceptedCmp20 = 'Dummy: AcceptedCmp2=0' ;
-
-      label AcceptedCmp30 = 'Dummy: AcceptedCmp3=0' ;
-
-      label AcceptedCmp40 = 'Dummy: AcceptedCmp4=0' ;
-
-      label AcceptedCmp50 = 'Dummy: AcceptedCmp5=0' ;
-
-      label Complain0 = 'Dummy: Complain=0' ;
-
-      label HigherEducationBinary0 = 'Dummy: HigherEducationBinary=0' ;
-
-      label Education2n_Cycle = 'Dummy: Education=2n Cycle' ;
-
-      label EducationBasic = 'Dummy: Education=Basic' ;
-
-      label EducationGraduation = 'Dummy: Education=Graduation' ;
-
-      label EducationMaster = 'Dummy: Education=Master' ;
 
       label Marital_StatusDivorced = 'Dummy: Marital_Status=Divorced' ;
 
@@ -86,221 +48,6 @@ LENGTH _WARN_ $4
       label P_DepVar0 = 'Predicted: DepVar=0' ;
 
       label  _WARN_ = "Warnings";
-
-*** Generate dummy variables for AcceptedCmp1 ;
-drop AcceptedCmp10 ;
-if missing( AcceptedCmp1 ) then do;
-   AcceptedCmp10 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp1 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp10 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp10 = -1;
-   end;
-   else do;
-      AcceptedCmp10 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp2 ;
-drop AcceptedCmp20 ;
-if missing( AcceptedCmp2 ) then do;
-   AcceptedCmp20 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp2 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp20 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp20 = -1;
-   end;
-   else do;
-      AcceptedCmp20 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp3 ;
-drop AcceptedCmp30 ;
-if missing( AcceptedCmp3 ) then do;
-   AcceptedCmp30 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp3 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp30 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp30 = -1;
-   end;
-   else do;
-      AcceptedCmp30 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp4 ;
-drop AcceptedCmp40 ;
-if missing( AcceptedCmp4 ) then do;
-   AcceptedCmp40 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp4 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp40 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp40 = -1;
-   end;
-   else do;
-      AcceptedCmp40 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for AcceptedCmp5 ;
-drop AcceptedCmp50 ;
-if missing( AcceptedCmp5 ) then do;
-   AcceptedCmp50 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( AcceptedCmp5 , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      AcceptedCmp50 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      AcceptedCmp50 = -1;
-   end;
-   else do;
-      AcceptedCmp50 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Complain ;
-drop Complain0 ;
-if missing( Complain ) then do;
-   Complain0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( Complain , BEST. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '0'  then do;
-      Complain0 = 1;
-   end;
-   else if _dm12 = '1'  then do;
-      Complain0 = -1;
-   end;
-   else do;
-      Complain0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for HigherEducationBinary ;
-drop HigherEducationBinary0 ;
-if missing( HigherEducationBinary ) then do;
-   HigherEducationBinary0 = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm12 $ 12; drop _dm12 ;
-   _dm12 = put( HigherEducationBinary , BEST12. );
-   %DMNORMIP( _dm12 )
-   if _dm12 = '1'  then do;
-      HigherEducationBinary0 = -1;
-   end;
-   else if _dm12 = '0'  then do;
-      HigherEducationBinary0 = 1;
-   end;
-   else do;
-      HigherEducationBinary0 = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
-
-*** Generate dummy variables for Education ;
-drop Education2n_Cycle EducationBasic EducationGraduation EducationMaster ;
-*** encoding is sparse, initialize to zero;
-Education2n_Cycle = 0;
-EducationBasic = 0;
-EducationGraduation = 0;
-EducationMaster = 0;
-if missing( Education ) then do;
-   Education2n_Cycle = .;
-   EducationBasic = .;
-   EducationGraduation = .;
-   EducationMaster = .;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-else do;
-   length _dm10 $ 10; drop _dm10 ;
-   _dm10 = put( Education , $10. );
-   %DMNORMIP( _dm10 )
-   if _dm10 = 'GRADUATION'  then do;
-      EducationGraduation = 1;
-   end;
-   else if _dm10 = 'PHD'  then do;
-      Education2n_Cycle = -1;
-      EducationBasic = -1;
-      EducationGraduation = -1;
-      EducationMaster = -1;
-   end;
-   else if _dm10 = 'MASTER'  then do;
-      EducationMaster = 1;
-   end;
-   else if _dm10 = '2N CYCLE'  then do;
-      Education2n_Cycle = 1;
-   end;
-   else if _dm10 = 'BASIC'  then do;
-      EducationBasic = 1;
-   end;
-   else do;
-      Education2n_Cycle = .;
-      EducationBasic = .;
-      EducationGraduation = .;
-      EducationMaster = .;
-      substr(_warn_,2,1) = 'U';
-      _DM_BAD = 1;
-   end;
-end;
 
 *** Generate dummy variables for Marital_Status ;
 drop Marital_StatusDivorced Marital_StatusMarried Marital_StatusSingle
@@ -374,21 +121,13 @@ end;
 
 IF NMISS(
    AcceptedCmpTotal ,
-   Age ,
    Frq ,
-   Income ,
-   Kidhome ,
-   MntFishProducts ,
-   MntFruits ,
-   MntGoldProds ,
-   MntSweetProducts ,
-   MonthsAsCustomer ,
+   Mnt ,
+   MntMeatProducts ,
+   NumCatalogPurchases ,
    NumDealsPurchases ,
    NumWebVisitsMonth ,
-   RFMstat ,
-   RMntFrq ,
-   Recency ,
-   Teenhome   ) THEN DO;
+   Recency   ) THEN DO;
    SUBSTR(_WARN_, 1, 1) = 'M';
 
    _DM_BAD = 1;
@@ -399,73 +138,42 @@ END;
 IF _DM_BAD EQ 0 THEN DO;
    S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 *
         AcceptedCmpTotal ;
-   S_Age  =    -3.91319138389466 +     0.08289609202857 * Age ;
    S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
-   S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits ;
-   S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   S_MonthsAsCustomer  =    -4.97258711890416 +     0.05902460910139 *
-        MonthsAsCustomer ;
+   S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
+   S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
+        NumCatalogPurchases ;
    S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
         NumDealsPurchases ;
    S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
         NumWebVisitsMonth ;
-   S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
-   S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
 END;
 ELSE DO;
    IF MISSING( AcceptedCmpTotal ) THEN S_AcceptedCmpTotal  = . ;
    ELSE S_AcceptedCmpTotal  =    -0.46762909508827 +      1.4961610131261 *
         AcceptedCmpTotal ;
-   IF MISSING( Age ) THEN S_Age  = . ;
-   ELSE S_Age  =    -3.91319138389466 +     0.08289609202857 * Age ;
    IF MISSING( Frq ) THEN S_Frq  = . ;
    ELSE S_Frq  =     -1.7674482809159 +     0.13966853800993 * Frq ;
-   IF MISSING( Income ) THEN S_Income  = . ;
-   ELSE S_Income  =    -2.48883438787018 +     0.00004789669836 * Income ;
-   IF MISSING( Kidhome ) THEN S_Kidhome  = . ;
-   ELSE S_Kidhome  =    -0.81505958668041 +     1.87132636245581 * Kidhome ;
-   IF MISSING( MntFishProducts ) THEN S_MntFishProducts  = . ;
-   ELSE S_MntFishProducts  =    -0.69884925989448 +     0.01914942799914 *
-        MntFishProducts ;
-   IF MISSING( MntFruits ) THEN S_MntFruits  = . ;
-   ELSE S_MntFruits  =    -0.68347542544545 +     0.02517057319714 * MntFruits
+   IF MISSING( Mnt ) THEN S_Mnt  = . ;
+   ELSE S_Mnt  =    -1.01843471091398 +      0.0016541571108 * Mnt ;
+   IF MISSING( MntMeatProducts ) THEN S_MntMeatProducts  = . ;
+   ELSE S_MntMeatProducts  =    -0.78623193565931 +     0.00462584508746 *
+        MntMeatProducts ;
+   IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
+   ELSE S_NumCatalogPurchases
+          =     -0.9539494374694 +     0.36073207463401 * NumCatalogPurchases
          ;
-   IF MISSING( MntGoldProds ) THEN S_MntGoldProds  = . ;
-   ELSE S_MntGoldProds  =     -0.8611213764608 +     0.01954474499711 *
-        MntGoldProds ;
-   IF MISSING( MntSweetProducts ) THEN S_MntSweetProducts  = . ;
-   ELSE S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
-        MntSweetProducts ;
-   IF MISSING( MonthsAsCustomer ) THEN S_MonthsAsCustomer  = . ;
-   ELSE S_MonthsAsCustomer  =    -4.97258711890416 +     0.05902460910139 *
-        MonthsAsCustomer ;
    IF MISSING( NumDealsPurchases ) THEN S_NumDealsPurchases  = . ;
    ELSE S_NumDealsPurchases  =    -1.34788949552081 +     0.59766336614987 *
         NumDealsPurchases ;
    IF MISSING( NumWebVisitsMonth ) THEN S_NumWebVisitsMonth  = . ;
    ELSE S_NumWebVisitsMonth  =    -2.24769875596018 +     0.42876953368015 *
         NumWebVisitsMonth ;
-   IF MISSING( RFMstat ) THEN S_RFMstat  = . ;
-   ELSE S_RFMstat  =    -0.33944380186973 +     0.00063877635032 * RFMstat ;
-   IF MISSING( RMntFrq ) THEN S_RMntFrq  = . ;
-   ELSE S_RMntFrq  =    -1.25743573075922 +     0.03326204244626 * RMntFrq ;
    IF MISSING( Recency ) THEN S_Recency  = . ;
    ELSE S_Recency  =    -1.69222845719633 +     0.03469514083585 * Recency ;
-   IF MISSING( Teenhome ) THEN S_Teenhome  = . ;
-   ELSE S_Teenhome  =    -0.88382230606631 +     1.81661831567223 * Teenhome ;
 END;
-*** *************************;
-*** Writing the Node bin ;
-*** *************************;
 *** *************************;
 *** Writing the Node nom ;
 *** *************************;
@@ -473,56 +181,28 @@ END;
 *** Writing the Node H1 ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H11  =     0.01063323210937 * S_AcceptedCmpTotal  +     0.03365569067266 *
-        S_Age  +    -0.06298217066682 * S_Frq  +    -0.43977830440504 *
-        S_Income  +     0.22335525511089 * S_Kidhome
-          +    -0.00221083086422 * S_MntFishProducts
-          +     0.04907450115954 * S_MntFruits  +     0.00835443713383 *
-        S_MntGoldProds  +     0.05663979576334 * S_MntSweetProducts
-          +    -0.04495572232299 * S_MonthsAsCustomer
-          +     -0.0984136172116 * S_NumDealsPurchases
-          +    -0.15146883503841 * S_NumWebVisitsMonth
-          +    -0.02630788492992 * S_RFMstat  +    -0.08035402524365 *
-        S_RMntFrq  +     0.43368485300438 * S_Recency
-          +      0.3065310385506 * S_Teenhome ;
-   H12  =    -0.06239928417011 * S_AcceptedCmpTotal  +     0.11670788528969 *
-        S_Age  +     1.41479310556294 * S_Frq  +     0.55422749477366 *
-        S_Income  +    -0.35011778053778 * S_Kidhome
-          +     -0.1923230661012 * S_MntFishProducts
-          +     0.04485871572122 * S_MntFruits  +    -0.20926540592022 *
-        S_MntGoldProds  +    -0.06600537118088 * S_MntSweetProducts
-          +     0.11972981955957 * S_MonthsAsCustomer
-          +    -0.69562897452195 * S_NumDealsPurchases
-          +    -0.60635372982312 * S_NumWebVisitsMonth
-          +    -0.17842199833071 * S_RFMstat  +    -0.33189187668375 *
-        S_RMntFrq  +     0.71456635096926 * S_Recency
-          +    -0.26705867856125 * S_Teenhome ;
-   H11  = H11  +     0.19687510992827 * AcceptedCmp10
-          +     0.19037220821848 * AcceptedCmp20  +     0.24009290344533 *
-        AcceptedCmp30  +     0.17182489961148 * AcceptedCmp40
-          +     0.14773082440883 * AcceptedCmp50  +    -0.04555612620664 *
-        Complain0  +    -0.02818279380113 * HigherEducationBinary0 ;
-   H12  = H12  +     0.46482549917487 * AcceptedCmp10
-          +     0.32665132858496 * AcceptedCmp20  +      0.6469026902643 *
-        AcceptedCmp30  +    -0.04744612561439 * AcceptedCmp40
-          +     0.23656305346688 * AcceptedCmp50  +    -0.28735021872996 *
-        Complain0  +     0.37276391144233 * HigherEducationBinary0 ;
-   H11  = H11  +    -0.04408933848586 * Education2n_Cycle
-          +    -0.16074222236013 * EducationBasic  +    -0.02200515763455 *
-        EducationGraduation  +     0.17612728898019 * EducationMaster
-          +    -0.09855412021102 * Marital_StatusDivorced
-          +     0.28837825625614 * Marital_StatusMarried
-          +    -0.23746933129835 * Marital_StatusSingle
-          +     0.26520860597348 * Marital_StatusTogether ;
-   H12  = H12  +    -0.08359997133316 * Education2n_Cycle
-          +     0.12257869993914 * EducationBasic  +    -0.01448644600588 *
-        EducationGraduation  +    -0.23141304817179 * EducationMaster
-          +    -0.18120682445185 * Marital_StatusDivorced
-          +    -0.31874441268113 * Marital_StatusMarried
-          +     0.42624435247785 * Marital_StatusSingle
-          +     -0.2878114826605 * Marital_StatusTogether ;
-   H11  =    -0.01661904525758 + H11 ;
-   H12  =       1.563867686297 + H12 ;
+   H11  =    -0.02653549681218 * S_AcceptedCmpTotal  +     1.60397071748115 *
+        S_Frq  +    -1.03902575983342 * S_Mnt  +    -2.72598098450155 *
+        S_MntMeatProducts  +    -1.06842131136244 * S_NumCatalogPurchases
+          +    -0.47093662204184 * S_NumDealsPurchases
+          +      0.0586185810543 * S_NumWebVisitsMonth
+          +     0.00587304361505 * S_Recency ;
+   H12  =     0.31492288320813 * S_AcceptedCmpTotal  +    -0.37978290075431 *
+        S_Frq  +     -0.3786050696094 * S_Mnt  +     0.41096392827771 *
+        S_MntMeatProducts  +     0.38723690923665 * S_NumCatalogPurchases
+          +     0.02153566641079 * S_NumDealsPurchases
+          +      0.3531856068889 * S_NumWebVisitsMonth
+          +    -0.45172996657465 * S_Recency ;
+   H11  = H11  +     0.20621500756581 * Marital_StatusDivorced
+          +    -0.46143457750178 * Marital_StatusMarried
+          +     0.25253829009689 * Marital_StatusSingle
+          +    -0.38100282992133 * Marital_StatusTogether ;
+   H12  = H12  +     0.09005972896227 * Marital_StatusDivorced
+          +    -0.27874888025763 * Marital_StatusMarried
+          +     0.21139659951803 * Marital_StatusSingle
+          +    -0.28610840450842 * Marital_StatusTogether ;
+   H11  =     -2.1416285472126 + H11 ;
+   H12  =    -0.48707610597771 + H12 ;
    H11  = TANH(H11 );
    H12  = TANH(H12 );
 END;
@@ -534,8 +214,8 @@ END;
 *** Writing the Node DepVar ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -5.18429329502722 * H11  +    -3.02840540662259 * H12 ;
-   P_DepVar1  =     1.08780546574566 + P_DepVar1 ;
+   P_DepVar1  =    -6.21347604335458 * H11  +     9.03440534689202 * H12 ;
+   P_DepVar1  =    -4.64112572140886 + P_DepVar1 ;
    P_DepVar0  = 0;
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.;

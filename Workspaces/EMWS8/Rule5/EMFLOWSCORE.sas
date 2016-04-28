@@ -43,20 +43,20 @@ if missing( AcceptedCmpTotal ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check Income for missing values ;
-if missing( Income ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
 *** Check Mnt for missing values ;
 if missing( Mnt ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
 
-*** Check NumDistPurchases for missing values ;
-if missing( NumDistPurchases ) then do;
+*** Check MntMeatProducts for missing values ;
+if missing( MntMeatProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -67,8 +67,8 @@ if missing( RFMstat ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check RMntFrq for missing values ;
-if missing( RMntFrq ) then do;
+*** Check Recency for missing values ;
+if missing( Recency ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -86,31 +86,31 @@ _LP0 = 0;
 
 ***  Effect: AcceptedCmpTotal ;
 _TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (   -1.39892542777179 * _TEMP);
-
-***  Effect: Income ;
-_TEMP = Income ;
-_LP0 = _LP0 + (    0.00002486456481 * _TEMP);
+_LP0 = _LP0 + (   -2.02021777270378 * _TEMP);
 
 ***  Effect: Mnt ;
 _TEMP = Mnt ;
-_LP0 = _LP0 + (    0.00222462909018 * _TEMP);
+_LP0 = _LP0 + (    0.00243963876472 * _TEMP);
 
-***  Effect: NumDistPurchases ;
-_TEMP = NumDistPurchases ;
-_LP0 = _LP0 + (   -0.17203152013744 * _TEMP);
+***  Effect: MntMeatProducts ;
+_TEMP = MntMeatProducts ;
+_LP0 = _LP0 + (   -0.00548782537061 * _TEMP);
+
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (   -0.26930170497076 * _TEMP);
 
 ***  Effect: RFMstat ;
 _TEMP = RFMstat ;
-_LP0 = _LP0 + (   -0.00061047201485 * _TEMP);
+_LP0 = _LP0 + (   -0.00007153979449 * _TEMP);
 
-***  Effect: RMntFrq ;
-_TEMP = RMntFrq ;
-_LP0 = _LP0 + (   -0.03762017413848 * _TEMP);
+***  Effect: Recency ;
+_TEMP = Recency ;
+_LP0 = _LP0 + (    0.05793015766766 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =     2.79794572900008 + _LP0;
+_TEMP =     0.91675416760091 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);
@@ -184,20 +184,20 @@ if missing( AcceptedCmpTotal ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check Income for missing values ;
-if missing( Income ) then do;
-   substr(_warn_,1,1) = 'M';
-   _DM_BAD = 1;
-end;
-
 *** Check Mnt for missing values ;
 if missing( Mnt ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
 
-*** Check NumDistPurchases for missing values ;
-if missing( NumDistPurchases ) then do;
+*** Check MntMeatProducts for missing values ;
+if missing( MntMeatProducts ) then do;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+
+*** Check NumCatalogPurchases for missing values ;
+if missing( NumCatalogPurchases ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -208,15 +208,15 @@ if missing( RFMstat ) then do;
    _DM_BAD = 1;
 end;
 
-*** Check RMntFrq for missing values ;
-if missing( RMntFrq ) then do;
+*** Check Recency for missing values ;
+if missing( Recency ) then do;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
 *** If missing inputs, use averages;
 if _DM_BAD > 0 then do;
-   _P0 = 0.8820638821;
-   _P1 = 0.1179361179;
+   _P0 = 0.8568019093;
+   _P1 = 0.1431980907;
    goto RULE5_2DR1;
 end;
 
@@ -227,31 +227,31 @@ _LP0 = 0;
 
 ***  Effect: AcceptedCmpTotal ;
 _TEMP = AcceptedCmpTotal ;
-_LP0 = _LP0 + (   -0.38948339516329 * _TEMP);
-
-***  Effect: Income ;
-_TEMP = Income ;
-_LP0 = _LP0 + ( -1.4713983209058E-6 * _TEMP);
+_LP0 = _LP0 + (   -0.08879141882421 * _TEMP);
 
 ***  Effect: Mnt ;
 _TEMP = Mnt ;
-_LP0 = _LP0 + (    0.00077235683449 * _TEMP);
+_LP0 = _LP0 + (   -0.00020536451991 * _TEMP);
 
-***  Effect: NumDistPurchases ;
-_TEMP = NumDistPurchases ;
-_LP0 = _LP0 + (   -0.06725999965564 * _TEMP);
+***  Effect: MntMeatProducts ;
+_TEMP = MntMeatProducts ;
+_LP0 = _LP0 + (   -0.00015633708501 * _TEMP);
+
+***  Effect: NumCatalogPurchases ;
+_TEMP = NumCatalogPurchases ;
+_LP0 = _LP0 + (   -0.02983767947379 * _TEMP);
 
 ***  Effect: RFMstat ;
 _TEMP = RFMstat ;
-_LP0 = _LP0 + (   -0.00005588087816 * _TEMP);
+_LP0 = _LP0 + (    0.00003277279673 * _TEMP);
 
-***  Effect: RMntFrq ;
-_TEMP = RMntFrq ;
-_LP0 = _LP0 + (    -0.0174463929883 * _TEMP);
+***  Effect: Recency ;
+_TEMP = Recency ;
+_LP0 = _LP0 + (    0.00697758564172 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_TEMP =     3.63208415998884 + _LP0;
+_TEMP =      2.0591647884112 + _LP0;
 if (_TEMP < 0) then do;
    _TEMP = exp(_TEMP);
    _P0 = _TEMP / (1 + _TEMP);

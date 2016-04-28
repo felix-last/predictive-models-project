@@ -34,21 +34,20 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.Varsel_TRAIN(keep=
-AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntGoldProds
-MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency );
+AcceptedCmpTotal DepVar Mnt MntMeatProducts NumCatalogPurchases RFMstat
+Recency );
 run;
 *------------------------------------------------------------* ;
 * Reg4: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) G_Marital_Status(ASC)
+    DepVar(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg4: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
-   NumDistPurchases RFMstat RMntFrq Recency
+    AcceptedCmpTotal Mnt MntMeatProducts NumCatalogPurchases RFMstat Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * Reg4: Create DMDB;
@@ -75,20 +74,13 @@ outmap= EMWS8.Reg4_MAPDS namelen=200
 ;
 class
 DepVar
-G_Marital_Status
 ;
 model DepVar =
 AcceptedCmpTotal
-Frq
-G_Marital_Status
-Income
 Mnt
-MntGoldProds
 MntMeatProducts
-MntWines
-NumDistPurchases
+NumCatalogPurchases
 RFMstat
-RMntFrq
 Recency
 /error=binomial link=LOGIT
 coding=DEVIATION

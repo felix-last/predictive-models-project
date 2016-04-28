@@ -36,10 +36,11 @@ quit;
 * Rule3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Rule3: DMDBVar Macro ;
@@ -126,10 +127,10 @@ title9;
 * Rule3: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-   Year_Birth
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Rule3: Tree Targets Macro ;
@@ -150,9 +151,10 @@ run;
 * Rule3: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Rule3: Ordinal Inputs Macro ;
@@ -186,19 +188,19 @@ measure=ASE
 ;
 MAKEMACRO NLEAVES=nleaves;
 save
-MODEL=WORK.OUTTREE_TREE_0NF5BC8
-SEQUENCE=WORK.OUTSEQ_TREE_0NF5BC8
-IMPORTANCE=WORK.OUTIMPORT_TREE_0NF5BC8
-NODESTAT=WORK.OUTNODES_TREE_0NF5BC8
-SUMMARY=WORK.OUTSUMMARY_TREE_0NF5BC8
-STATSBYNODE=WORK.OUTSTATS_TREE_0NF5BC8
-Pathlistnonmissing = WORK.OUTPATH_TREE_0NF5BC8
-Rules = WORK.OUTRULES_TREE_0NF5BC8
+MODEL=WORK.OUTTREE_TREE_3P7F1LK
+SEQUENCE=WORK.OUTSEQ_TREE_3P7F1LK
+IMPORTANCE=WORK.OUTIMPORT_TREE_3P7F1LK
+NODESTAT=WORK.OUTNODES_TREE_3P7F1LK
+SUMMARY=WORK.OUTSUMMARY_TREE_3P7F1LK
+STATSBYNODE=WORK.OUTSTATS_TREE_3P7F1LK
+Pathlistnonmissing = WORK.OUTPATH_TREE_3P7F1LK
+Rules = WORK.OUTRULES_TREE_3P7F1LK
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\RIP1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\RIP1.sas"
 group=Rule3
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\RIP1_res.sas"
 group=Rule3
 residual
 ;
@@ -208,8 +210,8 @@ score data=EMWS8.BINNING_VALIDATE out=_pvalid
 ;
 run;
 quit;
-data WORK.OUTIMPORT_TREE_0NF5BC8;
-set WORK.OUTIMPORT_TREE_0NF5BC8;
+data WORK.OUTIMPORT_TREE_3P7F1LK;
+set WORK.OUTIMPORT_TREE_3P7F1LK;
 label NAME = "%sysfunc(sasmsg(sashelp.dmine, meta_name_vlabel, noquote))" LABEL = "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, noquote))" NRULES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nrules_vlabel, noquote))" IMPORTANCE =
    "%sysfunc(sasmsg(sashelp.dmine, rpt_importance_vlabel, noquote))" NSURROGATES = "%sysfunc(sasmsg(sashelp.dmine, rpt_nsurrogates_vlabel, noquote))"
 VIMPORTANCE = "%sysfunc(sasmsg(sashelp.dmine, rpt_vimportance_vlabel, noquote))" RATIO = "%sysfunc(sasmsg(sashelp.dmine, rpt_ratio_vlabel, noquote))"
@@ -283,19 +285,20 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Year_Birth _bin);
+DepVar GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(ASC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(ASC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
    _bin(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
@@ -323,39 +326,45 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule3_DMDB
 validata = work._valid
-outest = WORK.DMREG_26144_R_OUTEST
-outterms = WORK.DMREG_26144_R_OUTTERMS
-outmap= WORK.DMREG_26144_R_MAP namelen=200
+outest = WORK.DMREG_2RSANHF_OUTEST
+outterms = WORK.DMREG_2RSANHF_OUTTERMS
+outmap= WORK.DMREG_2RSANHF_MAP namelen=200
 ;
 class
 _bin
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
 ;
 model _bin =
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -371,10 +380,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN1.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN1.sas"
 group=Rule3_1
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN1_res.sas"
 group=Rule3_1
 residual
 ;
@@ -443,16 +452,19 @@ set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -466,16 +478,19 @@ set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -532,19 +547,20 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_DMREG / view=EM_DMREG;
 set work._train(keep=
-DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Year_Birth _bin);
+DepVar GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth _bin);
 run;
 *------------------------------------------------------------* ;
 * Rule3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(ASC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(ASC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
    _bin(DESC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
@@ -572,39 +588,45 @@ quit;
 *------------------------------------------------------------*;
 proc dmreg data=EM_DMREG dmdbcat=WORK.Rule3_DMDB
 validata = work._valid
-outest = WORK.DMREG_060F441_OUTEST
-outterms = WORK.DMREG_060F441_OUTTERMS
-outmap= WORK.DMREG_060F441_MAP namelen=200
+outest = WORK.DMREG_1OHHU03_OUTEST
+outterms = WORK.DMREG_1OHHU03_OUTTERMS
+outmap= WORK.DMREG_1OHHU03_MAP namelen=200
 ;
 class
 _bin
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
 ;
 model _bin =
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -620,10 +642,10 @@ out=_ptrain(label="")
 score data=_valid
 out=_pvalid(label="")
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN2.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN2.sas"
 group=Rule3_2
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\BIN2_res.sas"
 group=Rule3_2
 residual
 ;
@@ -692,16 +714,19 @@ set _ptrain;
 if not ( I__bin eq '1' and F__bin eq '1') then output;
 keep
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -715,16 +740,19 @@ set _pvalid;
 if not (I__bin eq '1' and F__bin eq '1') then output;
 keep
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
@@ -747,19 +775,20 @@ set _pvalid;
 *------------------------------------------------------------*;
 data EM_Rule3;
 set work._train(keep=
-DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Year_Birth );
+DepVar GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Rule3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Rule3: DMDBVar Macro ;
@@ -797,9 +826,10 @@ quit;
 * Rule3: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Rule3: Ordinal Inputs Macro ;
@@ -833,7 +863,7 @@ Hidden=3
 ;
 Prelim 8 preiter=10
 pretime=3600
-Outest=WORK.PRELIMOUTEST_EMNEURAL_0UEKSU8
+Outest=WORK.PRELIMOUTEST_EMNEURAL_3N1RX2Z
 ;
 save network=WORK.NETWORK.dm_neural;
 train Maxiter=20
@@ -851,7 +881,7 @@ data _null_;
 set fit_Rule3(obs=1);
 call symput('ITER',put(_ITER_, 6.));
 run;
-data WORK.INITIAL_EMNEURAL_0UEKSU8;
+data WORK.INITIAL_EMNEURAL_3N1RX2Z;
 set WORK.Rule3_outest(where=(_ITER_ eq &ITER and _OBJ_ ne .));
 run;
 *------------------------------------------------------------*;
@@ -865,21 +895,21 @@ random=12345
 ;
 nloptions noprint;
 performance alldetails noutilfile;
-initial inest=WORK.INITIAL_EMNEURAL_0UEKSU8;
+initial inest=WORK.INITIAL_EMNEURAL_3N1RX2Z;
 train tech=NONE;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\CM.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\CM.sas"
 group=Rule3
 ;
 ;
-code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD9752_WN7LF-LEAVE_\Prc2\CM_res.sas"
+code file="C:\Users\LUKASF~1\AppData\Local\Temp\SAS Temporary Files\_TD115000_WN7LF-LEAVE_\Prc2\CM_res.sas"
 group=Rule3
 residual
 ;
 ;
 score data=_train out=_ptrain
-outkey=WORK.OUTKEY_EMNEURAL_0UEKSU8;
+outkey=WORK.OUTKEY_EMNEURAL_3N1RX2Z;
 score data=_valid out=_pvalid
-outkey=WORK.OUTKEY_EMNEURAL_0UEKSU8;
+outkey=WORK.OUTKEY_EMNEURAL_3N1RX2Z;
 run;
 quit;
 data _rnest;

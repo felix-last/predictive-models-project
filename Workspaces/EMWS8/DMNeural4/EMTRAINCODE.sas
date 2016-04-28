@@ -36,10 +36,11 @@ quit;
 * DMNeural4: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * DMNeural4: DMDBVar Macro ;
@@ -65,14 +66,14 @@ quit;
 * DMNeural4: Input Variables Macro ;
 *------------------------------------------------------------* ;
 %macro INPUTS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-   Year_Birth
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth
 %mend INPUTS;
 proc dmneurl data=EMWS8.BINNING_TRAIN dmdbcat=WORK.DMNeural4_DMDB
 outest=EMWS8.DMNeural4_ESTIMATE outfit=WORK._OUTFIT_DMNEURAL
-out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_0L2HRP_
+out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_35VUB4I
 optcrit=ACC maxcomp=6 maxstage=10 maxfunc=1000
 selcrit=SSE
 maxiter=400 maxvect=800 memsiz=8 stopr2=0.00005 cutoff=0.5 maxrows = 3000

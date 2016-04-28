@@ -34,19 +34,20 @@ run;
 quit;
 data EM_DMREG / view=EM_DMREG;
 set EMWS8.BINNING_TRAIN(keep=
-DepVar GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-Year_Birth );
+DepVar GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth );
 run;
 *------------------------------------------------------------* ;
 * Reg3: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_Frq(ASC) GRP_Income(ASC) GRP_Mnt(ASC)
-   GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC) GRP_MntMeatProducts(ASC)
-   GRP_MntWines(ASC) GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC)
-   GRP_NumWebPurchases(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
+    DepVar(DESC) GRP_AcceptedCmp5(ASC) GRP_AcceptedCmpTotal(ASC) GRP_Frq(ASC)
+   GRP_Income(ASC) GRP_Mnt(ASC) GRP_MntFishProducts(ASC) GRP_MntGoldProds(ASC)
+   GRP_MntMeatProducts(ASC) GRP_MntSweetProducts(ASC) GRP_MntWines(ASC)
+   GRP_NumCatalogPurchases(ASC) GRP_NumDistPurchases(ASC) GRP_NumWebPurchases(ASC)
+   GRP_NumWebVisitsMonth(ASC) GRP_RFMstat(ASC) GRP_RMntFrq(ASC) GRP_Recency(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * Reg3: DMDBVar Macro ;
@@ -80,32 +81,38 @@ outmap= EMWS8.Reg3_MAPDS namelen=200
 class
 DepVar
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency
 ;
 model DepVar =
 GRP_AcceptedCmp5
+GRP_AcceptedCmpTotal
 GRP_Frq
 GRP_Income
 GRP_Mnt
 GRP_MntFishProducts
 GRP_MntGoldProds
 GRP_MntMeatProducts
+GRP_MntSweetProducts
 GRP_MntWines
 GRP_NumCatalogPurchases
 GRP_NumDistPurchases
 GRP_NumWebPurchases
+GRP_NumWebVisitsMonth
 GRP_RFMstat
 GRP_RMntFrq
 GRP_Recency

@@ -36,10 +36,10 @@ quit;
 * Tree3: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
-   Year_Birth
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree3: Tree Targets Macro ;
@@ -60,9 +60,10 @@ run;
 * Tree3: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    GRP_AcceptedCmp5 GRP_Frq GRP_Income GRP_Mnt GRP_MntFishProducts
-   GRP_MntGoldProds GRP_MntMeatProducts GRP_MntWines GRP_NumCatalogPurchases
-   GRP_NumDistPurchases GRP_NumWebPurchases GRP_RFMstat GRP_RMntFrq GRP_Recency
+    GRP_AcceptedCmp5 GRP_AcceptedCmpTotal GRP_Frq GRP_Income GRP_Mnt
+   GRP_MntFishProducts GRP_MntGoldProds GRP_MntMeatProducts GRP_MntSweetProducts
+   GRP_MntWines GRP_NumCatalogPurchases GRP_NumDistPurchases GRP_NumWebPurchases
+   GRP_NumWebVisitsMonth GRP_RFMstat GRP_RMntFrq GRP_Recency
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Tree3: Ordinal Inputs Macro ;
@@ -73,39 +74,8 @@ run;
 *------------------------------------------------------------*;
 * Tree3: Run ARBOR procedure;
 *------------------------------------------------------------*;
-proc arbor data=EMWS8.EM_Tree3
-Leafsize=5
-Mincatsize = 5
-Maxbranch=2
-Maxdepth=6
-alpha = 0.2
-Padjust=
-CHAIDBEFORE
-DEPTH
-MAXRULES=5
-MAXSURRS=0
-Missing=USEINSEARCH
-Exhaustive=5000
-event='1'
-;
-;
-input %INTINPUTS
-/ level = interval;
-input %NOMINPUTS
-/ level=nominal;
-target DepVar / level=BINARY
-Criterion=PROBCHISQ
-;
-;
-Performance DISK
-NodeSize=20000
-;
-Assess
-Validata=EMWS8.BINNING_VALIDATE
-measure=MISC
-;
-SUBTREE BEST
-;
+proc arbor data=EMWS8.EM_Tree3 inmodel=EMWS8.Tree3_EMTREE refreshtrain;
+interact;
 MAKEMACRO NLEAVES=nleaves;
 save
 MODEL=EMWS8.Tree3_EMTREE

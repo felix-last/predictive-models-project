@@ -34,27 +34,21 @@ run;
 quit;
 data EM_AutoNeural38;
 set EMWS8.Meta3_TRAIN(keep=
-AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5
-AcceptedCmpTotal Age Complain DepVar Education Frq HigherEducationBinary Income
-Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds MntSweetProducts
-MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat RMntFrq Recency
-Teenhome );
+AcceptedCmpTotal DepVar Frq Marital_Status Mnt MntMeatProducts
+NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth Recency );
 run;
 *------------------------------------------------------------* ;
 * AutoNeural38: DMDBClass Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBClass;
-    AcceptedCmp1(ASC) AcceptedCmp2(ASC) AcceptedCmp3(ASC) AcceptedCmp4(ASC)
-   AcceptedCmp5(ASC) Complain(ASC) DepVar(DESC) Education(ASC)
-   HigherEducationBinary(ASC) Marital_Status(ASC)
+    DepVar(DESC) Marital_Status(ASC)
 %mend DMDBClass;
 *------------------------------------------------------------* ;
 * AutoNeural38: DMDBVar Macro ;
 *------------------------------------------------------------* ;
 %macro DMDBVar;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend DMDBVar;
 *------------------------------------------------------------*;
 * AutoNeural38: Create DMDB;
@@ -74,22 +68,20 @@ quit;
 * AutoNeural38: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    AcceptedCmpTotal Age Frq Income Kidhome MntFishProducts MntFruits MntGoldProds
-   MntSweetProducts MonthsAsCustomer NumDealsPurchases NumWebVisitsMonth RFMstat
-   RMntFrq Recency Teenhome
+    AcceptedCmpTotal Frq Mnt MntMeatProducts NumCatalogPurchases NumDealsPurchases
+   NumWebVisitsMonth Recency
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * AutoNeural38: Binary Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro BININPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   HigherEducationBinary
+
 %mend BININPUTS;
 *------------------------------------------------------------* ;
 * AutoNeural38: Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    Education Marital_Status
+    Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * AutoNeural38: Ordinal Inputs Macro ;
@@ -119,7 +111,6 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
@@ -128,7 +119,6 @@ target DepVar / level=NOMINAL id=DepVar
 ;
 *------------------------------------------------------------*;
 connect interval DepVar;
-connect binary DepVar;
 connect nominal DepVar;
 *;
 netoptions ranscale = 1;
@@ -206,7 +196,6 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
@@ -216,7 +205,6 @@ target DepVar / level=NOMINAL id=DepVar
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
 connect H1x1_ DepVar;
 *;
@@ -234,6 +222,170 @@ tech = Default
 title9 " ";
 title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
 train estiter=1 outest=_anest outfit=_anfit maxtime=900 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 2 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 2 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=SINE;
+connect interval H1x1_;
+connect nominal H1x1_;
+connect H1x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+prelim 8 outest=_anpre pretime=112 preiter=25
+tech = Default
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=899 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 35 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 35 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=SOFTMAX;
+connect interval H1x1_;
+connect nominal H1x1_;
+connect H1x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+prelim 8 outest=_anpre pretime=112 preiter=25
+tech = Default
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=898 maxiter=50
 tech = Default;
 ;
 run;
@@ -290,33 +442,39 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
 *------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
 * Layer #1;
 ;
 *------------------------------------------------------------*;
-Hidden 2 / id = H1x1_ act=SINE;
+Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
 connect H1x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
 initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
 prelim 8 outest=_anpre pretime=112 preiter=25
 tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
 train estiter=1 outest=_anest outfit=_anfit maxtime=897 maxiter=50
 tech = Default;
 ;
@@ -374,7 +532,6 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
@@ -382,25 +539,130 @@ target DepVar / level=NOMINAL id=DepVar
 * Layer #1;
 ;
 *------------------------------------------------------------*;
-Hidden 2 / id = H1x1_ act=SOFTMAX;
+Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
-connect H1x1_ DepVar;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=LOG;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H2x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
 initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
-prelim 8 outest=_anpre pretime=111 preiter=25
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+prelim 10 outest=_anpre pretime=89 preiter=25
 tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=897 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 13 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 13 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H2x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
+prelim 10 outest=_anpre pretime=89 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
 train estiter=1 outest=_anest outfit=_anfit maxtime=895 maxiter=50
 tech = Default;
 ;
@@ -458,26 +720,27 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
-*------------------------------------------------------------*;
-* Direct connection;
-;
-*------------------------------------------------------------*;
-connect interval DepVar;
-connect binary DepVar;
-connect nominal DepVar;
 *------------------------------------------------------------*;
 * Layer #1;
 ;
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
-connect H1x1_ DepVar;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SOFTMAX;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H2x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
@@ -486,15 +749,1087 @@ inest = EMWS8.AutoNeural38_ESTDS bylabel;
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
-prelim 8 outest=_anpre pretime=111 preiter=25
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+prelim 10 outest=_anpre pretime=89 preiter=25
 tech = Default
 inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
 train estiter=1 outest=_anest outfit=_anfit maxtime=894 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 47 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 47 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H2x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+prelim 10 outest=_anpre pretime=89 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=893 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 37 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 37 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=LOG;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H3x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+prelim 12 outest=_anpre pretime=74 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=892 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 19 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 19 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SINE;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H3x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 3 : SINE : ))";
+prelim 12 outest=_anpre pretime=74 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 3 : SINE : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=891 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 0 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H3x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+prelim 12 outest=_anpre pretime=74 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 3 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=890 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 9 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 9 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H3x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+prelim 12 outest=_anpre pretime=74 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=888 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 14 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 14 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=LOG;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+prelim 14 outest=_anpre pretime=63 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=888 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 6 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 6 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SINE;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 3 : SINE : ))";
+prelim 14 outest=_anpre pretime=63 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 3 : SINE : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=885 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 13 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 13 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+prelim 14 outest=_anpre pretime=63 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 4 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=883 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 22 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 22 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=LOG;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 1 : LOGISTIC : ))";
+prelim 14 outest=_anpre pretime=62 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 1 : LOGISTIC : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=881 maxiter=50
 tech = Default;
 ;
 run;
@@ -551,119 +1886,31 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
 *------------------------------------------------------------*;
 * Layer #1;
 ;
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
 Hidden 2 / id = H1x2_ act=LOG;
 connect interval H1x2_;
-connect binary H1x2_;
 connect nominal H1x2_;
-*------------------------------------------------------------*;
-* Layer #2;
-;
-*------------------------------------------------------------*;
-Hidden 2 / id = H2x1_ act=LOG;
-connect H1x1_ H2x1_;
-connect H1x2_ H2x1_;
-connect H2x1_ DepVar;
-*;
-netoptions ranscale = 1;
-*;
-initial
-inest = EMWS8.AutoNeural38_ESTDS bylabel;
-;
-*;
-title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
-prelim 10 outest=_anpre pretime=89 preiter=25
-tech = Default
-inest = EMWS8.AutoNeural38_ESTDS bylabel
-;
-*;
-title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
-train estiter=1 outest=_anest outfit=_anfit maxtime=893 maxiter=50
-tech = Default;
-;
-run;
-*;
-proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
-var _iter_ _aic_ _averr_ _misc_
-_vaverr_ _vmisc_
-;
-run;
-*------------------------------------------------------------*;
-* Extract best iteration;
-;
-*------------------------------------------------------------*;
-%global _iter;
-data _null_;
-set _anfit(where=(_NAME_ eq 'OVERALL'));
-retain _min 1e+64;
-if _VMISC_ < _min then do;
-_min = _VMISC_;
-call symput('_iter',put(_ITER_, 6.));
-end;
-run;
-*;
-data EMWS8.AutoNeural38_ESTDS;
-set _anest;
-if _ITER_ eq 4 then do;
-output;
-stop;
-end;
-run;
-*;
-data EMWS8.AutoNeural38_OUTFIT;
-set _anfit;
-if _ITER_ eq 4 and _NAME_ eq "OVERALL" then do;
-output;
-stop;
-end;
-run;
-*;
-title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
-proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
-var _iter_ _aic_ _averr_ _misc_
-_vaverr_ _vmisc_
-;
-run;
-title9;
-title10;
-*;
-proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
-validdata=EMWS8.Meta3_VALIDATE
-;
-*;
-nloptions noprint;
-performance alldetails noutilfile;
-input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
-input %NOMINPUTS / level=nominal id=nominal;
-target DepVar / level=NOMINAL id=DepVar
-;
-*------------------------------------------------------------*;
-* Layer #1;
-;
-*------------------------------------------------------------*;
-Hidden 2 / id = H1x1_ act=LOG;
-connect interval H1x1_;
-connect binary H1x1_;
-connect nominal H1x1_;
-Hidden 2 / id = H1x2_ act=LOG;
-connect interval H1x2_;
-connect binary H1x2_;
-connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
 *------------------------------------------------------------*;
 * Layer #2;
 ;
@@ -671,7 +1918,38 @@ connect nominal H1x2_;
 Hidden 2 / id = H2x1_ act=SINE;
 connect H1x1_ H2x1_;
 connect H1x2_ H2x1_;
-connect H2x1_ DepVar;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SINE;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
@@ -680,15 +1958,15 @@ inest = EMWS8.AutoNeural38_ESTDS bylabel;
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
-prelim 10 outest=_anpre pretime=89 preiter=25
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 2 : SINE : ))";
+prelim 14 outest=_anpre pretime=62 preiter=25
 tech = Default
 inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
-train estiter=1 outest=_anest outfit=_anfit maxtime=891 maxiter=50
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 2 : SINE : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=878 maxiter=50
 tech = Default;
 ;
 run;
@@ -714,7 +1992,7 @@ run;
 *;
 data EMWS8.AutoNeural38_ESTDS;
 set _anest;
-if _ITER_ eq 25 then do;
+if _ITER_ eq 31 then do;
 output;
 stop;
 end;
@@ -722,7 +2000,7 @@ run;
 *;
 data EMWS8.AutoNeural38_OUTFIT;
 set _anfit;
-if _ITER_ eq 25 and _NAME_ eq "OVERALL" then do;
+if _ITER_ eq 31 and _NAME_ eq "OVERALL" then do;
 output;
 stop;
 end;
@@ -745,30 +2023,70 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
 *------------------------------------------------------------*;
 * Layer #1;
 ;
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
 Hidden 2 / id = H1x2_ act=LOG;
 connect interval H1x2_;
-connect binary H1x2_;
 connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
 *------------------------------------------------------------*;
 * Layer #2;
 ;
 *------------------------------------------------------------*;
-Hidden 2 / id = H2x1_ act=SOFTMAX;
+Hidden 2 / id = H2x1_ act=SINE;
 connect H1x1_ H2x1_;
 connect H1x2_ H2x1_;
-connect H2x1_ DepVar;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
@@ -777,15 +2095,15 @@ inest = EMWS8.AutoNeural38_ESTDS bylabel;
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
-prelim 10 outest=_anpre pretime=89 preiter=25
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 3 : SOFTMAX : ))";
+prelim 14 outest=_anpre pretime=62 preiter=25
 tech = Default
 inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
-title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
-train estiter=1 outest=_anest outfit=_anfit maxtime=890 maxiter=50
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 5 FUNNEL LAYERS trial # 3 : SOFTMAX : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=876 maxiter=50
 tech = Default;
 ;
 run;
@@ -811,7 +2129,7 @@ run;
 *;
 data EMWS8.AutoNeural38_ESTDS;
 set _anest;
-if _ITER_ eq 8 then do;
+if _ITER_ eq 30 then do;
 output;
 stop;
 end;
@@ -819,7 +2137,7 @@ run;
 *;
 data EMWS8.AutoNeural38_OUTFIT;
 set _anfit;
-if _ITER_ eq 8 and _NAME_ eq "OVERALL" then do;
+if _ITER_ eq 30 and _NAME_ eq "OVERALL" then do;
 output;
 stop;
 end;
@@ -842,19 +2160,574 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
 *------------------------------------------------------------*;
 * Layer #1;
 ;
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
-connect H1x1_ DepVar;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+Hidden 2 / id = H1x5_ act=LOG;
+connect interval H1x5_;
+connect nominal H1x5_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+connect H1x5_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+connect H1x5_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+connect H1x5_ H2x3_;
+Hidden 2 / id = H2x4_ act=SINE;
+connect H1x1_ H2x4_;
+connect H1x2_ H2x4_;
+connect H1x3_ H2x4_;
+connect H1x4_ H2x4_;
+connect H1x5_ H2x4_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+connect H2x4_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+connect H2x4_ H3x2_;
+Hidden 2 / id = H3x3_ act=SOFTMAX;
+connect H2x1_ H3x3_;
+connect H2x2_ H3x3_;
+connect H2x3_ H3x3_;
+connect H2x4_ H3x3_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H3x3_ H4x1_;
+Hidden 2 / id = H4x2_ act=SOFTMAX;
+connect H3x1_ H4x2_;
+connect H3x2_ H4x2_;
+connect H3x3_ H4x2_;
+*------------------------------------------------------------*;
+* Layer #5;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H5x1_ act=LOG;
+connect H4x1_ H5x1_;
+connect H4x2_ H5x1_;
+connect H5x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 1 : LOGISTIC : ))";
+prelim 16 outest=_anpre pretime=54 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 1 : LOGISTIC : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=874 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 20 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 20 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+Hidden 2 / id = H1x5_ act=LOG;
+connect interval H1x5_;
+connect nominal H1x5_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+connect H1x5_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+connect H1x5_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+connect H1x5_ H2x3_;
+Hidden 2 / id = H2x4_ act=SINE;
+connect H1x1_ H2x4_;
+connect H1x2_ H2x4_;
+connect H1x3_ H2x4_;
+connect H1x4_ H2x4_;
+connect H1x5_ H2x4_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+connect H2x4_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+connect H2x4_ H3x2_;
+Hidden 2 / id = H3x3_ act=SOFTMAX;
+connect H2x1_ H3x3_;
+connect H2x2_ H3x3_;
+connect H2x3_ H3x3_;
+connect H2x4_ H3x3_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H3x3_ H4x1_;
+Hidden 2 / id = H4x2_ act=SOFTMAX;
+connect H3x1_ H4x2_;
+connect H3x2_ H4x2_;
+connect H3x3_ H4x2_;
+*------------------------------------------------------------*;
+* Layer #5;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H5x1_ act=SINE;
+connect H4x1_ H5x1_;
+connect H4x2_ H5x1_;
+connect H5x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 2 : SINE : ))";
+prelim 16 outest=_anpre pretime=54 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 2 : SINE : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=870 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 0 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+Hidden 2 / id = H1x5_ act=LOG;
+connect interval H1x5_;
+connect nominal H1x5_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+connect H1x5_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+connect H1x5_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+connect H1x5_ H2x3_;
+Hidden 2 / id = H2x4_ act=SINE;
+connect H1x1_ H2x4_;
+connect H1x2_ H2x4_;
+connect H1x3_ H2x4_;
+connect H1x4_ H2x4_;
+connect H1x5_ H2x4_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+connect H2x4_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+connect H2x4_ H3x2_;
+Hidden 2 / id = H3x3_ act=SOFTMAX;
+connect H2x1_ H3x3_;
+connect H2x2_ H3x3_;
+connect H2x3_ H3x3_;
+connect H2x4_ H3x3_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H3x3_ H4x1_;
+Hidden 2 / id = H4x2_ act=SOFTMAX;
+connect H3x1_ H4x2_;
+connect H3x2_ H4x2_;
+connect H3x3_ H4x2_;
+*------------------------------------------------------------*;
+* Layer #5;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H5x1_ act=SOFTMAX;
+connect H4x1_ H5x1_;
+connect H4x2_ H5x1_;
+connect H5x1_ DepVar;
+*;
+netoptions ranscale = 1;
+*;
+initial
+inest = EMWS8.AutoNeural38_ESTDS bylabel;
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 3 : SOFTMAX : ))";
+prelim 16 outest=_anpre pretime=54 preiter=25
+tech = Default
+inest = EMWS8.AutoNeural38_ESTDS bylabel
+;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Search # 6 FUNNEL LAYERS trial # 3 : SOFTMAX : ))";
+train estiter=1 outest=_anest outfit=_anfit maxtime=866 maxiter=50
+tech = Default;
+;
+run;
+*;
+proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+*------------------------------------------------------------*;
+* Extract best iteration;
+;
+*------------------------------------------------------------*;
+%global _iter;
+data _null_;
+set _anfit(where=(_NAME_ eq 'OVERALL'));
+retain _min 1e+64;
+if _VMISC_ < _min then do;
+_min = _VMISC_;
+call symput('_iter',put(_ITER_, 6.));
+end;
+run;
+*;
+data EMWS8.AutoNeural38_ESTDS;
+set _anest;
+if _ITER_ eq 26 then do;
+output;
+stop;
+end;
+run;
+*;
+data EMWS8.AutoNeural38_OUTFIT;
+set _anfit;
+if _ITER_ eq 26 and _NAME_ eq "OVERALL" then do;
+output;
+stop;
+end;
+run;
+*;
+title9 " ";
+title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title  , NOQUOTE, _VMISC_))";
+proc print data=EMWS8.AutoNeural38_OUTFIT noobs;
+var _iter_ _aic_ _averr_ _misc_
+_vaverr_ _vmisc_
+;
+run;
+title9;
+title10;
+*;
+proc neural data=EM_AutoNeural38 dmdbcat=WORK.AutoNeural38_DMDB
+validdata=EMWS8.Meta3_VALIDATE
+;
+*;
+nloptions noprint;
+performance alldetails noutilfile;
+input %INTINPUTS / level=interval id=interval;
+input %NOMINPUTS / level=nominal id=nominal;
+target DepVar / level=NOMINAL id=DepVar
+;
+*------------------------------------------------------------*;
+* Direct connection;
+;
+*------------------------------------------------------------*;
+connect interval DepVar;
+connect nominal DepVar;
+*------------------------------------------------------------*;
+* Layer #1;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H1x1_ act=LOG;
+connect interval H1x1_;
+connect nominal H1x1_;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
 *;
 netoptions ranscale = 1;
 *;
@@ -864,14 +2737,14 @@ inest = EMWS8.AutoNeural38_ESTDS bylabel;
 *;
 title9 " ";
 title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE, Final Training))";
-prelim 8 outest=_anpre pretime=111 preiter=25
+prelim 14 outest=_anpre pretime=61 preiter=25
 tech = Default
 inest = EMWS8.AutoNeural38_ESTDS bylabel
 ;
 *;
 title9 " ";
 title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE, Final Training))";
-train estiter=1 outest=_anest outfit=_anfit maxtime=888 maxiter=5
+train estiter=1 outest=_anest outfit=_anfit maxtime=862 maxiter=5
 tech = Default;
 ;
 run;
@@ -897,7 +2770,7 @@ run;
 *;
 data EMWS8.AutoNeural38_ESTDS;
 set _anest;
-if _ITER_ eq 1 then do;
+if _ITER_ eq 0 then do;
 output;
 stop;
 end;
@@ -905,7 +2778,7 @@ run;
 *;
 data EMWS8.AutoNeural38_OUTFIT;
 set _anfit;
-if _ITER_ eq 1 and _NAME_ eq "OVERALL" then do;
+if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
 output;
 stop;
 end;
@@ -932,7 +2805,6 @@ validdata=EMWS8.Meta3_VALIDATE
 nloptions noprint;
 performance alldetails noutilfile;
 input %INTINPUTS / level=interval id=interval;
-input %BININPUTS / level=nominal id=binary;
 input %NOMINPUTS / level=nominal id=nominal;
 target DepVar / level=NOMINAL id=DepVar
 ;
@@ -942,9 +2814,55 @@ target DepVar / level=NOMINAL id=DepVar
 *------------------------------------------------------------*;
 Hidden 2 / id = H1x1_ act=LOG;
 connect interval H1x1_;
-connect binary H1x1_;
 connect nominal H1x1_;
-connect H1x1_ DepVar;
+Hidden 2 / id = H1x2_ act=LOG;
+connect interval H1x2_;
+connect nominal H1x2_;
+Hidden 2 / id = H1x3_ act=LOG;
+connect interval H1x3_;
+connect nominal H1x3_;
+Hidden 2 / id = H1x4_ act=LOG;
+connect interval H1x4_;
+connect nominal H1x4_;
+*------------------------------------------------------------*;
+* Layer #2;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H2x1_ act=SINE;
+connect H1x1_ H2x1_;
+connect H1x2_ H2x1_;
+connect H1x3_ H2x1_;
+connect H1x4_ H2x1_;
+Hidden 2 / id = H2x2_ act=SINE;
+connect H1x1_ H2x2_;
+connect H1x2_ H2x2_;
+connect H1x3_ H2x2_;
+connect H1x4_ H2x2_;
+Hidden 2 / id = H2x3_ act=SINE;
+connect H1x1_ H2x3_;
+connect H1x2_ H2x3_;
+connect H1x3_ H2x3_;
+connect H1x4_ H2x3_;
+*------------------------------------------------------------*;
+* Layer #3;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H3x1_ act=SOFTMAX;
+connect H2x1_ H3x1_;
+connect H2x2_ H3x1_;
+connect H2x3_ H3x1_;
+Hidden 2 / id = H3x2_ act=SOFTMAX;
+connect H2x1_ H3x2_;
+connect H2x2_ H3x2_;
+connect H2x3_ H3x2_;
+*------------------------------------------------------------*;
+* Layer #4;
+;
+*------------------------------------------------------------*;
+Hidden 2 / id = H4x1_ act=SOFTMAX;
+connect H3x1_ H4x1_;
+connect H3x2_ H4x1_;
+connect H4x1_ DepVar;
 *;
 initial inest= EMWS8.AutoNeural38_ESTDS bylabel;
 train tech=none;

@@ -15,11 +15,25 @@ LENGTH _WARN_ $4
 
       label GRP_AcceptedCmp52 = 'Dummy: GRP_AcceptedCmp5=2' ;
 
+      label GRP_AcceptedCmpTotal3 = 'Dummy: GRP_AcceptedCmpTotal=3' ;
+
       label GRP_Frq2 = 'Dummy: GRP_Frq=2' ;
 
       label GRP_Frq3 = 'Dummy: GRP_Frq=3' ;
 
       label GRP_Frq4 = 'Dummy: GRP_Frq=4' ;
+
+      label GRP_Frq5 = 'Dummy: GRP_Frq=5' ;
+
+      label GRP_Frq6 = 'Dummy: GRP_Frq=6' ;
+
+      label GRP_Frq7 = 'Dummy: GRP_Frq=7' ;
+
+      label GRP_Frq8 = 'Dummy: GRP_Frq=8' ;
+
+      label GRP_Frq9 = 'Dummy: GRP_Frq=9' ;
+
+      label GRP_Frq10 = 'Dummy: GRP_Frq=10' ;
 
       label GRP_Income2 = 'Dummy: GRP_Income=2' ;
 
@@ -27,17 +41,51 @@ LENGTH _WARN_ $4
 
       label GRP_Income4 = 'Dummy: GRP_Income=4' ;
 
+      label GRP_Income5 = 'Dummy: GRP_Income=5' ;
+
+      label GRP_Income6 = 'Dummy: GRP_Income=6' ;
+
+      label GRP_Income7 = 'Dummy: GRP_Income=7' ;
+
+      label GRP_Income8 = 'Dummy: GRP_Income=8' ;
+
+      label GRP_Income9 = 'Dummy: GRP_Income=9' ;
+
+      label GRP_Income10 = 'Dummy: GRP_Income=10' ;
+
       label GRP_Mnt2 = 'Dummy: GRP_Mnt=2' ;
 
       label GRP_Mnt3 = 'Dummy: GRP_Mnt=3' ;
 
       label GRP_Mnt4 = 'Dummy: GRP_Mnt=4' ;
 
-      label GRP_MntFishProducts2 = 'Dummy: GRP_MntFishProducts=2' ;
+      label GRP_Mnt5 = 'Dummy: GRP_Mnt=5' ;
+
+      label GRP_Mnt6 = 'Dummy: GRP_Mnt=6' ;
+
+      label GRP_Mnt7 = 'Dummy: GRP_Mnt=7' ;
+
+      label GRP_Mnt8 = 'Dummy: GRP_Mnt=8' ;
+
+      label GRP_Mnt9 = 'Dummy: GRP_Mnt=9' ;
+
+      label GRP_Mnt10 = 'Dummy: GRP_Mnt=10' ;
 
       label GRP_MntFishProducts3 = 'Dummy: GRP_MntFishProducts=3' ;
 
       label GRP_MntFishProducts4 = 'Dummy: GRP_MntFishProducts=4' ;
+
+      label GRP_MntFishProducts5 = 'Dummy: GRP_MntFishProducts=5' ;
+
+      label GRP_MntFishProducts6 = 'Dummy: GRP_MntFishProducts=6' ;
+
+      label GRP_MntFishProducts7 = 'Dummy: GRP_MntFishProducts=7' ;
+
+      label GRP_MntFishProducts8 = 'Dummy: GRP_MntFishProducts=8' ;
+
+      label GRP_MntFishProducts9 = 'Dummy: GRP_MntFishProducts=9' ;
+
+      label GRP_MntFishProducts10 = 'Dummy: GRP_MntFishProducts=10' ;
 
       label GRP_MntGoldProds2 = 'Dummy: GRP_MntGoldProds=2' ;
 
@@ -45,11 +93,51 @@ LENGTH _WARN_ $4
 
       label GRP_MntGoldProds4 = 'Dummy: GRP_MntGoldProds=4' ;
 
+      label GRP_MntGoldProds5 = 'Dummy: GRP_MntGoldProds=5' ;
+
+      label GRP_MntGoldProds6 = 'Dummy: GRP_MntGoldProds=6' ;
+
+      label GRP_MntGoldProds7 = 'Dummy: GRP_MntGoldProds=7' ;
+
+      label GRP_MntGoldProds8 = 'Dummy: GRP_MntGoldProds=8' ;
+
+      label GRP_MntGoldProds9 = 'Dummy: GRP_MntGoldProds=9' ;
+
+      label GRP_MntGoldProds10 = 'Dummy: GRP_MntGoldProds=10' ;
+
       label GRP_MntMeatProducts2 = 'Dummy: GRP_MntMeatProducts=2' ;
 
       label GRP_MntMeatProducts3 = 'Dummy: GRP_MntMeatProducts=3' ;
 
       label GRP_MntMeatProducts4 = 'Dummy: GRP_MntMeatProducts=4' ;
+
+      label GRP_MntMeatProducts5 = 'Dummy: GRP_MntMeatProducts=5' ;
+
+      label GRP_MntMeatProducts6 = 'Dummy: GRP_MntMeatProducts=6' ;
+
+      label GRP_MntMeatProducts7 = 'Dummy: GRP_MntMeatProducts=7' ;
+
+      label GRP_MntMeatProducts8 = 'Dummy: GRP_MntMeatProducts=8' ;
+
+      label GRP_MntMeatProducts9 = 'Dummy: GRP_MntMeatProducts=9' ;
+
+      label GRP_MntMeatProducts10 = 'Dummy: GRP_MntMeatProducts=10' ;
+
+      label GRP_MntSweetProducts3 = 'Dummy: GRP_MntSweetProducts=3' ;
+
+      label GRP_MntSweetProducts4 = 'Dummy: GRP_MntSweetProducts=4' ;
+
+      label GRP_MntSweetProducts5 = 'Dummy: GRP_MntSweetProducts=5' ;
+
+      label GRP_MntSweetProducts6 = 'Dummy: GRP_MntSweetProducts=6' ;
+
+      label GRP_MntSweetProducts7 = 'Dummy: GRP_MntSweetProducts=7' ;
+
+      label GRP_MntSweetProducts8 = 'Dummy: GRP_MntSweetProducts=8' ;
+
+      label GRP_MntSweetProducts9 = 'Dummy: GRP_MntSweetProducts=9' ;
+
+      label GRP_MntSweetProducts10 = 'Dummy: GRP_MntSweetProducts=10' ;
 
       label GRP_MntWines2 = 'Dummy: GRP_MntWines=2' ;
 
@@ -57,9 +145,27 @@ LENGTH _WARN_ $4
 
       label GRP_MntWines4 = 'Dummy: GRP_MntWines=4' ;
 
+      label GRP_MntWines5 = 'Dummy: GRP_MntWines=5' ;
+
+      label GRP_MntWines6 = 'Dummy: GRP_MntWines=6' ;
+
+      label GRP_MntWines7 = 'Dummy: GRP_MntWines=7' ;
+
+      label GRP_MntWines8 = 'Dummy: GRP_MntWines=8' ;
+
+      label GRP_MntWines9 = 'Dummy: GRP_MntWines=9' ;
+
+      label GRP_MntWines10 = 'Dummy: GRP_MntWines=10' ;
+
       label GRP_NumCatalogPurchases3 = 'Dummy: GRP_NumCatalogPurchases=3' ;
 
       label GRP_NumCatalogPurchases4 = 'Dummy: GRP_NumCatalogPurchases=4' ;
+
+      label GRP_NumCatalogPurchases5 = 'Dummy: GRP_NumCatalogPurchases=5' ;
+
+      label GRP_NumCatalogPurchases6 = 'Dummy: GRP_NumCatalogPurchases=6' ;
+
+      label GRP_NumCatalogPurchases7 = 'Dummy: GRP_NumCatalogPurchases=7' ;
 
       label GRP_NumDistPurchases2 = 'Dummy: GRP_NumDistPurchases=2' ;
 
@@ -67,11 +173,45 @@ LENGTH _WARN_ $4
 
       label GRP_NumDistPurchases4 = 'Dummy: GRP_NumDistPurchases=4' ;
 
+      label GRP_NumDistPurchases5 = 'Dummy: GRP_NumDistPurchases=5' ;
+
+      label GRP_NumDistPurchases6 = 'Dummy: GRP_NumDistPurchases=6' ;
+
+      label GRP_NumDistPurchases7 = 'Dummy: GRP_NumDistPurchases=7' ;
+
+      label GRP_NumDistPurchases8 = 'Dummy: GRP_NumDistPurchases=8' ;
+
+      label GRP_NumDistPurchases9 = 'Dummy: GRP_NumDistPurchases=9' ;
+
+      label GRP_NumDistPurchases10 = 'Dummy: GRP_NumDistPurchases=10' ;
+
       label GRP_NumWebPurchases2 = 'Dummy: GRP_NumWebPurchases=2' ;
 
       label GRP_NumWebPurchases3 = 'Dummy: GRP_NumWebPurchases=3' ;
 
       label GRP_NumWebPurchases4 = 'Dummy: GRP_NumWebPurchases=4' ;
+
+      label GRP_NumWebPurchases5 = 'Dummy: GRP_NumWebPurchases=5' ;
+
+      label GRP_NumWebPurchases6 = 'Dummy: GRP_NumWebPurchases=6' ;
+
+      label GRP_NumWebPurchases7 = 'Dummy: GRP_NumWebPurchases=7' ;
+
+      label GRP_NumWebPurchases8 = 'Dummy: GRP_NumWebPurchases=8' ;
+
+      label GRP_NumWebVisitsMonth2 = 'Dummy: GRP_NumWebVisitsMonth=2' ;
+
+      label GRP_NumWebVisitsMonth3 = 'Dummy: GRP_NumWebVisitsMonth=3' ;
+
+      label GRP_NumWebVisitsMonth4 = 'Dummy: GRP_NumWebVisitsMonth=4' ;
+
+      label GRP_NumWebVisitsMonth5 = 'Dummy: GRP_NumWebVisitsMonth=5' ;
+
+      label GRP_NumWebVisitsMonth6 = 'Dummy: GRP_NumWebVisitsMonth=6' ;
+
+      label GRP_NumWebVisitsMonth7 = 'Dummy: GRP_NumWebVisitsMonth=7' ;
+
+      label GRP_NumWebVisitsMonth8 = 'Dummy: GRP_NumWebVisitsMonth=8' ;
 
       label GRP_RFMstat2 = 'Dummy: GRP_RFMstat=2' ;
 
@@ -79,11 +219,35 @@ LENGTH _WARN_ $4
 
       label GRP_RFMstat4 = 'Dummy: GRP_RFMstat=4' ;
 
+      label GRP_RFMstat5 = 'Dummy: GRP_RFMstat=5' ;
+
+      label GRP_RFMstat6 = 'Dummy: GRP_RFMstat=6' ;
+
+      label GRP_RFMstat7 = 'Dummy: GRP_RFMstat=7' ;
+
+      label GRP_RFMstat8 = 'Dummy: GRP_RFMstat=8' ;
+
+      label GRP_RFMstat9 = 'Dummy: GRP_RFMstat=9' ;
+
+      label GRP_RFMstat10 = 'Dummy: GRP_RFMstat=10' ;
+
       label GRP_RMntFrq2 = 'Dummy: GRP_RMntFrq=2' ;
 
       label GRP_RMntFrq3 = 'Dummy: GRP_RMntFrq=3' ;
 
       label GRP_RMntFrq4 = 'Dummy: GRP_RMntFrq=4' ;
+
+      label GRP_RMntFrq5 = 'Dummy: GRP_RMntFrq=5' ;
+
+      label GRP_RMntFrq6 = 'Dummy: GRP_RMntFrq=6' ;
+
+      label GRP_RMntFrq7 = 'Dummy: GRP_RMntFrq=7' ;
+
+      label GRP_RMntFrq8 = 'Dummy: GRP_RMntFrq=8' ;
+
+      label GRP_RMntFrq9 = 'Dummy: GRP_RMntFrq=9' ;
+
+      label GRP_RMntFrq10 = 'Dummy: GRP_RMntFrq=10' ;
 
       label GRP_Recency2 = 'Dummy: GRP_Recency=2' ;
 
@@ -91,35 +255,17 @@ LENGTH _WARN_ $4
 
       label GRP_Recency4 = 'Dummy: GRP_Recency=4' ;
 
-      label H1x1_1 = 'Hidden: H1x1_=1' ;
+      label GRP_Recency5 = 'Dummy: GRP_Recency=5' ;
 
-      label H1x1_2 = 'Hidden: H1x1_=2' ;
+      label GRP_Recency6 = 'Dummy: GRP_Recency=6' ;
 
-      label H1x1_3 = 'Hidden: H1x1_=3' ;
+      label GRP_Recency7 = 'Dummy: GRP_Recency=7' ;
 
-      label H1x1_4 = 'Hidden: H1x1_=4' ;
+      label GRP_Recency8 = 'Dummy: GRP_Recency=8' ;
 
-      label H1x1_5 = 'Hidden: H1x1_=5' ;
+      label GRP_Recency9 = 'Dummy: GRP_Recency=9' ;
 
-      label H1x2_1 = 'Hidden: H1x2_=1' ;
-
-      label H1x2_2 = 'Hidden: H1x2_=2' ;
-
-      label H1x2_3 = 'Hidden: H1x2_=3' ;
-
-      label H1x2_4 = 'Hidden: H1x2_=4' ;
-
-      label H1x2_5 = 'Hidden: H1x2_=5' ;
-
-      label H2x1_1 = 'Hidden: H2x1_=1' ;
-
-      label H2x1_2 = 'Hidden: H2x1_=2' ;
-
-      label H2x1_3 = 'Hidden: H2x1_=3' ;
-
-      label H2x1_4 = 'Hidden: H2x1_=4' ;
-
-      label H2x1_5 = 'Hidden: H2x1_=5' ;
+      label GRP_Recency10 = 'Dummy: GRP_Recency=10' ;
 
       label I_DepVar = 'Into: DepVar' ;
 
@@ -155,12 +301,53 @@ else do;
    end;
 end;
 
+*** Generate dummy variables for GRP_AcceptedCmpTotal ;
+drop GRP_AcceptedCmpTotal3 ;
+if missing( GRP_AcceptedCmpTotal ) then do;
+   GRP_AcceptedCmpTotal3 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( GRP_AcceptedCmpTotal , BEST12. );
+   %DMNORMIP( _dm12 )
+   if _dm12 = '3'  then do;
+      GRP_AcceptedCmpTotal3 = 1;
+   end;
+   else if _dm12 = '4'  then do;
+      GRP_AcceptedCmpTotal3 = -1;
+   end;
+   else do;
+      GRP_AcceptedCmpTotal3 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
 *** Generate dummy variables for GRP_Frq ;
-drop GRP_Frq2 GRP_Frq3 GRP_Frq4 ;
+drop GRP_Frq2 GRP_Frq3 GRP_Frq4 GRP_Frq5 GRP_Frq6 GRP_Frq7 GRP_Frq8 GRP_Frq9 
+        GRP_Frq10 ;
+*** encoding is sparse, initialize to zero;
+GRP_Frq2 = 0;
+GRP_Frq3 = 0;
+GRP_Frq4 = 0;
+GRP_Frq5 = 0;
+GRP_Frq6 = 0;
+GRP_Frq7 = 0;
+GRP_Frq8 = 0;
+GRP_Frq9 = 0;
+GRP_Frq10 = 0;
 if missing( GRP_Frq ) then do;
    GRP_Frq2 = .;
    GRP_Frq3 = .;
    GRP_Frq4 = .;
+   GRP_Frq5 = .;
+   GRP_Frq6 = .;
+   GRP_Frq7 = .;
+   GRP_Frq8 = .;
+   GRP_Frq9 = .;
+   GRP_Frq10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -168,41 +355,121 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_Frq , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '5'  then do;
-      GRP_Frq2 = -1;
-      GRP_Frq3 = -1;
-      GRP_Frq4 = -1;
-   end;
-   else if _dm12 = '3'  then do;
-      GRP_Frq2 = 0;
-      GRP_Frq3 = 1;
-      GRP_Frq4 = 0;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_Frq2 = 0;
-      GRP_Frq3 = 0;
-      GRP_Frq4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_Frq2 = 1;
-      GRP_Frq3 = 0;
-      GRP_Frq4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_Frq10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_Frq2 = -1;
+                  GRP_Frq3 = -1;
+                  GRP_Frq4 = -1;
+                  GRP_Frq5 = -1;
+                  GRP_Frq6 = -1;
+                  GRP_Frq7 = -1;
+                  GRP_Frq8 = -1;
+                  GRP_Frq9 = -1;
+                  GRP_Frq10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_Frq2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_Frq3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_Frq4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_Frq5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_Frq6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_Frq7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_Frq8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_Frq9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_Frq2 = .;
       GRP_Frq3 = .;
       GRP_Frq4 = .;
+      GRP_Frq5 = .;
+      GRP_Frq6 = .;
+      GRP_Frq7 = .;
+      GRP_Frq8 = .;
+      GRP_Frq9 = .;
+      GRP_Frq10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_Income ;
-drop GRP_Income2 GRP_Income3 GRP_Income4 ;
+drop GRP_Income2 GRP_Income3 GRP_Income4 GRP_Income5 GRP_Income6 GRP_Income7 
+        GRP_Income8 GRP_Income9 GRP_Income10 ;
+*** encoding is sparse, initialize to zero;
+GRP_Income2 = 0;
+GRP_Income3 = 0;
+GRP_Income4 = 0;
+GRP_Income5 = 0;
+GRP_Income6 = 0;
+GRP_Income7 = 0;
+GRP_Income8 = 0;
+GRP_Income9 = 0;
+GRP_Income10 = 0;
 if missing( GRP_Income ) then do;
    GRP_Income2 = .;
    GRP_Income3 = .;
    GRP_Income4 = .;
+   GRP_Income5 = .;
+   GRP_Income6 = .;
+   GRP_Income7 = .;
+   GRP_Income8 = .;
+   GRP_Income9 = .;
+   GRP_Income10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -210,41 +477,121 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_Income , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '5'  then do;
-      GRP_Income2 = -1;
-      GRP_Income3 = -1;
-      GRP_Income4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_Income2 = 0;
-      GRP_Income3 = 0;
-      GRP_Income4 = 1;
-   end;
-   else if _dm12 = '3'  then do;
-      GRP_Income2 = 0;
-      GRP_Income3 = 1;
-      GRP_Income4 = 0;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_Income2 = 1;
-      GRP_Income3 = 0;
-      GRP_Income4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_Income10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_Income2 = -1;
+                  GRP_Income3 = -1;
+                  GRP_Income4 = -1;
+                  GRP_Income5 = -1;
+                  GRP_Income6 = -1;
+                  GRP_Income7 = -1;
+                  GRP_Income8 = -1;
+                  GRP_Income9 = -1;
+                  GRP_Income10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_Income2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_Income3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_Income4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_Income5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_Income6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_Income7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_Income8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_Income9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_Income2 = .;
       GRP_Income3 = .;
       GRP_Income4 = .;
+      GRP_Income5 = .;
+      GRP_Income6 = .;
+      GRP_Income7 = .;
+      GRP_Income8 = .;
+      GRP_Income9 = .;
+      GRP_Income10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_Mnt ;
-drop GRP_Mnt2 GRP_Mnt3 GRP_Mnt4 ;
+drop GRP_Mnt2 GRP_Mnt3 GRP_Mnt4 GRP_Mnt5 GRP_Mnt6 GRP_Mnt7 GRP_Mnt8 GRP_Mnt9 
+        GRP_Mnt10 ;
+*** encoding is sparse, initialize to zero;
+GRP_Mnt2 = 0;
+GRP_Mnt3 = 0;
+GRP_Mnt4 = 0;
+GRP_Mnt5 = 0;
+GRP_Mnt6 = 0;
+GRP_Mnt7 = 0;
+GRP_Mnt8 = 0;
+GRP_Mnt9 = 0;
+GRP_Mnt10 = 0;
 if missing( GRP_Mnt ) then do;
    GRP_Mnt2 = .;
    GRP_Mnt3 = .;
    GRP_Mnt4 = .;
+   GRP_Mnt5 = .;
+   GRP_Mnt6 = .;
+   GRP_Mnt7 = .;
+   GRP_Mnt8 = .;
+   GRP_Mnt9 = .;
+   GRP_Mnt10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -252,41 +599,120 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_Mnt , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_Mnt2 = 0;
-      GRP_Mnt3 = 1;
-      GRP_Mnt4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_Mnt2 = -1;
-      GRP_Mnt3 = -1;
-      GRP_Mnt4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_Mnt2 = 0;
-      GRP_Mnt3 = 0;
-      GRP_Mnt4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_Mnt2 = 1;
-      GRP_Mnt3 = 0;
-      GRP_Mnt4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_Mnt10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_Mnt2 = -1;
+                  GRP_Mnt3 = -1;
+                  GRP_Mnt4 = -1;
+                  GRP_Mnt5 = -1;
+                  GRP_Mnt6 = -1;
+                  GRP_Mnt7 = -1;
+                  GRP_Mnt8 = -1;
+                  GRP_Mnt9 = -1;
+                  GRP_Mnt10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_Mnt2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_Mnt3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_Mnt4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_Mnt5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_Mnt6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_Mnt7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_Mnt8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_Mnt9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_Mnt2 = .;
       GRP_Mnt3 = .;
       GRP_Mnt4 = .;
+      GRP_Mnt5 = .;
+      GRP_Mnt6 = .;
+      GRP_Mnt7 = .;
+      GRP_Mnt8 = .;
+      GRP_Mnt9 = .;
+      GRP_Mnt10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_MntFishProducts ;
-drop GRP_MntFishProducts2 GRP_MntFishProducts3 GRP_MntFishProducts4 ;
+drop GRP_MntFishProducts3 GRP_MntFishProducts4 GRP_MntFishProducts5 
+        GRP_MntFishProducts6 GRP_MntFishProducts7 GRP_MntFishProducts8 
+        GRP_MntFishProducts9 GRP_MntFishProducts10 ;
+*** encoding is sparse, initialize to zero;
+GRP_MntFishProducts3 = 0;
+GRP_MntFishProducts4 = 0;
+GRP_MntFishProducts5 = 0;
+GRP_MntFishProducts6 = 0;
+GRP_MntFishProducts7 = 0;
+GRP_MntFishProducts8 = 0;
+GRP_MntFishProducts9 = 0;
+GRP_MntFishProducts10 = 0;
 if missing( GRP_MntFishProducts ) then do;
-   GRP_MntFishProducts2 = .;
    GRP_MntFishProducts3 = .;
    GRP_MntFishProducts4 = .;
+   GRP_MntFishProducts5 = .;
+   GRP_MntFishProducts6 = .;
+   GRP_MntFishProducts7 = .;
+   GRP_MntFishProducts8 = .;
+   GRP_MntFishProducts9 = .;
+   GRP_MntFishProducts10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -294,41 +720,112 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_MntFishProducts , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_MntFishProducts2 = 0;
-      GRP_MntFishProducts3 = 1;
-      GRP_MntFishProducts4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_MntFishProducts2 = -1;
-      GRP_MntFishProducts3 = -1;
-      GRP_MntFishProducts4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_MntFishProducts2 = 0;
-      GRP_MntFishProducts3 = 0;
-      GRP_MntFishProducts4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_MntFishProducts2 = 1;
-      GRP_MntFishProducts3 = 0;
-      GRP_MntFishProducts4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '5'  then do;
+      if _dm12 <= '3'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_MntFishProducts10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_MntFishProducts3 = -1;
+                  GRP_MntFishProducts4 = -1;
+                  GRP_MntFishProducts5 = -1;
+                  GRP_MntFishProducts6 = -1;
+                  GRP_MntFishProducts7 = -1;
+                  GRP_MntFishProducts8 = -1;
+                  GRP_MntFishProducts9 = -1;
+                  GRP_MntFishProducts10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '3'  then do;
+               GRP_MntFishProducts3 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '4'  then do;
+            GRP_MntFishProducts4 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '5'  then do;
+               GRP_MntFishProducts5 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
-      GRP_MntFishProducts2 = .;
+      if _dm12 <= '7'  then do;
+         if _dm12 = '6'  then do;
+            GRP_MntFishProducts6 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_MntFishProducts7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_MntFishProducts8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_MntFishProducts9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_MntFishProducts3 = .;
       GRP_MntFishProducts4 = .;
+      GRP_MntFishProducts5 = .;
+      GRP_MntFishProducts6 = .;
+      GRP_MntFishProducts7 = .;
+      GRP_MntFishProducts8 = .;
+      GRP_MntFishProducts9 = .;
+      GRP_MntFishProducts10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_MntGoldProds ;
-drop GRP_MntGoldProds2 GRP_MntGoldProds3 GRP_MntGoldProds4 ;
+drop GRP_MntGoldProds2 GRP_MntGoldProds3 GRP_MntGoldProds4 GRP_MntGoldProds5 
+        GRP_MntGoldProds6 GRP_MntGoldProds7 GRP_MntGoldProds8 
+        GRP_MntGoldProds9 GRP_MntGoldProds10 ;
+*** encoding is sparse, initialize to zero;
+GRP_MntGoldProds2 = 0;
+GRP_MntGoldProds3 = 0;
+GRP_MntGoldProds4 = 0;
+GRP_MntGoldProds5 = 0;
+GRP_MntGoldProds6 = 0;
+GRP_MntGoldProds7 = 0;
+GRP_MntGoldProds8 = 0;
+GRP_MntGoldProds9 = 0;
+GRP_MntGoldProds10 = 0;
 if missing( GRP_MntGoldProds ) then do;
    GRP_MntGoldProds2 = .;
    GRP_MntGoldProds3 = .;
    GRP_MntGoldProds4 = .;
+   GRP_MntGoldProds5 = .;
+   GRP_MntGoldProds6 = .;
+   GRP_MntGoldProds7 = .;
+   GRP_MntGoldProds8 = .;
+   GRP_MntGoldProds9 = .;
+   GRP_MntGoldProds10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -336,41 +833,122 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_MntGoldProds , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_MntGoldProds2 = 0;
-      GRP_MntGoldProds3 = 1;
-      GRP_MntGoldProds4 = 0;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_MntGoldProds2 = 0;
-      GRP_MntGoldProds3 = 0;
-      GRP_MntGoldProds4 = 1;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_MntGoldProds2 = -1;
-      GRP_MntGoldProds3 = -1;
-      GRP_MntGoldProds4 = -1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_MntGoldProds2 = 1;
-      GRP_MntGoldProds3 = 0;
-      GRP_MntGoldProds4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_MntGoldProds10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_MntGoldProds2 = -1;
+                  GRP_MntGoldProds3 = -1;
+                  GRP_MntGoldProds4 = -1;
+                  GRP_MntGoldProds5 = -1;
+                  GRP_MntGoldProds6 = -1;
+                  GRP_MntGoldProds7 = -1;
+                  GRP_MntGoldProds8 = -1;
+                  GRP_MntGoldProds9 = -1;
+                  GRP_MntGoldProds10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_MntGoldProds2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_MntGoldProds3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_MntGoldProds4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_MntGoldProds5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_MntGoldProds6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_MntGoldProds7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_MntGoldProds8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_MntGoldProds9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_MntGoldProds2 = .;
       GRP_MntGoldProds3 = .;
       GRP_MntGoldProds4 = .;
+      GRP_MntGoldProds5 = .;
+      GRP_MntGoldProds6 = .;
+      GRP_MntGoldProds7 = .;
+      GRP_MntGoldProds8 = .;
+      GRP_MntGoldProds9 = .;
+      GRP_MntGoldProds10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_MntMeatProducts ;
-drop GRP_MntMeatProducts2 GRP_MntMeatProducts3 GRP_MntMeatProducts4 ;
+drop GRP_MntMeatProducts2 GRP_MntMeatProducts3 GRP_MntMeatProducts4 
+        GRP_MntMeatProducts5 GRP_MntMeatProducts6 GRP_MntMeatProducts7 
+        GRP_MntMeatProducts8 GRP_MntMeatProducts9 GRP_MntMeatProducts10 ;
+*** encoding is sparse, initialize to zero;
+GRP_MntMeatProducts2 = 0;
+GRP_MntMeatProducts3 = 0;
+GRP_MntMeatProducts4 = 0;
+GRP_MntMeatProducts5 = 0;
+GRP_MntMeatProducts6 = 0;
+GRP_MntMeatProducts7 = 0;
+GRP_MntMeatProducts8 = 0;
+GRP_MntMeatProducts9 = 0;
+GRP_MntMeatProducts10 = 0;
 if missing( GRP_MntMeatProducts ) then do;
    GRP_MntMeatProducts2 = .;
    GRP_MntMeatProducts3 = .;
    GRP_MntMeatProducts4 = .;
+   GRP_MntMeatProducts5 = .;
+   GRP_MntMeatProducts6 = .;
+   GRP_MntMeatProducts7 = .;
+   GRP_MntMeatProducts8 = .;
+   GRP_MntMeatProducts9 = .;
+   GRP_MntMeatProducts10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -378,41 +956,232 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_MntMeatProducts , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_MntMeatProducts2 = 0;
-      GRP_MntMeatProducts3 = 1;
-      GRP_MntMeatProducts4 = 0;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_MntMeatProducts2 = 0;
-      GRP_MntMeatProducts3 = 0;
-      GRP_MntMeatProducts4 = 1;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_MntMeatProducts2 = -1;
-      GRP_MntMeatProducts3 = -1;
-      GRP_MntMeatProducts4 = -1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_MntMeatProducts2 = 1;
-      GRP_MntMeatProducts3 = 0;
-      GRP_MntMeatProducts4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_MntMeatProducts10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_MntMeatProducts2 = -1;
+                  GRP_MntMeatProducts3 = -1;
+                  GRP_MntMeatProducts4 = -1;
+                  GRP_MntMeatProducts5 = -1;
+                  GRP_MntMeatProducts6 = -1;
+                  GRP_MntMeatProducts7 = -1;
+                  GRP_MntMeatProducts8 = -1;
+                  GRP_MntMeatProducts9 = -1;
+                  GRP_MntMeatProducts10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_MntMeatProducts2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_MntMeatProducts3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_MntMeatProducts4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_MntMeatProducts5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_MntMeatProducts6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_MntMeatProducts7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_MntMeatProducts8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_MntMeatProducts9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_MntMeatProducts2 = .;
       GRP_MntMeatProducts3 = .;
       GRP_MntMeatProducts4 = .;
+      GRP_MntMeatProducts5 = .;
+      GRP_MntMeatProducts6 = .;
+      GRP_MntMeatProducts7 = .;
+      GRP_MntMeatProducts8 = .;
+      GRP_MntMeatProducts9 = .;
+      GRP_MntMeatProducts10 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for GRP_MntSweetProducts ;
+drop GRP_MntSweetProducts3 GRP_MntSweetProducts4 GRP_MntSweetProducts5 
+        GRP_MntSweetProducts6 GRP_MntSweetProducts7 GRP_MntSweetProducts8 
+        GRP_MntSweetProducts9 GRP_MntSweetProducts10 ;
+*** encoding is sparse, initialize to zero;
+GRP_MntSweetProducts3 = 0;
+GRP_MntSweetProducts4 = 0;
+GRP_MntSweetProducts5 = 0;
+GRP_MntSweetProducts6 = 0;
+GRP_MntSweetProducts7 = 0;
+GRP_MntSweetProducts8 = 0;
+GRP_MntSweetProducts9 = 0;
+GRP_MntSweetProducts10 = 0;
+if missing( GRP_MntSweetProducts ) then do;
+   GRP_MntSweetProducts3 = .;
+   GRP_MntSweetProducts4 = .;
+   GRP_MntSweetProducts5 = .;
+   GRP_MntSweetProducts6 = .;
+   GRP_MntSweetProducts7 = .;
+   GRP_MntSweetProducts8 = .;
+   GRP_MntSweetProducts9 = .;
+   GRP_MntSweetProducts10 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( GRP_MntSweetProducts , BEST12. );
+   %DMNORMIP( _dm12 )
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '5'  then do;
+      if _dm12 <= '3'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_MntSweetProducts10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_MntSweetProducts3 = -1;
+                  GRP_MntSweetProducts4 = -1;
+                  GRP_MntSweetProducts5 = -1;
+                  GRP_MntSweetProducts6 = -1;
+                  GRP_MntSweetProducts7 = -1;
+                  GRP_MntSweetProducts8 = -1;
+                  GRP_MntSweetProducts9 = -1;
+                  GRP_MntSweetProducts10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '3'  then do;
+               GRP_MntSweetProducts3 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '4'  then do;
+            GRP_MntSweetProducts4 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '5'  then do;
+               GRP_MntSweetProducts5 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 = '6'  then do;
+            GRP_MntSweetProducts6 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_MntSweetProducts7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_MntSweetProducts8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_MntSweetProducts9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
+      GRP_MntSweetProducts3 = .;
+      GRP_MntSweetProducts4 = .;
+      GRP_MntSweetProducts5 = .;
+      GRP_MntSweetProducts6 = .;
+      GRP_MntSweetProducts7 = .;
+      GRP_MntSweetProducts8 = .;
+      GRP_MntSweetProducts9 = .;
+      GRP_MntSweetProducts10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_MntWines ;
-drop GRP_MntWines2 GRP_MntWines3 GRP_MntWines4 ;
+drop GRP_MntWines2 GRP_MntWines3 GRP_MntWines4 GRP_MntWines5 GRP_MntWines6 
+        GRP_MntWines7 GRP_MntWines8 GRP_MntWines9 GRP_MntWines10 ;
+*** encoding is sparse, initialize to zero;
+GRP_MntWines2 = 0;
+GRP_MntWines3 = 0;
+GRP_MntWines4 = 0;
+GRP_MntWines5 = 0;
+GRP_MntWines6 = 0;
+GRP_MntWines7 = 0;
+GRP_MntWines8 = 0;
+GRP_MntWines9 = 0;
+GRP_MntWines10 = 0;
 if missing( GRP_MntWines ) then do;
    GRP_MntWines2 = .;
    GRP_MntWines3 = .;
    GRP_MntWines4 = .;
+   GRP_MntWines5 = .;
+   GRP_MntWines6 = .;
+   GRP_MntWines7 = .;
+   GRP_MntWines8 = .;
+   GRP_MntWines9 = .;
+   GRP_MntWines10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -420,40 +1189,114 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_MntWines , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_MntWines2 = 0;
-      GRP_MntWines3 = 1;
-      GRP_MntWines4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_MntWines2 = -1;
-      GRP_MntWines3 = -1;
-      GRP_MntWines4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_MntWines2 = 0;
-      GRP_MntWines3 = 0;
-      GRP_MntWines4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_MntWines2 = 1;
-      GRP_MntWines3 = 0;
-      GRP_MntWines4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_MntWines10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_MntWines2 = -1;
+                  GRP_MntWines3 = -1;
+                  GRP_MntWines4 = -1;
+                  GRP_MntWines5 = -1;
+                  GRP_MntWines6 = -1;
+                  GRP_MntWines7 = -1;
+                  GRP_MntWines8 = -1;
+                  GRP_MntWines9 = -1;
+                  GRP_MntWines10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_MntWines2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_MntWines3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_MntWines4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_MntWines5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_MntWines6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_MntWines7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_MntWines8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_MntWines9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_MntWines2 = .;
       GRP_MntWines3 = .;
       GRP_MntWines4 = .;
+      GRP_MntWines5 = .;
+      GRP_MntWines6 = .;
+      GRP_MntWines7 = .;
+      GRP_MntWines8 = .;
+      GRP_MntWines9 = .;
+      GRP_MntWines10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_NumCatalogPurchases ;
-drop GRP_NumCatalogPurchases3 GRP_NumCatalogPurchases4 ;
+drop GRP_NumCatalogPurchases3 GRP_NumCatalogPurchases4 
+        GRP_NumCatalogPurchases5 GRP_NumCatalogPurchases6 
+        GRP_NumCatalogPurchases7 ;
+*** encoding is sparse, initialize to zero;
+GRP_NumCatalogPurchases3 = 0;
+GRP_NumCatalogPurchases4 = 0;
+GRP_NumCatalogPurchases5 = 0;
+GRP_NumCatalogPurchases6 = 0;
+GRP_NumCatalogPurchases7 = 0;
 if missing( GRP_NumCatalogPurchases ) then do;
    GRP_NumCatalogPurchases3 = .;
    GRP_NumCatalogPurchases4 = .;
+   GRP_NumCatalogPurchases5 = .;
+   GRP_NumCatalogPurchases6 = .;
+   GRP_NumCatalogPurchases7 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -461,32 +1304,86 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_NumCatalogPurchases , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_NumCatalogPurchases3 = 1;
-      GRP_NumCatalogPurchases4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_NumCatalogPurchases3 = -1;
-      GRP_NumCatalogPurchases4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_NumCatalogPurchases3 = 0;
-      GRP_NumCatalogPurchases4 = 1;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '5'  then do;
+      if _dm12 <= '4'  then do;
+         if _dm12 = '3'  then do;
+            GRP_NumCatalogPurchases3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_NumCatalogPurchases4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '5'  then do;
+            GRP_NumCatalogPurchases5 = 1;
+            _dm_find = 1;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 = '6'  then do;
+            GRP_NumCatalogPurchases6 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_NumCatalogPurchases7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_NumCatalogPurchases3 = -1;
+            GRP_NumCatalogPurchases4 = -1;
+            GRP_NumCatalogPurchases5 = -1;
+            GRP_NumCatalogPurchases6 = -1;
+            GRP_NumCatalogPurchases7 = -1;
+            _dm_find = 1;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_NumCatalogPurchases3 = .;
       GRP_NumCatalogPurchases4 = .;
+      GRP_NumCatalogPurchases5 = .;
+      GRP_NumCatalogPurchases6 = .;
+      GRP_NumCatalogPurchases7 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_NumDistPurchases ;
-drop GRP_NumDistPurchases2 GRP_NumDistPurchases3 GRP_NumDistPurchases4 ;
+drop GRP_NumDistPurchases2 GRP_NumDistPurchases3 GRP_NumDistPurchases4 
+        GRP_NumDistPurchases5 GRP_NumDistPurchases6 GRP_NumDistPurchases7 
+        GRP_NumDistPurchases8 GRP_NumDistPurchases9 GRP_NumDistPurchases10 ;
+*** encoding is sparse, initialize to zero;
+GRP_NumDistPurchases2 = 0;
+GRP_NumDistPurchases3 = 0;
+GRP_NumDistPurchases4 = 0;
+GRP_NumDistPurchases5 = 0;
+GRP_NumDistPurchases6 = 0;
+GRP_NumDistPurchases7 = 0;
+GRP_NumDistPurchases8 = 0;
+GRP_NumDistPurchases9 = 0;
+GRP_NumDistPurchases10 = 0;
 if missing( GRP_NumDistPurchases ) then do;
    GRP_NumDistPurchases2 = .;
    GRP_NumDistPurchases3 = .;
    GRP_NumDistPurchases4 = .;
+   GRP_NumDistPurchases5 = .;
+   GRP_NumDistPurchases6 = .;
+   GRP_NumDistPurchases7 = .;
+   GRP_NumDistPurchases8 = .;
+   GRP_NumDistPurchases9 = .;
+   GRP_NumDistPurchases10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -494,41 +1391,118 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_NumDistPurchases , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '5'  then do;
-      GRP_NumDistPurchases2 = -1;
-      GRP_NumDistPurchases3 = -1;
-      GRP_NumDistPurchases4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_NumDistPurchases2 = 0;
-      GRP_NumDistPurchases3 = 0;
-      GRP_NumDistPurchases4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_NumDistPurchases2 = 1;
-      GRP_NumDistPurchases3 = 0;
-      GRP_NumDistPurchases4 = 0;
-   end;
-   else if _dm12 = '3'  then do;
-      GRP_NumDistPurchases2 = 0;
-      GRP_NumDistPurchases3 = 1;
-      GRP_NumDistPurchases4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_NumDistPurchases10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_NumDistPurchases2 = -1;
+                  GRP_NumDistPurchases3 = -1;
+                  GRP_NumDistPurchases4 = -1;
+                  GRP_NumDistPurchases5 = -1;
+                  GRP_NumDistPurchases6 = -1;
+                  GRP_NumDistPurchases7 = -1;
+                  GRP_NumDistPurchases8 = -1;
+                  GRP_NumDistPurchases9 = -1;
+                  GRP_NumDistPurchases10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_NumDistPurchases2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_NumDistPurchases3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_NumDistPurchases4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_NumDistPurchases5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_NumDistPurchases6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_NumDistPurchases7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_NumDistPurchases8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_NumDistPurchases9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_NumDistPurchases2 = .;
       GRP_NumDistPurchases3 = .;
       GRP_NumDistPurchases4 = .;
+      GRP_NumDistPurchases5 = .;
+      GRP_NumDistPurchases6 = .;
+      GRP_NumDistPurchases7 = .;
+      GRP_NumDistPurchases8 = .;
+      GRP_NumDistPurchases9 = .;
+      GRP_NumDistPurchases10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_NumWebPurchases ;
-drop GRP_NumWebPurchases2 GRP_NumWebPurchases3 GRP_NumWebPurchases4 ;
+drop GRP_NumWebPurchases2 GRP_NumWebPurchases3 GRP_NumWebPurchases4 
+        GRP_NumWebPurchases5 GRP_NumWebPurchases6 GRP_NumWebPurchases7 
+        GRP_NumWebPurchases8 ;
+*** encoding is sparse, initialize to zero;
+GRP_NumWebPurchases2 = 0;
+GRP_NumWebPurchases3 = 0;
+GRP_NumWebPurchases4 = 0;
+GRP_NumWebPurchases5 = 0;
+GRP_NumWebPurchases6 = 0;
+GRP_NumWebPurchases7 = 0;
+GRP_NumWebPurchases8 = 0;
 if missing( GRP_NumWebPurchases ) then do;
    GRP_NumWebPurchases2 = .;
    GRP_NumWebPurchases3 = .;
    GRP_NumWebPurchases4 = .;
+   GRP_NumWebPurchases5 = .;
+   GRP_NumWebPurchases6 = .;
+   GRP_NumWebPurchases7 = .;
+   GRP_NumWebPurchases8 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -536,41 +1510,200 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_NumWebPurchases , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_NumWebPurchases2 = 0;
-      GRP_NumWebPurchases3 = 1;
-      GRP_NumWebPurchases4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_NumWebPurchases2 = -1;
-      GRP_NumWebPurchases3 = -1;
-      GRP_NumWebPurchases4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_NumWebPurchases2 = 0;
-      GRP_NumWebPurchases3 = 0;
-      GRP_NumWebPurchases4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_NumWebPurchases2 = 1;
-      GRP_NumWebPurchases3 = 0;
-      GRP_NumWebPurchases4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '5'  then do;
+      if _dm12 <= '3'  then do;
+         if _dm12 = '2'  then do;
+            GRP_NumWebPurchases2 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '3'  then do;
+               GRP_NumWebPurchases3 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '4'  then do;
+            GRP_NumWebPurchases4 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '5'  then do;
+               GRP_NumWebPurchases5 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 = '6'  then do;
+            GRP_NumWebPurchases6 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_NumWebPurchases7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_NumWebPurchases8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_NumWebPurchases2 = -1;
+               GRP_NumWebPurchases3 = -1;
+               GRP_NumWebPurchases4 = -1;
+               GRP_NumWebPurchases5 = -1;
+               GRP_NumWebPurchases6 = -1;
+               GRP_NumWebPurchases7 = -1;
+               GRP_NumWebPurchases8 = -1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_NumWebPurchases2 = .;
       GRP_NumWebPurchases3 = .;
       GRP_NumWebPurchases4 = .;
+      GRP_NumWebPurchases5 = .;
+      GRP_NumWebPurchases6 = .;
+      GRP_NumWebPurchases7 = .;
+      GRP_NumWebPurchases8 = .;
+      substr(_warn_,2,1) = 'U';
+      _DM_BAD = 1;
+   end;
+end;
+
+*** Generate dummy variables for GRP_NumWebVisitsMonth ;
+drop GRP_NumWebVisitsMonth2 GRP_NumWebVisitsMonth3 GRP_NumWebVisitsMonth4 
+        GRP_NumWebVisitsMonth5 GRP_NumWebVisitsMonth6 GRP_NumWebVisitsMonth7 
+        GRP_NumWebVisitsMonth8 ;
+*** encoding is sparse, initialize to zero;
+GRP_NumWebVisitsMonth2 = 0;
+GRP_NumWebVisitsMonth3 = 0;
+GRP_NumWebVisitsMonth4 = 0;
+GRP_NumWebVisitsMonth5 = 0;
+GRP_NumWebVisitsMonth6 = 0;
+GRP_NumWebVisitsMonth7 = 0;
+GRP_NumWebVisitsMonth8 = 0;
+if missing( GRP_NumWebVisitsMonth ) then do;
+   GRP_NumWebVisitsMonth2 = .;
+   GRP_NumWebVisitsMonth3 = .;
+   GRP_NumWebVisitsMonth4 = .;
+   GRP_NumWebVisitsMonth5 = .;
+   GRP_NumWebVisitsMonth6 = .;
+   GRP_NumWebVisitsMonth7 = .;
+   GRP_NumWebVisitsMonth8 = .;
+   substr(_warn_,1,1) = 'M';
+   _DM_BAD = 1;
+end;
+else do;
+   length _dm12 $ 12; drop _dm12 ;
+   _dm12 = put( GRP_NumWebVisitsMonth , BEST12. );
+   %DMNORMIP( _dm12 )
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '5'  then do;
+      if _dm12 <= '3'  then do;
+         if _dm12 = '2'  then do;
+            GRP_NumWebVisitsMonth2 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '3'  then do;
+               GRP_NumWebVisitsMonth3 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '4'  then do;
+            GRP_NumWebVisitsMonth4 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '5'  then do;
+               GRP_NumWebVisitsMonth5 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 = '6'  then do;
+            GRP_NumWebVisitsMonth6 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_NumWebVisitsMonth7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_NumWebVisitsMonth8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_NumWebVisitsMonth2 = -1;
+               GRP_NumWebVisitsMonth3 = -1;
+               GRP_NumWebVisitsMonth4 = -1;
+               GRP_NumWebVisitsMonth5 = -1;
+               GRP_NumWebVisitsMonth6 = -1;
+               GRP_NumWebVisitsMonth7 = -1;
+               GRP_NumWebVisitsMonth8 = -1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
+      GRP_NumWebVisitsMonth2 = .;
+      GRP_NumWebVisitsMonth3 = .;
+      GRP_NumWebVisitsMonth4 = .;
+      GRP_NumWebVisitsMonth5 = .;
+      GRP_NumWebVisitsMonth6 = .;
+      GRP_NumWebVisitsMonth7 = .;
+      GRP_NumWebVisitsMonth8 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_RFMstat ;
-drop GRP_RFMstat2 GRP_RFMstat3 GRP_RFMstat4 ;
+drop GRP_RFMstat2 GRP_RFMstat3 GRP_RFMstat4 GRP_RFMstat5 GRP_RFMstat6 
+        GRP_RFMstat7 GRP_RFMstat8 GRP_RFMstat9 GRP_RFMstat10 ;
+*** encoding is sparse, initialize to zero;
+GRP_RFMstat2 = 0;
+GRP_RFMstat3 = 0;
+GRP_RFMstat4 = 0;
+GRP_RFMstat5 = 0;
+GRP_RFMstat6 = 0;
+GRP_RFMstat7 = 0;
+GRP_RFMstat8 = 0;
+GRP_RFMstat9 = 0;
+GRP_RFMstat10 = 0;
 if missing( GRP_RFMstat ) then do;
    GRP_RFMstat2 = .;
    GRP_RFMstat3 = .;
    GRP_RFMstat4 = .;
+   GRP_RFMstat5 = .;
+   GRP_RFMstat6 = .;
+   GRP_RFMstat7 = .;
+   GRP_RFMstat8 = .;
+   GRP_RFMstat9 = .;
+   GRP_RFMstat10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -578,41 +1711,121 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_RFMstat , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '4'  then do;
-      GRP_RFMstat2 = 0;
-      GRP_RFMstat3 = 0;
-      GRP_RFMstat4 = 1;
-   end;
-   else if _dm12 = '3'  then do;
-      GRP_RFMstat2 = 0;
-      GRP_RFMstat3 = 1;
-      GRP_RFMstat4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_RFMstat2 = -1;
-      GRP_RFMstat3 = -1;
-      GRP_RFMstat4 = -1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_RFMstat2 = 1;
-      GRP_RFMstat3 = 0;
-      GRP_RFMstat4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_RFMstat10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_RFMstat2 = -1;
+                  GRP_RFMstat3 = -1;
+                  GRP_RFMstat4 = -1;
+                  GRP_RFMstat5 = -1;
+                  GRP_RFMstat6 = -1;
+                  GRP_RFMstat7 = -1;
+                  GRP_RFMstat8 = -1;
+                  GRP_RFMstat9 = -1;
+                  GRP_RFMstat10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_RFMstat2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_RFMstat3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_RFMstat4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_RFMstat5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_RFMstat6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_RFMstat7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_RFMstat8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_RFMstat9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_RFMstat2 = .;
       GRP_RFMstat3 = .;
       GRP_RFMstat4 = .;
+      GRP_RFMstat5 = .;
+      GRP_RFMstat6 = .;
+      GRP_RFMstat7 = .;
+      GRP_RFMstat8 = .;
+      GRP_RFMstat9 = .;
+      GRP_RFMstat10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_RMntFrq ;
-drop GRP_RMntFrq2 GRP_RMntFrq3 GRP_RMntFrq4 ;
+drop GRP_RMntFrq2 GRP_RMntFrq3 GRP_RMntFrq4 GRP_RMntFrq5 GRP_RMntFrq6 
+        GRP_RMntFrq7 GRP_RMntFrq8 GRP_RMntFrq9 GRP_RMntFrq10 ;
+*** encoding is sparse, initialize to zero;
+GRP_RMntFrq2 = 0;
+GRP_RMntFrq3 = 0;
+GRP_RMntFrq4 = 0;
+GRP_RMntFrq5 = 0;
+GRP_RMntFrq6 = 0;
+GRP_RMntFrq7 = 0;
+GRP_RMntFrq8 = 0;
+GRP_RMntFrq9 = 0;
+GRP_RMntFrq10 = 0;
 if missing( GRP_RMntFrq ) then do;
    GRP_RMntFrq2 = .;
    GRP_RMntFrq3 = .;
    GRP_RMntFrq4 = .;
+   GRP_RMntFrq5 = .;
+   GRP_RMntFrq6 = .;
+   GRP_RMntFrq7 = .;
+   GRP_RMntFrq8 = .;
+   GRP_RMntFrq9 = .;
+   GRP_RMntFrq10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -620,41 +1833,121 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_RMntFrq , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '3'  then do;
-      GRP_RMntFrq2 = 0;
-      GRP_RMntFrq3 = 1;
-      GRP_RMntFrq4 = 0;
-   end;
-   else if _dm12 = '5'  then do;
-      GRP_RMntFrq2 = -1;
-      GRP_RMntFrq3 = -1;
-      GRP_RMntFrq4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_RMntFrq2 = 0;
-      GRP_RMntFrq3 = 0;
-      GRP_RMntFrq4 = 1;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_RMntFrq2 = 1;
-      GRP_RMntFrq3 = 0;
-      GRP_RMntFrq4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_RMntFrq10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_RMntFrq2 = -1;
+                  GRP_RMntFrq3 = -1;
+                  GRP_RMntFrq4 = -1;
+                  GRP_RMntFrq5 = -1;
+                  GRP_RMntFrq6 = -1;
+                  GRP_RMntFrq7 = -1;
+                  GRP_RMntFrq8 = -1;
+                  GRP_RMntFrq9 = -1;
+                  GRP_RMntFrq10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_RMntFrq2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_RMntFrq3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_RMntFrq4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_RMntFrq5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_RMntFrq6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_RMntFrq7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_RMntFrq8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_RMntFrq9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_RMntFrq2 = .;
       GRP_RMntFrq3 = .;
       GRP_RMntFrq4 = .;
+      GRP_RMntFrq5 = .;
+      GRP_RMntFrq6 = .;
+      GRP_RMntFrq7 = .;
+      GRP_RMntFrq8 = .;
+      GRP_RMntFrq9 = .;
+      GRP_RMntFrq10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
 end;
 
 *** Generate dummy variables for GRP_Recency ;
-drop GRP_Recency2 GRP_Recency3 GRP_Recency4 ;
+drop GRP_Recency2 GRP_Recency3 GRP_Recency4 GRP_Recency5 GRP_Recency6 
+        GRP_Recency7 GRP_Recency8 GRP_Recency9 GRP_Recency10 ;
+*** encoding is sparse, initialize to zero;
+GRP_Recency2 = 0;
+GRP_Recency3 = 0;
+GRP_Recency4 = 0;
+GRP_Recency5 = 0;
+GRP_Recency6 = 0;
+GRP_Recency7 = 0;
+GRP_Recency8 = 0;
+GRP_Recency9 = 0;
+GRP_Recency10 = 0;
 if missing( GRP_Recency ) then do;
    GRP_Recency2 = .;
    GRP_Recency3 = .;
    GRP_Recency4 = .;
+   GRP_Recency5 = .;
+   GRP_Recency6 = .;
+   GRP_Recency7 = .;
+   GRP_Recency8 = .;
+   GRP_Recency9 = .;
+   GRP_Recency10 = .;
    substr(_warn_,1,1) = 'M';
    _DM_BAD = 1;
 end;
@@ -662,30 +1955,93 @@ else do;
    length _dm12 $ 12; drop _dm12 ;
    _dm12 = put( GRP_Recency , BEST12. );
    %DMNORMIP( _dm12 )
-   if _dm12 = '5'  then do;
-      GRP_Recency2 = -1;
-      GRP_Recency3 = -1;
-      GRP_Recency4 = -1;
-   end;
-   else if _dm12 = '4'  then do;
-      GRP_Recency2 = 0;
-      GRP_Recency3 = 0;
-      GRP_Recency4 = 1;
-   end;
-   else if _dm12 = '3'  then do;
-      GRP_Recency2 = 0;
-      GRP_Recency3 = 1;
-      GRP_Recency4 = 0;
-   end;
-   else if _dm12 = '2'  then do;
-      GRP_Recency2 = 1;
-      GRP_Recency3 = 0;
-      GRP_Recency4 = 0;
+   _dm_find = 0; drop _dm_find;
+   if _dm12 <= '4'  then do;
+      if _dm12 <= '2'  then do;
+         if _dm12 <= '11'  then do;
+            if _dm12 = '10'  then do;
+               GRP_Recency10 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '11'  then do;
+                  GRP_Recency2 = -1;
+                  GRP_Recency3 = -1;
+                  GRP_Recency4 = -1;
+                  GRP_Recency5 = -1;
+                  GRP_Recency6 = -1;
+                  GRP_Recency7 = -1;
+                  GRP_Recency8 = -1;
+                  GRP_Recency9 = -1;
+                  GRP_Recency10 = -1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '2'  then do;
+               GRP_Recency2 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '3'  then do;
+            GRP_Recency3 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '4'  then do;
+               GRP_Recency4 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
    end;
    else do;
+      if _dm12 <= '7'  then do;
+         if _dm12 <= '6'  then do;
+            if _dm12 = '5'  then do;
+               GRP_Recency5 = 1;
+               _dm_find = 1;
+            end;
+            else do;
+               if _dm12 = '6'  then do;
+                  GRP_Recency6 = 1;
+                  _dm_find = 1;
+               end;
+            end;
+         end;
+         else do;
+            if _dm12 = '7'  then do;
+               GRP_Recency7 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+      else do;
+         if _dm12 = '8'  then do;
+            GRP_Recency8 = 1;
+            _dm_find = 1;
+         end;
+         else do;
+            if _dm12 = '9'  then do;
+               GRP_Recency9 = 1;
+               _dm_find = 1;
+            end;
+         end;
+      end;
+   end;
+   if not _dm_find then do;
       GRP_Recency2 = .;
       GRP_Recency3 = .;
       GRP_Recency4 = .;
+      GRP_Recency5 = .;
+      GRP_Recency6 = .;
+      GRP_Recency7 = .;
+      GRP_Recency8 = .;
+      GRP_Recency9 = .;
+      GRP_Recency10 = .;
       substr(_warn_,2,1) = 'U';
       _DM_BAD = 1;
    end;
@@ -716,435 +2072,114 @@ END;
 *** Writing the Node nominal ;
 *** *************************;
 *** *************************;
-*** Writing the Node H1x1_ ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H1x1_1  =      1.0311746583126 * S_Year_Birth ;
-   H1x1_2  =     1.67119181587557 * S_Year_Birth ;
-   H1x1_3  =    -2.17540349820814 * S_Year_Birth ;
-   H1x1_4  =    -2.56679893298362 * S_Year_Birth ;
-   H1x1_5  =    -0.60932306642258 * S_Year_Birth ;
-   H1x1_1  = H1x1_1  +     0.72534982243417 * GRP_AcceptedCmp52
-          +     0.33166960090157 * GRP_Frq2  +     1.71697127611163 * GRP_Frq3
-          +     0.81002020807326 * GRP_Frq4  +     0.48027973945372 * 
-        GRP_Income2  +    -1.09550149543369 * GRP_Income3
-          +    -0.22235642667559 * GRP_Income4  +    -0.00978473434282 * 
-        GRP_Mnt2  +    -0.11796310741854 * GRP_Mnt3  +    -0.42227802637743 * 
-        GRP_Mnt4  +    -0.60021395849859 * GRP_MntFishProducts2
-          +    -1.92253913417034 * GRP_MntFishProducts3
-          +     0.11236967036572 * GRP_MntFishProducts4
-          +     1.55117451498964 * GRP_MntGoldProds2
-          +    -2.17638819155912 * GRP_MntGoldProds3
-          +     1.12471370225173 * GRP_MntGoldProds4
-          +     0.73773441156548 * GRP_MntMeatProducts2
-          +     2.07738910661633 * GRP_MntMeatProducts3
-          +    -0.64280630173292 * GRP_MntMeatProducts4
-          +     0.77316083192112 * GRP_MntWines2  +     2.15867403144607 * 
-        GRP_MntWines3  +     2.47891578910494 * GRP_MntWines4
-          +     0.27137671258246 * GRP_NumCatalogPurchases3
-          +     1.17769351442984 * GRP_NumCatalogPurchases4
-          +     1.22104662684375 * GRP_NumDistPurchases2
-          +      3.4956187335148 * GRP_NumDistPurchases3
-          +     1.44110988448724 * GRP_NumDistPurchases4
-          +    -0.15910531424988 * GRP_NumWebPurchases2
-          +      2.0651216353476 * GRP_NumWebPurchases3
-          +     1.88264340284474 * GRP_NumWebPurchases4
-          +    -0.51356035467324 * GRP_RFMstat2  +    -0.97145618762825 * 
-        GRP_RFMstat3  +     1.44865956224608 * GRP_RFMstat4
-          +    -0.02171623156521 * GRP_RMntFrq2  +     2.25871822244977 * 
-        GRP_RMntFrq3  +    -0.95854946562766 * GRP_RMntFrq4
-          +    -0.19279939282854 * GRP_Recency2  +    -0.59440462375689 * 
-        GRP_Recency3  +     -2.1494171625282 * GRP_Recency4 ;
-   H1x1_2  = H1x1_2  +    -1.10416749938295 * GRP_AcceptedCmp52
-          +     2.11163264556083 * GRP_Frq2  +    -0.30443521786246 * GRP_Frq3
-          +     2.19401599825923 * GRP_Frq4  +    -0.38326784930815 * 
-        GRP_Income2  +    -0.07594895187003 * GRP_Income3
-          +     0.98207007879144 * GRP_Income4  +    -1.92634732130472 * 
-        GRP_Mnt2  +     0.64603066612326 * GRP_Mnt3  +     0.62922821521966 * 
-        GRP_Mnt4  +     -0.4161962895106 * GRP_MntFishProducts2
-          +     0.69185352158005 * GRP_MntFishProducts3
-          +    -0.03493178084029 * GRP_MntFishProducts4
-          +     1.51100187776315 * GRP_MntGoldProds2
-          +     0.06501688279193 * GRP_MntGoldProds3
-          +    -0.39137744731231 * GRP_MntGoldProds4
-          +    -1.71718837423104 * GRP_MntMeatProducts2
-          +    -2.21915390243757 * GRP_MntMeatProducts3
-          +    -0.56748587906854 * GRP_MntMeatProducts4
-          +     0.62307046604402 * GRP_MntWines2  +     0.47352126999194 * 
-        GRP_MntWines3  +      0.2191426110263 * GRP_MntWines4
-          +     1.48903401021544 * GRP_NumCatalogPurchases3
-          +     1.17263293507207 * GRP_NumCatalogPurchases4
-          +     1.51105230747578 * GRP_NumDistPurchases2
-          +     0.77634340058478 * GRP_NumDistPurchases3
-          +    -0.03088809375301 * GRP_NumDistPurchases4
-          +    -0.96601789395554 * GRP_NumWebPurchases2
-          +     0.85040977160083 * GRP_NumWebPurchases3
-          +     2.40308918299781 * GRP_NumWebPurchases4
-          +     0.12282845458333 * GRP_RFMstat2  +    -0.98545061581559 * 
-        GRP_RFMstat3  +     1.25668440586033 * GRP_RFMstat4
-          +     0.46767962398497 * GRP_RMntFrq2  +    -0.80481923203399 * 
-        GRP_RMntFrq3  +    -1.57392798605208 * GRP_RMntFrq4
-          +     0.85109569398847 * GRP_Recency2  +     0.29456403684394 * 
-        GRP_Recency3  +     2.66867988462295 * GRP_Recency4 ;
-   H1x1_3  = H1x1_3  +    -3.01879385716191 * GRP_AcceptedCmp52
-          +    -0.13662280353682 * GRP_Frq2  +     2.51930889376721 * GRP_Frq3
-          +     1.76895510412356 * GRP_Frq4  +     -0.5692048618965 * 
-        GRP_Income2  +     1.18033291239845 * GRP_Income3
-          +    -0.64679354804447 * GRP_Income4  +    -1.28802047381892 * 
-        GRP_Mnt2  +    -2.46267752020506 * GRP_Mnt3  +     0.17133913926957 * 
-        GRP_Mnt4  +     1.27283832451603 * GRP_MntFishProducts2
-          +    -0.25133476006515 * GRP_MntFishProducts3
-          +     1.43382012526151 * GRP_MntFishProducts4
-          +      0.6587510367878 * GRP_MntGoldProds2
-          +    -2.29815972364167 * GRP_MntGoldProds3
-          +    -1.17878838514109 * GRP_MntGoldProds4
-          +    -1.45630165039671 * GRP_MntMeatProducts2
-          +    -0.11970663820977 * GRP_MntMeatProducts3
-          +    -0.76333182688138 * GRP_MntMeatProducts4
-          +    -2.52565926826767 * GRP_MntWines2  +     0.00775439635111 * 
-        GRP_MntWines3  +    -1.79940008598217 * GRP_MntWines4
-          +    -1.25235345037614 * GRP_NumCatalogPurchases3
-          +    -3.32950963282576 * GRP_NumCatalogPurchases4
-          +    -0.83062872942088 * GRP_NumDistPurchases2
-          +      1.2644984519337 * GRP_NumDistPurchases3
-          +     0.62516412515385 * GRP_NumDistPurchases4
-          +    -0.91932392687811 * GRP_NumWebPurchases2
-          +     0.63985001179952 * GRP_NumWebPurchases3
-          +     0.11379774354586 * GRP_NumWebPurchases4
-          +    -0.83336515651784 * GRP_RFMstat2  +    -0.76327708518862 * 
-        GRP_RFMstat3  +    -1.65882578353771 * GRP_RFMstat4
-          +     0.96912805482142 * GRP_RMntFrq2  +     0.89830852536378 * 
-        GRP_RMntFrq3  +    -0.80853907149434 * GRP_RMntFrq4
-          +    -1.09357609598677 * GRP_Recency2  +    -0.36348291669233 * 
-        GRP_Recency3  +    -1.63045870617841 * GRP_Recency4 ;
-   H1x1_4  = H1x1_4  +    -0.22003392209515 * GRP_AcceptedCmp52
-          +    -0.37446340795406 * GRP_Frq2  +    -0.00569020240777 * GRP_Frq3
-          +     0.38116150545111 * GRP_Frq4  +    -0.36688806155078 * 
-        GRP_Income2  +     -4.2575032053121 * GRP_Income3
-          +     1.51798546961788 * GRP_Income4  +    -0.88579848196414 * 
-        GRP_Mnt2  +     1.84159465073955 * GRP_Mnt3  +     0.11670514600746 * 
-        GRP_Mnt4  +    -3.46232646407418 * GRP_MntFishProducts2
-          +     0.25005234850524 * GRP_MntFishProducts3
-          +    -0.07970714752313 * GRP_MntFishProducts4
-          +     -0.7495440064059 * GRP_MntGoldProds2
-          +     -0.0659148563739 * GRP_MntGoldProds3
-          +    -1.42445075896946 * GRP_MntGoldProds4
-          +      0.1738975461322 * GRP_MntMeatProducts2
-          +    -2.24799164386156 * GRP_MntMeatProducts3
-          +    -1.67754357341899 * GRP_MntMeatProducts4
-          +    -0.05307351478942 * GRP_MntWines2  +     -2.2168800511889 * 
-        GRP_MntWines3  +    -1.48732327222777 * GRP_MntWines4
-          +    -0.36761319556449 * GRP_NumCatalogPurchases3
-          +    -2.89167685306869 * GRP_NumCatalogPurchases4
-          +    -0.48267351716569 * GRP_NumDistPurchases2
-          +     0.93211719554417 * GRP_NumDistPurchases3
-          +      1.1708430486506 * GRP_NumDistPurchases4
-          +     0.03811902892169 * GRP_NumWebPurchases2
-          +    -1.51477371309928 * GRP_NumWebPurchases3
-          +     1.07378297590898 * GRP_NumWebPurchases4
-          +     1.68393431629797 * GRP_RFMstat2  +     1.58685880164611 * 
-        GRP_RFMstat3  +     0.80759821340467 * GRP_RFMstat4
-          +     1.66879117439255 * GRP_RMntFrq2  +     0.80834322412036 * 
-        GRP_RMntFrq3  +     0.23086766354714 * GRP_RMntFrq4
-          +      1.3218682104263 * GRP_Recency2  +    -1.73155287312103 * 
-        GRP_Recency3  +     0.90108611111458 * GRP_Recency4 ;
-   H1x1_5  = H1x1_5  +    -2.25400715952368 * GRP_AcceptedCmp52
-          +    -0.68951263089678 * GRP_Frq2  +    -1.06579468283295 * GRP_Frq3
-          +    -2.03202371442661 * GRP_Frq4  +      0.1036760802752 * 
-        GRP_Income2  +    -0.92046251438792 * GRP_Income3
-          +     1.24075371479112 * GRP_Income4  +    -2.19069916142209 * 
-        GRP_Mnt2  +     1.76084360929533 * GRP_Mnt3  +     0.20732134279897 * 
-        GRP_Mnt4  +    -1.25213582301524 * GRP_MntFishProducts2
-          +    -1.49559041774587 * GRP_MntFishProducts3
-          +     1.29292270443546 * GRP_MntFishProducts4
-          +     3.28109415592287 * GRP_MntGoldProds2
-          +     0.40523569115651 * GRP_MntGoldProds3
-          +        0.70305704265 * GRP_MntGoldProds4
-          +    -1.85351989681271 * GRP_MntMeatProducts2
-          +    -0.63625311683955 * GRP_MntMeatProducts3
-          +     0.27320544681113 * GRP_MntMeatProducts4
-          +     1.96095600251535 * GRP_MntWines2  +     2.24427494885455 * 
-        GRP_MntWines3  +    -0.88569250661863 * GRP_MntWines4
-          +    -0.42794019910524 * GRP_NumCatalogPurchases3
-          +    -2.32852367141603 * GRP_NumCatalogPurchases4
-          +    -1.40970961318877 * GRP_NumDistPurchases2
-          +     -2.5780841761751 * GRP_NumDistPurchases3
-          +    -0.35557998232484 * GRP_NumDistPurchases4
-          +     1.27746944985248 * GRP_NumWebPurchases2
-          +     0.69463977283169 * GRP_NumWebPurchases3
-          +    -0.54397813851169 * GRP_NumWebPurchases4
-          +    -0.31669101358561 * GRP_RFMstat2  +     2.18799717857163 * 
-        GRP_RFMstat3  +    -0.42571916720282 * GRP_RFMstat4
-          +     -0.8273646010144 * GRP_RMntFrq2  +     0.34575371088075 * 
-        GRP_RMntFrq3  +    -0.85751874647054 * GRP_RMntFrq4
-          +    -1.53759054703623 * GRP_Recency2  +      0.1907268514387 * 
-        GRP_Recency3  +    -0.73522914565387 * GRP_Recency4 ;
-   H1x1_1  =     0.19335754651259 + H1x1_1 ;
-   H1x1_2  =     2.09010164778105 + H1x1_2 ;
-   H1x1_3  =    -0.06489378657176 + H1x1_3 ;
-   H1x1_4  =    -0.14814564965512 + H1x1_4 ;
-   H1x1_5  =      1.2298003293092 + H1x1_5 ;
-   DROP _EXP_BAR;
-   _EXP_BAR=50;
-   H1x1_1  = 1.0 / (1.0 + EXP(MIN( - H1x1_1 , _EXP_BAR)));
-   H1x1_2  = 1.0 / (1.0 + EXP(MIN( - H1x1_2 , _EXP_BAR)));
-   H1x1_3  = 1.0 / (1.0 + EXP(MIN( - H1x1_3 , _EXP_BAR)));
-   H1x1_4  = 1.0 / (1.0 + EXP(MIN( - H1x1_4 , _EXP_BAR)));
-   H1x1_5  = 1.0 / (1.0 + EXP(MIN( - H1x1_5 , _EXP_BAR)));
-END;
-ELSE DO;
-   H1x1_1  = .;
-   H1x1_2  = .;
-   H1x1_3  = .;
-   H1x1_4  = .;
-   H1x1_5  = .;
-END;
-*** *************************;
-*** Writing the Node H1x2_ ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H1x2_1  =    -1.88709734442083 * S_Year_Birth ;
-   H1x2_2  =     0.39337522313841 * S_Year_Birth ;
-   H1x2_3  =    -0.80137600943997 * S_Year_Birth ;
-   H1x2_4  =     0.56552045600061 * S_Year_Birth ;
-   H1x2_5  =     0.08757939638091 * S_Year_Birth ;
-   H1x2_1  = H1x2_1  +    -0.80297380803583 * GRP_AcceptedCmp52
-          +     0.77171658129897 * GRP_Frq2  +    -1.90373500999925 * GRP_Frq3
-          +     0.34067508173447 * GRP_Frq4  +    -3.40546398001194 * 
-        GRP_Income2  +      2.4308303101124 * GRP_Income3
-          +      1.7371902933386 * GRP_Income4  +    -1.19436336479656 * 
-        GRP_Mnt2  +    -0.40996866110225 * GRP_Mnt3  +     1.04801669037568 * 
-        GRP_Mnt4  +     1.95500373096914 * GRP_MntFishProducts2
-          +     2.51364109656281 * GRP_MntFishProducts3
-          +    -1.42490007484769 * GRP_MntFishProducts4
-          +    -0.45125943648795 * GRP_MntGoldProds2
-          +     2.47102254724134 * GRP_MntGoldProds3
-          +     -1.9039173262792 * GRP_MntGoldProds4
-          +     0.19349291706995 * GRP_MntMeatProducts2
-          +     1.13475826324844 * GRP_MntMeatProducts3
-          +    -0.33642288502432 * GRP_MntMeatProducts4
-          +     1.11286337512828 * GRP_MntWines2  +    -1.73349392468621 * 
-        GRP_MntWines3  +     0.82891272252224 * GRP_MntWines4
-          +     0.15659125827236 * GRP_NumCatalogPurchases3
-          +     0.32817066335176 * GRP_NumCatalogPurchases4
-          +    -0.67313821415044 * GRP_NumDistPurchases2
-          +    -0.96239937857546 * GRP_NumDistPurchases3
-          +     0.32058507897383 * GRP_NumDistPurchases4
-          +     0.02503658374779 * GRP_NumWebPurchases2
-          +    -2.42182777667863 * GRP_NumWebPurchases3
-          +     1.09934791830799 * GRP_NumWebPurchases4
-          +     0.99647285457344 * GRP_RFMstat2  +    -1.81285090299632 * 
-        GRP_RFMstat3  +      0.6907946914019 * GRP_RFMstat4
-          +    -0.96741541040827 * GRP_RMntFrq2  +     1.54078374992995 * 
-        GRP_RMntFrq3  +     -0.5606172121429 * GRP_RMntFrq4
-          +     1.09972681443966 * GRP_Recency2  +     0.40240053086114 * 
-        GRP_Recency3  +     3.54622644138557 * GRP_Recency4 ;
-   H1x2_2  = H1x2_2  +    -0.84257803770334 * GRP_AcceptedCmp52
-          +    -1.76147524199782 * GRP_Frq2  +     0.76968937743693 * GRP_Frq3
-          +     1.10861276861184 * GRP_Frq4  +    -2.23247622323833 * 
-        GRP_Income2  +    -0.30655302009971 * GRP_Income3
-          +    -0.67421319601147 * GRP_Income4  +    -0.41833926468843 * 
-        GRP_Mnt2  +     0.52496961087688 * GRP_Mnt3  +     2.22224381605808 * 
-        GRP_Mnt4  +     1.90603665409631 * GRP_MntFishProducts2
-          +    -0.68769529687639 * GRP_MntFishProducts3
-          +     0.91046416847697 * GRP_MntFishProducts4
-          +     1.93581182421904 * GRP_MntGoldProds2
-          +     0.00795466624941 * GRP_MntGoldProds3
-          +    -0.22854189252742 * GRP_MntGoldProds4
-          +     0.51645804440055 * GRP_MntMeatProducts2
-          +    -0.73677565057958 * GRP_MntMeatProducts3
-          +    -3.38222954402665 * GRP_MntMeatProducts4
-          +    -0.52703533326761 * GRP_MntWines2  +     2.68998648323277 * 
-        GRP_MntWines3  +    -1.01553943004578 * GRP_MntWines4
-          +    -0.25257542492254 * GRP_NumCatalogPurchases3
-          +     0.92868654767551 * GRP_NumCatalogPurchases4
-          +    -0.18642581919214 * GRP_NumDistPurchases2
-          +     0.32117397006136 * GRP_NumDistPurchases3
-          +    -0.59059080451748 * GRP_NumDistPurchases4
-          +    -1.05057528699441 * GRP_NumWebPurchases2
-          +    -0.84936431958655 * GRP_NumWebPurchases3
-          +     0.43322339989668 * GRP_NumWebPurchases4
-          +    -0.27462600263662 * GRP_RFMstat2  +    -2.25150384807365 * 
-        GRP_RFMstat3  +    -0.00267009939433 * GRP_RFMstat4
-          +     1.27314966261257 * GRP_RMntFrq2  +     0.27127797709217 * 
-        GRP_RMntFrq3  +     1.12101959838801 * GRP_RMntFrq4
-          +     0.79686140512362 * GRP_Recency2  +      -3.204314799241 * 
-        GRP_Recency3  +    -0.17063922919112 * GRP_Recency4 ;
-   H1x2_3  = H1x2_3  +     0.61950412844712 * GRP_AcceptedCmp52
-          +     0.65265389665714 * GRP_Frq2  +     0.12876759740294 * GRP_Frq3
-          +    -0.38017417695108 * GRP_Frq4  +    -0.54457623826836 * 
-        GRP_Income2  +     2.06545795697617 * GRP_Income3
-          +     -0.2725653040132 * GRP_Income4  +     0.59334688450758 * 
-        GRP_Mnt2  +    -2.75668429292834 * GRP_Mnt3  +    -0.19086776143213 * 
-        GRP_Mnt4  +     -3.7490211951959 * GRP_MntFishProducts2
-          +     -0.2747383185488 * GRP_MntFishProducts3
-          +     0.05699547232616 * GRP_MntFishProducts4
-          +     1.78340082221807 * GRP_MntGoldProds2
-          +    -0.21272258173805 * GRP_MntGoldProds3
-          +    -0.63881612523162 * GRP_MntGoldProds4
-          +     0.35743242018534 * GRP_MntMeatProducts2
-          +     0.39288166088974 * GRP_MntMeatProducts3
-          +     0.68623350973697 * GRP_MntMeatProducts4
-          +    -1.04284335042439 * GRP_MntWines2  +    -0.97636647224011 * 
-        GRP_MntWines3  +    -1.75436887389742 * GRP_MntWines4
-          +     0.38349558810511 * GRP_NumCatalogPurchases3
-          +     0.94944817324412 * GRP_NumCatalogPurchases4
-          +     0.87924710032772 * GRP_NumDistPurchases2
-          +     0.54658799433949 * GRP_NumDistPurchases3
-          +     1.85594529989185 * GRP_NumDistPurchases4
-          +    -0.66471569231333 * GRP_NumWebPurchases2
-          +    -0.59461900037355 * GRP_NumWebPurchases3
-          +     0.12806083458682 * GRP_NumWebPurchases4
-          +    -0.75799558259662 * GRP_RFMstat2  +     1.03472328046295 * 
-        GRP_RFMstat3  +     0.35460394964665 * GRP_RFMstat4
-          +     2.35757770027854 * GRP_RMntFrq2  +    -1.60760048151685 * 
-        GRP_RMntFrq3  +       1.734911990241 * GRP_RMntFrq4
-          +    -0.50983934759213 * GRP_Recency2  +     1.22056684902473 * 
-        GRP_Recency3  +    -0.53617918353506 * GRP_Recency4 ;
-   H1x2_4  = H1x2_4  +     1.26170976978884 * GRP_AcceptedCmp52
-          +    -0.32711952545891 * GRP_Frq2  +    -1.19397195692697 * GRP_Frq3
-          +    -1.91237681986457 * GRP_Frq4  +    -0.79449068445985 * 
-        GRP_Income2  +    -1.22812902448096 * GRP_Income3
-          +     0.34997306488077 * GRP_Income4  +     0.97887573619442 * 
-        GRP_Mnt2  +    -0.47207479147139 * GRP_Mnt3  +    -0.72610866749196 * 
-        GRP_Mnt4  +    -1.02568945709262 * GRP_MntFishProducts2
-          +    -0.50962348735329 * GRP_MntFishProducts3
-          +    -1.75841654964734 * GRP_MntFishProducts4
-          +     2.14839745385174 * GRP_MntGoldProds2
-          +      2.4716387157729 * GRP_MntGoldProds3
-          +     0.61286996367418 * GRP_MntGoldProds4
-          +     1.45427097683349 * GRP_MntMeatProducts2
-          +    -0.34990206215878 * GRP_MntMeatProducts3
-          +     2.25284175811484 * GRP_MntMeatProducts4
-          +      0.9855268124051 * GRP_MntWines2  +    -0.12203915234087 * 
-        GRP_MntWines3  +     0.25102207151836 * GRP_MntWines4
-          +     1.02272173939472 * GRP_NumCatalogPurchases3
-          +    -0.86507841983648 * GRP_NumCatalogPurchases4
-          +    -0.44080685652484 * GRP_NumDistPurchases2
-          +     2.40613428385819 * GRP_NumDistPurchases3
-          +     0.26317801067025 * GRP_NumDistPurchases4
-          +     2.34961138802546 * GRP_NumWebPurchases2
-          +     2.35826990005342 * GRP_NumWebPurchases3
-          +     0.18496434892584 * GRP_NumWebPurchases4
-          +     1.79795147677472 * GRP_RFMstat2  +     0.58420175726653 * 
-        GRP_RFMstat3  +    -1.31222644039147 * GRP_RFMstat4
-          +    -0.47605088519028 * GRP_RMntFrq2  +    -1.93444600786423 * 
-        GRP_RMntFrq3  +    -1.73270719079454 * GRP_RMntFrq4
-          +    -0.07465628796168 * GRP_Recency2  +     0.39933484299815 * 
-        GRP_Recency3  +     1.24718444803263 * GRP_Recency4 ;
-   H1x2_5  = H1x2_5  +     0.87459488954875 * GRP_AcceptedCmp52
-          +    -0.84011640362753 * GRP_Frq2  +     0.77937376717729 * GRP_Frq3
-          +    -1.82978666358622 * GRP_Frq4  +    -0.03003575117499 * 
-        GRP_Income2  +    -0.09211385255865 * GRP_Income3
-          +    -1.94207051248492 * GRP_Income4  +     0.73641935783417 * 
-        GRP_Mnt2  +      -0.495669562808 * GRP_Mnt3  +    -0.04058774225968 * 
-        GRP_Mnt4  +     1.81606017533935 * GRP_MntFishProducts2
-          +     -2.3817205567109 * GRP_MntFishProducts3
-          +      1.4356293091772 * GRP_MntFishProducts4
-          +    -1.03209023546079 * GRP_MntGoldProds2
-          +     1.93949728331263 * GRP_MntGoldProds3
-          +     0.44849194130528 * GRP_MntGoldProds4
-          +     1.34973896956794 * GRP_MntMeatProducts2
-          +     1.40989126474294 * GRP_MntMeatProducts3
-          +     0.74435387703611 * GRP_MntMeatProducts4
-          +     0.94293940682329 * GRP_MntWines2  +     0.71988830572011 * 
-        GRP_MntWines3  +     0.43603082498929 * GRP_MntWines4
-          +     1.65449574071289 * GRP_NumCatalogPurchases3
-          +    -0.66380394478337 * GRP_NumCatalogPurchases4
-          +    -0.76749528874396 * GRP_NumDistPurchases2
-          +     1.83370965910825 * GRP_NumDistPurchases3
-          +    -0.73709156569506 * GRP_NumDistPurchases4
-          +     0.09215124428658 * GRP_NumWebPurchases2
-          +      1.0403096068891 * GRP_NumWebPurchases3
-          +     0.59317560741224 * GRP_NumWebPurchases4
-          +     1.75844403152209 * GRP_RFMstat2  +     -0.8733964014922 * 
-        GRP_RFMstat3  +    -0.76258024821499 * GRP_RFMstat4
-          +    -1.62335267331435 * GRP_RMntFrq2  +     0.16774877520829 * 
-        GRP_RMntFrq3  +    -0.59672894733807 * GRP_RMntFrq4
-          +     -0.1207352636629 * GRP_Recency2  +    -3.91419195768202 * 
-        GRP_Recency3  +    -1.81688897411428 * GRP_Recency4 ;
-   H1x2_1  =     0.53421261957097 + H1x2_1 ;
-   H1x2_2  =     0.61690490910033 + H1x2_2 ;
-   H1x2_3  =    -1.82311183459857 + H1x2_3 ;
-   H1x2_4  =    -0.21816223161936 + H1x2_4 ;
-   H1x2_5  =     -0.4592254459549 + H1x2_5 ;
-   DROP _EXP_BAR;
-   _EXP_BAR=50;
-   H1x2_1  = 1.0 / (1.0 + EXP(MIN( - H1x2_1 , _EXP_BAR)));
-   H1x2_2  = 1.0 / (1.0 + EXP(MIN( - H1x2_2 , _EXP_BAR)));
-   H1x2_3  = 1.0 / (1.0 + EXP(MIN( - H1x2_3 , _EXP_BAR)));
-   H1x2_4  = 1.0 / (1.0 + EXP(MIN( - H1x2_4 , _EXP_BAR)));
-   H1x2_5  = 1.0 / (1.0 + EXP(MIN( - H1x2_5 , _EXP_BAR)));
-END;
-ELSE DO;
-   H1x2_1  = .;
-   H1x2_2  = .;
-   H1x2_3  = .;
-   H1x2_4  = .;
-   H1x2_5  = .;
-END;
-*** *************************;
-*** Writing the Node H2x1_ ;
-*** *************************;
-IF _DM_BAD EQ 0 THEN DO;
-   H2x1_1  =    -0.10131311732967 * H1x1_1  +     2.09604760546585 * H1x1_2
-          +     0.75964449684316 * H1x1_3  +    -3.05899403391852 * H1x1_4
-          +    -2.64491525760726 * H1x1_5 ;
-   H2x1_2  =     2.09816176126174 * H1x1_1  +     -2.7170504295107 * H1x1_2
-          +    -4.28573382707654 * H1x1_3  +     -0.4124455577826 * H1x1_4
-          +    -1.74219234169061 * H1x1_5 ;
-   H2x1_3  =     -0.0908396989213 * H1x1_1  +    -2.13315935484498 * H1x1_2
-          +      -0.041102734605 * H1x1_3  +     0.44906302354183 * H1x1_4
-          +     2.22045400368613 * H1x1_5 ;
-   H2x1_4  =    -3.59138952025597 * H1x1_1  +     1.29340469653348 * H1x1_2
-          +       1.689672422487 * H1x1_3  +    -2.31797692991787 * H1x1_4
-          +    -2.53540958111863 * H1x1_5 ;
-   H2x1_5  =    -1.20648019467275 * H1x1_1  +      1.9669218225267 * H1x1_2
-          +     2.04494536709697 * H1x1_3  +    -2.33648894116384 * H1x1_4
-          +    -1.60853492956388 * H1x1_5 ;
-   H2x1_1  = H2x1_1  +    -1.45345171601353 * H1x2_1
-          +    -0.03179259597665 * H1x2_2  +     -2.9887894366399 * H1x2_3
-          +     0.68029332905711 * H1x2_4  +     0.76926185571867 * H1x2_5 ;
-   H2x1_2  = H2x1_2  +    -1.21280301577117 * H1x2_1
-          +      2.9525914680029 * H1x2_2  +    -0.55393861346072 * H1x2_3
-          +     1.77793175958897 * H1x2_4  +     2.51042321881699 * H1x2_5 ;
-   H2x1_3  = H2x1_3  +     1.57047941405239 * H1x2_1
-          +    -1.31134127121564 * H1x2_2  +      2.1322025881706 * H1x2_3
-          +    -0.61230583564273 * H1x2_4  +     0.14627232119209 * H1x2_5 ;
-   H2x1_4  = H2x1_4  +    -1.29890984989779 * H1x2_1
-          +    -1.37863865683621 * H1x2_2  +    -0.15093392936569 * H1x2_3
-          +     2.15628991822961 * H1x2_4  +    -0.04564203403522 * H1x2_5 ;
-   H2x1_5  = H2x1_5  +    -1.82286870874677 * H1x2_1
-          +    -1.06116903038863 * H1x2_2  +    -1.77472301413445 * H1x2_3
-          +     0.17320934910404 * H1x2_4  +    -0.96172965375973 * H1x2_5 ;
-   H2x1_1  =     0.61260716175728 + H2x1_1 ;
-   H2x1_2  =    -1.78716565467594 + H2x1_2 ;
-   H2x1_3  =    -0.88082814085488 + H2x1_3 ;
-   H2x1_4  =     0.33869525080862 + H2x1_4 ;
-   H2x1_5  =      2.0506883431914 + H2x1_5 ;
-   DROP _EXP_BAR;
-   _EXP_BAR=50;
-   H2x1_1  = 1.0 / (1.0 + EXP(MIN( - H2x1_1 , _EXP_BAR)));
-   H2x1_2  = 1.0 / (1.0 + EXP(MIN( - H2x1_2 , _EXP_BAR)));
-   H2x1_3  = 1.0 / (1.0 + EXP(MIN( - H2x1_3 , _EXP_BAR)));
-   H2x1_4  = 1.0 / (1.0 + EXP(MIN( - H2x1_4 , _EXP_BAR)));
-   H2x1_5  = 1.0 / (1.0 + EXP(MIN( - H2x1_5 , _EXP_BAR)));
-END;
-ELSE DO;
-   H2x1_1  = .;
-   H2x1_2  = .;
-   H2x1_3  = .;
-   H2x1_4  = .;
-   H2x1_5  = .;
-END;
-*** *************************;
 *** Writing the Node DepVar ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =     5.44508928953974 * H2x1_1  +    -7.80342156600058 * H2x1_2
-          +    -4.34349012782915 * H2x1_3  +     6.80870509597821 * H2x1_4
-          +     5.61199728345116 * H2x1_5 ;
-   P_DepVar1  =    -3.84280322129048 + P_DepVar1 ;
+   P_DepVar1  =     0.13041505791867 * S_Year_Birth ;
+   P_DepVar1  = P_DepVar1  +    -0.81394914954047 * GRP_AcceptedCmp52
+          +    -1.57479065391046 * GRP_AcceptedCmpTotal3
+          +     0.55721665311121 * GRP_Frq2  +     2.03538591612101 * GRP_Frq3
+          +     1.71084973908714 * GRP_Frq4  +     0.93073119070526 * GRP_Frq5
+          +     0.58841250291933 * GRP_Frq6  +    -0.21635109021843 * GRP_Frq7
+          +      0.0213506254167 * GRP_Frq8  +    -1.30191697936168 * GRP_Frq9
+          +    -1.31179820046974 * GRP_Frq10  +    -1.08336033604841 * 
+        GRP_Income2  +    -0.79871206076892 * GRP_Income3
+          +    -0.30315183422585 * GRP_Income4  +     0.82131408307175 * 
+        GRP_Income5  +     0.48741274023405 * GRP_Income6
+          +    -0.50872786670529 * GRP_Income7  +     -0.8768319258445 * 
+        GRP_Income8  +    -0.05749742206435 * GRP_Income9
+          +     0.62080590842343 * GRP_Income10  +     2.52780693320463 * 
+        GRP_Mnt2  +     1.42753900899901 * GRP_Mnt3  +    -0.37486538648468 * 
+        GRP_Mnt4  +    -0.70186702387476 * GRP_Mnt5  +    -1.09419855761909 * 
+        GRP_Mnt6  +    -0.74794036813571 * GRP_Mnt7  +    -0.38086942027823 * 
+        GRP_Mnt8  +    -0.14878906184572 * GRP_Mnt9  +     0.10029389010909 * 
+        GRP_Mnt10  +     0.93741359799158 * GRP_MntFishProducts3
+          +     0.33815869767181 * GRP_MntFishProducts4
+          +     0.18521216857753 * GRP_MntFishProducts5
+          +    -0.17622093488116 * GRP_MntFishProducts6
+          +     0.10360579093666 * GRP_MntFishProducts7
+          +     0.67417645975591 * GRP_MntFishProducts8
+          +     -0.4949659833943 * GRP_MntFishProducts9
+          +    -0.53307075001864 * GRP_MntFishProducts10
+          +    -0.44965793048776 * GRP_MntGoldProds2
+          +     0.70029834666821 * GRP_MntGoldProds3
+          +     0.26643011384249 * GRP_MntGoldProds4
+          +      0.2416000208193 * GRP_MntGoldProds5
+          +    -0.16739557727601 * GRP_MntGoldProds6
+          +    -0.03966136377161 * GRP_MntGoldProds7
+          +    -0.14433335823753 * GRP_MntGoldProds8
+          +    -0.01379766565883 * GRP_MntGoldProds9
+          +    -0.47948207920798 * GRP_MntGoldProds10
+          +     -7.7797809223883 * GRP_MntMeatProducts2
+          +    -4.30448682283205 * GRP_MntMeatProducts3
+          +    -3.09196678122785 * GRP_MntMeatProducts4
+          +    -1.39782945162908 * GRP_MntMeatProducts5
+          +     0.98656746132259 * GRP_MntMeatProducts6
+          +     1.23570299146524 * GRP_MntMeatProducts7
+          +     2.63070630185363 * GRP_MntMeatProducts8
+          +     2.57140709387759 * GRP_MntMeatProducts9
+          +     3.88874807046828 * GRP_MntMeatProducts10
+          +     0.33174074042224 * GRP_MntSweetProducts3
+          +     0.69101850116915 * GRP_MntSweetProducts4
+          +     0.17295436074838 * GRP_MntSweetProducts5
+          +      0.0314089298439 * GRP_MntSweetProducts6
+          +     0.79474403533727 * GRP_MntSweetProducts7
+          +    -0.35030029933384 * GRP_MntSweetProducts8
+          +    -0.22491638984504 * GRP_MntSweetProducts9
+          +    -0.26300371563779 * GRP_MntSweetProducts10
+          +       4.623529533535 * GRP_MntWines2  +     3.38930591268617 * 
+        GRP_MntWines3  +     2.86869681071208 * GRP_MntWines4
+          +     1.99919334553514 * GRP_MntWines5  +     0.51392642718101 * 
+        GRP_MntWines6  +    -0.54295287328303 * GRP_MntWines7
+          +     -1.9404151310852 * GRP_MntWines8  +    -2.81755694441313 * 
+        GRP_MntWines9  +    -3.65585472427726 * GRP_MntWines10
+          +    -6.48636650946379 * GRP_NumCatalogPurchases3
+          +    -2.42520952237724 * GRP_NumCatalogPurchases4
+          +     0.23992315717993 * GRP_NumCatalogPurchases5
+          +     1.78022371269645 * GRP_NumCatalogPurchases6
+          +     2.51919850869031 * GRP_NumCatalogPurchases7
+          +    -0.29160915509933 * GRP_NumDistPurchases2
+          +    -1.59386292237547 * GRP_NumDistPurchases3
+          +    -0.58149143918747 * GRP_NumDistPurchases4
+          +    -0.15227686380495 * GRP_NumDistPurchases5
+          +    -0.39776772752273 * GRP_NumDistPurchases6
+          +    -0.25189925687254 * GRP_NumDistPurchases7
+          +     -0.8006222944202 * GRP_NumDistPurchases8
+          +      1.1137088740435 * GRP_NumDistPurchases9
+          +     1.23069956311587 * GRP_NumDistPurchases10
+          +     0.00077574452293 * GRP_NumWebPurchases2
+          +     0.24159496564294 * GRP_NumWebPurchases3
+          +     0.30982055062128 * GRP_NumWebPurchases4
+          +     0.91413433678014 * GRP_NumWebPurchases5
+          +     0.47430505202684 * GRP_NumWebPurchases6
+          +     0.05910332727627 * GRP_NumWebPurchases7
+          +    -0.73591735479205 * GRP_NumWebPurchases8
+          +     -4.1347431929822 * GRP_NumWebVisitsMonth2
+          +    -2.56208193086546 * GRP_NumWebVisitsMonth3
+          +    -1.81937126717482 * GRP_NumWebVisitsMonth4
+          +    -0.77444924696859 * GRP_NumWebVisitsMonth5
+          +     0.82562856901811 * GRP_NumWebVisitsMonth6
+          +     1.04369947846006 * GRP_NumWebVisitsMonth7
+          +     2.55675009308953 * GRP_NumWebVisitsMonth8
+          +     0.20809605612831 * GRP_RFMstat2  +    -1.61430160476517 * 
+        GRP_RFMstat3  +    -0.52301122119481 * GRP_RFMstat4
+          +    -0.55945361088087 * GRP_RFMstat5  +    -0.14424212281577 * 
+        GRP_RFMstat6  +     1.05234320810026 * GRP_RFMstat7
+          +    -0.05407410464352 * GRP_RFMstat8  +    -0.01646632074069 * 
+        GRP_RFMstat9  +     0.70828472822109 * GRP_RFMstat10
+          +      1.8726948284706 * GRP_RMntFrq2  +     1.05367221065359 * 
+        GRP_RMntFrq3  +     1.16252388400818 * GRP_RMntFrq4
+          +    -0.68337506267394 * GRP_RMntFrq5  +    -0.30999632256804 * 
+        GRP_RMntFrq6  +      -1.800352250825 * GRP_RMntFrq7
+          +    -1.53582014310476 * GRP_RMntFrq8  +    -0.07192943405375 * 
+        GRP_RMntFrq9  +    -0.60583604685254 * GRP_RMntFrq10
+          +     3.84355692804923 * GRP_Recency2  +     2.89076929480023 * 
+        GRP_Recency3  +     2.87026210399223 * GRP_Recency4
+          +     1.49685595027077 * GRP_Recency5  +    -0.07603609831014 * 
+        GRP_Recency6  +    -0.44761807904964 * GRP_Recency7
+          +    -1.48577941891686 * GRP_Recency8  +    -1.45982970045671 * 
+        GRP_Recency9  +     -3.5176122167203 * GRP_Recency10 ;
+   P_DepVar1  =    -3.73504752117057 + P_DepVar1 ;
    P_DepVar0  = 0; 
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.; 

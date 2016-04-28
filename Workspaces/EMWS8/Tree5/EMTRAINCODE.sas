@@ -36,10 +36,9 @@ quit;
 * Tree5: Tree Variables Macro ;
 *------------------------------------------------------------* ;
 %macro EM_TREEVARS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   Education Income Kidhome Marital_Status MntFishProducts MntFruits MntGoldProds
-   MntMeatProducts MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Marital_Status Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend EM_TREEVARS;
 *------------------------------------------------------------* ;
 * Tree5: Tree Targets Macro ;
@@ -54,16 +53,15 @@ run;
 * Tree5: Interval Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro INTINPUTS;
-    Income Kidhome MntFishProducts MntFruits MntGoldProds MntMeatProducts
-   MntSweetProducts MntWines NumCatalogPurchases NumDealsPurchases
-   NumStorePurchases NumWebPurchases NumWebVisitsMonth Recency Teenhome
+    AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts
+   NumCatalogPurchases NumDealsPurchases NumWebVisitsMonth RFMstat Recency
+   Teenhome Year_Birth
 %mend INTINPUTS;
 *------------------------------------------------------------* ;
 * Tree5: Binary and Nominal Inputs Macro ;
 *------------------------------------------------------------* ;
 %macro NOMINPUTS;
-    AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain
-   Education Marital_Status
+    Marital_Status
 %mend NOMINPUTS;
 *------------------------------------------------------------* ;
 * Tree5: Ordinal Inputs Macro ;

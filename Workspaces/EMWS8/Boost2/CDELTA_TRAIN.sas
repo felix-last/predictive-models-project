@@ -2,15 +2,15 @@ if upcase(NAME) = "ACCEPTEDCMPTOTAL" then do;
 ROLE = "INPUT";
 end;
 else 
-if upcase(NAME) = "INCOME" then do;
-ROLE = "INPUT";
-end;
-else 
 if upcase(NAME) = "MNT" then do;
 ROLE = "INPUT";
 end;
 else 
-if upcase(NAME) = "NUMDISTPURCHASES" then do;
+if upcase(NAME) = "MNTMEATPRODUCTS" then do;
+ROLE = "INPUT";
+end;
+else 
+if upcase(NAME) = "NUMCATALOGPURCHASES" then do;
 ROLE = "INPUT";
 end;
 else 
@@ -22,10 +22,10 @@ if upcase(NAME) = "Q_DEPVAR1" then do;
 ROLE = "ASSESS";
 end;
 else 
-if upcase(NAME) = "RFMSTAT" then do;
+if upcase(NAME) = "RECENCY" then do;
 ROLE = "INPUT";
 end;
 else 
-if upcase(NAME) = "RMNTFRQ" then do;
+if upcase(NAME) = "RFMSTAT" then do;
 ROLE = "INPUT";
 end;
