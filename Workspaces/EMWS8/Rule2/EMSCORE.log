@@ -1,0 +1,2813 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.23 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Score Log
+Date:                28. April 2016
+Time:                09.23 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O2WMLDPV 
+"C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O2WMLDPV new;
+MPRINT(EM_DIAGRAM):   run;
+1246184    filename emflow
+1246184  ! "C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow 
+"C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rule2: Scoring DATA data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246185    *------------------------------------------------------------*;
+1246186    * Rule2: Scoring DATA data;
+1246187    *------------------------------------------------------------*;
+1246188    data EMWS8.Rule2_TRAIN
+1246189    / view=EMWS8.Rule2_TRAIN
+1246190    ;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_TRAIN / view=EMWS8.Rule2_TRAIN ;
+1246191    set EMWS8.PRINCOMP_TRAIN
+1246192    ;
+MPRINT(EM_DIAGRAM):   set EMWS8.PRINCOMP_TRAIN ;
+1246193    %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas.
+1246194   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246195   +* Rule Induction Scoring Code;
+MPRINT(EM_DIAGRAM):   * Rule Induction Scoring Code;
+1246196   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246197   +length _bin $12 I__bin $12 I_DepVar $32;
+MPRINT(EM_DIAGRAM):   length _bin $12 I__bin $12 I_DepVar $32;
+1246198   +label I_DepVar = 'Into: DepVar';
+MPRINT(EM_DIAGRAM):   label I_DepVar = 'Into: DepVar';
+1246199   +label F_DepVar = 'Into: DepVar';
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'Into: DepVar';
+1246200   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246201   +drop I__bin;
+MPRINT(EM_DIAGRAM):   drop I__bin;
+1246202   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246203   +F_DepVar=putn(DepVar, 'best.');
+MPRINT(EM_DIAGRAM):   F_DepVar=putn(DepVar, 'best.');
+1246204   +%DMNORMIP(F_DepVar);
+MPRINT(DMNORMIP):   call dmnorm(F_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246205   +I_DepVar = '';
+MPRINT(EM_DIAGRAM):   I_DepVar = '';
+1246206   +I__bin= '0';
+MPRINT(EM_DIAGRAM):   I__bin= '0';
+1246207   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246208   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246209   +* Null Model;
+MPRINT(EM_DIAGRAM):   * Null Model;
+1246210   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246211   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246212   +*Binary model for DepVar = 0;
+MPRINT(EM_DIAGRAM):   *Binary model for DepVar = 0;
+1246213   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246214   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246215   +*** begin scoring code for regression;
+MPRINT(EM_DIAGRAM):   *** begin scoring code for regression;
+1246216   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246217   +
+1246218   +length _WARN_ $4;
+MPRINT(EM_DIAGRAM):   length _WARN_ $4;
+1246219   +label _WARN_ = 'Warnings' ;
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings' ;
+1246220   +
+1246221   +length I__bin $ 12;
+MPRINT(EM_DIAGRAM):   length I__bin $ 12;
+1246222   +label I__bin = 'Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label I__bin = 'Into: _bin' ;
+1246223   +*** Target Values;
+MPRINT(EM_DIAGRAM):   *** Target Values;
+1246224   +array RULE2_1DRF [2] $12 _temporary_ ('1' '0' );
+MPRINT(EM_DIAGRAM):   array RULE2_1DRF [2] $12 _temporary_ ('1' '0' );
+1246225   +label U__bin = 'Unnormalized Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label U__bin = 'Unnormalized Into: _bin' ;
+1246226   +length U__bin $ 12;
+MPRINT(EM_DIAGRAM):   length U__bin $ 12;
+1246227   +*** Unnormalized target values;
+MPRINT(EM_DIAGRAM):   *** Unnormalized target values;
+1246228   +array RULE2_1DRU[2] $ 12 _temporary_ ('1           '  '0           ' );
+MPRINT(EM_DIAGRAM):   array RULE2_1DRU[2] $ 12 _temporary_ ('1           ' '0           ' );
+1246229   +
+1246230   +drop _DM_BAD;
+MPRINT(EM_DIAGRAM):   drop _DM_BAD;
+1246231   +_DM_BAD=0;
+MPRINT(EM_DIAGRAM):   _DM_BAD=0;
+1246232   +
+1246233   +*** Check PC_1 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_1 for missing values ;
+1246234   +if missing( PC_1 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_1 ) then do;
+1246235   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246236   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246237   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246238   +
+1246239   +*** Check PC_10 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_10 for missing values ;
+1246240   +if missing( PC_10 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_10 ) then do;
+1246241   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246242   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246243   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246244   +
+1246245   +*** Check PC_11 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_11 for missing values ;
+1246246   +if missing( PC_11 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_11 ) then do;
+1246247   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246248   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246249   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246250   +
+1246251   +*** Check PC_12 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_12 for missing values ;
+1246252   +if missing( PC_12 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_12 ) then do;
+1246253   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246254   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246255   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246256   +
+1246257   +*** Check PC_13 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_13 for missing values ;
+1246258   +if missing( PC_13 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_13 ) then do;
+1246259   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246260   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246261   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246262   +
+1246263   +*** Check PC_14 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_14 for missing values ;
+1246264   +if missing( PC_14 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_14 ) then do;
+1246265   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246266   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246267   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246268   +
+1246269   +*** Check PC_15 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_15 for missing values ;
+1246270   +if missing( PC_15 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_15 ) then do;
+1246271   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246272   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246273   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246274   +
+1246275   +*** Check PC_16 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_16 for missing values ;
+1246276   +if missing( PC_16 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_16 ) then do;
+1246277   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246278   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246279   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246280   +
+1246281   +*** Check PC_17 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_17 for missing values ;
+1246282   +if missing( PC_17 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_17 ) then do;
+1246283   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246284   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246285   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246286   +
+1246287   +*** Check PC_2 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_2 for missing values ;
+1246288   +if missing( PC_2 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_2 ) then do;
+1246289   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246290   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246291   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246292   +
+1246293   +*** Check PC_3 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_3 for missing values ;
+1246294   +if missing( PC_3 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_3 ) then do;
+1246295   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246296   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246297   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246298   +
+1246299   +*** Check PC_4 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_4 for missing values ;
+1246300   +if missing( PC_4 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_4 ) then do;
+1246301   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246302   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246303   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246304   +
+1246305   +*** Check PC_5 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_5 for missing values ;
+1246306   +if missing( PC_5 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_5 ) then do;
+1246307   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246308   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246309   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246310   +
+1246311   +*** Check PC_6 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_6 for missing values ;
+1246312   +if missing( PC_6 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_6 ) then do;
+1246313   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246314   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246315   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246316   +
+1246317   +*** Check PC_7 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_7 for missing values ;
+1246318   +if missing( PC_7 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_7 ) then do;
+1246319   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246320   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246321   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246322   +
+1246323   +*** Check PC_8 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_8 for missing values ;
+1246324   +if missing( PC_8 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_8 ) then do;
+1246325   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246326   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246327   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246328   +
+1246329   +*** Check PC_9 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_9 for missing values ;
+1246330   +if missing( PC_9 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_9 ) then do;
+1246331   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246332   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246333   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246334   +
+1246335   +*** Check Year_Birth for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check Year_Birth for missing values ;
+1246336   +if missing( Year_Birth ) then do;
+MPRINT(EM_DIAGRAM):   if missing( Year_Birth ) then do;
+1246337   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246338   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246339   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246340   +*** If missing inputs, use averages;
+MPRINT(EM_DIAGRAM):   *** If missing inputs, use averages;
+1246341   +if _DM_BAD > 0 then do;
+MPRINT(EM_DIAGRAM):   if _DM_BAD > 0 then do;
+1246342   +   _P0 = 0.848778433;
+MPRINT(EM_DIAGRAM):   _P0 = 0.848778433;
+1246343   +   _P1 = 0.151221567;
+MPRINT(EM_DIAGRAM):   _P1 = 0.151221567;
+1246344   +   goto RULE2_1DR1;
+MPRINT(EM_DIAGRAM):   goto RULE2_1DR1;
+1246345   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246346   +
+1246347   +*** Compute Linear Predictor;
+MPRINT(EM_DIAGRAM):   *** Compute Linear Predictor;
+1246348   +drop _TEMP;
+MPRINT(EM_DIAGRAM):   drop _TEMP;
+1246349   +drop _LP0;
+MPRINT(EM_DIAGRAM):   drop _LP0;
+1246350   +_LP0 = 0;
+MPRINT(EM_DIAGRAM):   _LP0 = 0;
+1246351   +
+1246352   +***  Effect: PC_1 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_1 ;
+1246353   +_TEMP = PC_1 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_1 ;
+1246354   +_LP0 = _LP0 + (   -0.26954538993436 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.26954538993436 * _TEMP);
+1246355   +
+1246356   +***  Effect: PC_10 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_10 ;
+1246357   +_TEMP = PC_10 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_10 ;
+1246358   +_LP0 = _LP0 + (    0.64298546191549 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.64298546191549 * _TEMP);
+1246359   +
+1246360   +***  Effect: PC_11 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_11 ;
+1246361   +_TEMP = PC_11 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_11 ;
+1246362   +_LP0 = _LP0 + (   -0.20476065541485 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.20476065541485 * _TEMP);
+1246363   +
+1246364   +***  Effect: PC_12 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_12 ;
+1246365   +_TEMP = PC_12 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_12 ;
+1246366   +_LP0 = _LP0 + (   -0.12743171542628 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.12743171542628 * _TEMP);
+1246367   +
+1246368   +***  Effect: PC_13 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_13 ;
+1246369   +_TEMP = PC_13 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_13 ;
+1246370   +_LP0 = _LP0 + (    1.10503864281047 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 1.10503864281047 * _TEMP);
+1246371   +
+1246372   +***  Effect: PC_14 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_14 ;
+1246373   +_TEMP = PC_14 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_14 ;
+1246374   +_LP0 = _LP0 + (   -0.47070066205459 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.47070066205459 * _TEMP);
+1246375   +
+1246376   +***  Effect: PC_15 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_15 ;
+1246377   +_TEMP = PC_15 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_15 ;
+1246378   +_LP0 = _LP0 + (    0.27866462830127 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.27866462830127 * _TEMP);
+1246379   +
+1246380   +***  Effect: PC_16 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_16 ;
+1246381   +_TEMP = PC_16 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_16 ;
+1246382   +_LP0 = _LP0 + (   -0.29228285295779 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.29228285295779 * _TEMP);
+1246383   +
+1246384   +***  Effect: PC_17 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_17 ;
+1246385   +_TEMP = PC_17 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_17 ;
+1246386   +_LP0 = _LP0 + (    0.09077869563516 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.09077869563516 * _TEMP);
+1246387   +
+1246388   +***  Effect: PC_2 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_2 ;
+1246389   +_TEMP = PC_2 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_2 ;
+1246390   +_LP0 = _LP0 + (    0.49216130375915 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.49216130375915 * _TEMP);
+1246391   +
+1246392   +***  Effect: PC_3 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_3 ;
+1246393   +_TEMP = PC_3 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_3 ;
+1246394   +_LP0 = _LP0 + (    0.12545955198911 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.12545955198911 * _TEMP);
+1246395   +
+1246396   +***  Effect: PC_4 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_4 ;
+1246397   +_TEMP = PC_4 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_4 ;
+1246398   +_LP0 = _LP0 + (   -0.15867643727867 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.15867643727867 * _TEMP);
+1246399   +
+1246400   +***  Effect: PC_5 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_5 ;
+1246401   +_TEMP = PC_5 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_5 ;
+1246402   +_LP0 = _LP0 + (    0.33181560721534 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.33181560721534 * _TEMP);
+1246403   +
+1246404   +***  Effect: PC_6 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_6 ;
+1246405   +_TEMP = PC_6 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_6 ;
+1246406   +_LP0 = _LP0 + (   -0.16318363469576 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.16318363469576 * _TEMP);
+1246407   +
+1246408   +***  Effect: PC_7 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_7 ;
+1246409   +_TEMP = PC_7 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_7 ;
+1246410   +_LP0 = _LP0 + (   -0.10858313490894 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.10858313490894 * _TEMP);
+1246411   +
+1246412   +***  Effect: PC_8 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_8 ;
+1246413   +_TEMP = PC_8 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_8 ;
+1246414   +_LP0 = _LP0 + (   -0.32504481403824 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.32504481403824 * _TEMP);
+1246415   +
+1246416   +***  Effect: PC_9 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_9 ;
+1246417   +_TEMP = PC_9 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_9 ;
+1246418   +_LP0 = _LP0 + (    -0.4740117191236 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.4740117191236 * _TEMP);
+1246419   +
+1246420   +***  Effect: Year_Birth ;
+MPRINT(EM_DIAGRAM):   *** Effect: Year_Birth ;
+1246421   +_TEMP = Year_Birth ;
+MPRINT(EM_DIAGRAM):   _TEMP = Year_Birth ;
+1246422   +_LP0 = _LP0 + (   -0.01248469025693 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.01248469025693 * _TEMP);
+1246423   +
+1246424   +*** Naive Posterior Probabilities;
+MPRINT(EM_DIAGRAM):   *** Naive Posterior Probabilities;
+1246425   +drop _MAXP _IY _P0 _P1;
+MPRINT(EM_DIAGRAM):   drop _MAXP _IY _P0 _P1;
+1246426   +_TEMP =     27.3541091117543 + _LP0;
+MPRINT(EM_DIAGRAM):   _TEMP = 27.3541091117543 + _LP0;
+1246427   +if (_TEMP < 0) then do;
+MPRINT(EM_DIAGRAM):   if (_TEMP < 0) then do;
+1246428   +   _TEMP = exp(_TEMP);
+MPRINT(EM_DIAGRAM):   _TEMP = exp(_TEMP);
+1246429   +   _P0 = _TEMP / (1 + _TEMP);
+MPRINT(EM_DIAGRAM):   _P0 = _TEMP / (1 + _TEMP);
+1246430   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246431   +else _P0 = 1 / (1 + exp(-_TEMP));
+MPRINT(EM_DIAGRAM):   else _P0 = 1 / (1 + exp(-_TEMP));
+1246432   +_P1 = 1.0 - _P0;
+MPRINT(EM_DIAGRAM):   _P1 = 1.0 - _P0;
+1246433   +
+1246434   +RULE2_1DR1:
+1246435   +
+1246436   +
+1246437   +*** Posterior Probabilities and Predicted Level;
+MPRINT(EM_DIAGRAM):   RULE2_1DR1: *** Posterior Probabilities and Predicted Level;
+1246438   +label P__bin1 = 'Predicted: _bin=1' ;
+MPRINT(EM_DIAGRAM):   label P__bin1 = 'Predicted: _bin=1' ;
+1246439   +label P__bin0 = 'Predicted: _bin=0' ;
+MPRINT(EM_DIAGRAM):   label P__bin0 = 'Predicted: _bin=0' ;
+1246440   +P__bin1 = _P0;
+MPRINT(EM_DIAGRAM):   P__bin1 = _P0;
+1246441   +_MAXP = _P0;
+MPRINT(EM_DIAGRAM):   _MAXP = _P0;
+1246442   +_IY = 1;
+MPRINT(EM_DIAGRAM):   _IY = 1;
+1246443   +P__bin0 = _P1;
+MPRINT(EM_DIAGRAM):   P__bin0 = _P1;
+1246444   +if (_P1 >  _MAXP + 1E-8) then do;
+MPRINT(EM_DIAGRAM):   if (_P1 > _MAXP + 1E-8) then do;
+1246445   +   _MAXP = _P1;
+MPRINT(EM_DIAGRAM):   _MAXP = _P1;
+1246446   +   _IY = 2;
+MPRINT(EM_DIAGRAM):   _IY = 2;
+1246447   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246448   +I__bin = RULE2_1DRF[_IY];
+MPRINT(EM_DIAGRAM):   I__bin = RULE2_1DRF[_IY];
+1246449   +U__bin = RULE2_1DRU[_IY];
+MPRINT(EM_DIAGRAM):   U__bin = RULE2_1DRU[_IY];
+1246450   +
+1246451   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246452   +***** end scoring code for regression;
+MPRINT(EM_DIAGRAM):   ***** end scoring code for regression;
+1246453   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246454   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246455   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246456   +if I__bin eq '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin eq '1' then do;
+1246457   +I_DepVar = ("0");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("0");
+1246458   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246459   +P_DepVar0=P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar0=P__bin1;
+1246460   +P_DepVar1 = 1-P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 1-P__bin1;
+1246461   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246462   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246463   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246464   +* END Binary Model for DepVar = 0;
+MPRINT(EM_DIAGRAM):   * END Binary Model for DepVar = 0;
+1246465   +;
+MPRINT(EM_DIAGRAM):   ;
+1246466   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246467   +DROP P__bin1 P__bin0;
+MPRINT(EM_DIAGRAM):   DROP P__bin1 P__bin0;
+1246468   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246469   +*Binary model for DepVar = 1;
+MPRINT(EM_DIAGRAM):   *Binary model for DepVar = 1;
+1246470   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246471   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246472   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246473   +if I__bin ne '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin ne '1' then do;
+1246474   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246475   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246476   +*** begin scoring code for regression;
+MPRINT(EM_DIAGRAM):   *** begin scoring code for regression;
+1246477   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246478   +
+1246479   +length _WARN_ $4;
+MPRINT(EM_DIAGRAM):   length _WARN_ $4;
+1246480   +label _WARN_ = 'Warnings' ;
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings' ;
+1246481   +
+1246482   +length I__bin $ 12;
+MPRINT(EM_DIAGRAM):   length I__bin $ 12;
+1246483   +label I__bin = 'Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label I__bin = 'Into: _bin' ;
+1246484   +*** Target Values;
+MPRINT(EM_DIAGRAM):   *** Target Values;
+1246485   +array RULE2_2DRF [2] $12 _temporary_ ('1' '0' );
+MPRINT(EM_DIAGRAM):   array RULE2_2DRF [2] $12 _temporary_ ('1' '0' );
+1246486   +label U__bin = 'Unnormalized Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label U__bin = 'Unnormalized Into: _bin' ;
+1246487   +length U__bin $ 12;
+MPRINT(EM_DIAGRAM):   length U__bin $ 12;
+1246488   +*** Unnormalized target values;
+MPRINT(EM_DIAGRAM):   *** Unnormalized target values;
+1246489   +array RULE2_2DRU[2] $ 12 _temporary_ ('1           '  '0           ' );
+MPRINT(EM_DIAGRAM):   array RULE2_2DRU[2] $ 12 _temporary_ ('1           ' '0           ' );
+1246490   +
+1246491   +drop _DM_BAD;
+MPRINT(EM_DIAGRAM):   drop _DM_BAD;
+1246492   +_DM_BAD=0;
+MPRINT(EM_DIAGRAM):   _DM_BAD=0;
+1246493   +
+1246494   +*** Check PC_1 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_1 for missing values ;
+1246495   +if missing( PC_1 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_1 ) then do;
+1246496   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246497   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246498   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246499   +
+1246500   +*** Check PC_10 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_10 for missing values ;
+1246501   +if missing( PC_10 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_10 ) then do;
+1246502   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246503   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246504   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246505   +
+1246506   +*** Check PC_11 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_11 for missing values ;
+1246507   +if missing( PC_11 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_11 ) then do;
+1246508   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246509   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246510   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246511   +
+1246512   +*** Check PC_12 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_12 for missing values ;
+1246513   +if missing( PC_12 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_12 ) then do;
+1246514   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246515   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246516   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246517   +
+1246518   +*** Check PC_13 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_13 for missing values ;
+1246519   +if missing( PC_13 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_13 ) then do;
+1246520   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246521   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246522   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246523   +
+1246524   +*** Check PC_14 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_14 for missing values ;
+1246525   +if missing( PC_14 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_14 ) then do;
+1246526   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246527   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246528   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246529   +
+1246530   +*** Check PC_15 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_15 for missing values ;
+1246531   +if missing( PC_15 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_15 ) then do;
+1246532   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246533   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246534   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246535   +
+1246536   +*** Check PC_16 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_16 for missing values ;
+1246537   +if missing( PC_16 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_16 ) then do;
+1246538   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246539   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246540   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246541   +
+1246542   +*** Check PC_17 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_17 for missing values ;
+1246543   +if missing( PC_17 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_17 ) then do;
+1246544   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246545   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246546   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246547   +
+1246548   +*** Check PC_2 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_2 for missing values ;
+1246549   +if missing( PC_2 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_2 ) then do;
+1246550   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246551   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246552   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246553   +
+1246554   +*** Check PC_3 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_3 for missing values ;
+1246555   +if missing( PC_3 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_3 ) then do;
+1246556   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246557   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246558   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246559   +
+1246560   +*** Check PC_4 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_4 for missing values ;
+1246561   +if missing( PC_4 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_4 ) then do;
+1246562   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246563   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246564   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246565   +
+1246566   +*** Check PC_5 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_5 for missing values ;
+1246567   +if missing( PC_5 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_5 ) then do;
+1246568   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246569   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246570   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246571   +
+1246572   +*** Check PC_6 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_6 for missing values ;
+1246573   +if missing( PC_6 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_6 ) then do;
+1246574   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246575   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246576   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246577   +
+1246578   +*** Check PC_7 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_7 for missing values ;
+1246579   +if missing( PC_7 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_7 ) then do;
+1246580   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246581   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246582   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246583   +
+1246584   +*** Check PC_8 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_8 for missing values ;
+1246585   +if missing( PC_8 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_8 ) then do;
+1246586   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246587   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246588   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246589   +
+1246590   +*** Check PC_9 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_9 for missing values ;
+1246591   +if missing( PC_9 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_9 ) then do;
+1246592   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246593   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246594   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246595   +
+1246596   +*** Check Year_Birth for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check Year_Birth for missing values ;
+1246597   +if missing( Year_Birth ) then do;
+MPRINT(EM_DIAGRAM):   if missing( Year_Birth ) then do;
+1246598   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246599   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246600   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246601   +*** If missing inputs, use averages;
+MPRINT(EM_DIAGRAM):   *** If missing inputs, use averages;
+1246602   +if _DM_BAD > 0 then do;
+MPRINT(EM_DIAGRAM):   if _DM_BAD > 0 then do;
+1246603   +   _P0 = 0.8734793187;
+MPRINT(EM_DIAGRAM):   _P0 = 0.8734793187;
+1246604   +   _P1 = 0.1265206813;
+MPRINT(EM_DIAGRAM):   _P1 = 0.1265206813;
+1246605   +   goto RULE2_2DR1;
+MPRINT(EM_DIAGRAM):   goto RULE2_2DR1;
+1246606   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246607   +
+1246608   +*** Compute Linear Predictor;
+MPRINT(EM_DIAGRAM):   *** Compute Linear Predictor;
+1246609   +drop _TEMP;
+MPRINT(EM_DIAGRAM):   drop _TEMP;
+1246610   +drop _LP0;
+MPRINT(EM_DIAGRAM):   drop _LP0;
+1246611   +_LP0 = 0;
+MPRINT(EM_DIAGRAM):   _LP0 = 0;
+1246612   +
+1246613   +***  Effect: PC_1 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_1 ;
+1246614   +_TEMP = PC_1 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_1 ;
+1246615   +_LP0 = _LP0 + (   -0.03612390911596 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.03612390911596 * _TEMP);
+1246616   +
+1246617   +***  Effect: PC_10 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_10 ;
+1246618   +_TEMP = PC_10 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_10 ;
+1246619   +_LP0 = _LP0 + (    0.06820597280816 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.06820597280816 * _TEMP);
+1246620   +
+1246621   +***  Effect: PC_11 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_11 ;
+1246622   +_TEMP = PC_11 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_11 ;
+1246623   +_LP0 = _LP0 + (   -0.17043934950998 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.17043934950998 * _TEMP);
+1246624   +
+1246625   +***  Effect: PC_12 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_12 ;
+1246626   +_TEMP = PC_12 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_12 ;
+1246627   +_LP0 = _LP0 + (   -0.08762035785807 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.08762035785807 * _TEMP);
+1246628   +
+1246629   +***  Effect: PC_13 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_13 ;
+1246630   +_TEMP = PC_13 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_13 ;
+1246631   +_LP0 = _LP0 + (   -0.00710586984487 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.00710586984487 * _TEMP);
+1246632   +
+1246633   +***  Effect: PC_14 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_14 ;
+1246634   +_TEMP = PC_14 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_14 ;
+1246635   +_LP0 = _LP0 + (    0.16652236865491 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.16652236865491 * _TEMP);
+1246636   +
+1246637   +***  Effect: PC_15 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_15 ;
+1246638   +_TEMP = PC_15 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_15 ;
+1246639   +_LP0 = _LP0 + (    0.08979058114247 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.08979058114247 * _TEMP);
+1246640   +
+1246641   +***  Effect: PC_16 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_16 ;
+1246642   +_TEMP = PC_16 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_16 ;
+1246643   +_LP0 = _LP0 + (      0.220612910808 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.220612910808 * _TEMP);
+1246644   +
+1246645   +***  Effect: PC_17 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_17 ;
+1246646   +_TEMP = PC_17 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_17 ;
+1246647   +_LP0 = _LP0 + (     0.3532578688198 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.3532578688198 * _TEMP);
+1246648   +
+1246649   +***  Effect: PC_2 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_2 ;
+1246650   +_TEMP = PC_2 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_2 ;
+1246651   +_LP0 = _LP0 + (    0.01707898306859 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01707898306859 * _TEMP);
+1246652   +
+1246653   +***  Effect: PC_3 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_3 ;
+1246654   +_TEMP = PC_3 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_3 ;
+1246655   +_LP0 = _LP0 + (   -0.04098600315279 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.04098600315279 * _TEMP);
+1246656   +
+1246657   +***  Effect: PC_4 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_4 ;
+1246658   +_TEMP = PC_4 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_4 ;
+1246659   +_LP0 = _LP0 + (   -0.12424996467647 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.12424996467647 * _TEMP);
+1246660   +
+1246661   +***  Effect: PC_5 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_5 ;
+1246662   +_TEMP = PC_5 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_5 ;
+1246663   +_LP0 = _LP0 + (    0.14871522071704 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.14871522071704 * _TEMP);
+1246664   +
+1246665   +***  Effect: PC_6 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_6 ;
+1246666   +_TEMP = PC_6 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_6 ;
+1246667   +_LP0 = _LP0 + (    0.01740995003177 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01740995003177 * _TEMP);
+1246668   +
+1246669   +***  Effect: PC_7 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_7 ;
+1246670   +_TEMP = PC_7 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_7 ;
+1246671   +_LP0 = _LP0 + (   -0.11689871002672 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.11689871002672 * _TEMP);
+1246672   +
+1246673   +***  Effect: PC_8 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_8 ;
+1246674   +_TEMP = PC_8 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_8 ;
+1246675   +_LP0 = _LP0 + (   -0.07038379844183 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.07038379844183 * _TEMP);
+1246676   +
+1246677   +***  Effect: PC_9 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_9 ;
+1246678   +_TEMP = PC_9 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_9 ;
+1246679   +_LP0 = _LP0 + (   -0.15243029909114 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.15243029909114 * _TEMP);
+1246680   +
+1246681   +***  Effect: Year_Birth ;
+MPRINT(EM_DIAGRAM):   *** Effect: Year_Birth ;
+1246682   +_TEMP = Year_Birth ;
+MPRINT(EM_DIAGRAM):   _TEMP = Year_Birth ;
+1246683   +_LP0 = _LP0 + (    0.01263443774752 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01263443774752 * _TEMP);
+1246684   +
+1246685   +*** Naive Posterior Probabilities;
+MPRINT(EM_DIAGRAM):   *** Naive Posterior Probabilities;
+1246686   +drop _MAXP _IY _P0 _P1;
+MPRINT(EM_DIAGRAM):   drop _MAXP _IY _P0 _P1;
+1246687   +_TEMP =     -22.431397048942 + _LP0;
+MPRINT(EM_DIAGRAM):   _TEMP = -22.431397048942 + _LP0;
+1246688   +if (_TEMP < 0) then do;
+MPRINT(EM_DIAGRAM):   if (_TEMP < 0) then do;
+1246689   +   _TEMP = exp(_TEMP);
+MPRINT(EM_DIAGRAM):   _TEMP = exp(_TEMP);
+1246690   +   _P0 = _TEMP / (1 + _TEMP);
+MPRINT(EM_DIAGRAM):   _P0 = _TEMP / (1 + _TEMP);
+1246691   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246692   +else _P0 = 1 / (1 + exp(-_TEMP));
+MPRINT(EM_DIAGRAM):   else _P0 = 1 / (1 + exp(-_TEMP));
+1246693   +_P1 = 1.0 - _P0;
+MPRINT(EM_DIAGRAM):   _P1 = 1.0 - _P0;
+1246694   +
+1246695   +RULE2_2DR1:
+1246696   +
+1246697   +
+1246698   +*** Posterior Probabilities and Predicted Level;
+MPRINT(EM_DIAGRAM):   RULE2_2DR1: *** Posterior Probabilities and Predicted Level;
+1246699   +label P__bin1 = 'Predicted: _bin=1' ;
+MPRINT(EM_DIAGRAM):   label P__bin1 = 'Predicted: _bin=1' ;
+1246700   +label P__bin0 = 'Predicted: _bin=0' ;
+MPRINT(EM_DIAGRAM):   label P__bin0 = 'Predicted: _bin=0' ;
+1246701   +P__bin1 = _P0;
+MPRINT(EM_DIAGRAM):   P__bin1 = _P0;
+1246702   +_MAXP = _P0;
+MPRINT(EM_DIAGRAM):   _MAXP = _P0;
+1246703   +_IY = 1;
+MPRINT(EM_DIAGRAM):   _IY = 1;
+1246704   +P__bin0 = _P1;
+MPRINT(EM_DIAGRAM):   P__bin0 = _P1;
+1246705   +if (_P1 >  _MAXP + 1E-8) then do;
+MPRINT(EM_DIAGRAM):   if (_P1 > _MAXP + 1E-8) then do;
+1246706   +   _MAXP = _P1;
+MPRINT(EM_DIAGRAM):   _MAXP = _P1;
+1246707   +   _IY = 2;
+MPRINT(EM_DIAGRAM):   _IY = 2;
+1246708   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246709   +I__bin = RULE2_2DRF[_IY];
+MPRINT(EM_DIAGRAM):   I__bin = RULE2_2DRF[_IY];
+1246710   +U__bin = RULE2_2DRU[_IY];
+MPRINT(EM_DIAGRAM):   U__bin = RULE2_2DRU[_IY];
+1246711   +
+1246712   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246713   +***** end scoring code for regression;
+MPRINT(EM_DIAGRAM):   ***** end scoring code for regression;
+1246714   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246715   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246716   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246717   +if I__bin eq '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin eq '1' then do;
+1246718   +I_DepVar = ("1");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("1");
+1246719   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246720   +P_DepVar1=P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar1=P__bin1;
+1246721   +P_DepVar0 = 1-P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 1-P__bin1;
+1246722   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246723   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246724   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246725   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246726   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246727   +DROP P__bin1 P__bin0;
+MPRINT(EM_DIAGRAM):   DROP P__bin1 P__bin0;
+1246728   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246729   +* Cleanup Model for DepVar;
+MPRINT(EM_DIAGRAM):   * Cleanup Model for DepVar;
+1246730   +* Null Model based on training frequencies;
+MPRINT(EM_DIAGRAM):   * Null Model based on training frequencies;
+1246731   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246732   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246733   +if I__bin ne '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin ne '1' then do;
+1246734   +I_DepVar = ("1");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("1");
+1246735   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246736   +P_DepVar1 = 0.15122156697556;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15122156697556;
+1246737   +P_DepVar0 = 0.84877843302443;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84877843302443;
+1246738   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246739   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246740   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246741   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246742   +drop U__bin _bin;
+MPRINT(EM_DIAGRAM):   drop U__bin _bin;
+1246743   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246744   +_FORMAT = PUT(DepVar, BEST.);
+MPRINT(EM_DIAGRAM):   _FORMAT = PUT(DepVar, BEST.);
+1246745   +%DMNORMCP(_FORMAT, F_DepVar);
+MPRINT(DMNORMCP):   F_DepVar=dmnorm(_FORMAT,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246746   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246747   +*Computing Residual Vars: DepVar;
+MPRINT(EM_DIAGRAM):   *Computing Residual Vars: DepVar;
+1246748   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246749   +Label R_DepVar1='Residual: DepVar=1';
+MPRINT(EM_DIAGRAM):   Label R_DepVar1= 'Residual: DepVar=1';
+1246750   +Label R_DepVar0='Residual: DepVar=0';
+MPRINT(EM_DIAGRAM):   Label R_DepVar0= 'Residual: DepVar=0';
+1246751   +if
+1246752   + F_DepVar ne '1'
+1246753   +and F_DepVar ne '0'
+1246754   + then do;
+MPRINT(EM_DIAGRAM):   if F_DepVar ne '1' and F_DepVar ne '0' then do;
+1246755   +R_DepVar1=.;
+MPRINT(EM_DIAGRAM):   R_DepVar1=.;
+1246756   +R_DepVar0=.;
+MPRINT(EM_DIAGRAM):   R_DepVar0=.;
+1246757   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246758   +else do;
+MPRINT(EM_DIAGRAM):   else do;
+1246759   +R_DepVar1= - P_DepVar1;
+MPRINT(EM_DIAGRAM):   R_DepVar1= - P_DepVar1;
+1246760   +R_DepVar0= - P_DepVar0;
+MPRINT(EM_DIAGRAM):   R_DepVar0= - P_DepVar0;
+1246761   +select(F_DepVar);
+MPRINT(EM_DIAGRAM):   select(F_DepVar);
+1246762   +when('1')R_DepVar1= R_DepVar1+1;
+MPRINT(EM_DIAGRAM):   when('1')R_DepVar1= R_DepVar1+1;
+1246763   +when('0')R_DepVar0= R_DepVar0+1;
+MPRINT(EM_DIAGRAM):   when('0')R_DepVar0= R_DepVar0+1;
+1246764   +otherwise;
+MPRINT(EM_DIAGRAM):   otherwise;
+1246765   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246766   +end;
+MPRINT(EM_DIAGRAM):   end;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_DIAGRAM):   run;
+1246767    run;
+
+NOTE: DATA STEP view saved on file EMWS8.RULE2_TRAIN.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS8.PRINCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+1246768    quit;
+1246769    filename emflow;
+MPRINT(EM_DIAGRAM):   filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+1246770    filename emflow
+1246770  ! "C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):    filename emflow 
+"C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas";
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rule2: Scoring VALIDATE data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246771    *------------------------------------------------------------*;
+1246772    * Rule2: Scoring VALIDATE data;
+1246773    *------------------------------------------------------------*;
+1246774    data EMWS8.Rule2_VALIDATE
+1246775    / view=EMWS8.Rule2_VALIDATE
+1246776    ;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_VALIDATE / view=EMWS8.Rule2_VALIDATE ;
+1246777    set EMWS8.PRINCOMP_VALIDATE
+1246778    ;
+MPRINT(EM_DIAGRAM):   set EMWS8.PRINCOMP_VALIDATE ;
+1246779    %inc emflow;
+NOTE: %INCLUDE (level 1) file EMFLOW is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\Rule2\EMFLOWSCORE.sas.
+1246780   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246781   +* Rule Induction Scoring Code;
+MPRINT(EM_DIAGRAM):   * Rule Induction Scoring Code;
+1246782   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246783   +length _bin $12 I__bin $12 I_DepVar $32;
+MPRINT(EM_DIAGRAM):   length _bin $12 I__bin $12 I_DepVar $32;
+1246784   +label I_DepVar = 'Into: DepVar';
+MPRINT(EM_DIAGRAM):   label I_DepVar = 'Into: DepVar';
+1246785   +label F_DepVar = 'Into: DepVar';
+MPRINT(EM_DIAGRAM):   label F_DepVar = 'Into: DepVar';
+1246786   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246787   +drop I__bin;
+MPRINT(EM_DIAGRAM):   drop I__bin;
+1246788   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246789   +F_DepVar=putn(DepVar, 'best.');
+MPRINT(EM_DIAGRAM):   F_DepVar=putn(DepVar, 'best.');
+1246790   +%DMNORMIP(F_DepVar);
+MPRINT(DMNORMIP):   call dmnorm(F_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1246791   +I_DepVar = '';
+MPRINT(EM_DIAGRAM):   I_DepVar = '';
+1246792   +I__bin= '0';
+MPRINT(EM_DIAGRAM):   I__bin= '0';
+1246793   +*;
+MPRINT(EM_DIAGRAM):   *;
+1246794   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246795   +* Null Model;
+MPRINT(EM_DIAGRAM):   * Null Model;
+1246796   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246797   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246798   +*Binary model for DepVar = 0;
+MPRINT(EM_DIAGRAM):   *Binary model for DepVar = 0;
+1246799   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1246800   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246801   +*** begin scoring code for regression;
+MPRINT(EM_DIAGRAM):   *** begin scoring code for regression;
+1246802   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1246803   +
+1246804   +length _WARN_ $4;
+MPRINT(EM_DIAGRAM):   length _WARN_ $4;
+1246805   +label _WARN_ = 'Warnings' ;
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings' ;
+1246806   +
+1246807   +length I__bin $ 12;
+MPRINT(EM_DIAGRAM):   length I__bin $ 12;
+1246808   +label I__bin = 'Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label I__bin = 'Into: _bin' ;
+1246809   +*** Target Values;
+MPRINT(EM_DIAGRAM):   *** Target Values;
+1246810   +array RULE2_1DRF [2] $12 _temporary_ ('1' '0' );
+MPRINT(EM_DIAGRAM):   array RULE2_1DRF [2] $12 _temporary_ ('1' '0' );
+1246811   +label U__bin = 'Unnormalized Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label U__bin = 'Unnormalized Into: _bin' ;
+1246812   +length U__bin $ 12;
+MPRINT(EM_DIAGRAM):   length U__bin $ 12;
+1246813   +*** Unnormalized target values;
+MPRINT(EM_DIAGRAM):   *** Unnormalized target values;
+1246814   +array RULE2_1DRU[2] $ 12 _temporary_ ('1           '  '0           ' );
+MPRINT(EM_DIAGRAM):   array RULE2_1DRU[2] $ 12 _temporary_ ('1           ' '0           ' );
+1246815   +
+1246816   +drop _DM_BAD;
+MPRINT(EM_DIAGRAM):   drop _DM_BAD;
+1246817   +_DM_BAD=0;
+MPRINT(EM_DIAGRAM):   _DM_BAD=0;
+1246818   +
+1246819   +*** Check PC_1 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_1 for missing values ;
+1246820   +if missing( PC_1 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_1 ) then do;
+1246821   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246822   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246823   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246824   +
+1246825   +*** Check PC_10 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_10 for missing values ;
+1246826   +if missing( PC_10 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_10 ) then do;
+1246827   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246828   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246829   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246830   +
+1246831   +*** Check PC_11 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_11 for missing values ;
+1246832   +if missing( PC_11 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_11 ) then do;
+1246833   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246834   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246835   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246836   +
+1246837   +*** Check PC_12 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_12 for missing values ;
+1246838   +if missing( PC_12 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_12 ) then do;
+1246839   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246840   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246841   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246842   +
+1246843   +*** Check PC_13 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_13 for missing values ;
+1246844   +if missing( PC_13 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_13 ) then do;
+1246845   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246846   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246847   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246848   +
+1246849   +*** Check PC_14 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_14 for missing values ;
+1246850   +if missing( PC_14 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_14 ) then do;
+1246851   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246852   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246853   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246854   +
+1246855   +*** Check PC_15 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_15 for missing values ;
+1246856   +if missing( PC_15 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_15 ) then do;
+1246857   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246858   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246859   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246860   +
+1246861   +*** Check PC_16 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_16 for missing values ;
+1246862   +if missing( PC_16 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_16 ) then do;
+1246863   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246864   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246865   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246866   +
+1246867   +*** Check PC_17 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_17 for missing values ;
+1246868   +if missing( PC_17 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_17 ) then do;
+1246869   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246870   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246871   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246872   +
+1246873   +*** Check PC_2 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_2 for missing values ;
+1246874   +if missing( PC_2 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_2 ) then do;
+1246875   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246876   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246877   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246878   +
+1246879   +*** Check PC_3 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_3 for missing values ;
+1246880   +if missing( PC_3 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_3 ) then do;
+1246881   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246882   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246883   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246884   +
+1246885   +*** Check PC_4 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_4 for missing values ;
+1246886   +if missing( PC_4 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_4 ) then do;
+1246887   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246888   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246889   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246890   +
+1246891   +*** Check PC_5 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_5 for missing values ;
+1246892   +if missing( PC_5 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_5 ) then do;
+1246893   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246894   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246895   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246896   +
+1246897   +*** Check PC_6 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_6 for missing values ;
+1246898   +if missing( PC_6 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_6 ) then do;
+1246899   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246900   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246901   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246902   +
+1246903   +*** Check PC_7 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_7 for missing values ;
+1246904   +if missing( PC_7 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_7 ) then do;
+1246905   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246906   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246907   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246908   +
+1246909   +*** Check PC_8 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_8 for missing values ;
+1246910   +if missing( PC_8 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_8 ) then do;
+1246911   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246912   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246913   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246914   +
+1246915   +*** Check PC_9 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_9 for missing values ;
+1246916   +if missing( PC_9 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_9 ) then do;
+1246917   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246918   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246919   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246920   +
+1246921   +*** Check Year_Birth for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check Year_Birth for missing values ;
+1246922   +if missing( Year_Birth ) then do;
+MPRINT(EM_DIAGRAM):   if missing( Year_Birth ) then do;
+1246923   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1246924   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1246925   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246926   +*** If missing inputs, use averages;
+MPRINT(EM_DIAGRAM):   *** If missing inputs, use averages;
+1246927   +if _DM_BAD > 0 then do;
+MPRINT(EM_DIAGRAM):   if _DM_BAD > 0 then do;
+1246928   +   _P0 = 0.848778433;
+MPRINT(EM_DIAGRAM):   _P0 = 0.848778433;
+1246929   +   _P1 = 0.151221567;
+MPRINT(EM_DIAGRAM):   _P1 = 0.151221567;
+1246930   +   goto RULE2_1DR1;
+MPRINT(EM_DIAGRAM):   goto RULE2_1DR1;
+1246931   +end;
+MPRINT(EM_DIAGRAM):   end;
+1246932   +
+1246933   +*** Compute Linear Predictor;
+MPRINT(EM_DIAGRAM):   *** Compute Linear Predictor;
+1246934   +drop _TEMP;
+MPRINT(EM_DIAGRAM):   drop _TEMP;
+1246935   +drop _LP0;
+MPRINT(EM_DIAGRAM):   drop _LP0;
+1246936   +_LP0 = 0;
+MPRINT(EM_DIAGRAM):   _LP0 = 0;
+1246937   +
+1246938   +***  Effect: PC_1 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_1 ;
+1246939   +_TEMP = PC_1 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_1 ;
+1246940   +_LP0 = _LP0 + (   -0.26954538993436 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.26954538993436 * _TEMP);
+1246941   +
+1246942   +***  Effect: PC_10 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_10 ;
+1246943   +_TEMP = PC_10 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_10 ;
+1246944   +_LP0 = _LP0 + (    0.64298546191549 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.64298546191549 * _TEMP);
+1246945   +
+1246946   +***  Effect: PC_11 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_11 ;
+1246947   +_TEMP = PC_11 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_11 ;
+1246948   +_LP0 = _LP0 + (   -0.20476065541485 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.20476065541485 * _TEMP);
+1246949   +
+1246950   +***  Effect: PC_12 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_12 ;
+1246951   +_TEMP = PC_12 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_12 ;
+1246952   +_LP0 = _LP0 + (   -0.12743171542628 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.12743171542628 * _TEMP);
+1246953   +
+1246954   +***  Effect: PC_13 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_13 ;
+1246955   +_TEMP = PC_13 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_13 ;
+1246956   +_LP0 = _LP0 + (    1.10503864281047 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 1.10503864281047 * _TEMP);
+1246957   +
+1246958   +***  Effect: PC_14 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_14 ;
+1246959   +_TEMP = PC_14 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_14 ;
+1246960   +_LP0 = _LP0 + (   -0.47070066205459 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.47070066205459 * _TEMP);
+1246961   +
+1246962   +***  Effect: PC_15 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_15 ;
+1246963   +_TEMP = PC_15 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_15 ;
+1246964   +_LP0 = _LP0 + (    0.27866462830127 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.27866462830127 * _TEMP);
+1246965   +
+1246966   +***  Effect: PC_16 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_16 ;
+1246967   +_TEMP = PC_16 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_16 ;
+1246968   +_LP0 = _LP0 + (   -0.29228285295779 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.29228285295779 * _TEMP);
+1246969   +
+1246970   +***  Effect: PC_17 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_17 ;
+1246971   +_TEMP = PC_17 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_17 ;
+1246972   +_LP0 = _LP0 + (    0.09077869563516 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.09077869563516 * _TEMP);
+1246973   +
+1246974   +***  Effect: PC_2 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_2 ;
+1246975   +_TEMP = PC_2 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_2 ;
+1246976   +_LP0 = _LP0 + (    0.49216130375915 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.49216130375915 * _TEMP);
+1246977   +
+1246978   +***  Effect: PC_3 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_3 ;
+1246979   +_TEMP = PC_3 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_3 ;
+1246980   +_LP0 = _LP0 + (    0.12545955198911 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.12545955198911 * _TEMP);
+1246981   +
+1246982   +***  Effect: PC_4 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_4 ;
+1246983   +_TEMP = PC_4 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_4 ;
+1246984   +_LP0 = _LP0 + (   -0.15867643727867 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.15867643727867 * _TEMP);
+1246985   +
+1246986   +***  Effect: PC_5 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_5 ;
+1246987   +_TEMP = PC_5 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_5 ;
+1246988   +_LP0 = _LP0 + (    0.33181560721534 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.33181560721534 * _TEMP);
+1246989   +
+1246990   +***  Effect: PC_6 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_6 ;
+1246991   +_TEMP = PC_6 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_6 ;
+1246992   +_LP0 = _LP0 + (   -0.16318363469576 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.16318363469576 * _TEMP);
+1246993   +
+1246994   +***  Effect: PC_7 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_7 ;
+1246995   +_TEMP = PC_7 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_7 ;
+1246996   +_LP0 = _LP0 + (   -0.10858313490894 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.10858313490894 * _TEMP);
+1246997   +
+1246998   +***  Effect: PC_8 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_8 ;
+1246999   +_TEMP = PC_8 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_8 ;
+1247000   +_LP0 = _LP0 + (   -0.32504481403824 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.32504481403824 * _TEMP);
+1247001   +
+1247002   +***  Effect: PC_9 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_9 ;
+1247003   +_TEMP = PC_9 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_9 ;
+1247004   +_LP0 = _LP0 + (    -0.4740117191236 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.4740117191236 * _TEMP);
+1247005   +
+1247006   +***  Effect: Year_Birth ;
+MPRINT(EM_DIAGRAM):   *** Effect: Year_Birth ;
+1247007   +_TEMP = Year_Birth ;
+MPRINT(EM_DIAGRAM):   _TEMP = Year_Birth ;
+1247008   +_LP0 = _LP0 + (   -0.01248469025693 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.01248469025693 * _TEMP);
+1247009   +
+1247010   +*** Naive Posterior Probabilities;
+MPRINT(EM_DIAGRAM):   *** Naive Posterior Probabilities;
+1247011   +drop _MAXP _IY _P0 _P1;
+MPRINT(EM_DIAGRAM):   drop _MAXP _IY _P0 _P1;
+1247012   +_TEMP =     27.3541091117543 + _LP0;
+MPRINT(EM_DIAGRAM):   _TEMP = 27.3541091117543 + _LP0;
+1247013   +if (_TEMP < 0) then do;
+MPRINT(EM_DIAGRAM):   if (_TEMP < 0) then do;
+1247014   +   _TEMP = exp(_TEMP);
+MPRINT(EM_DIAGRAM):   _TEMP = exp(_TEMP);
+1247015   +   _P0 = _TEMP / (1 + _TEMP);
+MPRINT(EM_DIAGRAM):   _P0 = _TEMP / (1 + _TEMP);
+1247016   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247017   +else _P0 = 1 / (1 + exp(-_TEMP));
+MPRINT(EM_DIAGRAM):   else _P0 = 1 / (1 + exp(-_TEMP));
+1247018   +_P1 = 1.0 - _P0;
+MPRINT(EM_DIAGRAM):   _P1 = 1.0 - _P0;
+1247019   +
+1247020   +RULE2_1DR1:
+1247021   +
+1247022   +
+1247023   +*** Posterior Probabilities and Predicted Level;
+MPRINT(EM_DIAGRAM):   RULE2_1DR1: *** Posterior Probabilities and Predicted Level;
+1247024   +label P__bin1 = 'Predicted: _bin=1' ;
+MPRINT(EM_DIAGRAM):   label P__bin1 = 'Predicted: _bin=1' ;
+1247025   +label P__bin0 = 'Predicted: _bin=0' ;
+MPRINT(EM_DIAGRAM):   label P__bin0 = 'Predicted: _bin=0' ;
+1247026   +P__bin1 = _P0;
+MPRINT(EM_DIAGRAM):   P__bin1 = _P0;
+1247027   +_MAXP = _P0;
+MPRINT(EM_DIAGRAM):   _MAXP = _P0;
+1247028   +_IY = 1;
+MPRINT(EM_DIAGRAM):   _IY = 1;
+1247029   +P__bin0 = _P1;
+MPRINT(EM_DIAGRAM):   P__bin0 = _P1;
+1247030   +if (_P1 >  _MAXP + 1E-8) then do;
+MPRINT(EM_DIAGRAM):   if (_P1 > _MAXP + 1E-8) then do;
+1247031   +   _MAXP = _P1;
+MPRINT(EM_DIAGRAM):   _MAXP = _P1;
+1247032   +   _IY = 2;
+MPRINT(EM_DIAGRAM):   _IY = 2;
+1247033   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247034   +I__bin = RULE2_1DRF[_IY];
+MPRINT(EM_DIAGRAM):   I__bin = RULE2_1DRF[_IY];
+1247035   +U__bin = RULE2_1DRU[_IY];
+MPRINT(EM_DIAGRAM):   U__bin = RULE2_1DRU[_IY];
+1247036   +
+1247037   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247038   +***** end scoring code for regression;
+MPRINT(EM_DIAGRAM):   ***** end scoring code for regression;
+1247039   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247040   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247041   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247042   +if I__bin eq '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin eq '1' then do;
+1247043   +I_DepVar = ("0");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("0");
+1247044   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247045   +P_DepVar0=P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar0=P__bin1;
+1247046   +P_DepVar1 = 1-P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 1-P__bin1;
+1247047   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247048   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247049   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247050   +* END Binary Model for DepVar = 0;
+MPRINT(EM_DIAGRAM):   * END Binary Model for DepVar = 0;
+1247051   +;
+MPRINT(EM_DIAGRAM):   ;
+1247052   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247053   +DROP P__bin1 P__bin0;
+MPRINT(EM_DIAGRAM):   DROP P__bin1 P__bin0;
+1247054   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247055   +*Binary model for DepVar = 1;
+MPRINT(EM_DIAGRAM):   *Binary model for DepVar = 1;
+1247056   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247057   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247058   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247059   +if I__bin ne '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin ne '1' then do;
+1247060   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247061   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247062   +*** begin scoring code for regression;
+MPRINT(EM_DIAGRAM):   *** begin scoring code for regression;
+1247063   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247064   +
+1247065   +length _WARN_ $4;
+MPRINT(EM_DIAGRAM):   length _WARN_ $4;
+1247066   +label _WARN_ = 'Warnings' ;
+MPRINT(EM_DIAGRAM):   label _WARN_ = 'Warnings' ;
+1247067   +
+1247068   +length I__bin $ 12;
+MPRINT(EM_DIAGRAM):   length I__bin $ 12;
+1247069   +label I__bin = 'Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label I__bin = 'Into: _bin' ;
+1247070   +*** Target Values;
+MPRINT(EM_DIAGRAM):   *** Target Values;
+1247071   +array RULE2_2DRF [2] $12 _temporary_ ('1' '0' );
+MPRINT(EM_DIAGRAM):   array RULE2_2DRF [2] $12 _temporary_ ('1' '0' );
+1247072   +label U__bin = 'Unnormalized Into: _bin' ;
+MPRINT(EM_DIAGRAM):   label U__bin = 'Unnormalized Into: _bin' ;
+1247073   +length U__bin $ 12;
+MPRINT(EM_DIAGRAM):   length U__bin $ 12;
+1247074   +*** Unnormalized target values;
+MPRINT(EM_DIAGRAM):   *** Unnormalized target values;
+1247075   +array RULE2_2DRU[2] $ 12 _temporary_ ('1           '  '0           ' );
+MPRINT(EM_DIAGRAM):   array RULE2_2DRU[2] $ 12 _temporary_ ('1           ' '0           ' );
+1247076   +
+1247077   +drop _DM_BAD;
+MPRINT(EM_DIAGRAM):   drop _DM_BAD;
+1247078   +_DM_BAD=0;
+MPRINT(EM_DIAGRAM):   _DM_BAD=0;
+1247079   +
+1247080   +*** Check PC_1 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_1 for missing values ;
+1247081   +if missing( PC_1 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_1 ) then do;
+1247082   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247083   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247084   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247085   +
+1247086   +*** Check PC_10 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_10 for missing values ;
+1247087   +if missing( PC_10 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_10 ) then do;
+1247088   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247089   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247090   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247091   +
+1247092   +*** Check PC_11 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_11 for missing values ;
+1247093   +if missing( PC_11 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_11 ) then do;
+1247094   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247095   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247096   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247097   +
+1247098   +*** Check PC_12 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_12 for missing values ;
+1247099   +if missing( PC_12 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_12 ) then do;
+1247100   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247101   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247102   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247103   +
+1247104   +*** Check PC_13 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_13 for missing values ;
+1247105   +if missing( PC_13 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_13 ) then do;
+1247106   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247107   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247108   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247109   +
+1247110   +*** Check PC_14 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_14 for missing values ;
+1247111   +if missing( PC_14 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_14 ) then do;
+1247112   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247113   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247114   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247115   +
+1247116   +*** Check PC_15 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_15 for missing values ;
+1247117   +if missing( PC_15 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_15 ) then do;
+1247118   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247119   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247120   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247121   +
+1247122   +*** Check PC_16 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_16 for missing values ;
+1247123   +if missing( PC_16 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_16 ) then do;
+1247124   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247125   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247126   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247127   +
+1247128   +*** Check PC_17 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_17 for missing values ;
+1247129   +if missing( PC_17 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_17 ) then do;
+1247130   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247131   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247132   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247133   +
+1247134   +*** Check PC_2 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_2 for missing values ;
+1247135   +if missing( PC_2 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_2 ) then do;
+1247136   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247137   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247138   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247139   +
+1247140   +*** Check PC_3 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_3 for missing values ;
+1247141   +if missing( PC_3 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_3 ) then do;
+1247142   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247143   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247144   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247145   +
+1247146   +*** Check PC_4 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_4 for missing values ;
+1247147   +if missing( PC_4 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_4 ) then do;
+1247148   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247149   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247150   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247151   +
+1247152   +*** Check PC_5 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_5 for missing values ;
+1247153   +if missing( PC_5 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_5 ) then do;
+1247154   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247155   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247156   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247157   +
+1247158   +*** Check PC_6 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_6 for missing values ;
+1247159   +if missing( PC_6 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_6 ) then do;
+1247160   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247161   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247162   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247163   +
+1247164   +*** Check PC_7 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_7 for missing values ;
+1247165   +if missing( PC_7 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_7 ) then do;
+1247166   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247167   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247168   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247169   +
+1247170   +*** Check PC_8 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_8 for missing values ;
+1247171   +if missing( PC_8 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_8 ) then do;
+1247172   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247173   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247174   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247175   +
+1247176   +*** Check PC_9 for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check PC_9 for missing values ;
+1247177   +if missing( PC_9 ) then do;
+MPRINT(EM_DIAGRAM):   if missing( PC_9 ) then do;
+1247178   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247179   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247180   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247181   +
+1247182   +*** Check Year_Birth for missing values ;
+MPRINT(EM_DIAGRAM):   *** Check Year_Birth for missing values ;
+1247183   +if missing( Year_Birth ) then do;
+MPRINT(EM_DIAGRAM):   if missing( Year_Birth ) then do;
+1247184   +   substr(_warn_,1,1) = 'M';
+MPRINT(EM_DIAGRAM):   substr(_warn_,1,1) = 'M';
+1247185   +   _DM_BAD = 1;
+MPRINT(EM_DIAGRAM):   _DM_BAD = 1;
+1247186   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247187   +*** If missing inputs, use averages;
+MPRINT(EM_DIAGRAM):   *** If missing inputs, use averages;
+1247188   +if _DM_BAD > 0 then do;
+MPRINT(EM_DIAGRAM):   if _DM_BAD > 0 then do;
+1247189   +   _P0 = 0.8734793187;
+MPRINT(EM_DIAGRAM):   _P0 = 0.8734793187;
+1247190   +   _P1 = 0.1265206813;
+MPRINT(EM_DIAGRAM):   _P1 = 0.1265206813;
+1247191   +   goto RULE2_2DR1;
+MPRINT(EM_DIAGRAM):   goto RULE2_2DR1;
+1247192   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247193   +
+1247194   +*** Compute Linear Predictor;
+MPRINT(EM_DIAGRAM):   *** Compute Linear Predictor;
+1247195   +drop _TEMP;
+MPRINT(EM_DIAGRAM):   drop _TEMP;
+1247196   +drop _LP0;
+MPRINT(EM_DIAGRAM):   drop _LP0;
+1247197   +_LP0 = 0;
+MPRINT(EM_DIAGRAM):   _LP0 = 0;
+1247198   +
+1247199   +***  Effect: PC_1 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_1 ;
+1247200   +_TEMP = PC_1 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_1 ;
+1247201   +_LP0 = _LP0 + (   -0.03612390911596 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.03612390911596 * _TEMP);
+1247202   +
+1247203   +***  Effect: PC_10 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_10 ;
+1247204   +_TEMP = PC_10 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_10 ;
+1247205   +_LP0 = _LP0 + (    0.06820597280816 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.06820597280816 * _TEMP);
+1247206   +
+1247207   +***  Effect: PC_11 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_11 ;
+1247208   +_TEMP = PC_11 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_11 ;
+1247209   +_LP0 = _LP0 + (   -0.17043934950998 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.17043934950998 * _TEMP);
+1247210   +
+1247211   +***  Effect: PC_12 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_12 ;
+1247212   +_TEMP = PC_12 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_12 ;
+1247213   +_LP0 = _LP0 + (   -0.08762035785807 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.08762035785807 * _TEMP);
+1247214   +
+1247215   +***  Effect: PC_13 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_13 ;
+1247216   +_TEMP = PC_13 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_13 ;
+1247217   +_LP0 = _LP0 + (   -0.00710586984487 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.00710586984487 * _TEMP);
+1247218   +
+1247219   +***  Effect: PC_14 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_14 ;
+1247220   +_TEMP = PC_14 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_14 ;
+1247221   +_LP0 = _LP0 + (    0.16652236865491 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.16652236865491 * _TEMP);
+1247222   +
+1247223   +***  Effect: PC_15 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_15 ;
+1247224   +_TEMP = PC_15 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_15 ;
+1247225   +_LP0 = _LP0 + (    0.08979058114247 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.08979058114247 * _TEMP);
+1247226   +
+1247227   +***  Effect: PC_16 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_16 ;
+1247228   +_TEMP = PC_16 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_16 ;
+1247229   +_LP0 = _LP0 + (      0.220612910808 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.220612910808 * _TEMP);
+1247230   +
+1247231   +***  Effect: PC_17 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_17 ;
+1247232   +_TEMP = PC_17 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_17 ;
+1247233   +_LP0 = _LP0 + (     0.3532578688198 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.3532578688198 * _TEMP);
+1247234   +
+1247235   +***  Effect: PC_2 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_2 ;
+1247236   +_TEMP = PC_2 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_2 ;
+1247237   +_LP0 = _LP0 + (    0.01707898306859 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01707898306859 * _TEMP);
+1247238   +
+1247239   +***  Effect: PC_3 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_3 ;
+1247240   +_TEMP = PC_3 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_3 ;
+1247241   +_LP0 = _LP0 + (   -0.04098600315279 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.04098600315279 * _TEMP);
+1247242   +
+1247243   +***  Effect: PC_4 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_4 ;
+1247244   +_TEMP = PC_4 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_4 ;
+1247245   +_LP0 = _LP0 + (   -0.12424996467647 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.12424996467647 * _TEMP);
+1247246   +
+1247247   +***  Effect: PC_5 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_5 ;
+1247248   +_TEMP = PC_5 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_5 ;
+1247249   +_LP0 = _LP0 + (    0.14871522071704 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.14871522071704 * _TEMP);
+1247250   +
+1247251   +***  Effect: PC_6 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_6 ;
+1247252   +_TEMP = PC_6 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_6 ;
+1247253   +_LP0 = _LP0 + (    0.01740995003177 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01740995003177 * _TEMP);
+1247254   +
+1247255   +***  Effect: PC_7 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_7 ;
+1247256   +_TEMP = PC_7 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_7 ;
+1247257   +_LP0 = _LP0 + (   -0.11689871002672 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.11689871002672 * _TEMP);
+1247258   +
+1247259   +***  Effect: PC_8 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_8 ;
+1247260   +_TEMP = PC_8 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_8 ;
+1247261   +_LP0 = _LP0 + (   -0.07038379844183 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.07038379844183 * _TEMP);
+1247262   +
+1247263   +***  Effect: PC_9 ;
+MPRINT(EM_DIAGRAM):   *** Effect: PC_9 ;
+1247264   +_TEMP = PC_9 ;
+MPRINT(EM_DIAGRAM):   _TEMP = PC_9 ;
+1247265   +_LP0 = _LP0 + (   -0.15243029909114 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( -0.15243029909114 * _TEMP);
+1247266   +
+1247267   +***  Effect: Year_Birth ;
+MPRINT(EM_DIAGRAM):   *** Effect: Year_Birth ;
+1247268   +_TEMP = Year_Birth ;
+MPRINT(EM_DIAGRAM):   _TEMP = Year_Birth ;
+1247269   +_LP0 = _LP0 + (    0.01263443774752 * _TEMP);
+MPRINT(EM_DIAGRAM):   _LP0 = _LP0 + ( 0.01263443774752 * _TEMP);
+1247270   +
+1247271   +*** Naive Posterior Probabilities;
+MPRINT(EM_DIAGRAM):   *** Naive Posterior Probabilities;
+1247272   +drop _MAXP _IY _P0 _P1;
+MPRINT(EM_DIAGRAM):   drop _MAXP _IY _P0 _P1;
+1247273   +_TEMP =     -22.431397048942 + _LP0;
+MPRINT(EM_DIAGRAM):   _TEMP = -22.431397048942 + _LP0;
+1247274   +if (_TEMP < 0) then do;
+MPRINT(EM_DIAGRAM):   if (_TEMP < 0) then do;
+1247275   +   _TEMP = exp(_TEMP);
+MPRINT(EM_DIAGRAM):   _TEMP = exp(_TEMP);
+1247276   +   _P0 = _TEMP / (1 + _TEMP);
+MPRINT(EM_DIAGRAM):   _P0 = _TEMP / (1 + _TEMP);
+1247277   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247278   +else _P0 = 1 / (1 + exp(-_TEMP));
+MPRINT(EM_DIAGRAM):   else _P0 = 1 / (1 + exp(-_TEMP));
+1247279   +_P1 = 1.0 - _P0;
+MPRINT(EM_DIAGRAM):   _P1 = 1.0 - _P0;
+1247280   +
+1247281   +RULE2_2DR1:
+1247282   +
+1247283   +
+1247284   +*** Posterior Probabilities and Predicted Level;
+MPRINT(EM_DIAGRAM):   RULE2_2DR1: *** Posterior Probabilities and Predicted Level;
+1247285   +label P__bin1 = 'Predicted: _bin=1' ;
+MPRINT(EM_DIAGRAM):   label P__bin1 = 'Predicted: _bin=1' ;
+1247286   +label P__bin0 = 'Predicted: _bin=0' ;
+MPRINT(EM_DIAGRAM):   label P__bin0 = 'Predicted: _bin=0' ;
+1247287   +P__bin1 = _P0;
+MPRINT(EM_DIAGRAM):   P__bin1 = _P0;
+1247288   +_MAXP = _P0;
+MPRINT(EM_DIAGRAM):   _MAXP = _P0;
+1247289   +_IY = 1;
+MPRINT(EM_DIAGRAM):   _IY = 1;
+1247290   +P__bin0 = _P1;
+MPRINT(EM_DIAGRAM):   P__bin0 = _P1;
+1247291   +if (_P1 >  _MAXP + 1E-8) then do;
+MPRINT(EM_DIAGRAM):   if (_P1 > _MAXP + 1E-8) then do;
+1247292   +   _MAXP = _P1;
+MPRINT(EM_DIAGRAM):   _MAXP = _P1;
+1247293   +   _IY = 2;
+MPRINT(EM_DIAGRAM):   _IY = 2;
+1247294   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247295   +I__bin = RULE2_2DRF[_IY];
+MPRINT(EM_DIAGRAM):   I__bin = RULE2_2DRF[_IY];
+1247296   +U__bin = RULE2_2DRU[_IY];
+MPRINT(EM_DIAGRAM):   U__bin = RULE2_2DRU[_IY];
+1247297   +
+1247298   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247299   +***** end scoring code for regression;
+MPRINT(EM_DIAGRAM):   ***** end scoring code for regression;
+1247300   +*************************************;
+MPRINT(EM_DIAGRAM):   *************************************;
+1247301   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247302   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247303   +if I__bin eq '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin eq '1' then do;
+1247304   +I_DepVar = ("1");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("1");
+1247305   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247306   +P_DepVar1=P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar1=P__bin1;
+1247307   +P_DepVar0 = 1-P__bin1;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 1-P__bin1;
+1247308   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247309   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247310   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247311   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247312   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247313   +DROP P__bin1 P__bin0;
+MPRINT(EM_DIAGRAM):   DROP P__bin1 P__bin0;
+1247314   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247315   +* Cleanup Model for DepVar;
+MPRINT(EM_DIAGRAM):   * Cleanup Model for DepVar;
+1247316   +* Null Model based on training frequencies;
+MPRINT(EM_DIAGRAM):   * Null Model based on training frequencies;
+1247317   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247318   +%DMNORMIP(I__bin);
+MPRINT(DMNORMIP):   call dmnorm(I__bin,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMIP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247319   +if I__bin ne '1' then do;
+MPRINT(EM_DIAGRAM):   if I__bin ne '1' then do;
+1247320   +I_DepVar = ("1");
+MPRINT(EM_DIAGRAM):   I_DepVar = ("1");
+1247321   +%DMNORMCP(I_DepVar, I_DepVar);
+MPRINT(DMNORMCP):   I_DepVar=dmnorm(I_DepVar,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247322   +P_DepVar1 = 0.15122156697556;
+MPRINT(EM_DIAGRAM):   P_DepVar1 = 0.15122156697556;
+1247323   +P_DepVar0 = 0.84877843302443;
+MPRINT(EM_DIAGRAM):   P_DepVar0 = 0.84877843302443;
+1247324   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247325   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247326   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247327   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247328   +drop U__bin _bin;
+MPRINT(EM_DIAGRAM):   drop U__bin _bin;
+1247329   +*;
+MPRINT(EM_DIAGRAM):   *;
+1247330   +_FORMAT = PUT(DepVar, BEST.);
+MPRINT(EM_DIAGRAM):   _FORMAT = PUT(DepVar, BEST.);
+1247331   +%DMNORMCP(_FORMAT, F_DepVar);
+MPRINT(DMNORMCP):   F_DepVar=dmnorm(_FORMAT,
+MPRINT(DMNORLEN):  32
+MPRINT(DMNORMCP):  );
+MPRINT(EM_DIAGRAM):  ;
+1247332   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247333   +*Computing Residual Vars: DepVar;
+MPRINT(EM_DIAGRAM):   *Computing Residual Vars: DepVar;
+1247334   +*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1247335   +Label R_DepVar1='Residual: DepVar=1';
+MPRINT(EM_DIAGRAM):   Label R_DepVar1= 'Residual: DepVar=1';
+1247336   +Label R_DepVar0='Residual: DepVar=0';
+MPRINT(EM_DIAGRAM):   Label R_DepVar0= 'Residual: DepVar=0';
+1247337   +if
+1247338   + F_DepVar ne '1'
+1247339   +and F_DepVar ne '0'
+1247340   + then do;
+MPRINT(EM_DIAGRAM):   if F_DepVar ne '1' and F_DepVar ne '0' then do;
+1247341   +R_DepVar1=.;
+MPRINT(EM_DIAGRAM):   R_DepVar1=.;
+1247342   +R_DepVar0=.;
+MPRINT(EM_DIAGRAM):   R_DepVar0=.;
+1247343   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247344   +else do;
+MPRINT(EM_DIAGRAM):   else do;
+1247345   +R_DepVar1= - P_DepVar1;
+MPRINT(EM_DIAGRAM):   R_DepVar1= - P_DepVar1;
+1247346   +R_DepVar0= - P_DepVar0;
+MPRINT(EM_DIAGRAM):   R_DepVar0= - P_DepVar0;
+1247347   +select(F_DepVar);
+MPRINT(EM_DIAGRAM):   select(F_DepVar);
+1247348   +when('1')R_DepVar1= R_DepVar1+1;
+MPRINT(EM_DIAGRAM):   when('1')R_DepVar1= R_DepVar1+1;
+1247349   +when('0')R_DepVar0= R_DepVar0+1;
+MPRINT(EM_DIAGRAM):   when('0')R_DepVar0= R_DepVar0+1;
+1247350   +otherwise;
+MPRINT(EM_DIAGRAM):   otherwise;
+1247351   +end;
+MPRINT(EM_DIAGRAM):   end;
+1247352   +end;
+MPRINT(EM_DIAGRAM):   end;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EM_DIAGRAM):   run;
+1247353    run;
+
+NOTE: DATA STEP view saved on file EMWS8.RULE2_VALIDATE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: View EMWS8.PRINCOMP_VALIDATE.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: DATA statement used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+1247354    quit;
+1247355    filename emflow;
+MPRINT(EM_DIAGRAM):   filename emflow;
+NOTE: Fileref EMFLOW has been deassigned.
+MPRINT(EM_DIAGRAM):   
+MPRINT(CALFITSTATSNOMINAL):   data _tmpTrainFitTable(keep=_TARGET_ _ASE_ _DIV_ _MAX_ _NOBS_ 
+_RASE_ _SSE_ _DISF_ _MISC_ _WRONG_ rename=(_TARGET_=TARGET));
+MPRINT(CALFITSTATSNOMINAL):   set EMWS8.Rule2_TRAIN end=eof;
+MPRINT(CALFITSTATSNOMINAL):   length _TARGET_ $32;
+MPRINT(CALFITSTATSNOMINAL):   length _ASE_ _DIV_ _MAX_ _NOBS_ _RASE_ _SSE_ _DISF_ _MISC_ 
+_WRONG_ 8;
+MPRINT(CALFITSTATSNOMINAL):   label _TARGET_ = "Train: Target Variable" _NOBS_= "Train: Sum of 
+Frequencies" _SSE_= "Train: Sum of Squared Errors" _MAX_= "Train: Maximum Absolute Error" 
+_DIV_ = "Train: Divisor for ASE" _WRONG_= "Train: Number of Wrong Classifications" _DISF_= 
+"Train: Frequency of Classified Cases" _MISC_= "Train: Misclassification Rate" _ASE_ = "Train: 
+Average Squared Error" _RASE_ = "Train: Root Average Squared Error";
+MPRINT(CALFITSTATSNOMINAL):   retain _TARGET_ _WRONG_ _DIV_ _MAX_ _SSE_ _DISF_ _MISC_ _ASE_ 
+_RASE_ ;
+MPRINT(CALFITSTATSNOMINAL):   if R_DepVar1 ne . then do;
+MPRINT(CALFITSTATSNOMINAL):   _SSE_ +(R_DepVar1)*(R_DepVar1);
+MPRINT(CALFITSTATSNOMINAL):   _DIV_ +1;
+MPRINT(CALFITSTATSNOMINAL):   _MAX_ =max(_MAX_ ,abs(R_DepVar1));
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if R_DepVar0 ne . then do;
+MPRINT(CALFITSTATSNOMINAL):   _SSE_ +(R_DepVar0)*(R_DepVar0);
+MPRINT(CALFITSTATSNOMINAL):   _DIV_ +1;
+MPRINT(CALFITSTATSNOMINAL):   _MAX_ =max(_MAX_ ,abs(R_DepVar0));
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if F_DepVar ne "" then do;
+MPRINT(CALFITSTATSNOMINAL):   _DISF_+ 1;
+MPRINT(CALFITSTATSNOMINAL):   _WRONG_+(F_DepVar ne I_DepVar);
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if eof then do;
+MPRINT(CALFITSTATSNOMINAL):   _TARGET_ = "DepVar";
+MPRINT(CALFITSTATSNOMINAL):   _MAX = 0;
+MPRINT(CALFITSTATSNOMINAL):   if _DISF_ ne 0 then do;
+MPRINT(CALFITSTATSNOMINAL):   _MISC_=_WRONG_/_DISF_;
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   _NOBS_ = _DIV_/2;
+MPRINT(CALFITSTATSNOMINAL):   _ASE_=_SSE_/_DIV_;
+MPRINT(CALFITSTATSNOMINAL):   _RASE_=sqrt(_ASE_);
+MPRINT(CALFITSTATSNOMINAL):   output;
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   set _tmpTrainFitTable;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   
+MPRINT(CALFITSTATSNOMINAL):   data _tmpValidFitTable(keep=_TARGET_ _ASE_ _DIV_ _MAX_ _NOBS_ 
+_RASE_ _SSE_ _DISF_ _MISC_ _WRONG_ rename=(_TARGET_=TARGET));
+MPRINT(CALFITSTATSNOMINAL):   set EMWS8.Rule2_VALIDATE end=eof;
+MPRINT(CALFITSTATSNOMINAL):   length _TARGET_ $32;
+MPRINT(CALFITSTATSNOMINAL):   length _ASE_ _DIV_ _MAX_ _NOBS_ _RASE_ _SSE_ _DISF_ _MISC_ 
+_WRONG_ 8;
+MPRINT(CALFITSTATSNOMINAL):   label _TARGET_ = "Valid: Target Variable" _NOBS_= "Valid: Sum of 
+Frequencies" _SSE_= "Valid: Sum of Squared Errors" _MAX_= "Valid: Maximum Absolute Error" 
+_DIV_ = "Valid: Divisor for ASE" _WRONG_= "Valid: Number of Wrong Classifications" _DISF_= 
+"Valid: Frequency of Classified Cases" _MISC_= "Valid: Misclassification Rate" _ASE_ = "Valid: 
+Average Squared Error" _RASE_ = "Valid: Root Average Squared Error";
+MPRINT(CALFITSTATSNOMINAL):   retain _TARGET_ _WRONG_ _DIV_ _MAX_ _SSE_ _DISF_ _MISC_ _ASE_ 
+_RASE_ ;
+MPRINT(CALFITSTATSNOMINAL):   if R_DepVar1 ne . then do;
+MPRINT(CALFITSTATSNOMINAL):   _SSE_ +(R_DepVar1)*(R_DepVar1);
+MPRINT(CALFITSTATSNOMINAL):   _DIV_ +1;
+MPRINT(CALFITSTATSNOMINAL):   _MAX_ =max(_MAX_ ,abs(R_DepVar1));
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if R_DepVar0 ne . then do;
+MPRINT(CALFITSTATSNOMINAL):   _SSE_ +(R_DepVar0)*(R_DepVar0);
+MPRINT(CALFITSTATSNOMINAL):   _DIV_ +1;
+MPRINT(CALFITSTATSNOMINAL):   _MAX_ =max(_MAX_ ,abs(R_DepVar0));
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if F_DepVar ne "" then do;
+MPRINT(CALFITSTATSNOMINAL):   _DISF_+ 1;
+MPRINT(CALFITSTATSNOMINAL):   _WRONG_+(F_DepVar ne I_DepVar);
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   if eof then do;
+MPRINT(CALFITSTATSNOMINAL):   _TARGET_ = "DepVar";
+MPRINT(CALFITSTATSNOMINAL):   _MAX = 0;
+MPRINT(CALFITSTATSNOMINAL):   if _DISF_ ne 0 then do;
+MPRINT(CALFITSTATSNOMINAL):   _MISC_=_WRONG_/_DISF_;
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   _NOBS_ = _DIV_/2;
+MPRINT(CALFITSTATSNOMINAL):   _ASE_=_SSE_/_DIV_;
+MPRINT(CALFITSTATSNOMINAL):   _RASE_=sqrt(_ASE_);
+MPRINT(CALFITSTATSNOMINAL):   output;
+MPRINT(CALFITSTATSNOMINAL):   end;
+MPRINT(CALFITSTATSNOMINAL):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _tmpdata_(DROP= TARGET);
+MPRINT(EM_DIAGRAM):   set _tmpValidFitTable;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _tmpdata_;
+MPRINT(EM_DIAGRAM):   set _tmpdata_;
+MPRINT(EM_DIAGRAM):   rename _ASE_=_VASE_;
+MPRINT(EM_DIAGRAM):   rename _DIV_=_VDIV_;
+MPRINT(EM_DIAGRAM):   rename _MAX_=_VMAX_;
+MPRINT(EM_DIAGRAM):   rename _NOBS_=_VNOBS_;
+MPRINT(EM_DIAGRAM):   rename _RASE_=_VRASE_;
+MPRINT(EM_DIAGRAM):   rename _SSE_=_VSSE_;
+MPRINT(EM_DIAGRAM):   rename _DISF_=_VDISF_;
+MPRINT(EM_DIAGRAM):   rename _MISC_=_VMISC_;
+MPRINT(EM_DIAGRAM):   rename _WRONG_=_VWRONG_;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_EMOUTFIT;
+MPRINT(EM_DIAGRAM):   merge EMWS8.Rule2_EMOUTFIT _tmpdata_;
+MPRINT(EM_DIAGRAM):   run;
+1247415    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+1247416    * Rule2: Computing metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   * Rule2: Computing metadata for TRAIN data;
+1247417    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+NOTE: View EMWS8.RULE2_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Computing Metadata for TRAIN data;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   filename _delta 
+"C:\\predictive-models-project\Workspaces\EMWS8\Rule2\CDELTA_TRAIN.sas";
+MPRINT(EMADVISECOLUMNS):   proc display c=sashelp.emmeta.advisecolumns.scl;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    options validvarname=any;
+MPRINT(EMADVISECOLUMNS):   proc contents data=EMWS8.Rule2_TRAIN out=_tempAdvisor noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   options validvarname=V7;
+MPRINT(EMADVISECOLUMNS):    data _null_;
+MPRINT(EMADVISECOLUMNS):   dsid = open('EMWS8.Rule2_TRAIN');
+MPRINT(EMADVISECOLUMNS):   call symput('_dsidTable', strip(put(dsid, best.)));
+MPRINT(EMADVISECOLUMNS):   if dsid then do;
+MPRINT(EMADVISECOLUMNS):   call symput('_engineTable', attrc(dsid, 'ENGINE'));
+MPRINT(EMADVISECOLUMNS):   dsid = close(dsid);
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc contents data=EMWS8.Rule2_TRAIN out=WORK.M0CI_OAR noprint;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0CI_OAR;
+MPRINT(EMADVISECOLUMNS):   length NAME $ 64 TYPE $ 1 LABEL $ 200 FORMAT $ 20 INFORMAT $20 
+INDEX $ 1 INDEXTYPE $ 9;
+MPRINT(EMADVISECOLUMNS):   label NAME =;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0CI_OAR(keep=name type length label format formatl 
+formatd informat informl informd idxusage rename=(type=itype));
+MPRINT(EMADVISECOLUMNS):   if itype = 1 then type = 'N';
+MPRINT(EMADVISECOLUMNS):   else type = 'C';
+MPRINT(EMADVISECOLUMNS):   if formatl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' then format = strip(format)!!strip(put(formatl, 
+best12.))!!'.'!!strip(put(formatd, best12.));
+MPRINT(EMADVISECOLUMNS):   else format = strip(put(formatl, best12.))!!'.'!!strip(put(formatd, 
+best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if format ne '' then format = strip(format)!!'.';
+MPRINT(EMADVISECOLUMNS):   if informl > 0 then do;
+MPRINT(EMADVISECOLUMNS):   if informat ne ' ' then informat = 
+strip(informat)!!strip(put(informl, best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   else informat = strip(put(informl, 
+best12.))!!'.'!!strip(put(informd, best12.));
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if informat ne '' then informat = strip(informat)!!'.';
+MPRINT(EMADVISECOLUMNS):   if idxusage = 'NONE' then index ="N";
+MPRINT(EMADVISECOLUMNS):   else index = "Y";
+MPRINT(EMADVISECOLUMNS):   indextype = idxusage;
+MPRINT(EMADVISECOLUMNS):   drop idxusage itype formatl formatd informl informd;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M0CI_OAR;
+MPRINT(EMADVISECOLUMNS):   length UNAME $64;
+MPRINT(EMADVISECOLUMNS):   set WORK.M0CI_OAR;
+MPRINT(EMADVISECOLUMNS):   UNAME = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    proc sort data=WORK.M26Y0HX5 NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by UNAME;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   drop UNAME;
+MPRINT(EMADVISECOLUMNS):   set WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M2DQB289(keep=NAME ATTR);
+MPRINT(EMADVISECOLUMNS):   length ATTR $ 20;
+MPRINT(EMADVISECOLUMNS):   set WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   if level ne "INTERVAL" then do;
+MPRINT(EMADVISECOLUMNS):   if order = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ORDER';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' and formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'FORMATTYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'ROLE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'LEVEL';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if type = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'TYPE';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if index = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'INDEX';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if report = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   attr = 'REPORT';
+MPRINT(EMADVISECOLUMNS):   output;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   proc sort NOTHREADS;
+MPRINT(EMADVISECOLUMNS):   by attr;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   length NAME $64 ROLE $ 32 LEVEL $ 10 ORDER $ 8 CREATOR $32 
+FORMATTYPE $ 10 FAMILY $ 10 LOWERLIMIT 8 UPPERLIMIT 8 REPORT $1 DISTRIBUTION $ 20 COMMENT $64;
+MPRINT(EMADVISECOLUMNS):   length levelAssigned 8 roleAssigned 8 PRICE 8;
+MPRINT(EMADVISECOLUMNS):   set WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   if formattype = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if format ne ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if type = 'N' then do;
+MPRINT(EMADVISECOLUMNS):   pos = indexc(format,'.1234567890');
+MPRINT(EMADVISECOLUMNS):   if pos > 1 then tempfmt = substr(format,1, pos-1);
+MPRINT(EMADVISECOLUMNS):   else tempfmt = ' ';
+MPRINT(EMADVISECOLUMNS):   flen = length(tempfmt);
+MPRINT(EMADVISECOLUMNS):   select;
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATE" "DAY" "DDMMYY" "DOWNAME" "JULDAY" "JULIAN" 
+"MMDDYY" "MMDDYYD" "MMDDYYC" "MMDDYYN" "MMDDYYP" "MMDDYYS" "MONNAME" "MONTH" "MONYY" "NENGO" 
+"QTR" "QTRR" "WEEKDATE" "WEEKDATX" "WEEKDAY" "WORDDATE" "WORDDATX" "YEAR" "YYMMDD" "YYMON" 
+"YYMMDDC" "YYMMDDD" "YYMMDDN" "YYMMDDP" "YYMMDDS" "EURDFDE" "NJDATE" "NLDATE" "EURDFDD" 
+"EURDFDWN" "EURDFMN" "EURDFMY" "EURDFWK" "EURDFWKX" "EURDFWDX" "EURDFDN" "EURDFDE" )) 
+formattype = 'DATE';
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("DATETIME" "EURDFDT" "TOD" )) formattype = 
+"DATETIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("HHMM" "HOUR" "MMSS" "TIME" "TIMEAMPM" )) 
+formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("COMMA" "COMMAX" "DOLLAR" "DOLLARX" "E" "FRACT" 
+"NEGPAREN" "PERCENT")) formattype="QUANTITY";
+MPRINT(EMADVISECOLUMNS):   when(tempfmt in ("BINARY" "HEX" "IB" "OCTAL" "PD" "PIB" "PK" "RB" 
+"SSN" "Z" "ZD")) formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   formattype = "USER";
+MPRINT(EMADVISECOLUMNS):   if substr(tempfmt, 1, 6)='NLDATE' then formattype = "DATE";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 6)='NLDATM' then formattype = "DATETIME";
+MPRINT(EMADVISECOLUMNS):   else if substr(tempfmt, 1, 4)='NLTIM' then formattype = "TIME";
+MPRINT(EMADVISECOLUMNS):   else if flen >= 4 then do;
+MPRINT(EMADVISECOLUMNS):   str = substr(tempfmt,1,4);
+MPRINT(EMADVISECOLUMNS):   if str in ("MMYY" "YYMM" "YYQR") then formattype ="DATE";
+MPRINT(EMADVISECOLUMNS):   else if str = "S370" then formattype = "CODING";
+MPRINT(EMADVISECOLUMNS):   else if str = "BEST" then formattype = "NUM";
+MPRINT(EMADVISECOLUMNS):   drop str;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if flen >=3 and substr(tempfmt,1,3) = "YYQ" then formatType = 
+"DATE";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   drop flen tempfmt pos;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   formatType = "CATEGORY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if formatType = "NUM" then do;
+MPRINT(EMADVISECOLUMNS):   if index = "Y" then formatType = "DISCRETE";
+MPRINT(EMADVISECOLUMNS):   else formatType = "QUANTITY";
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if level = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formatType in ("CATEGORY", "CODING", "ID") or type = "C" then 
+level = "NOMINAL";
+MPRINT(EMADVISECOLUMNS):   else level = "INTERVAL";
+MPRINT(EMADVISECOLUMNS):   levelAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else level = upcase(level);
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   length name_prefix $8 _uname $64;
+MPRINT(EMADVISECOLUMNS):   drop name_prefix _uname _freqflag;
+MPRINT(EMADVISECOLUMNS):   retain _freqflag;
+MPRINT(EMADVISECOLUMNS):   if LENGTH> 80 then ROLE = 'TEXT';
+MPRINT(EMADVISECOLUMNS):   _uname = upcase(NAME);
+MPRINT(EMADVISECOLUMNS):   select(_uname);
+MPRINT(EMADVISECOLUMNS):   when('_WARN_') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_SEGMENT') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('_NODE_') do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSTARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_VALUETARGET') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_PREDICTION') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_EVENTPROBABILITY') ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   when('EM_CLASSIFICATION') ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   when('EM_DECISION') ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   when('EM_PROFIT') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_LOSS') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('EM_ROI') ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   when('URI') ROLE = 'URL';
+MPRINT(EMADVISECOLUMNS):   when('FILTERED') ROLE = 'TEXTLOC';
+MPRINT(EMADVISECOLUMNS):   otherwise do;
+MPRINT(EMADVISECOLUMNS):   if upcase(NAME) =: 'ZIP' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'REJECTED';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   COMMENT = 'Rejected by: Exceed the maximum class level of %s';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if upcase(NAME) in('FREQ', 'FREQUENCY') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'FREQ';
+MPRINT(EMADVISECOLUMNS):   if TYPE = 'C' then ROLE = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   else if _freqflag =1 then ROLE='REJECTED';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   name_prefix = scan(_uname, 1, '_');
+MPRINT(EMADVISECOLUMNS):   if scan(_uname, 2, '_') = '' then name_prefix='';
+MPRINT(EMADVISECOLUMNS):   if name_prefix in('F', 'I', 'U') then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'CLASSIFICATION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('P', 'V') then ROLE = 'PREDICT';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('R', 'RS', 'RT', 'RD', 'RDS', 'RDT', 'RA', 
+'RAS', 'RAT') then ROLE = 'RESIDUAL';
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='D' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'DECISION';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix ='B' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'SEGMENT';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else if name_prefix in('EP', 'BP', 'CP', 'EL', 'CL', 'BL', 'W', 
+'ROI', 'IC') then ROLE = 'ASSESS';
+MPRINT(EMADVISECOLUMNS):   else do;
+MPRINT(EMADVISECOLUMNS):   array _ROLE_ (19) $32 _TEMPORARY_ 
+('ASSESS','CLASSIFICATION','CENSOR', 'COST', 'CROSSID', 'DECISION', 'ID','INPUT', 'LABEL', 
+'MISSING','PREDICT','REFERRER','REJECTED', 'RESIDUAL','SEGMENT', 'SEQUENCE','TARGET', 'TEXT', 
+'TIMEID');
+MPRINT(EMADVISECOLUMNS):   drop _found_ i;
+MPRINT(EMADVISECOLUMNS):   _found_=0;
+MPRINT(EMADVISECOLUMNS):   do i=1 to 19 until(_found_=1);
+MPRINT(EMADVISECOLUMNS):   if index(_uname, trim(_ROLE_{i}))=1 then do;
+MPRINT(EMADVISECOLUMNS):   ROLE=_ROLE_{i};
+MPRINT(EMADVISECOLUMNS):   if ROLE = 'ID' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'SEGMENT' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'TIMEID' and TYPE='N' then LEVEL = 'INTERVAL';
+MPRINT(EMADVISECOLUMNS):   _found_=1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if length(_uname)>2 then do;
+MPRINT(EMADVISECOLUMNS):   if substr(reverse(trim(_uname)), 1, 3) = 'DI_' then do;
+MPRINT(EMADVISECOLUMNS):   ROLE = 'ID';
+MPRINT(EMADVISECOLUMNS):   LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if ROLE='FREQ' then _freqflag=1;
+MPRINT(EMADVISECOLUMNS):   else if ROLE = 'CLASSIFICATION' then LEVEL = 'NOMINAL';
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   if role = ' ' then do;
+MPRINT(EMADVISECOLUMNS):   if formattype in('DATE', 'DATETIME', 'TIME') then role = 'TIMEID';
+MPRINT(EMADVISECOLUMNS):   else role = 'INPUT';
+MPRINT(EMADVISECOLUMNS):   roleAssigned = 1;
+MPRINT(EMADVISECOLUMNS):   end;
+MPRINT(EMADVISECOLUMNS):   else role = upcase(role);
+MPRINT(EMADVISECOLUMNS):   if REPORT = '' then REPORT = 'N';
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):    data WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   set WORK.M26Y0HX5;
+MPRINT(EMADVISECOLUMNS):   label NAME = "Variable Name" TYPE = "Type" ROLE = "Role" LEVEL= 
+"Measurement Level" ORDER= "Order" CREATOR= "Creator" FORMATTYPE= "Format Type" FAMILY= 
+"Family" DISTRIBUTION= "Distribution" PRICE= "Price" LOWERLIMIT= "Lower limit" UPPERLIMIT= 
+"Upper Limit" REPORT= "Report" COMMENT= "Comment" INDEX= "Index" INDEXTYPE= "IndexType" LABEL= 
+"Label" LENGTH= "Length";
+MPRINT(EMADVISECOLUMNS):   drop levelAssigned roleAssigned;
+MPRINT(EMADVISECOLUMNS):   run;
+MPRINT(EMADVISECOLUMNS):   
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK.COLUMNMETA;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * &nodeid: Merge incoming metadata;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   proc contents data=EMWS8.PRINCOMP_TRAIN noprint out=_temp2(keep=NAME);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_temp2;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.PRINCOMP_CMeta_TRAIN out=_temp;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_CMeta_TRAIN;
+MPRINT(EM_DIAGRAM):   merge WORK.COLUMNMETA(in=_a) _temp2(in=_b) _temp(drop=FORMAT INFORMAT 
+LENGTH INDEX INDEXTYPE in=_c) end=_eof_;
+MPRINT(EM_DIAGRAM):   by NAME;
+MPRINT(EM_DIAGRAM):   if (^_a and _b) or (^_c and _a and _b) then delete;
+MPRINT(EM_DIAGRAM):   if ^_b then CREATOR = "Rule2";
+MPRINT(EM_DIAGRAM):   select(upcase(name));
+MPRINT(EM_DIAGRAM):   when("P_DEPVAR1") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("R_DEPVAR1") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("P_DEPVAR0") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("R_DEPVAR0") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("F_DEPVAR") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("I_DEPVAR") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("U_DEPVAR") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("_WARN_") creator = "Rule2";
+MPRINT(EM_DIAGRAM):   when("DEPVAR") model = "Rule2";
+MPRINT(EM_DIAGRAM):   when('');
+MPRINT(EM_DIAGRAM):   otherwise;
+MPRINT(EM_DIAGRAM):   end;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rule2: Apply Delta Code;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   if name = '_NODE_' then role = 'SEGMENT';
+MPRINT(EM_DIAGRAM):   if name = '_LEAF_' then role = 'REJECTED';
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _delta;
+1247731    data WORK.MODELTEMP_INFO;
+MPRINT(EM_DIAGRAM):    data WORK.MODELTEMP_INFO;
+1247732    set EMWS8.Rule2_EMINFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Rule2_EMINFO;
+1247733    where DATA='Rule2' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+MPRINT(EM_DIAGRAM):   where DATA='Rule2' and KEY ^in('DECDATA', 'DECMETA', 'IMPORTANCE', 
+'MODEL');
+1247734    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 0 observations read from the data set EMWS8.RULE2_EMINFO.
+      WHERE (DATA='Rule2') and KEY not in ('DECDATA', 'DECMETA', 'IMPORTANCE', 'MODEL');
+NOTE: The data set WORK.MODELTEMP_INFO has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1247735    data EMWS8.Rule2_EMINFO;
+MPRINT(EM_DIAGRAM):    data EMWS8.Rule2_EMINFO;
+1247736    length TARGET KEY $32 DATA $43;
+MPRINT(EM_DIAGRAM):   length TARGET KEY $32 DATA $43;
+1247737    input TARGET KEY DATA $;
+MPRINT(EM_DIAGRAM):   input TARGET KEY DATA $;
+1247738    cards;
+MPRINT(EM_DIAGRAM):   cards;
+
+NOTE: The data set EMWS8.RULE2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   run;
+1247742    run;
+1247743    data EMWS8.Rule2_EMINFO;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_EMINFO;
+1247744    set EMWS8.Rule2_EMINFO WORK.MODELTEMP_INFO;
+MPRINT(EM_DIAGRAM):   set EMWS8.Rule2_EMINFO WORK.MODELTEMP_INFO;
+1247745    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set EMWS8.RULE2_EMINFO.
+NOTE: There were 0 observations read from the data set WORK.MODELTEMP_INFO.
+NOTE: The data set EMWS8.RULE2_EMINFO has 3 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1247746    proc sort data = EMWS8.Rule2_EMINFO NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.Rule2_EMINFO NOTHREADS;
+1247747    by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+1247748    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set EMWS8.RULE2_EMINFO.
+NOTE: The data set EMWS8.RULE2_EMINFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1247749    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+MPRINT(EM_DIAGRAM):    proc sort data = EMWS8.FIMPORT_EMINFO OUT=WORK.SORTEDEMINFO NOTHREADS;
+1247750    by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+1247751    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.FIMPORT_EMINFO.
+NOTE: The data set WORK.SORTEDEMINFO has 1 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1247752    proc sort data = EMWS8.Rule2_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+MPRINT(EM_DIAGRAM):   proc sort data = EMWS8.Rule2_EMINFO OUT=WORK.TEMP_INFO NOTHREADS;
+1247753    by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+1247754    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Input data set is already sorted; it has been copied to the output data set.
+NOTE: There were 3 observations read from the data set EMWS8.RULE2_EMINFO.
+NOTE: The data set WORK.TEMP_INFO has 3 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1247755    data EMWS8.Rule2_EMINFO;
+MPRINT(EM_DIAGRAM):   data EMWS8.Rule2_EMINFO;
+1247756    merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+MPRINT(EM_DIAGRAM):   merge WORK.SORTEDEMINFO WORK.TEMP_INFO;
+1247757    by TARGET KEY;
+MPRINT(EM_DIAGRAM):   by TARGET KEY;
+1247758    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.SORTEDEMINFO.
+NOTE: There were 3 observations read from the data set WORK.TEMP_INFO.
+NOTE: The data set EMWS8.RULE2_EMINFO has 4 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1247759    proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+1247760    delete TEMP_INFO SORTEDEMINFO;
+MPRINT(EM_DIAGRAM):   delete TEMP_INFO SORTEDEMINFO;
+1247761    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.TEMP_INFO (memtype=DATA).
+NOTE: Deleting WORK.SORTEDEMINFO (memtype=DATA).
+1247762    quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+NOTE: View EMWS8.RULE2_TRAIN.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+NOTE: View EMWS8.RULE2_VALIDATE.VIEW used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

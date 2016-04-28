@@ -257,22 +257,22 @@ UB=.;
 end;
  
 if DISPLAY_VAR='MonthsAsCustomer' and _GROUP_ = 2 then do;
-_LABEL_='MonthsAsCustomer< 69';
-UB=69;
+_LABEL_='MonthsAsCustomer< 70';
+UB=70;
 end;
 else
 if DISPLAY_VAR='MonthsAsCustomer' and _GROUP_ = 3 then do;
-_LABEL_='69<= MonthsAsCustomer< 83';
-UB=83;
+_LABEL_='70<= MonthsAsCustomer< 84';
+UB=84;
 end;
 else
 if DISPLAY_VAR='MonthsAsCustomer' and _GROUP_ = 4 then do;
-_LABEL_='83<= MonthsAsCustomer< 98';
-UB=98;
+_LABEL_='84<= MonthsAsCustomer< 99';
+UB=99;
 end;
 else
 if DISPLAY_VAR='MonthsAsCustomer' and _GROUP_ = 5 then do;
-_LABEL_='98<= MonthsAsCustomer';
+_LABEL_='99<= MonthsAsCustomer';
 UB=.;
 end;
  

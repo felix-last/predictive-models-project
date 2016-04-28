@@ -1,0 +1,4551 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.07 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                28. April 2016
+Time:                09.07 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O04CKEPM 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O04CKEPM new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.07 Uhr" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_7PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.03.01M2P081512";
+MPRINT(EM_DIAGRAM):   put "EM Version:          12.1";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMTRAIN.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMSCORE.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMREPORT.log" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMOUTPUT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.07 Uhr" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMTRAIN.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMSCORE.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMREPORT.out" encoding="UTF-8" 
+NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+1172183    proc freq data=EMWS8.AutoNeural27_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS8.AutoNeural27_VariableSet noprint;
+1172184    table ROLE*LEVEL/out=WORK.AutoNeural27META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.AutoNeural27META;
+1172185    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 13 observations read from the data set EMWS8.AUTONEURAL27_VARIABLESET.
+NOTE: The data set WORK.AUTONEURAL27META has 3 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172186    proc print data=WORK.AutoNeural27META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.AutoNeural27META label noobs;
+1172187    var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+1172188    label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+1172188  ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+1172188  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+1172189    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1172190    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+1172191    run;
+
+NOTE: There were 3 observations read from the data set WORK.AUTONEURAL27META.
+NOTE: The PROCEDURE PRINT printed page 1036.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172192    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172193    %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS8.Varsel_TRAIN EMWS8.Varsel_TRAIN 
+EMWS8.Varsel_TRAIN EMWS8.Varsel_TRAIN EMWS8 Varsel_TRAIN 
+EMWS8.Varsel_TRAIN EMWS8.Varsel_TRAIN 
+EMWS8.Varsel_TRAIN EMWS8.Varsel_TRAIN EMWS8 Varsel_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS8.Varsel_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _sortedDecData;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_DepVar_DD;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.AutoNeural27_DepVar_DD;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_DepVar_DD;
+MPRINT(EM_DIAGRAM):   merge EMWS8.AutoNeural27_DepVar_DD 
+_TEMPCLASS(rename=(NMISSPERCENT=TRAINPRIOR FREQUENCY=COUNT));
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.AutoNeural27_DepVar_DD 
+out=EMWS8.AutoNeural27_DepVar_DD(drop=_levelorder_);
+MPRINT(EM_DIAGRAM):   by _levelorder_;
+MPRINT(EM_DIAGRAM):   run;
+1172240    data WORK.AutoNeural27_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.AutoNeural27_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS 
+ORDER);
+1172241    length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+1172242    label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+1172242  ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+1172242  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+1172243       "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+1172243  ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+1172243  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+1172244    set EMWS8.AUTONEURAL27_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS8.AUTONEURAL27_DEPVAR_DM( where=(_TYPE_="TARGET"));
+1172245    NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+1172246    select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+1172247    when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+1172248    when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+1172249    when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+1172250    when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+1172251    otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+1172252    end;
+MPRINT(EM_DIAGRAM):   end;
+1172253    output;
+MPRINT(EM_DIAGRAM):   output;
+1172254    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.AUTONEURAL27_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+1172255    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1172256    proc print data=WORK.AutoNeural27_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.AutoNeural27_EVENT noobs label;
+1172257    var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+1172258    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1172259    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+1172260    run;
+
+NOTE: There were 1 observations read from the data set WORK.AUTONEURAL27_EVENT.
+NOTE: The PROCEDURE PRINT printed page 1037.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172261    title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+1172262    proc print data = EMWS8.AutoNeural27_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS8.AutoNeural27_DepVar_DM noobs label;
+1172263    var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+1172264    where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+1172265    label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+1172265  ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+1172265  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+1172266    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1172267    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+1172268    run;
+
+NOTE: There were 7 observations read from the data set EMWS8.AUTONEURAL27_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 1038.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172269    title10;
+MPRINT(EM_DIAGRAM):   title10;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Preparing metadata for Training;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data WORK.M005M7FU;
+MPRINT(EM_DIAGRAM):   set WORK.M005M7FU;
+MPRINT(EM_DIAGRAM):   where(use = 'Y' or (role = 'INPUT' and use = 'D'));
+MPRINT(EM_DIAGRAM):   if (role = 'REJECTED') then role = 'INPUT';
+MPRINT(EM_DIAGRAM):   run;
+1172278    data WORK.M005M7FU;
+MPRINT(EM_DIAGRAM):    data WORK.M005M7FU;
+1172279    set WORK.M005M7FU end=eof;
+MPRINT(EM_DIAGRAM):   set WORK.M005M7FU end=eof;
+1172280    output;
+MPRINT(EM_DIAGRAM):   output;
+1172281    if eof then do;
+MPRINT(EM_DIAGRAM):   if eof then do;
+1172282    NAME="";
+MPRINT(EM_DIAGRAM):   NAME="";
+1172283    ROLE="COST";
+MPRINT(EM_DIAGRAM):   ROLE="COST";
+1172284    LEVEL="INTERVAL";
+MPRINT(EM_DIAGRAM):   LEVEL="INTERVAL";
+1172285    TYPE="N";
+MPRINT(EM_DIAGRAM):   TYPE="N";
+1172286    output;
+MPRINT(EM_DIAGRAM):   output;
+1172287    end;
+MPRINT(EM_DIAGRAM):   end;
+1172288    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 13 observations read from the data set WORK.M005M7FU.
+NOTE: The data set WORK.M005M7FU has 14 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS8.AUTONEURAL27_DEPVAR_DD.
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+1172289    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+1172290    * AutoNeural27: Create decision matrix;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Create decision matrix;
+1172291    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1172292    data WORK.DepVar;
+MPRINT(EM_DIAGRAM):   data WORK.DepVar;
+1172293      length   DepVar                           $  32
+1172294               COUNT                                8
+1172295               DATAPRIOR                            8
+1172296               TRAINPRIOR                           8
+1172297               DECPRIOR                             8
+1172298               DECISION1                            8
+1172299               DECISION2                            8
+1172300               ;
+MPRINT(EM_DIAGRAM):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 DECISION1 
+8 DECISION2 8 ;
+1172301    
+1172302      label    COUNT="Level Counts"
+1172303               DATAPRIOR="Data Proportions"
+1172304               TRAINPRIOR="Training Proportions"
+1172305               DECPRIOR="Decision Priors"
+1172306               DECISION1="1"
+1172307               DECISION2="0"
+1172308               ;
+MPRINT(EM_DIAGRAM):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+1172309      format   COUNT 10.
+1172310               ;
+MPRINT(EM_DIAGRAM):   format COUNT 10. ;
+1172311    DepVar="1"; COUNT=359; DATAPRIOR=0.151221567; TRAINPRIOR=0.15122156697556;
+1172311  ! DECPRIOR=.; DECISION1=1; DECISION2=0;
+MPRINT(EM_DIAGRAM):   DepVar="1";
+MPRINT(EM_DIAGRAM):   COUNT=359;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.151221567;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.15122156697556;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=1;
+MPRINT(EM_DIAGRAM):   DECISION2=0;
+1172312    output;
+MPRINT(EM_DIAGRAM):   output;
+1172313    DepVar="0"; COUNT=2015; DATAPRIOR=0.848778433; TRAINPRIOR=0.84877843302443;
+1172313  ! DECPRIOR=.; DECISION1=0; DECISION2=1;
+MPRINT(EM_DIAGRAM):   DepVar="0";
+MPRINT(EM_DIAGRAM):   COUNT=2015;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.848778433;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.84877843302443;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=0;
+MPRINT(EM_DIAGRAM):   DECISION2=1;
+1172314    output;
+MPRINT(EM_DIAGRAM):   output;
+1172315    ;
+MPRINT(EM_DIAGRAM):   ;
+1172316    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172317    proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+1172318    modify DepVar(type=PROFIT label=DepVar);
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= '1';
+MPRINT(EM_DIAGRAM):   label DECISION2= '0';
+MPRINT(EM_DIAGRAM):   run;
+1172319    label DECISION1= '1';
+1172320    label DECISION2= '0';
+1172321    run;
+
+NOTE: MODIFY was successful for WORK.DEPVAR.DATA.
+1172322    quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.04 seconds
+      
+
+1172323    data EM_AutoNeural27;
+MPRINT(EM_DIAGRAM):   data EM_AutoNeural27;
+1172324    set EMWS8.Varsel_TRAIN(keep=
+1172325    AcceptedCmpTotal DepVar Frq G_Marital_Status Income Mnt MntGoldProds
+1172326    MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency );
+MPRINT(EM_DIAGRAM):   set EMWS8.Varsel_TRAIN(keep= AcceptedCmpTotal DepVar Frq 
+G_Marital_Status Income Mnt MntGoldProds MntMeatProducts MntWines NumDistPurchases RFMstat 
+The SAS System
+
+RMntFrq Recency );
+1172327    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.VARSEL_TRAIN.
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172328    *------------------------------------------------------------* ;
+1172329    * AutoNeural27: DMDBClass Macro ;
+1172330    *------------------------------------------------------------* ;
+1172331    %macro DMDBClass;
+1172332        DepVar(DESC) G_Marital_Status(ASC)
+1172333    %mend DMDBClass;
+1172334    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172335    * AutoNeural27: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: DMDBVar Macro ;
+1172336    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172337    %macro DMDBVar;
+1172338        AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+1172339       NumDistPurchases RFMstat RMntFrq Recency
+1172340    %mend DMDBVar;
+1172341    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1172342    * AutoNeural27: Create DMDB;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Create DMDB;
+1172343    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1172344    proc dmdb batch data=WORK.EM_AutoNeural27
+1172345    dmdbcat=WORK.AutoNeural27_DMDB
+1172346    maxlevel = 513
+1172347    ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=WORK.EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB 
+maxlevel = 513 ;
+MPRINT(EM_DIAGRAM):   class
+1172348    class %DMDBClass;
+MPRINT(DMDBCLASS):   DepVar(DESC) G_Marital_Status(ASC)
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   var
+1172349    var %DMDBVar;
+MPRINT(DMDBVAR):   AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines 
+NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):  ;
+1172350    target
+1172351    DepVar
+1172352    ;
+MPRINT(EM_DIAGRAM):   target DepVar ;
+1172353    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2374   Memory used = 511K.
+NOTE: There were 2374 observations read from the data set WORK.EM_AUTONEURAL27.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+1172354    quit;
+1172355    *--- end code ---*;
+
+1172356    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+1172357    * AutoNeural27: Interval Inputs Macro ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Interval Inputs Macro ;
+1172358    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172359    %macro INTINPUTS;
+1172360        AcceptedCmpTotal Frq Income Mnt MntGoldProds MntMeatProducts MntWines
+1172361       NumDistPurchases RFMstat RMntFrq Recency
+1172362    %mend INTINPUTS;
+1172363    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172364    * AutoNeural27: Binary Inputs Macro ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Binary Inputs Macro ;
+1172365    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172366    %macro BININPUTS;
+1172367    
+1172368    %mend BININPUTS;
+1172369    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172370    * AutoNeural27: Nominal Inputs Macro ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Nominal Inputs Macro ;
+1172371    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172372    %macro NOMINPUTS;
+1172373        G_Marital_Status
+1172374    %mend NOMINPUTS;
+1172375    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172376    * AutoNeural27: Ordinal Inputs Macro ;
+MPRINT(EM_DIAGRAM):   * AutoNeural27: Ordinal Inputs Macro ;
+1172377    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1172378    %macro ORDINPUTS;
+1172379    
+1172380    %mend ORDINPUTS;
+1172381    * set printing options;
+MPRINT(EM_DIAGRAM):   * set printing options;
+1172382    ;
+MPRINT(EM_DIAGRAM):   ;
+1172383    options linesize = 80;
+MPRINT(EM_DIAGRAM):   options linesize = 80;
+1172384    options pagesize = 6000;
+MPRINT(EM_DIAGRAM):   options pagesize = 6000;
+1172385    options nonumber;
+MPRINT(EM_DIAGRAM):   options nonumber;
+1172386    options nocenter;
+MPRINT(EM_DIAGRAM):   options nocenter;
+1172387    options nodate;
+MPRINT(EM_DIAGRAM):   options nodate;
+1172388    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172389    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_autonet_title  ,
+1172389  ! NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "AutoNet";
+MPRINT(EM_DIAGRAM):   *;
+1172390    *;
+
+1172391    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    
+*------------------------------------------------------------*;
+1172392    * Autoneural: search / FUNNEL LAYERS;
+MPRINT(EM_DIAGRAM):   * Autoneural: search / FUNNEL LAYERS;
+1172393    ;
+MPRINT(EM_DIAGRAM):   ;
+1172394    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172395    *;
+MPRINT(EM_DIAGRAM):   *;
+
+1172396    *;
+MPRINT(EM_DIAGRAM):    *;
+1172397    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172398    validdata=EMWS8.Varsel_VALIDATE
+1172399    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172400    *;
+MPRINT(EM_DIAGRAM):   *;
+1172401    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172402    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172403    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1172404    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1172405    target DepVar / level=NOMINAL id=DepVar
+1172406    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1172407    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172408    * Direct connection;
+MPRINT(EM_DIAGRAM):   * Direct connection;
+1172409    ;
+MPRINT(EM_DIAGRAM):   ;
+1172410    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172411    connect interval DepVar;
+MPRINT(EM_DIAGRAM):   connect interval DepVar;
+1172412    connect nominal DepVar;
+MPRINT(EM_DIAGRAM):   connect nominal DepVar;
+1172413    *;
+MPRINT(EM_DIAGRAM):   *;
+1172414    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1172415    *;
+MPRINT(EM_DIAGRAM):   *;
+1172416    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172417    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1172417  ! Search # 1 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 1 : DIRECT : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=1800 
+maxiter=50 tech = Default;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: Convergence criterion (ABSGCONV=0.00001) satisfied.
+NOTE: The data set WORK._ANEST has 26 observations and 29 variables.
+NOTE: The data set WORK._ANFIT has 22 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1172418    train estiter=1 outest=_anest outfit=_anfit maxtime=1800 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1172419    tech = Default;
+1172420    ;
+1172421    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           0.23 seconds
+      cpu time            0.23 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           0.24 seconds
+      cpu time            0.23 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172422    *;
+1172423    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1172424    var _iter_ _aic_ _averr_ _misc_
+1172425    _vaverr_ _vmisc_
+1172426    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172427    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1039.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172428    *------------------------------------------------------------*;
+1172429    * Extract best iteration;
+1172430    ;
+1172431    *------------------------------------------------------------*;
+1172432    %global _iter;
+1172433    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1172434    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1172435    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1172436    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1172437    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1172438    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1172439    end;
+MPRINT(EM_DIAGRAM):   end;
+1172440    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172441    *;
+
+1172442    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1172443    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1172444    if _ITER_ eq 3 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 3 then do;
+1172445    output;
+MPRINT(EM_DIAGRAM):   output;
+1172446    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172447    end;
+MPRINT(EM_DIAGRAM):   end;
+1172448    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 4 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 29 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172449    *;
+1172450    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172451    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1172452    if _ITER_ eq 3 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 3 and _NAME_ eq "OVERALL" then do;
+1172453    output;
+MPRINT(EM_DIAGRAM):   output;
+1172454    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172455    end;
+MPRINT(EM_DIAGRAM):   end;
+1172456    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 8 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172457    *;
+MPRINT(EM_DIAGRAM):    *;
+1172458    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172459    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1172459  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1172460    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1172461    var _iter_ _aic_ _averr_ _misc_
+1172462    _vaverr_ _vmisc_
+1172463    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172464    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1040.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172465    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1172466    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172467    %sysfunc(sasmsg(sashelp.dmine, starthistory_note , NOQUOTE));
+MPRINT(EM_DIAGRAM):    * Start history;
+MPRINT(EM_DIAGRAM):  ;
+1172468    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172469    length _func_ _status_ _step_ $16;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16;
+1172470    label _func_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_function_vlabel  ,
+1172470  !  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _func_ = "Function";
+1172471    label _status_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_status_vlabel  ,
+1172471  !  NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _status_ = "Status";
+1172472    label _iter_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_iteration_vlabel
+1172472  ! , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _iter_ = "Iteration";
+1172473    label _step_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_step_vlabel  ,
+1172473  ! NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _step_ = "Step";
+1172474    _func_ = '';
+MPRINT(EM_DIAGRAM):   _func_ = '';
+1172475    _status_ = '';
+MPRINT(EM_DIAGRAM):   _status_ = '';
+1172476    _step_ = 'FUNNEL LAYERS 1';
+MPRINT(EM_DIAGRAM):   _step_ = 'FUNNEL LAYERS 1';
+1172477    set
+1172478    _anfit(where=(_name_ eq 'OVERALL' and _iter_ eq 0))
+1172479    ;
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_name_ eq 'OVERALL' and _iter_ eq 0)) ;
+1172480    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK._ANFIT.
+      WHERE (_name_='OVERALL') and (_iter_=0);
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 1 observations and 39 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172481    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172482    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172483    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172484    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172485    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172486    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172487    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172488    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172489    *SEARCH: copy estimates and fit to best buffer;
+MPRINT(EM_DIAGRAM):    *SEARCH: copy estimates and fit to best buffer;
+1172490    ;
+MPRINT(EM_DIAGRAM):   ;
+1172491    data WORK.SAVEDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.SAVEDS_AUTONEUR_0YZCARR;
+1172492    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172493    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_0YZCARR has 1 observations and 29 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172494    data EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_BESTDS;
+1172495    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172496    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_BESTDS has 1 observations and 29 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172497    data WORK.BFITDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.BFITDS_AUTONEUR_0YZCARR;
+1172498    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172499    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_0YZCARR has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172500    * Add function info to new history;
+MPRINT(EM_DIAGRAM):    * Add function info to new history;
+1172501    ;
+MPRINT(EM_DIAGRAM):   ;
+1172502    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172503    set EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY;
+1172504    _func_ = 'DIRECT';
+MPRINT(EM_DIAGRAM):   _func_ = 'DIRECT';
+1172505    _status_ = 'initial';
+MPRINT(EM_DIAGRAM):   _status_ = 'initial';
+1172506    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 1 observations and 39 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172507    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172508    ;
+MPRINT(EM_DIAGRAM):   ;
+1172509    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172510    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172511    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172512    _func_ = "DIRECT";
+MPRINT(EM_DIAGRAM):   _func_ = "DIRECT";
+1172513    _status_ = "candidate";
+MPRINT(EM_DIAGRAM):   _status_ = "candidate";
+1172514    _step_ = "FUNNEL LAYERS 1";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 1";
+1172515    _index_ = 1;
+MPRINT(EM_DIAGRAM):   _index_ = 1;
+1172516    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172517    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172518    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172519    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 2 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172520    *;
+MPRINT(EM_DIAGRAM):    *;
+1172521    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172522    validdata=EMWS8.Varsel_VALIDATE
+1172523    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172524    *;
+MPRINT(EM_DIAGRAM):   *;
+1172525    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172526    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172527    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1172528    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1172529    target DepVar / level=NOMINAL id=DepVar
+1172530    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1172531    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172532    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1172533    ;
+MPRINT(EM_DIAGRAM):   ;
+1172534    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172535    Hidden 5 / id = H1x1_ act=LOG;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=LOG;
+1172536    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1172537    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1172538    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1172539    *;
+MPRINT(EM_DIAGRAM):   *;
+1172540    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1172541    *;
+MPRINT(EM_DIAGRAM):   *;
+1172542    initial
+1172543    ;
+MPRINT(EM_DIAGRAM):   initial ;
+1172544    *;
+MPRINT(EM_DIAGRAM):   *;
+1172545    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172546    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1172546  ! Search # 1 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 2 : LOGISTIC : 
+Prelim";
+MPRINT(EM_DIAGRAM):   prelim 20 outest=_anpre pretime=45 preiter=25 tech = 
+Default ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 41 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1172547    prelim 20 outest=_anpre pretime=45 preiter=25
+1172548    tech = Default
+1172549    ;
+1172550    *;
+1172551    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172552    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1172552  ! Search # 1 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 2 : LOGISTIC : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=900 
+maxiter=50 tech = Default;
+WARNING: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 129 observations and 91 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1172553    train estiter=1 outest=_anest outfit=_anfit maxtime=900 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1172554    tech = Default;
+1172555    ;
+1172556    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           21.74 seconds
+      cpu time            21.49 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1041.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           21.75 seconds
+      cpu time            21.49 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172557    *;
+1172558    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1172559    var _iter_ _aic_ _averr_ _misc_
+1172560    _vaverr_ _vmisc_
+1172561    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172562    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1042.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172563    *------------------------------------------------------------*;
+1172564    * Extract best iteration;
+1172565    ;
+1172566    *------------------------------------------------------------*;
+1172567    %global _iter;
+1172568    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1172569    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1172570    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1172571    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1172572    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1172573    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1172574    end;
+MPRINT(EM_DIAGRAM):   end;
+1172575    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172576    *;
+
+1172577    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1172578    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1172579    if _ITER_ eq 10 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 10 then do;
+1172580    output;
+MPRINT(EM_DIAGRAM):   output;
+1172581    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172582    end;
+MPRINT(EM_DIAGRAM):   end;
+1172583    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172584    *;
+1172585    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172586    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1172587    if _ITER_ eq 10 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 10 and _NAME_ eq "OVERALL" then do;
+1172588    output;
+MPRINT(EM_DIAGRAM):   output;
+1172589    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172590    end;
+MPRINT(EM_DIAGRAM):   end;
+1172591    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 22 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172592    *;
+MPRINT(EM_DIAGRAM):    *;
+1172593    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172594    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1172594  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1172595    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1172596    var _iter_ _aic_ _averr_ _misc_
+1172597    _vaverr_ _vmisc_
+1172598    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172599    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1043.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172600    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1172601    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172602    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172603    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172604    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172605    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172606    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172607    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172608    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172609    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172610    *SEARCH: copy estimates and fit to best buffer;
+MPRINT(EM_DIAGRAM):    *SEARCH: copy estimates and fit to best buffer;
+1172611    ;
+MPRINT(EM_DIAGRAM):   ;
+1172612    data WORK.SAVEDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.SAVEDS_AUTONEUR_0YZCARR;
+1172613    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172614    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_0YZCARR has 1 observations and 91 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172615    data EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_BESTDS;
+1172616    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172617    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_BESTDS has 1 observations and 91 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172618    data WORK.BFITDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.BFITDS_AUTONEUR_0YZCARR;
+1172619    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172620    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_0YZCARR has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172621    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172622    ;
+MPRINT(EM_DIAGRAM):   ;
+1172623    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172624    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172625    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172626    _func_ = "LOGISTIC";
+MPRINT(EM_DIAGRAM):   _func_ = "LOGISTIC";
+1172627    _status_ = "candidate";
+MPRINT(EM_DIAGRAM):   _status_ = "candidate";
+1172628    _step_ = "FUNNEL LAYERS 1";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 1";
+1172629    _index_ = 1;
+MPRINT(EM_DIAGRAM):   _index_ = 1;
+1172630    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172631    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172632    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172633    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 3 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172634    *;
+MPRINT(EM_DIAGRAM):    *;
+1172635    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172636    validdata=EMWS8.Varsel_VALIDATE
+1172637    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172638    *;
+MPRINT(EM_DIAGRAM):   *;
+1172639    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172640    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172641    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1172642    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1172643    target DepVar / level=NOMINAL id=DepVar
+1172644    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1172645    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172646    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1172647    ;
+MPRINT(EM_DIAGRAM):   ;
+1172648    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172649    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1172650    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1172651    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1172652    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1172653    *;
+MPRINT(EM_DIAGRAM):   *;
+1172654    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1172655    *;
+MPRINT(EM_DIAGRAM):   *;
+1172656    initial
+1172657    ;
+MPRINT(EM_DIAGRAM):   initial ;
+1172658    *;
+MPRINT(EM_DIAGRAM):   *;
+1172659    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172660    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1172660  ! Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 3 : SINE : 
+Prelim";
+MPRINT(EM_DIAGRAM):   prelim 20 outest=_anpre pretime=44 preiter=25 tech = 
+Default ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 41 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1172661    prelim 20 outest=_anpre pretime=44 preiter=25
+1172662    tech = Default
+1172663    ;
+1172664    *;
+1172665    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172666    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1172666  ! Search # 1 FUNNEL LAYERS trial # 3 : SINE : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 3 : SINE : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=894 
+maxiter=50 tech = Default;
+WARNING: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 129 observations and 91 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1172667    train estiter=1 outest=_anest outfit=_anfit maxtime=894 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1172668    tech = Default;
+1172669    ;
+1172670    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           21.64 seconds
+      cpu time            21.35 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1044.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           21.65 seconds
+      cpu time            21.37 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172671    *;
+1172672    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1172673    var _iter_ _aic_ _averr_ _misc_
+1172674    _vaverr_ _vmisc_
+1172675    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172676    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1045.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172677    *------------------------------------------------------------*;
+1172678    * Extract best iteration;
+1172679    ;
+1172680    *------------------------------------------------------------*;
+1172681    %global _iter;
+1172682    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1172683    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1172684    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1172685    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1172686    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1172687    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1172688    end;
+MPRINT(EM_DIAGRAM):   end;
+1172689    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172690    *;
+
+1172691    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1172692    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1172693    if _ITER_ eq 0 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 0 then do;
+1172694    output;
+MPRINT(EM_DIAGRAM):   output;
+1172695    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172696    end;
+MPRINT(EM_DIAGRAM):   end;
+1172697    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172698    *;
+1172699    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172700    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1172701    if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+1172702    output;
+MPRINT(EM_DIAGRAM):   output;
+1172703    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172704    end;
+MPRINT(EM_DIAGRAM):   end;
+1172705    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172706    *;
+MPRINT(EM_DIAGRAM):    *;
+1172707    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172708    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1172708  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1172709    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1172710    var _iter_ _aic_ _averr_ _misc_
+1172711    _vaverr_ _vmisc_
+1172712    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172713    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1046.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172714    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1172715    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172716    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172717    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172718    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172719    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172720    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172721    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172722    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172723    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172724    *SEARCH: copy estimates and fit to best buffer;
+MPRINT(EM_DIAGRAM):    *SEARCH: copy estimates and fit to best buffer;
+1172725    ;
+MPRINT(EM_DIAGRAM):   ;
+1172726    data WORK.SAVEDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.SAVEDS_AUTONEUR_0YZCARR;
+1172727    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172728    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set WORK.SAVEDS_AUTONEUR_0YZCARR has 1 observations and 91 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172729    data EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_BESTDS;
+1172730    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1172731    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_BESTDS has 1 observations and 91 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172732    data WORK.BFITDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   data WORK.BFITDS_AUTONEUR_0YZCARR;
+1172733    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172734    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.BFITDS_AUTONEUR_0YZCARR has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172735    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172736    ;
+MPRINT(EM_DIAGRAM):   ;
+1172737    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172738    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172739    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172740    _func_ = "SINE";
+MPRINT(EM_DIAGRAM):   _func_ = "SINE";
+1172741    _status_ = "candidate";
+MPRINT(EM_DIAGRAM):   _status_ = "candidate";
+1172742    _step_ = "FUNNEL LAYERS 1";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 1";
+1172743    _index_ = 1;
+MPRINT(EM_DIAGRAM):   _index_ = 1;
+1172744    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172745    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172746    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172747    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 4 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172748    *;
+MPRINT(EM_DIAGRAM):    *;
+1172749    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172750    validdata=EMWS8.Varsel_VALIDATE
+1172751    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172752    *;
+MPRINT(EM_DIAGRAM):   *;
+1172753    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172754    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172755    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1172756    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1172757    target DepVar / level=NOMINAL id=DepVar
+1172758    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1172759    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172760    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1172761    ;
+MPRINT(EM_DIAGRAM):   ;
+1172762    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172763    Hidden 5 / id = H1x1_ act=SOFTMAX;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SOFTMAX;
+1172764    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1172765    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1172766    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1172767    *;
+MPRINT(EM_DIAGRAM):   *;
+1172768    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1172769    *;
+MPRINT(EM_DIAGRAM):   *;
+1172770    initial
+1172771    ;
+MPRINT(EM_DIAGRAM):   initial ;
+1172772    *;
+MPRINT(EM_DIAGRAM):   *;
+1172773    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172774    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1172774  ! Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : 
+Prelim";
+MPRINT(EM_DIAGRAM):   prelim 20 outest=_anpre pretime=44 preiter=25 tech = 
+Default ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 41 observations and 77 variables.
+MPRINT(EM_DIAGRAM):   *;
+1172775    prelim 20 outest=_anpre pretime=44 preiter=25
+1172776    tech = Default
+1172777    ;
+1172778    *;
+1172779    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172780    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1172780  ! Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 1 FUNNEL LAYERS trial # 4 : SOFTMAX : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=889 
+maxiter=50 tech = Default;
+NOTE: Convergence criterion (FCONV=0.0001) satisfied.
+NOTE: The data set WORK._ANEST has 96 observations and 77 variables.
+NOTE: The data set WORK._ANFIT has 66 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1172781    train estiter=1 outest=_anest outfit=_anfit maxtime=889 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1172782    tech = Default;
+1172783    ;
+1172784    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           16.24 seconds
+      cpu time            16.11 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1047.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           16.25 seconds
+      cpu time            16.11 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172785    *;
+1172786    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1172787    var _iter_ _aic_ _averr_ _misc_
+1172788    _vaverr_ _vmisc_
+1172789    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172790    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 33 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1048.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172791    *------------------------------------------------------------*;
+1172792    * Extract best iteration;
+1172793    ;
+1172794    *------------------------------------------------------------*;
+1172795    %global _iter;
+1172796    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1172797    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1172798    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1172799    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1172800    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1172801    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1172802    end;
+MPRINT(EM_DIAGRAM):   end;
+1172803    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 33 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172804    *;
+
+1172805    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1172806    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1172807    if _ITER_ eq 1 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 1 then do;
+1172808    output;
+MPRINT(EM_DIAGRAM):   output;
+1172809    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172810    end;
+MPRINT(EM_DIAGRAM):   end;
+1172811    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 77 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172812    *;
+1172813    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172814    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1172815    if _ITER_ eq 1 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 1 and _NAME_ eq "OVERALL" then do;
+1172816    output;
+MPRINT(EM_DIAGRAM):   output;
+1172817    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172818    end;
+MPRINT(EM_DIAGRAM):   end;
+1172819    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 4 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172820    *;
+MPRINT(EM_DIAGRAM):    *;
+1172821    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172822    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1172822  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1172823    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1172824    var _iter_ _aic_ _averr_ _misc_
+1172825    _vaverr_ _vmisc_
+1172826    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172827    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1049.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172828    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1172829    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172830    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172831    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172832    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172833    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172834    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172835    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172836    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172837    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172838    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172839    ;
+MPRINT(EM_DIAGRAM):   ;
+1172840    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172841    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172842    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172843    _func_ = "SOFTMAX";
+MPRINT(EM_DIAGRAM):   _func_ = "SOFTMAX";
+1172844    _status_ = "reject";
+MPRINT(EM_DIAGRAM):   _status_ = "reject";
+1172845    _step_ = "FUNNEL LAYERS 1";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 1";
+1172846    _index_ = 1;
+MPRINT(EM_DIAGRAM):   _index_ = 1;
+1172847    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172848    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172849    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172850    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 4 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 5 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172851    *SEARCH: recall best estimates and fit;
+MPRINT(EM_DIAGRAM):    *SEARCH: recall best estimates and fit;
+1172852    ;
+MPRINT(EM_DIAGRAM):   ;
+1172853    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_ESTDS;
+1172854    set EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_BESTDS;
+1172855    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_BESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172856    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172857    set WORK.BFITDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   set WORK.BFITDS_AUTONEUR_0YZCARR;
+1172858    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.BFITDS_AUTONEUR_0YZCARR.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172859    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172860    ;
+MPRINT(EM_DIAGRAM):   ;
+1172861    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172862    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172863    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172864    _func_ = "SINE";
+MPRINT(EM_DIAGRAM):   _func_ = "SINE";
+1172865    _status_ = "keep";
+MPRINT(EM_DIAGRAM):   _status_ = "keep";
+1172866    _step_ = "FUNNEL LAYERS 1";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 1";
+1172867    _index_ = 1;
+MPRINT(EM_DIAGRAM):   _index_ = 1;
+1172868    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172869    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172870    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172871    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 5 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 6 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172872    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172873    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172874    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172875    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 40 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172876    *;
+MPRINT(EM_DIAGRAM):    *;
+1172877    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172878    validdata=EMWS8.Varsel_VALIDATE
+1172879    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172880    *;
+MPRINT(EM_DIAGRAM):   *;
+1172881    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172882    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172883    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1172884    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1172885    target DepVar / level=NOMINAL id=DepVar
+1172886    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1172887    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172888    * Direct connection;
+MPRINT(EM_DIAGRAM):   * Direct connection;
+1172889    ;
+MPRINT(EM_DIAGRAM):   ;
+1172890    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172891    connect interval DepVar;
+MPRINT(EM_DIAGRAM):   connect interval DepVar;
+1172892    connect nominal DepVar;
+MPRINT(EM_DIAGRAM):   connect nominal DepVar;
+1172893    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172894    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1172895    ;
+MPRINT(EM_DIAGRAM):   ;
+1172896    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172897    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1172898    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1172899    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1172900    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1172901    *;
+MPRINT(EM_DIAGRAM):   *;
+1172902    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1172903    *;
+MPRINT(EM_DIAGRAM):   *;
+1172904    initial
+1172905    inest = EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest = EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1172906    ;
+MPRINT(EM_DIAGRAM):   ;
+1172907    *;
+MPRINT(EM_DIAGRAM):   *;
+1172908    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172909    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1172909  ! Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : 
+Prelim";
+1172910    prelim 20 outest=_anpre pretime=44 preiter=25
+MPRINT(EM_DIAGRAM):   prelim 20 outest=_anpre pretime=44 preiter=25 tech = 
+Default inest = EMWS8.AutoNeural27_ESTDS bylabel ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+The prelim will run only once. Use the randbias or randout option on the target 
+layer.
+NOTE: The data set WORK._ANPRE has 3 observations and 104 variables.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1172911    tech = Default
+1172912    inest = EMWS8.AutoNeural27_ESTDS bylabel
+1172913    ;
+1172914    *;
+1172915    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172916    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1172916  ! Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 1 : DIRECT : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=885 
+maxiter=50 tech = Default;
+WARNING: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 142 observations and 104 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1172917    train estiter=1 outest=_anest outfit=_anfit maxtime=885 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1172918    tech = Default;
+1172919    ;
+1172920    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           4.02 seconds
+      cpu time            3.79 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1050.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           4.03 seconds
+      cpu time            3.79 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172921    *;
+1172922    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1172923    var _iter_ _aic_ _averr_ _misc_
+1172924    _vaverr_ _vmisc_
+1172925    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172926    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1051.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1172927    *------------------------------------------------------------*;
+1172928    * Extract best iteration;
+1172929    ;
+1172930    *------------------------------------------------------------*;
+1172931    %global _iter;
+1172932    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1172933    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1172934    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1172935    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1172936    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1172937    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1172938    end;
+MPRINT(EM_DIAGRAM):   end;
+1172939    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172940    *;
+
+1172941    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1172942    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1172943    if _ITER_ eq 0 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 0 then do;
+1172944    output;
+MPRINT(EM_DIAGRAM):   output;
+1172945    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172946    end;
+MPRINT(EM_DIAGRAM):   end;
+1172947    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 104 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1172948    *;
+1172949    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172950    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1172951    if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 0 and _NAME_ eq "OVERALL" then do;
+1172952    output;
+MPRINT(EM_DIAGRAM):   output;
+1172953    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1172954    end;
+MPRINT(EM_DIAGRAM):   end;
+1172955    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172956    *;
+MPRINT(EM_DIAGRAM):    *;
+1172957    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1172958    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1172958  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1172959    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1172960    var _iter_ _aic_ _averr_ _misc_
+1172961    _vaverr_ _vmisc_
+1172962    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1172963    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1052.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172964    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1172965    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1172966    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172967    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172968    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172969    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172970    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1172971    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172972    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1172973    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172974    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1172975    ;
+MPRINT(EM_DIAGRAM):   ;
+1172976    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1172977    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1172978    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1172979    _func_ = "DIRECT";
+MPRINT(EM_DIAGRAM):   _func_ = "DIRECT";
+1172980    _status_ = "reject";
+MPRINT(EM_DIAGRAM):   _status_ = "reject";
+1172981    _step_ = "FUNNEL LAYERS 2";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 2";
+1172982    _index_ = 2;
+MPRINT(EM_DIAGRAM):   _index_ = 2;
+1172983    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172984    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1172985    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1172986    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 6 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 7 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1172987    * SEARCH: recall starting estimates;
+MPRINT(EM_DIAGRAM):    * SEARCH: recall starting estimates;
+1172988    ;
+MPRINT(EM_DIAGRAM):   ;
+1172989    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_ESTDS;
+1172990    set EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_BESTDS;
+1172991    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_BESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1172992    *;
+MPRINT(EM_DIAGRAM):    *;
+1172993    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1172994    validdata=EMWS8.Varsel_VALIDATE
+1172995    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1172996    *;
+MPRINT(EM_DIAGRAM):   *;
+1172997    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1172998    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1172999    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1173000    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1173001    target DepVar / level=NOMINAL id=DepVar
+1173002    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1173003    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173004    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1173005    ;
+MPRINT(EM_DIAGRAM):   ;
+1173006    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173007    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1173008    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1173009    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1173010    Hidden 5 / id = H1x2_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x2_ act=SINE;
+1173011    connect interval H1x2_;
+MPRINT(EM_DIAGRAM):   connect interval H1x2_;
+1173012    connect nominal H1x2_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x2_;
+1173013    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173014    * Layer #2;
+MPRINT(EM_DIAGRAM):   * Layer #2;
+1173015    ;
+MPRINT(EM_DIAGRAM):   ;
+1173016    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173017    Hidden 5 / id = H2x1_ act=LOG;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H2x1_ act=LOG;
+1173018    connect H1x1_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x1_ H2x1_;
+1173019    connect H1x2_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x2_ H2x1_;
+1173020    connect H2x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H2x1_ DepVar;
+1173021    *;
+MPRINT(EM_DIAGRAM):   *;
+1173022    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1173023    *;
+MPRINT(EM_DIAGRAM):   *;
+1173024    initial
+1173025    inest = EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest = EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1173026    ;
+MPRINT(EM_DIAGRAM):   ;
+1173027    *;
+MPRINT(EM_DIAGRAM):   *;
+1173028    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173029    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1173029  ! Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : 
+Prelim";
+1173030    prelim 25 outest=_anpre pretime=35 preiter=25
+MPRINT(EM_DIAGRAM):   prelim 25 outest=_anpre pretime=35 preiter=25 tech = 
+Default inest = EMWS8.AutoNeural27_ESTDS bylabel ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 51 observations and 216 variables.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1173031    tech = Default
+1173032    inest = EMWS8.AutoNeural27_ESTDS bylabel
+1173033    ;
+1173034    *;
+1173035    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173036    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1173036  ! Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 2 : LOGISTIC : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=884 
+maxiter=50 tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 53 observations and 216 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1173037    train estiter=1 outest=_anest outfit=_anfit maxtime=884 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1173038    tech = Default;
+1173039    ;
+1173040    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           9.26 seconds
+      cpu time            9.14 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1053.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           9.26 seconds
+      cpu time            9.15 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173041    *;
+1173042    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1173043    var _iter_ _aic_ _averr_ _misc_
+1173044    _vaverr_ _vmisc_
+1173045    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173046    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1054.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173047    *------------------------------------------------------------*;
+1173048    * Extract best iteration;
+1173049    ;
+1173050    *------------------------------------------------------------*;
+1173051    %global _iter;
+1173052    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1173053    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1173054    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1173055    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1173056    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1173057    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1173058    end;
+MPRINT(EM_DIAGRAM):   end;
+1173059    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173060    *;
+
+1173061    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1173062    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1173063    if _ITER_ eq 11 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 11 then do;
+1173064    output;
+MPRINT(EM_DIAGRAM):   output;
+1173065    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173066    end;
+MPRINT(EM_DIAGRAM):   end;
+1173067    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 12 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 216 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173068    *;
+1173069    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173070    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1173071    if _ITER_ eq 11 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 11 and _NAME_ eq "OVERALL" then do;
+1173072    output;
+MPRINT(EM_DIAGRAM):   output;
+1173073    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173074    end;
+MPRINT(EM_DIAGRAM):   end;
+1173075    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 24 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173076    *;
+MPRINT(EM_DIAGRAM):    *;
+1173077    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173078    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1173078  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1173079    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1173080    var _iter_ _aic_ _averr_ _misc_
+1173081    _vaverr_ _vmisc_
+1173082    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173083    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1055.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173084    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1173085    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173086    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173087    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173088    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173089    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173090    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173091    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173092    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173093    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173094    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1173095    ;
+MPRINT(EM_DIAGRAM):   ;
+1173096    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173097    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173098    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1173099    _func_ = "LOGISTIC";
+MPRINT(EM_DIAGRAM):   _func_ = "LOGISTIC";
+1173100    _status_ = "reject";
+MPRINT(EM_DIAGRAM):   _status_ = "reject";
+1173101    _step_ = "FUNNEL LAYERS 2";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 2";
+1173102    _index_ = 2;
+MPRINT(EM_DIAGRAM):   _index_ = 2;
+1173103    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173104    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1173105    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1173106    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 7 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 8 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173107    * SEARCH: recall starting estimates;
+MPRINT(EM_DIAGRAM):    * SEARCH: recall starting estimates;
+1173108    ;
+MPRINT(EM_DIAGRAM):   ;
+1173109    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_ESTDS;
+1173110    set EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_BESTDS;
+1173111    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_BESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173112    *;
+MPRINT(EM_DIAGRAM):    *;
+1173113    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1173114    validdata=EMWS8.Varsel_VALIDATE
+1173115    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1173116    *;
+MPRINT(EM_DIAGRAM):   *;
+1173117    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1173118    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1173119    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1173120    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1173121    target DepVar / level=NOMINAL id=DepVar
+1173122    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1173123    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173124    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1173125    ;
+MPRINT(EM_DIAGRAM):   ;
+1173126    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173127    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1173128    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1173129    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1173130    Hidden 5 / id = H1x2_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x2_ act=SINE;
+1173131    connect interval H1x2_;
+MPRINT(EM_DIAGRAM):   connect interval H1x2_;
+1173132    connect nominal H1x2_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x2_;
+1173133    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173134    * Layer #2;
+MPRINT(EM_DIAGRAM):   * Layer #2;
+1173135    ;
+MPRINT(EM_DIAGRAM):   ;
+1173136    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173137    Hidden 5 / id = H2x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H2x1_ act=SINE;
+1173138    connect H1x1_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x1_ H2x1_;
+1173139    connect H1x2_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x2_ H2x1_;
+1173140    connect H2x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H2x1_ DepVar;
+1173141    *;
+MPRINT(EM_DIAGRAM):   *;
+1173142    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1173143    *;
+MPRINT(EM_DIAGRAM):   *;
+1173144    initial
+1173145    inest = EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest = EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1173146    ;
+MPRINT(EM_DIAGRAM):   ;
+1173147    *;
+MPRINT(EM_DIAGRAM):   *;
+1173148    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173149    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1173149  ! Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 3 : SINE : 
+Prelim";
+1173150    prelim 25 outest=_anpre pretime=35 preiter=25
+MPRINT(EM_DIAGRAM):   prelim 25 outest=_anpre pretime=35 preiter=25 tech = 
+Default inest = EMWS8.AutoNeural27_ESTDS bylabel ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 51 observations and 216 variables.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1173151    tech = Default
+1173152    inest = EMWS8.AutoNeural27_ESTDS bylabel
+1173153    ;
+1173154    *;
+1173155    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173156    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1173156  ! Search # 2 FUNNEL LAYERS trial # 3 : SINE : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 3 : SINE : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=881 
+maxiter=50 tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 53 observations and 216 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1173157    train estiter=1 outest=_anest outfit=_anfit maxtime=881 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1173158    tech = Default;
+1173159    ;
+1173160    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           8.12 seconds
+      cpu time            8.06 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1056.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           8.12 seconds
+      cpu time            8.06 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173161    *;
+1173162    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1173163    var _iter_ _aic_ _averr_ _misc_
+1173164    _vaverr_ _vmisc_
+1173165    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173166    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1057.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173167    *------------------------------------------------------------*;
+1173168    * Extract best iteration;
+1173169    ;
+1173170    *------------------------------------------------------------*;
+1173171    %global _iter;
+1173172    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1173173    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1173174    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1173175    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1173176    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1173177    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1173178    end;
+MPRINT(EM_DIAGRAM):   end;
+1173179    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173180    *;
+
+1173181    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1173182    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1173183    if _ITER_ eq 11 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 11 then do;
+1173184    output;
+MPRINT(EM_DIAGRAM):   output;
+1173185    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173186    end;
+MPRINT(EM_DIAGRAM):   end;
+1173187    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 12 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 216 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173188    *;
+1173189    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173190    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1173191    if _ITER_ eq 11 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 11 and _NAME_ eq "OVERALL" then do;
+1173192    output;
+MPRINT(EM_DIAGRAM):   output;
+1173193    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173194    end;
+MPRINT(EM_DIAGRAM):   end;
+1173195    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 24 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173196    *;
+MPRINT(EM_DIAGRAM):    *;
+1173197    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173198    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1173198  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1173199    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1173200    var _iter_ _aic_ _averr_ _misc_
+1173201    _vaverr_ _vmisc_
+1173202    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173203    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1058.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173204    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1173205    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173206    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173207    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173208    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173209    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173210    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173211    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173212    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173213    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173214    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1173215    ;
+MPRINT(EM_DIAGRAM):   ;
+1173216    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173217    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173218    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1173219    _func_ = "SINE";
+MPRINT(EM_DIAGRAM):   _func_ = "SINE";
+1173220    _status_ = "reject";
+MPRINT(EM_DIAGRAM):   _status_ = "reject";
+1173221    _step_ = "FUNNEL LAYERS 2";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 2";
+1173222    _index_ = 2;
+MPRINT(EM_DIAGRAM):   _index_ = 2;
+1173223    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173224    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1173225    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1173226    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 8 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 9 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173227    * SEARCH: recall starting estimates;
+MPRINT(EM_DIAGRAM):    * SEARCH: recall starting estimates;
+1173228    ;
+MPRINT(EM_DIAGRAM):   ;
+1173229    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_ESTDS;
+1173230    set EMWS8.AutoNeural27_BESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_BESTDS;
+1173231    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_BESTDS.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173232    *;
+MPRINT(EM_DIAGRAM):    *;
+1173233    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1173234    validdata=EMWS8.Varsel_VALIDATE
+1173235    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1173236    *;
+MPRINT(EM_DIAGRAM):   *;
+1173237    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1173238    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1173239    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1173240    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1173241    target DepVar / level=NOMINAL id=DepVar
+1173242    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1173243    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173244    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1173245    ;
+MPRINT(EM_DIAGRAM):   ;
+1173246    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173247    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1173248    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1173249    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1173250    Hidden 5 / id = H1x2_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x2_ act=SINE;
+1173251    connect interval H1x2_;
+MPRINT(EM_DIAGRAM):   connect interval H1x2_;
+1173252    connect nominal H1x2_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x2_;
+1173253    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173254    * Layer #2;
+MPRINT(EM_DIAGRAM):   * Layer #2;
+1173255    ;
+MPRINT(EM_DIAGRAM):   ;
+1173256    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173257    Hidden 5 / id = H2x1_ act=SOFTMAX;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H2x1_ act=SOFTMAX;
+1173258    connect H1x1_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x1_ H2x1_;
+1173259    connect H1x2_ H2x1_;
+MPRINT(EM_DIAGRAM):   connect H1x2_ H2x1_;
+1173260    connect H2x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H2x1_ DepVar;
+1173261    *;
+MPRINT(EM_DIAGRAM):   *;
+1173262    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1173263    *;
+MPRINT(EM_DIAGRAM):   *;
+1173264    initial
+1173265    inest = EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest = EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1173266    ;
+MPRINT(EM_DIAGRAM):   ;
+1173267    *;
+MPRINT(EM_DIAGRAM):   *;
+1173268    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173269    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1173269  ! Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : 
+Prelim";
+1173270    prelim 25 outest=_anpre pretime=35 preiter=25
+MPRINT(EM_DIAGRAM):   prelim 25 outest=_anpre pretime=35 preiter=25 tech = 
+Default inest = EMWS8.AutoNeural27_ESTDS bylabel ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 25 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANPRE has 51 observations and 205 variables.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1173271    tech = Default
+1173272    inest = EMWS8.AutoNeural27_ESTDS bylabel
+1173273    ;
+1173274    *;
+1173275    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173276    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1173276  ! Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : ))";
+MPRINT(EM_DIAGRAM):   title10 "Search # 2 FUNNEL LAYERS trial # 4 : SOFTMAX : 
+Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=879 
+maxiter=50 tech = Default;
+WARNING: QUANEW Optimization cannot be completed.
+NOTE: QUANEW needs more than 50 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 53 observations and 205 variables.
+NOTE: The data set WORK._ANFIT has 104 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1173277    train estiter=1 outest=_anest outfit=_anfit maxtime=879 maxiter=50
+MPRINT(EM_DIAGRAM):   run;
+1173278    tech = Default;
+1173279    ;
+1173280    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           9.26 seconds
+      cpu time            9.17 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1059.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           9.27 seconds
+      cpu time            9.17 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173281    *;
+1173282    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1173283    var _iter_ _aic_ _averr_ _misc_
+1173284    _vaverr_ _vmisc_
+1173285    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173286    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1060.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173287    *------------------------------------------------------------*;
+1173288    * Extract best iteration;
+1173289    ;
+1173290    *------------------------------------------------------------*;
+1173291    %global _iter;
+1173292    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1173293    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1173294    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1173295    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1173296    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1173297    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1173298    end;
+MPRINT(EM_DIAGRAM):   end;
+1173299    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 52 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173300    *;
+
+1173301    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1173302    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1173303    if _ITER_ eq 15 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 15 then do;
+1173304    output;
+MPRINT(EM_DIAGRAM):   output;
+1173305    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173306    end;
+MPRINT(EM_DIAGRAM):   end;
+1173307    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 16 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 205 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173308    *;
+1173309    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173310    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1173311    if _ITER_ eq 15 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 15 and _NAME_ eq "OVERALL" then do;
+1173312    output;
+MPRINT(EM_DIAGRAM):   output;
+1173313    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173314    end;
+MPRINT(EM_DIAGRAM):   end;
+1173315    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 32 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173316    *;
+MPRINT(EM_DIAGRAM):    *;
+1173317    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173318    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1173318  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1173319    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1173320    var _iter_ _aic_ _averr_ _misc_
+1173321    _vaverr_ _vmisc_
+1173322    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173323    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1061.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173324    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1173325    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173326    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173327    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173328    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173329    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173330    data work.tmp_outfit;
+MPRINT(EM_DIAGRAM):    data work.tmp_outfit;
+1173331    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173332    if _NAME_ = 'OVERALL';
+MPRINT(EM_DIAGRAM):   if _NAME_ = 'OVERALL';
+1173333    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set WORK.TMP_OUTFIT has 1 observations and 36 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173334    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1173335    ;
+MPRINT(EM_DIAGRAM):   ;
+1173336    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173337    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173338    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1173339    _func_ = "SOFTMAX";
+MPRINT(EM_DIAGRAM):   _func_ = "SOFTMAX";
+1173340    _status_ = "reject";
+MPRINT(EM_DIAGRAM):   _status_ = "reject";
+1173341    _step_ = "FUNNEL LAYERS 2";
+MPRINT(EM_DIAGRAM):   _step_ = "FUNNEL LAYERS 2";
+1173342    _index_ = 2;
+MPRINT(EM_DIAGRAM):   _index_ = 2;
+1173343    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173344    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1173345    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1173346    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 9 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 10 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173347    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1173348    set WORK.SAVEDS_AUTONEUR_0YZCARR;
+MPRINT(EM_DIAGRAM):   set WORK.SAVEDS_AUTONEUR_0YZCARR;
+1173349    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      WORK.SAVEDS_AUTONEUR_0YZCARR.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173350    *;
+MPRINT(EM_DIAGRAM):    *;
+1173351    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1173352    validdata=EMWS8.Varsel_VALIDATE
+1173353    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1173354    *;
+MPRINT(EM_DIAGRAM):   *;
+1173355    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1173356    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1173357    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1173358    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1173359    target DepVar / level=NOMINAL id=DepVar
+1173360    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1173361    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173362    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1173363    ;
+MPRINT(EM_DIAGRAM):   ;
+1173364    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173365    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1173366    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1173367    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1173368    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1173369    *;
+MPRINT(EM_DIAGRAM):   *;
+1173370    netoptions ranscale = 1;
+MPRINT(EM_DIAGRAM):   netoptions ranscale = 1;
+1173371    *;
+MPRINT(EM_DIAGRAM):   *;
+1173372    initial
+1173373    inest = EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest = EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1173374    ;
+MPRINT(EM_DIAGRAM):   ;
+1173375    *;
+MPRINT(EM_DIAGRAM):   *;
+1173376    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173377    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_prelim_title  ,NOQUOTE,
+1173377  ! Final Training))";
+MPRINT(EM_DIAGRAM):   title10 "Final Training Prelim";
+1173378    prelim 20 outest=_anpre pretime=43 preiter=25
+MPRINT(EM_DIAGRAM):   prelim 20 outest=_anpre pretime=43 preiter=25 tech = 
+Default inest = EMWS8.AutoNeural27_ESTDS bylabel ;
+NOTE:  Synchronizing the objectives and the Solution.
+NOTE: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 25 iterations or 2147483647 function calls.
+The prelim will run only once. Use the randbias or randout option on the target 
+layer.
+NOTE: The data set WORK._ANPRE has 3 observations and 91 variables.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+MPRINT(EM_DIAGRAM):   *;
+1173379    tech = Default
+1173380    inest = EMWS8.AutoNeural27_ESTDS bylabel
+1173381    ;
+1173382    *;
+1173383    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173384    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_train_title  ,NOQUOTE,
+1173384  ! Final Training))";
+MPRINT(EM_DIAGRAM):   title10 "Final Training Training";
+MPRINT(EM_DIAGRAM):   train estiter=1 outest=_anest outfit=_anfit maxtime=877 
+maxiter=5 tech = Default;
+WARNING: LEVMAR Optimization cannot be completed.
+NOTE: LEVMAR needs more than 5 iterations or 2147483647 function calls.
+NOTE: The data set WORK._ANEST has 84 observations and 91 variables.
+NOTE: The data set WORK._ANFIT has 14 observations and 36 variables.
+MPRINT(EM_DIAGRAM):   ;
+1173385    train estiter=1 outest=_anest outfit=_anfit maxtime=877 maxiter=5
+MPRINT(EM_DIAGRAM):   run;
+1173386    tech = Default;
+1173387    ;
+1173388    run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           1.40 seconds
+      cpu time            1.40 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: The PROCEDURE NEURAL printed page 1062.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           1.41 seconds
+      cpu time            1.40 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173389    *;
+1173390    proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+MPRINT(EM_DIAGRAM):   proc print data=_anfit(where=(_name_ eq 'OVERALL')) noobs;
+1173391    var _iter_ _aic_ _averr_ _misc_
+1173392    _vaverr_ _vmisc_
+1173393    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173394    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 7 observations read from the data set WORK._ANFIT.
+      WHERE _name_='OVERALL';
+NOTE: The PROCEDURE PRINT printed page 1063.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Extract best iteration;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173395    *------------------------------------------------------------*;
+1173396    * Extract best iteration;
+1173397    ;
+1173398    *------------------------------------------------------------*;
+1173399    %global _iter;
+1173400    data _null_;
+MPRINT(EM_DIAGRAM):   data _null_;
+1173401    set _anfit(where=(_NAME_ eq 'OVERALL'));
+MPRINT(EM_DIAGRAM):   set _anfit(where=(_NAME_ eq 'OVERALL'));
+1173402    retain _min 1e+64;
+MPRINT(EM_DIAGRAM):   retain _min 1e+64;
+1173403    if _VMISC_ < _min then do;
+MPRINT(EM_DIAGRAM):   if _VMISC_ < _min then do;
+1173404    _min = _VMISC_;
+MPRINT(EM_DIAGRAM):   _min = _VMISC_;
+1173405    call symput('_iter',put(_ITER_, 6.));
+MPRINT(EM_DIAGRAM):   call symput('_iter',put(_ITER_, 6.));
+1173406    end;
+MPRINT(EM_DIAGRAM):   end;
+1173407    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 7 observations read from the data set WORK._ANFIT.
+      WHERE _NAME_='OVERALL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173408    *;
+
+1173409    data EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_ESTDS;
+1173410    set _anest;
+MPRINT(EM_DIAGRAM):   set _anest;
+1173411    if _ITER_ eq 2 then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 2 then do;
+1173412    output;
+MPRINT(EM_DIAGRAM):   output;
+1173413    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173414    end;
+MPRINT(EM_DIAGRAM):   end;
+1173415    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 3 observations read from the data set WORK._ANEST.
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *;
+1173416    *;
+1173417    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173418    set _anfit;
+MPRINT(EM_DIAGRAM):   set _anfit;
+1173419    if _ITER_ eq 2 and _NAME_ eq "OVERALL" then do;
+MPRINT(EM_DIAGRAM):   if _ITER_ eq 2 and _NAME_ eq "OVERALL" then do;
+1173420    output;
+MPRINT(EM_DIAGRAM):   output;
+1173421    stop;
+MPRINT(EM_DIAGRAM):   stop;
+1173422    end;
+MPRINT(EM_DIAGRAM):   end;
+1173423    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 6 observations read from the data set WORK._ANFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173424    *;
+MPRINT(EM_DIAGRAM):    *;
+1173425    title9 " ";
+MPRINT(EM_DIAGRAM):   title9 " ";
+1173426    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_selectediteration_title
+1173426  ! , NOQUOTE, _VMISC_))";
+MPRINT(EM_DIAGRAM):   title10 "Selected Iteration based on _VMISC_";
+1173427    proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_OUTFIT noobs;
+1173428    var _iter_ _aic_ _averr_ _misc_
+1173429    _vaverr_ _vmisc_
+1173430    ;
+MPRINT(EM_DIAGRAM):   var _iter_ _aic_ _averr_ _misc_ _vaverr_ _vmisc_ ;
+1173431    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The PROCEDURE PRINT printed page 1064.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173432    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1173433    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173434    * Accumulate history;
+MPRINT(EM_DIAGRAM):    * Accumulate history;
+1173435    ;
+MPRINT(EM_DIAGRAM):   ;
+1173436    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173437    set EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_OUTFIT;
+1173438    length _func_ _status_ _step_ $16 _index_ 8;
+MPRINT(EM_DIAGRAM):   length _func_ _status_ _step_ $16 _index_ 8;
+1173439    _func_ = "";
+MPRINT(EM_DIAGRAM):   _func_ = "";
+1173440    _status_ = "Final";
+MPRINT(EM_DIAGRAM):   _status_ = "Final";
+1173441    _step_ = "";
+MPRINT(EM_DIAGRAM):   _step_ = "";
+1173442    _index_ = 5;
+MPRINT(EM_DIAGRAM):   _index_ = 5;
+1173443    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 1 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173444    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_HISTORY;
+1173445    set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY EMWS8.AutoNeural27_OUTFIT;
+1173446    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 10 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: There were 1 observations read from the data set 
+      EMWS8.AUTONEURAL27_OUTFIT.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 11 observations and 40 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173447    title9 " ";
+MPRINT(EM_DIAGRAM):    title9 " ";
+1173448    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_finaltrainhistory_title
+1173448  ! , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Final Training History";
+1173449    proc print data=EMWS8.AutoNeural27_HISTORY noobs;
+MPRINT(EM_DIAGRAM):   proc print data=EMWS8.AutoNeural27_HISTORY noobs;
+1173450    var _step_ _func_ _status_ _iter_ _averr_ _misc_ _aic_
+1173451    _vaverr_ _vmisc_
+1173452    ;
+MPRINT(EM_DIAGRAM):   var _step_ _func_ _status_ _iter_ _averr_ _misc_ _aic_ 
+_vaverr_ _vmisc_ ;
+1173453    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: The PROCEDURE PRINT printed page 1065.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173454    data work.keep_history;
+MPRINT(EM_DIAGRAM):   data work.keep_history;
+1173455    set EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY;
+1173456    if _status_='keep';
+MPRINT(EM_DIAGRAM):   if _status_='keep';
+1173457    if _func_='DIRECT' then neurons=0;
+MPRINT(EM_DIAGRAM):   if _func_='DIRECT' then neurons=0;
+1173458    else neurons=5;
+MPRINT(EM_DIAGRAM):   else neurons=5;
+1173459    label neurons="%sysfunc(sasmsg(sashelp.dmine,
+1173459  ! rpt_numberneurons_vlabel  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label neurons= "Number of Neurons";
+1173460    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set 
+      EMWS8.AUTONEURAL27_HISTORY.
+NOTE: The data set WORK.KEEP_HISTORY has 1 observations and 41 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173461    title8 " ";
+MPRINT(EM_DIAGRAM):   title8 " ";
+1173462    title9 "%sysfunc(sasmsg(sashelp.dmine, rpt_finalmodel_title  ,
+1173462  ! NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title9 "Final Model";
+1173463    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_stopping_title  ,
+1173463  ! NOQUOTE, %nrbquote(Termination criteria were satisfied: overfitting
+1173463  ! based on _VMISC_)))";
+MPRINT(EM_DIAGRAM):   title10 "Stopping: Termination criteria were satisfied: 
+overfitting based on _VMISC_";
+1173464    proc print data=work.keep_history noobs;
+MPRINT(EM_DIAGRAM):   proc print data=work.keep_history noobs;
+1173465    var _func_ _averr_
+1173466    _vaverr_
+1173467    neurons;
+MPRINT(EM_DIAGRAM):   var _func_ _averr_ _vaverr_ neurons;
+1173468    sum neurons;
+MPRINT(EM_DIAGRAM):   sum neurons;
+1173469    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.KEEP_HISTORY.
+NOTE: The PROCEDURE PRINT printed page 1066.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173470    title8;
+MPRINT(EM_DIAGRAM):   title8;
+1173471    title9;
+MPRINT(EM_DIAGRAM):   title9;
+1173472    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173473    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    
+*------------------------------------------------------------*;
+1173474    * AutoNeural Final Network;
+MPRINT(EM_DIAGRAM):   * AutoNeural Final Network;
+1173475    ;
+MPRINT(EM_DIAGRAM):   ;
+1173476    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173477    *;
+MPRINT(EM_DIAGRAM):   *;
+1173478    proc neural data=EM_AutoNeural27 dmdbcat=WORK.AutoNeural27_DMDB
+1173479    validdata=EMWS8.Varsel_VALIDATE
+1173480    ;
+MPRINT(EM_DIAGRAM):   proc neural data=EM_AutoNeural27 
+dmdbcat=WORK.AutoNeural27_DMDB validdata=EMWS8.Varsel_VALIDATE ;
+1173481    *;
+MPRINT(EM_DIAGRAM):   *;
+1173482    nloptions noprint;
+MPRINT(EM_DIAGRAM):   nloptions noprint;
+1173483    performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   performance alldetails noutilfile;
+MPRINT(EM_DIAGRAM):   input
+1173484    input %INTINPUTS / level=interval id=interval;
+MPRINT(INTINPUTS):   AcceptedCmpTotal Frq Income Mnt MntGoldProds 
+MntMeatProducts MntWines NumDistPurchases RFMstat RMntFrq Recency
+MPRINT(EM_DIAGRAM):   / level=interval id=interval;
+MPRINT(EM_DIAGRAM):   input
+1173485    input %NOMINPUTS / level=nominal id=nominal;
+MPRINT(NOMINPUTS):   G_Marital_Status
+MPRINT(EM_DIAGRAM):   / level=nominal id=nominal;
+1173486    target DepVar / level=NOMINAL id=DepVar
+1173487    ;
+MPRINT(EM_DIAGRAM):   target DepVar / level=NOMINAL id=DepVar ;
+1173488    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173489    * Layer #1;
+MPRINT(EM_DIAGRAM):   * Layer #1;
+1173490    ;
+MPRINT(EM_DIAGRAM):   ;
+1173491    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173492    Hidden 5 / id = H1x1_ act=SINE;
+MPRINT(EM_DIAGRAM):   Hidden 5 / id = H1x1_ act=SINE;
+1173493    connect interval H1x1_;
+MPRINT(EM_DIAGRAM):   connect interval H1x1_;
+1173494    connect nominal H1x1_;
+MPRINT(EM_DIAGRAM):   connect nominal H1x1_;
+1173495    connect H1x1_ DepVar;
+MPRINT(EM_DIAGRAM):   connect H1x1_ DepVar;
+1173496    *;
+MPRINT(EM_DIAGRAM):   *;
+1173497    initial inest= EMWS8.AutoNeural27_ESTDS bylabel;
+MPRINT(EM_DIAGRAM):   initial inest= EMWS8.AutoNeural27_ESTDS bylabel;
+NOTE: The data set EMWS8.AUTONEURAL27_ESTDS has 1 observations and 91 variables.
+1173498    train tech=none;
+MPRINT(EM_DIAGRAM):   train tech=none;
+NOTE: No optimization performed.
+1173499    code
+1173499  ! file="C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\SCO
+1173499  ! RECODE.sas"
+1173500    group=AutoNeural27
+1173501    ;
+MPRINT(EM_DIAGRAM):   code 
+file="C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\SCORECODE.sas"
+ group=AutoNeural27 ;
+NOTE: External file 
+      C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\SCORECODE.sas 
+      opened.
+1173502    ;
+MPRINT(EM_DIAGRAM):   ;
+1173503    code
+1173503  ! file="C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\RES
+1173503  ! IDUALSCORECODE.sas"
+1173504    group=AutoNeural27
+1173505    residual
+1173506    ;
+MPRINT(EM_DIAGRAM):   code 
+file="C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\RESIDUALSCOREC
+ODE.sas" group=AutoNeural27 residual ;
+NOTE: External file 
+      C:\\predictive-models-project\Workspaces\EMWS8\AutoNeural27\RESIDUALSCOREC
+      ODE.sas opened.
+1173507    ;
+MPRINT(EM_DIAGRAM):   ;
+1173508    score data=EMWS8.Varsel_TRAIN out=_NULL_
+NOTE: View EMWS8.VARSEL_TRAIN.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+1173509    outfit=WORK.FIT1
+1173510    role=TRAIN
+1173511    outkey=EMWS8.AutoNeural27_OUTKEY;
+MPRINT(EM_DIAGRAM):   score data=EMWS8.Varsel_TRAIN out=_NULL_ outfit=WORK.FIT1 
+role=TRAIN outkey=EMWS8.AutoNeural27_OUTKEY;
+NOTE: The data set EMWS8.AUTONEURAL27_OUTKEY has 30 observations and 8 
+      variables.
+NOTE: The data set EMWS8.VARSEL_TRAIN has . observations and 47 variables.
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: The data set WORK.FIT1 has 2 observations and 23 variables.
+1173512    score data=EMWS8.Varsel_VALIDATE out=_NULL_
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.03 seconds
+      
+1173513    outfit=WORK.FIT2
+1173514    outkey=EMWS8.AutoNeural27_OUTKEY;
+MPRINT(EM_DIAGRAM):   score data=EMWS8.Varsel_VALIDATE out=_NULL_ 
+outfit=WORK.FIT2 outkey=EMWS8.AutoNeural27_OUTKEY;
+NOTE: The data set EMWS8.AUTONEURAL27_OUTKEY has 30 observations and 8 
+      variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: The data set WORK.FIT2 has 2 observations and 15 variables.
+1173515    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK.EM_AUTONEURAL27 has 2374 observations and 13 variables.
+NOTE: The data set EMWS8.VARSEL_VALIDATE has . observations and 47 variables.
+NOTE: View EMWS8.VARSEL_VALIDATE.VIEW used (Total process time):
+      real time           0.21 seconds
+      cpu time            0.21 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: Closing the Neural Application.
+NOTE: PROCEDURE NEURAL used (Total process time):
+      real time           0.21 seconds
+      cpu time            0.21 seconds
+      
+
+1173516    data EMWS8.AutoNeural27_OUTFIT;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_OUTFIT;
+1173517    merge WORK.FIT1 WORK.FIT2;
+MPRINT(EM_DIAGRAM):   merge WORK.FIT1 WORK.FIT2;
+1173518    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK.FIT1.
+NOTE: There were 2 observations read from the data set WORK.FIT2.
+NOTE: The data set EMWS8.AUTONEURAL27_OUTFIT has 2 observations and 36 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173519    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    
+*------------------------------------------------------------*;
+1173520    * Generate Weights Plotting data set;
+MPRINT(EM_DIAGRAM):   * Generate Weights Plotting data set;
+1173521    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   
+*------------------------------------------------------------*;
+1173522    data tempweight ( drop = _tech_ _decay_ _seed_ _nobj_ _obj_ _objerr_
+1173522  ! _averr_ _p_num_ where= (_type_ eq "PARMS"));
+MPRINT(EM_DIAGRAM):   data tempweight ( drop = _tech_ _decay_ _seed_ _nobj_ 
+_obj_ _objerr_ _averr_ _p_num_ where= (_type_ eq "PARMS"));
+1173523    set EMWS8.AutoNeural27_ESTDS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_ESTDS;
+1173524    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.AUTONEURAL27_ESTDS.
+NOTE: The data set WORK.TEMPWEIGHT has 1 observations and 83 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173525    proc sort;
+MPRINT(EM_DIAGRAM):   proc sort;
+1173526    by _name_;
+MPRINT(EM_DIAGRAM):   by _name_;
+1173527    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.TEMPWEIGHT.
+NOTE: The data set WORK.TEMPWEIGHT has 1 observations and 83 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1173528    proc transpose data=tempweight out=EMWS8.AutoNeural27_WEIGHTS;
+MPRINT(EM_DIAGRAM):   proc transpose data=tempweight 
+out=EMWS8.AutoNeural27_WEIGHTS;
+1173529    by _name_;
+MPRINT(EM_DIAGRAM):   by _name_;
+1173530    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set WORK.TEMPWEIGHT.
+NOTE: The data set EMWS8.AUTONEURAL27_WEIGHTS has 81 observations and 3 
+      variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1173531    data EMWS8.AutoNeural27_WEIGHTS;
+MPRINT(EM_DIAGRAM):   data EMWS8.AutoNeural27_WEIGHTS;
+1173532    set EMWS8.AutoNeural27_WEIGHTS;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_WEIGHTS;
+1173533    FROM = ktrim(kleft(kscan(_LABEL_, 1, '-->')));
+MPRINT(EM_DIAGRAM):   FROM = ktrim(kleft(kscan(_LABEL_, 1, '-->')));
+1173534    TO = ktrim(kleft(kscan(_LABEL_, 2, '>')));
+MPRINT(EM_DIAGRAM):   TO = ktrim(kleft(kscan(_LABEL_, 2, '>')));
+1173535    WEIGHT = COL1;
+MPRINT(EM_DIAGRAM):   WEIGHT = COL1;
+1173536    if (TO eq '') or (FROM eq '') then delete;
+MPRINT(EM_DIAGRAM):   if (TO eq '') or (FROM eq '') then delete;
+1173537    label _LABEL_ ="%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel  ,
+1173537  ! NOQUOTE))" FROM = "%sysfunc(sasmsg(sashelp.dmine, rpt_from_vlabel  ,
+1173537  ! NOQUOTE))" TO = "%sysfunc(sasmsg(sashelp.dmine, rpt_into_vlabel  ,
+1173537  ! NOQUOTE))" WEIGHT =
+1173538       "%sysfunc(sasmsg(sashelp.dmine, rpt_weight_vlabel  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _LABEL_ = "Label" FROM = "From" TO = "Into" WEIGHT 
+= "Weight";
+1173539    keep FROM TO WEIGHT _LABEL_;
+MPRINT(EM_DIAGRAM):   keep FROM TO WEIGHT _LABEL_;
+1173540    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 81 observations read from the data set 
+      EMWS8.AUTONEURAL27_WEIGHTS.
+NOTE: The data set EMWS8.AUTONEURAL27_WEIGHTS has 76 observations and 4 
+      variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):   * restore printing options;
+MPRINT(EM_DIAGRAM):   ;
+1173541    * restore printing options;
+1173542    ;
+1173543    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1173544    options linesize=95;
+MPRINT(EM_DIAGRAM):   options linesize=95;
+1173545    options pagesize=10000;
+MPRINT(EM_DIAGRAM):   options pagesize=10000;
+1173546    options nonumber;
+MPRINT(EM_DIAGRAM):   options nonumber;
+1173547    options nocenter;
+MPRINT(EM_DIAGRAM):   options nocenter;
+1173548    options nodate;
+MPRINT(EM_DIAGRAM):   options nodate;
+MPRINT(EM_DIAGRAM):   *;
+1173549    *;
+1173550    proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+1173551    delete EM_AutoNeural27;
+MPRINT(EM_DIAGRAM):   delete EM_AutoNeural27;
+1173552    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Deleting WORK.EM_AUTONEURAL27 (memtype=DATA).
+1173553    quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+1173554    data EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):    data EMWS8.AutoNeural27_HISTORY;
+1173555    set EMWS8.AutoNeural27_HISTORY;
+MPRINT(EM_DIAGRAM):   set EMWS8.AutoNeural27_HISTORY;
+1173556    label _T_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_trainstep_vlabel  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _T_ = "Training Step";
+1173557    label _iter_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_trainiterations_vlabel  ,
+1173557  ! NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _iter_ = "Training Iterations";
+1173558    _T_ = _N_ -1;
+MPRINT(EM_DIAGRAM):   _T_ = _N_ -1;
+1173559    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 11 observations read from the data set EMWS8.AUTONEURAL27_HISTORY.
+NOTE: The data set EMWS8.AUTONEURAL27_HISTORY has 11 observations and 41 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

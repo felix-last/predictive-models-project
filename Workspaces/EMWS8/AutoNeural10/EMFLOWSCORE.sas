@@ -108,6 +108,16 @@ LENGTH _WARN_ $4
 
       label H1x2_5 = 'Hidden: H1x2_=5' ;
 
+      label H1x3_1 = 'Hidden: H1x3_=1' ;
+
+      label H1x3_2 = 'Hidden: H1x3_=2' ;
+
+      label H1x3_3 = 'Hidden: H1x3_=3' ;
+
+      label H1x3_4 = 'Hidden: H1x3_=4' ;
+
+      label H1x3_5 = 'Hidden: H1x3_=5' ;
+
       label H2x1_1 = 'Hidden: H2x1_=1' ;
 
       label H2x1_2 = 'Hidden: H2x1_=2' ;
@@ -117,6 +127,26 @@ LENGTH _WARN_ $4
       label H2x1_4 = 'Hidden: H2x1_=4' ;
 
       label H2x1_5 = 'Hidden: H2x1_=5' ;
+
+      label H2x2_1 = 'Hidden: H2x2_=1' ;
+
+      label H2x2_2 = 'Hidden: H2x2_=2' ;
+
+      label H2x2_3 = 'Hidden: H2x2_=3' ;
+
+      label H2x2_4 = 'Hidden: H2x2_=4' ;
+
+      label H2x2_5 = 'Hidden: H2x2_=5' ;
+
+      label H3x1_1 = 'Hidden: H3x1_=1' ;
+
+      label H3x1_2 = 'Hidden: H3x1_=2' ;
+
+      label H3x1_3 = 'Hidden: H3x1_=3' ;
+
+      label H3x1_4 = 'Hidden: H3x1_=4' ;
+
+      label H3x1_5 = 'Hidden: H3x1_=5' ;
 
       label I_DepVar = 'Into: DepVar' ;
 
@@ -468,7 +498,7 @@ IF _DM_BAD EQ 0 THEN DO;
    S_MntSweetProducts  =    -0.69020047720885 +     0.02548703406327 *
         MntSweetProducts ;
    S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
-   S_MonthsAsCustomer  =    -4.93910929907081 +      0.0590440785747 *
+   S_MonthsAsCustomer  =    -4.97258711890416 +     0.05902460910139 *
         MonthsAsCustomer ;
    S_NumCatalogPurchases  =     -0.9539494374694 +     0.36073207463401 *
         NumCatalogPurchases ;
@@ -519,7 +549,7 @@ ELSE DO;
    IF MISSING( MntWines ) THEN S_MntWines  = . ;
    ELSE S_MntWines  =    -0.90995945712571 +     0.00292658058326 * MntWines ;
    IF MISSING( MonthsAsCustomer ) THEN S_MonthsAsCustomer  = . ;
-   ELSE S_MonthsAsCustomer  =    -4.93910929907081 +      0.0590440785747 *
+   ELSE S_MonthsAsCustomer  =    -4.97258711890416 +     0.05902460910139 *
         MonthsAsCustomer ;
    IF MISSING( NumCatalogPurchases ) THEN S_NumCatalogPurchases  = . ;
    ELSE S_NumCatalogPurchases
@@ -559,156 +589,156 @@ END;
 *** Writing the Node H1x1_ ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H1x1_1  =     -2.0588471958351 * S_AcceptedCmpTotal
-          +     0.38628980389456 * S_Age  +     -0.8545617733777 * S_Frq
-          +    -1.37557200210661 * S_Income  +     1.58583945545125 *
-        S_Kidhome  +    -1.49250871593186 * S_Mnt  +    -2.02986091068301 *
-        S_MntFishProducts  +     0.28845511703412 * S_MntFruits
-          +    -0.62495372005095 * S_MntGoldProds  +     3.22144698444712 *
-        S_MntMeatProducts  +    -2.67158036653801 * S_MntSweetProducts
-          +    -4.30837863985493 * S_MntWines  +     0.39603200162704 *
-        S_MonthsAsCustomer  +      1.8259166147951 * S_NumCatalogPurchases
-          +      3.4758215776031 * S_NumDealsPurchases
-          +     0.17094021755289 * S_NumDistPurchases
-          +    -2.72090095694641 * S_NumStorePurchases
-          +    -0.31877935826328 * S_NumWebPurchases
-          +    -2.03399974412918 * S_NumWebVisitsMonth
-          +     2.74309130038659 * S_RFMstat  +    -0.74941844935268 *
-        S_RMntFrq  +     0.29064555076615 * S_Recency
-          +    -0.57040700827247 * S_Teenhome ;
-   H1x1_2  =     -0.5995699177824 * S_AcceptedCmpTotal
-          +    -1.17769485933608 * S_Age  +     0.95998296288295 * S_Frq
-          +     -2.2343179478513 * S_Income  +     3.17436638275163 *
-        S_Kidhome  +     0.46987648124346 * S_Mnt  +     0.07213935656698 *
-        S_MntFishProducts  +    -1.38055808108069 * S_MntFruits
-          +     0.62140960451545 * S_MntGoldProds  +     -1.9000500396873 *
-        S_MntMeatProducts  +    -0.35707372583597 * S_MntSweetProducts
-          +     1.99720917743483 * S_MntWines  +     0.89245096364062 *
-        S_MonthsAsCustomer  +    -0.61497875715928 * S_NumCatalogPurchases
-          +    -1.21013804197082 * S_NumDealsPurchases
-          +     0.59974279122188 * S_NumDistPurchases
-          +     1.92425710681156 * S_NumStorePurchases
-          +     1.02413182452324 * S_NumWebPurchases
-          +    -3.63276285340174 * S_NumWebVisitsMonth
-          +     0.33919100670479 * S_RFMstat  +     0.84767315208026 *
-        S_RMntFrq  +     3.87352563099005 * S_Recency
-          +     2.74174964084917 * S_Teenhome ;
-   H1x1_3  =    -2.27029708882419 * S_AcceptedCmpTotal
-          +     0.57558817521081 * S_Age  +     0.03666022895146 * S_Frq
-          +    -0.43764949843184 * S_Income  +     0.05202039236868 *
-        S_Kidhome  +    -0.17515517773197 * S_Mnt  +      2.1454579331563 *
-        S_MntFishProducts  +     -0.0544472234117 * S_MntFruits
-          +    -0.24751372889101 * S_MntGoldProds  +    -7.95986512066472 *
-        S_MntMeatProducts  +    -0.42258869313323 * S_MntSweetProducts
-          +      4.6542173574208 * S_MntWines  +     0.27973663838423 *
-        S_MonthsAsCustomer  +    -0.92923468464154 * S_NumCatalogPurchases
-          +      0.4928343071801 * S_NumDealsPurchases
-          +     -0.0196677325409 * S_NumDistPurchases
-          +     0.44395828164873 * S_NumStorePurchases
-          +     0.86947051591224 * S_NumWebPurchases
-          +    -0.96787241206077 * S_NumWebVisitsMonth
-          +     -0.9429396337834 * S_RFMstat  +    -1.69298966254302 *
-        S_RMntFrq  +     0.24582117217188 * S_Recency
-          +    -1.08471509540368 * S_Teenhome ;
-   H1x1_4  =     0.54181596412096 * S_AcceptedCmpTotal
-          +    -1.19331526818752 * S_Age  +     0.79853759822324 * S_Frq
-          +     0.73370928178794 * S_Income  +     0.38661834479377 *
-        S_Kidhome  +      0.3442876988888 * S_Mnt  +    -0.58769739655035 *
-        S_MntFishProducts  +     -0.8703586573687 * S_MntFruits
-          +    -0.06073044217122 * S_MntGoldProds  +     1.06031608775663 *
-        S_MntMeatProducts  +      0.1600438561366 * S_MntSweetProducts
-          +    -0.10937637342015 * S_MntWines  +     0.44423445817796 *
-        S_MonthsAsCustomer  +     2.20653376632749 * S_NumCatalogPurchases
-          +     1.10280977051932 * S_NumDealsPurchases
-          +     0.99310057404036 * S_NumDistPurchases
-          +    -0.05647459609331 * S_NumStorePurchases
-          +    -0.89852483938631 * S_NumWebPurchases
-          +     2.63022480227445 * S_NumWebVisitsMonth
-          +      0.0081819695781 * S_RFMstat  +     1.19338523211724 *
-        S_RMntFrq  +    -4.46436997560659 * S_Recency
-          +    -2.03251171372039 * S_Teenhome ;
-   H1x1_5  =    -1.03227948250072 * S_AcceptedCmpTotal
-          +     0.25510562405413 * S_Age  +     0.11938172756061 * S_Frq
-          +    -0.88855927472898 * S_Income  +    -0.98732962014399 *
-        S_Kidhome  +     0.57537935682752 * S_Mnt  +     0.07702692666996 *
-        S_MntFishProducts  +     0.69541223905843 * S_MntFruits
-          +    -0.26720187465927 * S_MntGoldProds  +    -0.03938241662919 *
-        S_MntMeatProducts  +     1.08781093588885 * S_MntSweetProducts
-          +     1.16253823123182 * S_MntWines  +    -1.60607722651025 *
-        S_MonthsAsCustomer  +    -1.69043794225498 * S_NumCatalogPurchases
-          +    -2.62220616180571 * S_NumDealsPurchases
-          +    -0.51737930835331 * S_NumDistPurchases
-          +     0.88655783158133 * S_NumStorePurchases
-          +     0.35132468809969 * S_NumWebPurchases
-          +     -1.6320869675862 * S_NumWebVisitsMonth
-          +     0.33776958473405 * S_RFMstat  +    -0.42290181425075 *
-        S_RMntFrq  +     1.06226028677401 * S_Recency
-          +     1.11855899514962 * S_Teenhome ;
-   H1x1_1  = H1x1_1  +     0.53637737817097 * AcceptedCmp10
-          +    -1.85405146733588 * AcceptedCmp20  +    -1.47621046566649 *
-        AcceptedCmp30  +    -1.37767318086242 * AcceptedCmp40
-          +    -0.96348396070145 * AcceptedCmp50  +    -1.30976546088379 *
-        Complain0  +    -0.54848314184314 * HigherEducationBinary0 ;
-   H1x1_2  = H1x1_2  +     0.18445380584184 * AcceptedCmp10
-          +    -0.69257274561716 * AcceptedCmp20  +     0.17226038285159 *
-        AcceptedCmp30  +    -1.06145995435722 * AcceptedCmp40
-          +     1.23459262841144 * AcceptedCmp50  +    -0.14674063302587 *
-        Complain0  +    -1.08422405648698 * HigherEducationBinary0 ;
-   H1x1_3  = H1x1_3  +     0.81272808689375 * AcceptedCmp10
-          +    -0.37057950605918 * AcceptedCmp20  +    -1.75364708883985 *
-        AcceptedCmp30  +     -1.9879502333289 * AcceptedCmp40
-          +     2.82649108460951 * AcceptedCmp50  +    -0.14219031901768 *
-        Complain0  +     -0.5514346363694 * HigherEducationBinary0 ;
-   H1x1_4  = H1x1_4  +    -1.12354567881562 * AcceptedCmp10
-          +    -1.64564861831306 * AcceptedCmp20  +    -1.84950171464501 *
-        AcceptedCmp30  +    -2.60581164673686 * AcceptedCmp40
-          +    -0.53568003317161 * AcceptedCmp50  +    -0.13929928866767 *
-        Complain0  +     1.18053116626218 * HigherEducationBinary0 ;
-   H1x1_5  = H1x1_5  +     -0.3006993305802 * AcceptedCmp10
-          +    -0.67101949915278 * AcceptedCmp20  +     0.48950637221178 *
-        AcceptedCmp30  +     0.25937105093078 * AcceptedCmp40
-          +       0.650714225549 * AcceptedCmp50  +    -0.53543482850089 *
-        Complain0  +     0.62014708316206 * HigherEducationBinary0 ;
-   H1x1_1  = H1x1_1  +     0.78710932360637 * Education2n_Cycle
-          +    -0.34656604802235 * EducationBasic  +     0.11820082193221 *
-        EducationGraduation  +     1.42539292513854 * EducationMaster
-          +     0.34809919741136 * Marital_StatusDivorced
-          +    -0.26594093535929 * Marital_StatusMarried
-          +     0.70249715999987 * Marital_StatusSingle
-          +    -0.45710525283449 * Marital_StatusTogether ;
-   H1x1_2  = H1x1_2  +    -1.00496261512915 * Education2n_Cycle
-          +     0.66783492956492 * EducationBasic  +     0.91185122922538 *
-        EducationGraduation  +    -0.28204692640004 * EducationMaster
-          +    -0.20448765627193 * Marital_StatusDivorced
-          +     1.73231344674733 * Marital_StatusMarried
-          +    -0.70956480480373 * Marital_StatusSingle
-          +      1.0926428215879 * Marital_StatusTogether ;
-   H1x1_3  = H1x1_3  +    -0.06222681334412 * Education2n_Cycle
-          +    -0.00009122618999 * EducationBasic  +    -0.07444046529217 *
-        EducationGraduation  +     1.01284161768787 * EducationMaster
-          +     0.30333818684353 * Marital_StatusDivorced
-          +    -1.44603535988199 * Marital_StatusMarried
-          +     0.48409598426383 * Marital_StatusSingle
-          +    -1.14528682521622 * Marital_StatusTogether ;
-   H1x1_4  = H1x1_4  +    -0.92316818310935 * Education2n_Cycle
-          +     0.93590924020503 * EducationBasic  +     0.36762108040277 *
-        EducationGraduation  +    -1.17735200022013 * EducationMaster
-          +     -1.5342907846297 * Marital_StatusDivorced
-          +    -1.79544684592172 * Marital_StatusMarried
-          +     0.65604313645117 * Marital_StatusSingle
-          +    -2.08172869142628 * Marital_StatusTogether ;
-   H1x1_5  = H1x1_5  +    -0.56328800945753 * Education2n_Cycle
-          +    -0.06918346311418 * EducationBasic  +     -1.5176897786776 *
-        EducationGraduation  +     0.09618331198762 * EducationMaster
-          +    -3.97940893560267 * Marital_StatusDivorced
-          +      3.5880254142663 * Marital_StatusMarried
-          +     -2.9897737730927 * Marital_StatusSingle
-          +     3.75098376776525 * Marital_StatusTogether ;
-   H1x1_1  =    -2.89135496095875 + H1x1_1 ;
-   H1x1_2  =     0.39943637099295 + H1x1_2 ;
-   H1x1_3  =    -1.08093114818147 + H1x1_3 ;
-   H1x1_4  =    -3.29426643182948 + H1x1_4 ;
-   H1x1_5  =    -1.76822552726746 + H1x1_5 ;
+   H1x1_1  =     -1.6780441789215 * S_AcceptedCmpTotal
+          +     0.45385980917029 * S_Age  +    -0.71899650455913 * S_Frq
+          +    -1.93679506571805 * S_Income  +     1.56925991391051 *
+        S_Kidhome  +    -1.47175189232318 * S_Mnt  +    -2.23220260217222 *
+        S_MntFishProducts  +    -0.27017202076253 * S_MntFruits
+          +    -0.33562096740259 * S_MntGoldProds  +     3.61472960640287 *
+        S_MntMeatProducts  +    -2.85576251647297 * S_MntSweetProducts
+          +     -4.4467685903527 * S_MntWines  +     0.38963757858628 *
+        S_MonthsAsCustomer  +     1.66666181194027 * S_NumCatalogPurchases
+          +     3.45371614080196 * S_NumDealsPurchases
+          +     0.19118374544537 * S_NumDistPurchases
+          +    -2.45138001446793 * S_NumStorePurchases
+          +    -0.11424280244155 * S_NumWebPurchases
+          +    -2.31770357716565 * S_NumWebVisitsMonth
+          +     2.81643889601936 * S_RFMstat  +    -1.04896006701534 *
+        S_RMntFrq  +     0.26870809438679 * S_Recency
+          +    -0.26422448158811 * S_Teenhome ;
+   H1x1_2  =    -0.85648293000641 * S_AcceptedCmpTotal
+          +    -1.65647402725291 * S_Age  +     1.01151947076788 * S_Frq
+          +    -2.30217634682957 * S_Income  +     3.64198249916211 *
+        S_Kidhome  +     0.20767518788666 * S_Mnt  +     0.16841756532554 *
+        S_MntFishProducts  +      -1.068506425921 * S_MntFruits
+          +     0.58318801939162 * S_MntGoldProds  +    -2.31777049056548 *
+        S_MntMeatProducts  +     0.23759430399811 * S_MntSweetProducts
+          +      1.6840332285232 * S_MntWines  +     1.02971381781013 *
+        S_MonthsAsCustomer  +    -0.67962580165124 * S_NumCatalogPurchases
+          +    -1.28390925647659 * S_NumDealsPurchases
+          +     0.82669177239926 * S_NumDistPurchases
+          +     1.71678585204511 * S_NumStorePurchases
+          +     1.49226295608046 * S_NumWebPurchases
+          +     -4.0105103018388 * S_NumWebVisitsMonth
+          +     0.59909792991084 * S_RFMstat  +     1.07820515361554 *
+        S_RMntFrq  +     4.74241121363086 * S_Recency
+          +     3.02084642655958 * S_Teenhome ;
+   H1x1_3  =    -2.68802949086986 * S_AcceptedCmpTotal
+          +     0.32408799976195 * S_Age  +     0.22616656573012 * S_Frq
+          +     -0.4811040196236 * S_Income  +     0.01554228937278 *
+        S_Kidhome  +    -0.00131538598753 * S_Mnt  +     1.89942488016409 *
+        S_MntFishProducts  +     0.56303548397494 * S_MntFruits
+          +    -0.15594598286956 * S_MntGoldProds  +    -7.89542322794989 *
+        S_MntMeatProducts  +    -0.27122492647076 * S_MntSweetProducts
+          +     4.85572438492582 * S_MntWines  +     0.12362243863555 *
+        S_MonthsAsCustomer  +    -1.47960473675934 * S_NumCatalogPurchases
+          +     0.22958626391725 * S_NumDealsPurchases
+          +    -0.02046515813996 * S_NumDistPurchases
+          +      0.8618502050837 * S_NumStorePurchases
+          +     1.45175370326009 * S_NumWebPurchases
+          +    -0.86122442436156 * S_NumWebVisitsMonth
+          +    -0.99643351802143 * S_RFMstat  +    -1.65762265567389 *
+        S_RMntFrq  +    -0.08202178452839 * S_Recency
+          +    -0.62066116666102 * S_Teenhome ;
+   H1x1_4  =     0.45192233004895 * S_AcceptedCmpTotal
+          +    -0.94676544762121 * S_Age  +     0.73809341266988 * S_Frq
+          +     0.72277799278136 * S_Income  +    -0.12970804152173 *
+        S_Kidhome  +     0.01052564540044 * S_Mnt  +    -0.48321452967118 *
+        S_MntFishProducts  +    -0.41471448831942 * S_MntFruits
+          +     0.04381334765674 * S_MntGoldProds  +     0.92594151100538 *
+        S_MntMeatProducts  +     0.29845970530397 * S_MntSweetProducts
+          +    -0.71535779454556 * S_MntWines  +     0.00059837351168 *
+        S_MonthsAsCustomer  +     2.23353511013288 * S_NumCatalogPurchases
+          +     1.25310034610344 * S_NumDealsPurchases
+          +     0.92141098602176 * S_NumDistPurchases
+          +    -0.08806509391473 * S_NumStorePurchases
+          +     -1.0533787624668 * S_NumWebPurchases
+          +     3.07050739830585 * S_NumWebVisitsMonth
+          +    -0.05671059637078 * S_RFMstat  +     1.73621676609839 *
+        S_RMntFrq  +     -3.8741602707981 * S_Recency
+          +    -2.06796290973426 * S_Teenhome ;
+   H1x1_5  =    -1.36121985595495 * S_AcceptedCmpTotal
+          +     0.05422070059006 * S_Age  +     0.27495083329116 * S_Frq
+          +     -0.9677209394449 * S_Income  +    -1.13619168708067 *
+        S_Kidhome  +     0.62918569209141 * S_Mnt  +     0.37160756976122 *
+        S_MntFishProducts  +     0.88680401337821 * S_MntFruits
+          +    -0.36100921959604 * S_MntGoldProds  +    -0.35574990334834 *
+        S_MntMeatProducts  +     0.82389188555236 * S_MntSweetProducts
+          +     1.43496434553922 * S_MntWines  +    -1.46335376005851 *
+        S_MonthsAsCustomer  +    -1.84942841156411 * S_NumCatalogPurchases
+          +    -1.68259553608287 * S_NumDealsPurchases
+          +    -0.53835572290445 * S_NumDistPurchases
+          +     1.25833922835446 * S_NumStorePurchases
+          +     0.48300830623998 * S_NumWebPurchases
+          +    -2.20119275236582 * S_NumWebVisitsMonth
+          +     -0.2397284702987 * S_RFMstat  +    -0.71924218175088 *
+        S_RMntFrq  +     0.35692712879409 * S_Recency
+          +     0.77122286526706 * S_Teenhome ;
+   H1x1_1  = H1x1_1  +     0.07301304241545 * AcceptedCmp10
+          +    -1.95730125129608 * AcceptedCmp20  +    -1.38342161079442 *
+        AcceptedCmp30  +    -1.49080889719345 * AcceptedCmp40
+          +    -1.07381857035964 * AcceptedCmp50  +    -1.39161532835475 *
+        Complain0  +    -0.48833832833721 * HigherEducationBinary0 ;
+   H1x1_2  = H1x1_2  +     0.38934062747222 * AcceptedCmp10
+          +    -0.32259780417284 * AcceptedCmp20  +     0.51602852076334 *
+        AcceptedCmp30  +    -0.70838948180655 * AcceptedCmp40
+          +     1.29066052659113 * AcceptedCmp50  +      0.1004848714971 *
+        Complain0  +    -0.73386392383925 * HigherEducationBinary0 ;
+   H1x1_3  = H1x1_3  +     0.34219997086576 * AcceptedCmp10
+          +    -0.12311182470953 * AcceptedCmp20  +     -2.0600710888874 *
+        AcceptedCmp30  +      -1.904294485826 * AcceptedCmp40
+          +     3.36424449872952 * AcceptedCmp50  +    -0.25078238709812 *
+        Complain0  +    -0.08077684854733 * HigherEducationBinary0 ;
+   H1x1_4  = H1x1_4  +    -1.12501407155309 * AcceptedCmp10
+          +    -1.58866249671355 * AcceptedCmp20  +    -1.72881548820716 *
+        AcceptedCmp30  +      -2.214698125839 * AcceptedCmp40
+          +    -0.62635613939269 * AcceptedCmp50  +      0.0150779868394 *
+        Complain0  +     1.03338023365724 * HigherEducationBinary0 ;
+   H1x1_5  = H1x1_5  +    -0.26508589111781 * AcceptedCmp10
+          +    -0.40912292690255 * AcceptedCmp20  +     0.75389762391096 *
+        AcceptedCmp30  +     0.41336953757691 * AcceptedCmp40
+          +     0.15346623431804 * AcceptedCmp50  +    -0.57037201584293 *
+        Complain0  +     0.77009921064044 * HigherEducationBinary0 ;
+   H1x1_1  = H1x1_1  +      1.0009305049246 * Education2n_Cycle
+          +     -0.4613305087931 * EducationBasic  +      0.3758596828746 *
+        EducationGraduation  +     1.25189584055994 * EducationMaster
+          +     0.26230568150721 * Marital_StatusDivorced
+          +     0.27563523967756 * Marital_StatusMarried
+          +     0.54464481618478 * Marital_StatusSingle
+          +    -0.59728882722473 * Marital_StatusTogether ;
+   H1x1_2  = H1x1_2  +    -0.67268966683928 * Education2n_Cycle
+          +     1.13837889947773 * EducationBasic  +     1.04211010190617 *
+        EducationGraduation  +     0.29772013614284 * EducationMaster
+          +    -0.06750661313108 * Marital_StatusDivorced
+          +     1.48628445854207 * Marital_StatusMarried
+          +    -0.52197797291165 * Marital_StatusSingle
+          +     0.26825188905773 * Marital_StatusTogether ;
+   H1x1_3  = H1x1_3  +     0.15872794306716 * Education2n_Cycle
+          +     -0.2621450786439 * EducationBasic  +      -0.141563901063 *
+        EducationGraduation  +     0.45665087056809 * EducationMaster
+          +     0.03219453957597 * Marital_StatusDivorced
+          +    -0.73835008216677 * Marital_StatusMarried
+          +     0.11212575818086 * Marital_StatusSingle
+          +    -0.43478073380625 * Marital_StatusTogether ;
+   H1x1_4  = H1x1_4  +    -0.76014837933596 * Education2n_Cycle
+          +     0.81014096036717 * EducationBasic  +     0.41200440507889 *
+        EducationGraduation  +    -1.00228990059701 * EducationMaster
+          +    -0.95055539413405 * Marital_StatusDivorced
+          +    -1.65922419336067 * Marital_StatusMarried
+          +     0.78727538125107 * Marital_StatusSingle
+          +    -2.04820355088009 * Marital_StatusTogether ;
+   H1x1_5  = H1x1_5  +    -0.28767104655135 * Education2n_Cycle
+          +     0.23294407135706 * EducationBasic  +    -1.19680108607997 *
+        EducationGraduation  +     0.46710355433642 * EducationMaster
+          +     -4.1747415035634 * Marital_StatusDivorced
+          +     3.61194282451968 * Marital_StatusMarried
+          +     -3.2800495365546 * Marital_StatusSingle
+          +     4.03496183640024 * Marital_StatusTogether ;
+   H1x1_1  =    -2.93438581065873 + H1x1_1 ;
+   H1x1_2  =     0.62443347607569 + H1x1_2 ;
+   H1x1_3  =    -1.18755793198513 + H1x1_3 ;
+   H1x1_4  =    -3.21278432238831 + H1x1_4 ;
+   H1x1_5  =    -1.81875492018044 + H1x1_5 ;
    DROP _EXP_BAR;
    _EXP_BAR=50;
    H1x1_1  = 1.0 / (1.0 + EXP(MIN( - H1x1_1 , _EXP_BAR)));
@@ -728,156 +758,156 @@ END;
 *** Writing the Node H1x2_ ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H1x2_1  =     1.01981866144831 * S_AcceptedCmpTotal
-          +    -1.47346125364319 * S_Age  +    -0.08669650492194 * S_Frq
-          +    -0.51585471637562 * S_Income  +     1.40711190452923 *
-        S_Kidhome  +    -0.21341957199148 * S_Mnt  +    -0.31211158173505 *
-        S_MntFishProducts  +    -0.77126486046129 * S_MntFruits
-          +     -0.4503905849175 * S_MntGoldProds  +     1.01090165857015 *
-        S_MntMeatProducts  +    -0.05554268249583 * S_MntSweetProducts
-          +     2.72203992871966 * S_MntWines  +    -0.46212144021719 *
-        S_MonthsAsCustomer  +    -0.10495120677935 * S_NumCatalogPurchases
-          +     0.07279889333775 * S_NumDealsPurchases
-          +     0.07542203992452 * S_NumDistPurchases
-          +     0.16296239303342 * S_NumStorePurchases
-          +     1.59193921229231 * S_NumWebPurchases
-          +    -0.35227839362603 * S_NumWebVisitsMonth
-          +      1.3224105019117 * S_RFMstat  +    -0.77035988511057 *
-        S_RMntFrq  +     0.43315770276588 * S_Recency
-          +     0.43447147039235 * S_Teenhome ;
-   H1x2_2  =    -0.07629675162821 * S_AcceptedCmpTotal
-          +     0.81684969971216 * S_Age  +     0.52870818801428 * S_Frq
-          +     0.15358022485378 * S_Income  +    -0.64458879887927 *
-        S_Kidhome  +    -2.12225648421746 * S_Mnt  +     1.05240671673302 *
-        S_MntFishProducts  +    -0.89595336397918 * S_MntFruits
-          +    -0.28950558043577 * S_MntGoldProds  +     0.30996043499478 *
-        S_MntMeatProducts  +     1.27676485470274 * S_MntSweetProducts
-          +    -1.30045112439384 * S_MntWines  +     1.36110971826862 *
-        S_MonthsAsCustomer  +     -0.1778244163518 * S_NumCatalogPurchases
-          +    -0.37456959251084 * S_NumDealsPurchases
-          +    -1.15252469975668 * S_NumDistPurchases
-          +    -1.39822501888899 * S_NumStorePurchases
-          +    -0.32777847360723 * S_NumWebPurchases
-          +     0.84026499832926 * S_NumWebVisitsMonth
-          +    -1.47180193258497 * S_RFMstat  +     0.18801983980439 *
-        S_RMntFrq  +     1.21016626691186 * S_Recency
-          +    -0.82943594788748 * S_Teenhome ;
-   H1x2_3  =    -0.06736000283511 * S_AcceptedCmpTotal
-          +    -0.47270148030219 * S_Age  +      1.1959707178877 * S_Frq
-          +    -1.40081626653738 * S_Income  +     0.35085595025526 *
-        S_Kidhome  +    -0.43652344252181 * S_Mnt  +     1.12197802721591 *
-        S_MntFishProducts  +     1.27079634537799 * S_MntFruits
-          +    -0.03023683680758 * S_MntGoldProds  +     0.51289568088141 *
-        S_MntMeatProducts  +     1.12894900622408 * S_MntSweetProducts
-          +    -0.66940205871871 * S_MntWines  +    -1.57211003055303 *
-        S_MonthsAsCustomer  +     1.47778465205569 * S_NumCatalogPurchases
-          +     1.14090099538367 * S_NumDealsPurchases
-          +     -0.2600155774492 * S_NumDistPurchases
-          +     1.31362002392113 * S_NumStorePurchases
-          +     1.31465307763555 * S_NumWebPurchases
-          +    -0.18041623858351 * S_NumWebVisitsMonth
-          +    -0.12685084546738 * S_RFMstat  +     0.43500462904027 *
-        S_RMntFrq  +    -0.81910738140729 * S_Recency
-          +    -0.61936793661609 * S_Teenhome ;
-   H1x2_4  =    -0.31415783692162 * S_AcceptedCmpTotal
-          +     0.11061423227332 * S_Age  +    -0.65722939551233 * S_Frq
-          +     -0.9063192568986 * S_Income  +      0.4013752851291 *
-        S_Kidhome  +    -1.06795963585271 * S_Mnt  +     0.24969441019479 *
-        S_MntFishProducts  +    -0.63550038240549 * S_MntFruits
-          +     1.04454010114015 * S_MntGoldProds  +     0.89912571026653 *
-        S_MntMeatProducts  +    -1.92356868621234 * S_MntSweetProducts
-          +     -1.8642245725538 * S_MntWines  +     0.13416556054779 *
-        S_MonthsAsCustomer  +    -1.01272407075887 * S_NumCatalogPurchases
-          +     1.06486073796679 * S_NumDealsPurchases
-          +    -0.04890191247577 * S_NumDistPurchases
-          +     0.86871320720698 * S_NumStorePurchases
-          +     0.03183587281884 * S_NumWebPurchases
-          +     -0.4863802923315 * S_NumWebVisitsMonth
-          +    -1.38034657666878 * S_RFMstat  +    -0.73640242597195 *
-        S_RMntFrq  +     0.17186861211542 * S_Recency
-          +    -0.39595339111048 * S_Teenhome ;
-   H1x2_5  =     1.68315669988315 * S_AcceptedCmpTotal
-          +    -1.67467335764173 * S_Age  +     1.29921539173109 * S_Frq
-          +    -0.52305600367899 * S_Income  +     1.06261291858944 *
-        S_Kidhome  +     1.77049882170904 * S_Mnt  +    -0.27692609509601 *
-        S_MntFishProducts  +    -1.23166107817727 * S_MntFruits
-          +    -2.21476398466362 * S_MntGoldProds  +     1.02542528622621 *
-        S_MntMeatProducts  +     1.04913114036094 * S_MntSweetProducts
-          +     0.30606520702636 * S_MntWines  +    -1.15158074964406 *
-        S_MonthsAsCustomer  +     0.77918810586275 * S_NumCatalogPurchases
-          +    -0.01160267590349 * S_NumDealsPurchases
-          +    -0.92773075463083 * S_NumDistPurchases
-          +    -0.83326680533995 * S_NumStorePurchases
-          +    -1.16991058954473 * S_NumWebPurchases
-          +    -2.07771165573723 * S_NumWebVisitsMonth
-          +     0.59832456826177 * S_RFMstat  +     0.08151078945291 *
-        S_RMntFrq  +     0.80165981122986 * S_Recency
-          +     1.41798811088435 * S_Teenhome ;
-   H1x2_1  = H1x2_1  +    -0.16600737981926 * AcceptedCmp10
-          +     1.41264623988567 * AcceptedCmp20  +      1.0446306999234 *
-        AcceptedCmp30  +    -1.00688604631169 * AcceptedCmp40
-          +     0.64523782235527 * AcceptedCmp50  +    -1.76623980391232 *
-        Complain0  +     1.64644530449125 * HigherEducationBinary0 ;
-   H1x2_2  = H1x2_2  +    -0.39493094663506 * AcceptedCmp10
-          +    -0.99095404154277 * AcceptedCmp20  +    -0.81166937096774 *
-        AcceptedCmp30  +     0.14520361414777 * AcceptedCmp40
-          +    -1.54302055254785 * AcceptedCmp50  +    -0.60600550413714 *
-        Complain0  +    -3.04730224174859 * HigherEducationBinary0 ;
-   H1x2_3  = H1x2_3  +      1.8650016934441 * AcceptedCmp10
-          +     0.85335394099291 * AcceptedCmp20  +     0.47327521312159 *
-        AcceptedCmp30  +    -2.64862753506152 * AcceptedCmp40
-          +     0.65827168680229 * AcceptedCmp50  +     0.45516433167059 *
-        Complain0  +    -0.62891111222764 * HigherEducationBinary0 ;
-   H1x2_4  = H1x2_4  +    -0.31781332022679 * AcceptedCmp10
-          +    -0.35773084257089 * AcceptedCmp20  +      0.0486072265688 *
-        AcceptedCmp30  +     1.50494203860483 * AcceptedCmp40
-          +     0.00499691981651 * AcceptedCmp50  +    -0.29977032190776 *
-        Complain0  +     0.76473087756218 * HigherEducationBinary0 ;
-   H1x2_5  = H1x2_5  +     -0.4639041544815 * AcceptedCmp10
-          +    -1.28977231764453 * AcceptedCmp20  +    -0.03597660273531 *
-        AcceptedCmp30  +     0.17848986397338 * AcceptedCmp40
-          +     0.06649914015182 * AcceptedCmp50  +    -0.95633404051563 *
-        Complain0  +    -0.62555630659121 * HigherEducationBinary0 ;
-   H1x2_1  = H1x2_1  +    -1.75926153465974 * Education2n_Cycle
-          +     0.96255168005018 * EducationBasic  +     -1.2029563052774 *
-        EducationGraduation  +    -0.22397098444024 * EducationMaster
-          +    -0.10361472385198 * Marital_StatusDivorced
-          +     0.05574820877885 * Marital_StatusMarried
-          +     0.13130988205279 * Marital_StatusSingle
-          +    -1.51165564425323 * Marital_StatusTogether ;
-   H1x2_2  = H1x2_2  +     1.73281005101474 * Education2n_Cycle
-          +    -0.51397811328576 * EducationBasic  +     1.64296402934617 *
-        EducationGraduation  +     1.44983505587452 * EducationMaster
-          +      0.0059353523794 * Marital_StatusDivorced
-          +    -0.59379435051653 * Marital_StatusMarried
-          +    -1.93587108708999 * Marital_StatusSingle
-          +     2.02868236823401 * Marital_StatusTogether ;
-   H1x2_3  = H1x2_3  +     0.11852280587389 * Education2n_Cycle
-          +    -0.87963137637159 * EducationBasic  +      0.3212539101977 *
-        EducationGraduation  +     0.16497026569775 * EducationMaster
-          +    -0.74333797840386 * Marital_StatusDivorced
-          +    -0.93061135117658 * Marital_StatusMarried
-          +     1.04024182655844 * Marital_StatusSingle
-          +     0.58313569749679 * Marital_StatusTogether ;
-   H1x2_4  = H1x2_4  +     -1.2170050337036 * Education2n_Cycle
-          +    -0.83332588435502 * EducationBasic  +     0.43242117148542 *
-        EducationGraduation  +     1.71196178631559 * EducationMaster
-          +    -3.01050675344463 * Marital_StatusDivorced
-          +      0.1638723582239 * Marital_StatusMarried
-          +     0.94548468360304 * Marital_StatusSingle
-          +    -0.67333048623615 * Marital_StatusTogether ;
-   H1x2_5  = H1x2_5  +    -0.66774344191467 * Education2n_Cycle
-          +     0.75591270317285 * EducationBasic  +    -0.29337325355435 *
-        EducationGraduation  +     0.57450456442662 * EducationMaster
-          +    -1.37013926274158 * Marital_StatusDivorced
-          +    -0.34168970042779 * Marital_StatusMarried
-          +     0.63383683543962 * Marital_StatusSingle
-          +     0.75118887766443 * Marital_StatusTogether ;
-   H1x2_1  =    -1.05245414685459 + H1x2_1 ;
-   H1x2_2  =    -2.03581716915326 + H1x2_2 ;
-   H1x2_3  =    -0.95118365599668 + H1x2_3 ;
-   H1x2_4  =    -1.36171328515396 + H1x2_4 ;
-   H1x2_5  =    -0.09438724866767 + H1x2_5 ;
+   H1x2_1  =    -0.54874145972704 * S_AcceptedCmpTotal
+          +    -1.96729802286214 * S_Age  +     0.48476252791598 * S_Frq
+          +    -0.22341551246937 * S_Income  +      0.5578096957255 *
+        S_Kidhome  +     0.02626802496223 * S_Mnt  +     0.45412544568839 *
+        S_MntFishProducts  +     1.01144979259918 * S_MntFruits
+          +     0.10684155186482 * S_MntGoldProds  +    -0.28941930881694 *
+        S_MntMeatProducts  +    -1.28044699620063 * S_MntSweetProducts
+          +     0.01381215802108 * S_MntWines  +    -0.10048261914477 *
+        S_MonthsAsCustomer  +     2.77259931235269 * S_NumCatalogPurchases
+          +     1.29727972396867 * S_NumDealsPurchases
+          +     -0.4796144286007 * S_NumDistPurchases
+          +     0.88365985808591 * S_NumStorePurchases
+          +     0.68522096892804 * S_NumWebPurchases
+          +     0.54931043107798 * S_NumWebVisitsMonth
+          +     0.54113568533807 * S_RFMstat  +    -1.25421061779043 *
+        S_RMntFrq  +     2.35704770144328 * S_Recency
+          +     0.71039073076168 * S_Teenhome ;
+   H1x2_2  =    -0.87761654715429 * S_AcceptedCmpTotal
+          +     0.35157201280883 * S_Age  +    -0.52499399345006 * S_Frq
+          +    -0.18535763866989 * S_Income  +    -2.37902660986953 *
+        S_Kidhome  +     0.91895423997679 * S_Mnt  +     0.25609945459048 *
+        S_MntFishProducts  +    -0.81235755934506 * S_MntFruits
+          +     0.52120923975997 * S_MntGoldProds  +    -0.44372337811583 *
+        S_MntMeatProducts  +     0.44948834045992 * S_MntSweetProducts
+          +     -1.0932771504262 * S_MntWines  +     0.50602262267579 *
+        S_MonthsAsCustomer  +     1.56553203254999 * S_NumCatalogPurchases
+          +     0.26997834581422 * S_NumDealsPurchases
+          +      1.4974894627406 * S_NumDistPurchases
+          +     0.20577850505638 * S_NumStorePurchases
+          +     0.67578530037026 * S_NumWebPurchases
+          +     1.48893165613941 * S_NumWebVisitsMonth
+          +     0.13287732996796 * S_RFMstat  +     0.56918286957798 *
+        S_RMntFrq  +    -1.40718347701522 * S_Recency
+          +    -1.45355422903931 * S_Teenhome ;
+   H1x2_3  =    -0.04229252175967 * S_AcceptedCmpTotal
+          +    -0.15725101559927 * S_Age  +      2.0258984610186 * S_Frq
+          +     0.68410444381038 * S_Income  +     0.69019962444573 *
+        S_Kidhome  +    -0.34233922017925 * S_Mnt  +     1.55352897772997 *
+        S_MntFishProducts  +    -0.76176236164027 * S_MntFruits
+          +    -1.16754517357962 * S_MntGoldProds  +     1.24350326644835 *
+        S_MntMeatProducts  +    -0.81282451423383 * S_MntSweetProducts
+          +      0.7172672745995 * S_MntWines  +     1.13255065624057 *
+        S_MonthsAsCustomer  +    -0.07781573365472 * S_NumCatalogPurchases
+          +    -0.75474919633886 * S_NumDealsPurchases
+          +     2.21872386475638 * S_NumDistPurchases
+          +    -0.36191460108989 * S_NumStorePurchases
+          +     0.03160010932412 * S_NumWebPurchases
+          +     0.00984650739909 * S_NumWebVisitsMonth
+          +     0.89037882953417 * S_RFMstat  +    -1.05136047825247 *
+        S_RMntFrq  +     0.97890474913417 * S_Recency
+          +     1.27657797009328 * S_Teenhome ;
+   H1x2_4  =    -1.09473986244398 * S_AcceptedCmpTotal
+          +     0.02292759635423 * S_Age  +     -1.7109267909752 * S_Frq
+          +    -1.43383040360225 * S_Income  +    -1.57934610129188 *
+        S_Kidhome  +      0.1051214240099 * S_Mnt  +     0.97936539268931 *
+        S_MntFishProducts  +    -0.59583313648658 * S_MntFruits
+          +     1.51886505753921 * S_MntGoldProds  +    -0.32475169924002 *
+        S_MntMeatProducts  +     2.41110603237098 * S_MntSweetProducts
+          +    -0.31356867592074 * S_MntWines  +    -0.46746195334785 *
+        S_MonthsAsCustomer  +      1.2175994058873 * S_NumCatalogPurchases
+          +    -1.12057357865269 * S_NumDealsPurchases
+          +    -0.70841760614521 * S_NumDistPurchases
+          +    -1.39174816270404 * S_NumStorePurchases
+          +    -1.62343249380806 * S_NumWebPurchases
+          +    -0.73097954508465 * S_NumWebVisitsMonth
+          +    -3.00146168388145 * S_RFMstat  +     0.52793752800199 *
+        S_RMntFrq  +    -1.13585643618227 * S_Recency
+          +    -0.84809590269062 * S_Teenhome ;
+   H1x2_5  =    -0.76941479017685 * S_AcceptedCmpTotal
+          +    -0.80197055800099 * S_Age  +    -0.33523741625948 * S_Frq
+          +     0.67386262421365 * S_Income  +     1.52003240833706 *
+        S_Kidhome  +     0.14459028288037 * S_Mnt  +     0.39874528164598 *
+        S_MntFishProducts  +    -1.59397070226712 * S_MntFruits
+          +     0.78518859165099 * S_MntGoldProds  +     0.48003679676647 *
+        S_MntMeatProducts  +    -0.17657709565986 * S_MntSweetProducts
+          +    -0.79155200251992 * S_MntWines  +     0.27335896970236 *
+        S_MonthsAsCustomer  +     1.70502645622852 * S_NumCatalogPurchases
+          +     0.66880481485557 * S_NumDealsPurchases
+          +     0.69540174544859 * S_NumDistPurchases
+          +     1.68246546921736 * S_NumStorePurchases
+          +     1.85958176898295 * S_NumWebPurchases
+          +    -0.23815810306565 * S_NumWebVisitsMonth
+          +    -1.93291997626659 * S_RFMstat  +     0.44532152898673 *
+        S_RMntFrq  +    -2.12360922264332 * S_Recency
+          +     0.99915338747458 * S_Teenhome ;
+   H1x2_1  = H1x2_1  +    -0.34162163066653 * AcceptedCmp10
+          +    -1.63962075993761 * AcceptedCmp20  +    -0.15621537766672 *
+        AcceptedCmp30  +      -0.732967936338 * AcceptedCmp40
+          +    -0.89574320220152 * AcceptedCmp50  +    -1.65404732277767 *
+        Complain0  +     0.39810242344925 * HigherEducationBinary0 ;
+   H1x2_2  = H1x2_2  +     1.20749893379181 * AcceptedCmp10
+          +     0.74035850461127 * AcceptedCmp20  +    -0.57598323268755 *
+        AcceptedCmp30  +      0.2507562576407 * AcceptedCmp40
+          +    -1.65954337863227 * AcceptedCmp50  +    -0.36715622527216 *
+        Complain0  +    -0.80760857638242 * HigherEducationBinary0 ;
+   H1x2_3  = H1x2_3  +      0.1125551214626 * AcceptedCmp10
+          +      0.9256532360503 * AcceptedCmp20  +    -0.66171851987996 *
+        AcceptedCmp30  +     1.38941609616943 * AcceptedCmp40
+          +    -0.12600029950267 * AcceptedCmp50  +     1.77872255302987 *
+        Complain0  +     0.92261637863861 * HigherEducationBinary0 ;
+   H1x2_4  = H1x2_4  +     1.15541901435911 * AcceptedCmp10
+          +     0.29649422640031 * AcceptedCmp20  +     0.39809722545141 *
+        AcceptedCmp30  +    -0.33350815656019 * AcceptedCmp40
+          +    -0.67932033799188 * AcceptedCmp50  +     0.37378775543802 *
+        Complain0  +    -0.42273281355142 * HigherEducationBinary0 ;
+   H1x2_5  = H1x2_5  +     0.42070748083274 * AcceptedCmp10
+          +     0.35338291913326 * AcceptedCmp20  +    -0.47257467834599 *
+        AcceptedCmp30  +     1.53611423156071 * AcceptedCmp40
+          +    -1.33360798584085 * AcceptedCmp50  +    -1.44352278404761 *
+        Complain0  +    -0.33674466205114 * HigherEducationBinary0 ;
+   H1x2_1  = H1x2_1  +     0.60843711339598 * Education2n_Cycle
+          +     -0.2612316425128 * EducationBasic  +     0.53215140077355 *
+        EducationGraduation  +     0.32623787352656 * EducationMaster
+          +      0.2766977476799 * Marital_StatusDivorced
+          +     0.99585126449473 * Marital_StatusMarried
+          +    -0.71244490682808 * Marital_StatusSingle
+          +     0.05234471555621 * Marital_StatusTogether ;
+   H1x2_2  = H1x2_2  +    -1.37916273373311 * Education2n_Cycle
+          +     0.16982792088728 * EducationBasic  +     0.00814910507718 *
+        EducationGraduation  +     0.47239961039918 * EducationMaster
+          +     0.04724779113048 * Marital_StatusDivorced
+          +    -0.80186231440666 * Marital_StatusMarried
+          +    -0.02226793584171 * Marital_StatusSingle
+          +     1.15827064756189 * Marital_StatusTogether ;
+   H1x2_3  = H1x2_3  +    -0.24428291102209 * Education2n_Cycle
+          +    -0.11697967041189 * EducationBasic  +    -1.11774839931933 *
+        EducationGraduation  +     0.41284540548646 * EducationMaster
+          +     0.28206835683721 * Marital_StatusDivorced
+          +     0.46500886756532 * Marital_StatusMarried
+          +     0.35327545255503 * Marital_StatusSingle
+          +     0.58394650567036 * Marital_StatusTogether ;
+   H1x2_4  = H1x2_4  +    -0.41547462236128 * Education2n_Cycle
+          +     1.13629818238321 * EducationBasic  +     0.25034344652006 *
+        EducationGraduation  +    -0.29812527209479 * EducationMaster
+          +     1.22291788006392 * Marital_StatusDivorced
+          +    -2.27040720272432 * Marital_StatusMarried
+          +     1.13606780043773 * Marital_StatusSingle
+          +    -1.07606142589696 * Marital_StatusTogether ;
+   H1x2_5  = H1x2_5  +     1.12913918872999 * Education2n_Cycle
+          +     1.23833680718071 * EducationBasic  +     1.02294394812757 *
+        EducationGraduation  +      0.4909097120378 * EducationMaster
+          +     -0.3999800759199 * Marital_StatusDivorced
+          +    -0.40978271635345 * Marital_StatusMarried
+          +    -0.55524279444227 * Marital_StatusSingle
+          +    -0.84395633194091 * Marital_StatusTogether ;
+   H1x2_1  =    -0.65400470626386 + H1x2_1 ;
+   H1x2_2  =    -0.07530883721979 + H1x2_2 ;
+   H1x2_3  =      -0.290996947172 + H1x2_3 ;
+   H1x2_4  =    -0.89461283774487 + H1x2_4 ;
+   H1x2_5  =    -0.37171981998051 + H1x2_5 ;
    DROP _EXP_BAR;
    _EXP_BAR=50;
    H1x2_1  = 1.0 / (1.0 + EXP(MIN( - H1x2_1 , _EXP_BAR)));
@@ -894,51 +924,236 @@ ELSE DO;
    H1x2_5  = .;
 END;
 *** *************************;
+*** Writing the Node H1x3_ ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H1x3_1  =     0.02034446400728 * S_AcceptedCmpTotal
+          +    -0.93561297099295 * S_Age  +     0.49066734733476 * S_Frq
+          +    -1.34856771280634 * S_Income  +     1.35662384709137 *
+        S_Kidhome  +    -0.02206222240953 * S_Mnt  +     0.42162640035912 *
+        S_MntFishProducts  +      1.4724867503467 * S_MntFruits
+          +    -0.51460401528507 * S_MntGoldProds  +       0.958125893994 *
+        S_MntMeatProducts  +     0.57113865733502 * S_MntSweetProducts
+          +    -1.00744287646761 * S_MntWines  +     0.17043433169038 *
+        S_MonthsAsCustomer  +     1.69277828985001 * S_NumCatalogPurchases
+          +     0.15783958682465 * S_NumDealsPurchases
+          +     1.52124708558457 * S_NumDistPurchases
+          +     -1.3804418313581 * S_NumStorePurchases
+          +    -1.29570111649272 * S_NumWebPurchases
+          +    -0.64280706056547 * S_NumWebVisitsMonth
+          +    -1.20774016698707 * S_RFMstat  +    -0.44623204790714 *
+        S_RMntFrq  +    -0.06726660535826 * S_Recency
+          +    -0.73266660753354 * S_Teenhome ;
+   H1x3_2  =     0.05576327437156 * S_AcceptedCmpTotal
+          +    -0.09670418926268 * S_Age  +     0.70499031549942 * S_Frq
+          +     0.26184897891893 * S_Income  +    -1.14390972062773 *
+        S_Kidhome  +     -0.0692794596346 * S_Mnt  +     0.38520399298269 *
+        S_MntFishProducts  +     0.23416686193508 * S_MntFruits
+          +     0.54961704765881 * S_MntGoldProds  +     1.00350256670809 *
+        S_MntMeatProducts  +    -0.03432942277526 * S_MntSweetProducts
+          +    -0.79877133727616 * S_MntWines  +    -2.29194848128805 *
+        S_MonthsAsCustomer  +    -0.38950356087292 * S_NumCatalogPurchases
+          +     0.12337111358286 * S_NumDealsPurchases
+          +     -2.3848926094027 * S_NumDistPurchases
+          +    -1.20666646996433 * S_NumStorePurchases
+          +     0.89549302881365 * S_NumWebPurchases
+          +     0.95359042569947 * S_NumWebVisitsMonth
+          +    -0.41458051201542 * S_RFMstat  +    -2.05830783255089 *
+        S_RMntFrq  +     0.17682790616815 * S_Recency
+          +     0.20329199183726 * S_Teenhome ;
+   H1x3_3  =     0.56145399373835 * S_AcceptedCmpTotal
+          +     -0.0607922137813 * S_Age  +    -0.72333515266618 * S_Frq
+          +     1.00319702869592 * S_Income  +    -0.98265416539823 *
+        S_Kidhome  +      0.0683081611036 * S_Mnt  +     0.53609800817402 *
+        S_MntFishProducts  +     2.04360526983241 * S_MntFruits
+          +    -0.71698041504305 * S_MntGoldProds  +     -0.0344399486348 *
+        S_MntMeatProducts  +     0.33812230317499 * S_MntSweetProducts
+          +     1.06616289880664 * S_MntWines  +     0.61567483782422 *
+        S_MonthsAsCustomer  +      0.1468959674594 * S_NumCatalogPurchases
+          +    -1.05383642674948 * S_NumDealsPurchases
+          +     1.71861984509369 * S_NumDistPurchases
+          +     1.47595181536047 * S_NumStorePurchases
+          +    -1.64165005491178 * S_NumWebPurchases
+          +    -2.35130004742828 * S_NumWebVisitsMonth
+          +      1.0733561716985 * S_RFMstat  +     1.11931629246452 *
+        S_RMntFrq  +    -1.27356615687944 * S_Recency
+          +     0.38980214209917 * S_Teenhome ;
+   H1x3_4  =    -1.87202109167616 * S_AcceptedCmpTotal
+          +     0.55536174675106 * S_Age  +     1.30133566520787 * S_Frq
+          +     1.18618986686496 * S_Income  +      0.7889264950743 *
+        S_Kidhome  +     0.52573653297629 * S_Mnt  +    -0.46151505202831 *
+        S_MntFishProducts  +     0.87196199131075 * S_MntFruits
+          +    -1.42881514301194 * S_MntGoldProds  +     0.75395204572369 *
+        S_MntMeatProducts  +    -1.86940235435459 * S_MntSweetProducts
+          +    -0.16531589560603 * S_MntWines  +     0.80429494629006 *
+        S_MonthsAsCustomer  +     2.07324775707635 * S_NumCatalogPurchases
+          +     0.13347794794222 * S_NumDealsPurchases
+          +     0.30533639886561 * S_NumDistPurchases
+          +     1.63892955540526 * S_NumStorePurchases
+          +     0.43734586516446 * S_NumWebPurchases
+          +     1.79260779802864 * S_NumWebVisitsMonth
+          +     2.03019700767877 * S_RFMstat  +    -0.36302320348133 *
+        S_RMntFrq  +    -0.32271271703746 * S_Recency
+          +     1.03191552613762 * S_Teenhome ;
+   H1x3_5  =     0.20857223520727 * S_AcceptedCmpTotal
+          +    -0.20096771162452 * S_Age  +     0.34962532991985 * S_Frq
+          +     1.37548654455856 * S_Income  +     1.56421861140197 *
+        S_Kidhome  +    -1.14534324749928 * S_Mnt  +     1.19456381083083 *
+        S_MntFishProducts  +     0.66027175430916 * S_MntFruits
+          +    -0.93198171949009 * S_MntGoldProds  +    -0.72464830253528 *
+        S_MntMeatProducts  +     1.02487566206095 * S_MntSweetProducts
+          +     1.05601020947303 * S_MntWines  +     2.31580499448269 *
+        S_MonthsAsCustomer  +    -0.72019418879499 * S_NumCatalogPurchases
+          +     1.64209094349557 * S_NumDealsPurchases
+          +    -0.38876870460627 * S_NumDistPurchases
+          +    -0.48559309584971 * S_NumStorePurchases
+          +     0.21254626353218 * S_NumWebPurchases
+          +    -0.71484448532542 * S_NumWebVisitsMonth
+          +     0.02349535084994 * S_RFMstat  +    -0.16176132186427 *
+        S_RMntFrq  +     0.44893411588775 * S_Recency
+          +      0.2652212690846 * S_Teenhome ;
+   H1x3_1  = H1x3_1  +    -1.35842958516566 * AcceptedCmp10
+          +     0.34594436457216 * AcceptedCmp20  +      0.3640777110552 *
+        AcceptedCmp30  +    -2.65231594293215 * AcceptedCmp40
+          +    -0.32594395344101 * AcceptedCmp50  +    -0.20731631969028 *
+        Complain0  +    -0.37562812451995 * HigherEducationBinary0 ;
+   H1x3_2  = H1x3_2  +    -0.29516697471591 * AcceptedCmp10
+          +     0.12160626453607 * AcceptedCmp20  +    -0.19673071668839 *
+        AcceptedCmp30  +      0.9679629348873 * AcceptedCmp40
+          +     0.27607865991675 * AcceptedCmp50  +     0.34210605810889 *
+        Complain0  +    -0.91955372970801 * HigherEducationBinary0 ;
+   H1x3_3  = H1x3_3  +    -0.64048354977116 * AcceptedCmp10
+          +     0.71632378156708 * AcceptedCmp20  +     1.49620826236085 *
+        AcceptedCmp30  +    -0.41927727863342 * AcceptedCmp40
+          +    -0.74518887123144 * AcceptedCmp50  +     -0.5653895859863 *
+        Complain0  +     0.49026807979832 * HigherEducationBinary0 ;
+   H1x3_4  = H1x3_4  +    -0.39456977652419 * AcceptedCmp10
+          +    -0.35607374401334 * AcceptedCmp20  +     0.25403314478809 *
+        AcceptedCmp30  +    -1.26365534513909 * AcceptedCmp40
+          +    -0.93574993035227 * AcceptedCmp50  +    -0.01475423275475 *
+        Complain0  +     0.99152563511102 * HigherEducationBinary0 ;
+   H1x3_5  = H1x3_5  +    -1.26373480748972 * AcceptedCmp10
+          +     0.14485593883591 * AcceptedCmp20  +     -0.0764980824216 *
+        AcceptedCmp30  +    -1.03297576023738 * AcceptedCmp40
+          +    -1.10199278454673 * AcceptedCmp50  +     0.92040879426753 *
+        Complain0  +     0.19845951543481 * HigherEducationBinary0 ;
+   H1x3_1  = H1x3_1  +     0.21888802927361 * Education2n_Cycle
+          +    -1.88729117459232 * EducationBasic  +    -0.23163049582765 *
+        EducationGraduation  +     0.46887304015863 * EducationMaster
+          +     1.33953173091973 * Marital_StatusDivorced
+          +    -0.26253208073262 * Marital_StatusMarried
+          +    -0.00960552682431 * Marital_StatusSingle
+          +     1.02851334153667 * Marital_StatusTogether ;
+   H1x3_2  = H1x3_2  +     2.36701652448958 * Education2n_Cycle
+          +     0.64894060487321 * EducationBasic  +     -1.2851019467738 *
+        EducationGraduation  +     1.05325310300372 * EducationMaster
+          +     1.43150850334311 * Marital_StatusDivorced
+          +    -0.69239127844934 * Marital_StatusMarried
+          +     2.08477562471559 * Marital_StatusSingle
+          +    -1.55945531486837 * Marital_StatusTogether ;
+   H1x3_3  = H1x3_3  +    -0.07588279976612 * Education2n_Cycle
+          +    -1.60804492005984 * EducationBasic  +     0.15348594453976 *
+        EducationGraduation  +     1.80436924796338 * EducationMaster
+          +     1.08387556786168 * Marital_StatusDivorced
+          +      1.0283506000217 * Marital_StatusMarried
+          +    -0.87069431107983 * Marital_StatusSingle
+          +    -0.04455113729262 * Marital_StatusTogether ;
+   H1x3_4  = H1x3_4  +    -0.24072826180906 * Education2n_Cycle
+          +     0.56372511932643 * EducationBasic  +    -1.72914870390939 *
+        EducationGraduation  +    -1.53859265107051 * EducationMaster
+          +      -1.347780188307 * Marital_StatusDivorced
+          +    -0.53911983240372 * Marital_StatusMarried
+          +     0.22083074159185 * Marital_StatusSingle
+          +     0.46023807391468 * Marital_StatusTogether ;
+   H1x3_5  = H1x3_5  +    -0.72917301249658 * Education2n_Cycle
+          +     0.78780526232794 * EducationBasic  +     0.22244378874589 *
+        EducationGraduation  +      1.6087631135774 * EducationMaster
+          +     1.46582538311384 * Marital_StatusDivorced
+          +     0.05256161016002 * Marital_StatusMarried
+          +    -1.21402967626877 * Marital_StatusSingle
+          +     0.88645860928281 * Marital_StatusTogether ;
+   H1x3_1  =     0.88456831875399 + H1x3_1 ;
+   H1x3_2  =    -0.97118571845853 + H1x3_2 ;
+   H1x3_3  =    -0.79264210370105 + H1x3_3 ;
+   H1x3_4  =     0.02838267530757 + H1x3_4 ;
+   H1x3_5  =      0.6575544901332 + H1x3_5 ;
+   DROP _EXP_BAR;
+   _EXP_BAR=50;
+   H1x3_1  = 1.0 / (1.0 + EXP(MIN( - H1x3_1 , _EXP_BAR)));
+   H1x3_2  = 1.0 / (1.0 + EXP(MIN( - H1x3_2 , _EXP_BAR)));
+   H1x3_3  = 1.0 / (1.0 + EXP(MIN( - H1x3_3 , _EXP_BAR)));
+   H1x3_4  = 1.0 / (1.0 + EXP(MIN( - H1x3_4 , _EXP_BAR)));
+   H1x3_5  = 1.0 / (1.0 + EXP(MIN( - H1x3_5 , _EXP_BAR)));
+END;
+ELSE DO;
+   H1x3_1  = .;
+   H1x3_2  = .;
+   H1x3_3  = .;
+   H1x3_4  = .;
+   H1x3_5  = .;
+END;
+*** *************************;
 *** Writing the Node H2x1_ ;
 *** *************************;
 IF _DM_BAD EQ 0 THEN DO;
-   H2x1_1  =    -3.66869890196477 * H1x1_1  +     3.66276995899936 * H1x1_2
-          +      4.9852243803889 * H1x1_3  +    -3.40922134517979 * H1x1_4
-          +     2.26435924995065 * H1x1_5 ;
-   H2x1_2  =     1.35296027814603 * H1x1_1  +     0.16236277762099 * H1x1_2
-          +      0.4094634018093 * H1x1_3  +    -1.05233334297087 * H1x1_4
-          +    -0.51735435825901 * H1x1_5 ;
-   H2x1_3  =    -3.57467050540101 * H1x1_1  +     1.96738498758928 * H1x1_2
-          +      3.1519435691133 * H1x1_3  +    -2.73180541318793 * H1x1_4
-          +     2.53621803266955 * H1x1_5 ;
-   H2x1_4  =    -1.77897865469649 * H1x1_1  +    -0.34371813002239 * H1x1_2
-          +     0.97655076671381 * H1x1_3  +    -0.53022688394362 * H1x1_4
-          +     1.78452647837415 * H1x1_5 ;
-   H2x1_5  =    -2.37976522756638 * H1x1_1  +     2.07473947277607 * H1x1_2
-          +      3.6114905073808 * H1x1_3  +    -4.57668209905758 * H1x1_4
-          +     2.97931581645784 * H1x1_5 ;
-   H2x1_1  = H2x1_1  +      0.5090021095213 * H1x2_1
-          +    -0.99996599039586 * H1x2_2  +     0.09317756017156 * H1x2_3
-          +     0.07646136890595 * H1x2_4  +    -0.86729455140311 * H1x2_5 ;
-   H2x1_2  = H2x1_2  +     0.54458122713319 * H1x2_1
-          +    -1.01527351866283 * H1x2_2  +    -1.05264779960249 * H1x2_3
-          +     2.00891057398994 * H1x2_4  +     0.23877185330348 * H1x2_5 ;
-   H2x1_3  = H2x1_3  +     0.45936122831356 * H1x2_1
-          +    -0.78158455560098 * H1x2_2  +    -0.93755507764598 * H1x2_3
-          +    -0.41290092050446 * H1x2_4  +    -1.08076286104858 * H1x2_5 ;
-   H2x1_4  = H2x1_4  +     0.95365620475779 * H1x2_1
-          +    -0.84100294393078 * H1x2_2  +     0.70463413466954 * H1x2_3
-          +     1.80542761219637 * H1x2_4  +     0.45881360213194 * H1x2_5 ;
-   H2x1_5  = H2x1_5  +     0.59629215620441 * H1x2_1
-          +    -0.66300910076078 * H1x2_2  +     0.53748646350811 * H1x2_3
-          +     0.40402787748621 * H1x2_4  +    -0.68066387330661 * H1x2_5 ;
-   H2x1_1  =    -1.36901208947371 + H2x1_1 ;
-   H2x1_2  =     1.02513270875023 + H2x1_2 ;
-   H2x1_3  =     0.21017025934674 + H2x1_3 ;
-   H2x1_4  =    -1.15214364807652 + H2x1_4 ;
-   H2x1_5  =    -1.32590257108023 + H2x1_5 ;
-   DROP _EXP_BAR;
-   _EXP_BAR=50;
-   H2x1_1  = 1.0 / (1.0 + EXP(MIN( - H2x1_1 , _EXP_BAR)));
-   H2x1_2  = 1.0 / (1.0 + EXP(MIN( - H2x1_2 , _EXP_BAR)));
-   H2x1_3  = 1.0 / (1.0 + EXP(MIN( - H2x1_3 , _EXP_BAR)));
-   H2x1_4  = 1.0 / (1.0 + EXP(MIN( - H2x1_4 , _EXP_BAR)));
-   H2x1_5  = 1.0 / (1.0 + EXP(MIN( - H2x1_5 , _EXP_BAR)));
+   H2x1_1  =    -0.87888588976745 * H1x1_1  +     2.90335871970001 * H1x1_2
+          +     3.56892082037266 * H1x1_3  +    -2.73992780705083 * H1x1_4
+          +     1.85087845133324 * H1x1_5 ;
+   H2x1_2  =    -0.58574259841126 * H1x1_1  +    -0.21734849016798 * H1x1_2
+          +    -0.25911074181081 * H1x1_3  +    -0.42608313525243 * H1x1_4
+          +      0.0572264965726 * H1x1_5 ;
+   H2x1_3  =     -3.4245103090892 * H1x1_1  +     2.39148442791109 * H1x1_2
+          +     2.40633993926864 * H1x1_3  +    -0.39116314741561 * H1x1_4
+          +     1.55940137045446 * H1x1_5 ;
+   H2x1_4  =     4.40552826823228 * H1x1_1  +    -2.22667369285426 * H1x1_2
+          +    -4.36956996992936 * H1x1_3  +     5.07833758885145 * H1x1_4
+          +    -3.71745000855391 * H1x1_5 ;
+   H2x1_1  = H2x1_1  +     2.57417055243767 * H1x2_1
+          +     0.83648749576123 * H1x2_2  +     0.89390090173338 * H1x2_3
+          +     0.64981014833304 * H1x2_4  +    -0.52148329192172 * H1x2_5 ;
+   H2x1_2  = H2x1_2  +      0.0180888989385 * H1x2_1
+          +    -0.80823823488019 * H1x2_2  +    -0.28763491232907 * H1x2_3
+          +     0.25846928082637 * H1x2_4  +    -0.90191452174928 * H1x2_5 ;
+   H2x1_3  = H2x1_3  +     1.14009879940491 * H1x2_1
+          +    -0.40787680915084 * H1x2_2  +     0.07284828777988 * H1x2_3
+          +     0.36049016529857 * H1x2_4  +    -1.18138631855392 * H1x2_5 ;
+   H2x1_4  = H2x1_4  +     -0.1178430666715 * H1x2_1
+          +     2.09065650924536 * H1x2_2  +     1.04148055725421 * H1x2_3
+          +     0.02606984862898 * H1x2_4  +     0.31973150706209 * H1x2_5 ;
+   H2x1_1  = H2x1_1  +     0.37589541636702 * H1x3_1
+          +    -1.02452495514201 * H1x3_2  +     0.44765211805329 * H1x3_3
+          +    -1.35647342372032 * H1x3_4  +     -0.6490399229487 * H1x3_5 ;
+   H2x1_2  = H2x1_2  +      -1.910747593267 * H1x3_1
+          +     1.91313714874593 * H1x3_2  +     0.89010950185557 * H1x3_3
+          +     1.16258612173237 * H1x3_4  +     0.67062728470341 * H1x3_5 ;
+   H2x1_3  = H2x1_3  +    -0.61933600446437 * H1x3_1
+          +     1.71790550668732 * H1x3_2  +     0.54214423164791 * H1x3_3
+          +     1.23934237110052 * H1x3_4  +     -0.5426823885329 * H1x3_5 ;
+   H2x1_4  = H2x1_4  +     0.63501991890118 * H1x3_1
+          +     0.52608732282548 * H1x3_2  +     1.05849455171994 * H1x3_3
+          +    -0.10988994454917 * H1x3_4  +     -0.4296682351699 * H1x3_5 ;
+   H2x1_1  =     1.65760855975376 + H2x1_1 ;
+   H2x1_2  =    -1.48092067999918 + H2x1_2 ;
+   H2x1_3  =     0.34293203475136 + H2x1_3 ;
+   H2x1_4  =     2.26730807690838 + H2x1_4 ;
+   H2x1_5  = 0;
+   _MAX_ = MAX (H2x1_1 , H2x1_2 , H2x1_3 , H2x1_4 , H2x1_5 );
+   _SUM_ = 0.;
+   H2x1_1  = EXP(H2x1_1  - _MAX_);
+   _SUM_ = _SUM_ + H2x1_1 ;
+   H2x1_2  = EXP(H2x1_2  - _MAX_);
+   _SUM_ = _SUM_ + H2x1_2 ;
+   H2x1_3  = EXP(H2x1_3  - _MAX_);
+   _SUM_ = _SUM_ + H2x1_3 ;
+   H2x1_4  = EXP(H2x1_4  - _MAX_);
+   _SUM_ = _SUM_ + H2x1_4 ;
+   H2x1_5  = EXP(H2x1_5  - _MAX_);
+   _SUM_ = _SUM_ + H2x1_5 ;
+   H2x1_1  = H2x1_1  / _SUM_;
+   H2x1_2  = H2x1_2  / _SUM_;
+   H2x1_3  = H2x1_3  / _SUM_;
+   H2x1_4  = H2x1_4  / _SUM_;
+   H2x1_5  = H2x1_5  / _SUM_;
 END;
 ELSE DO;
    H2x1_1  = .;
@@ -946,6 +1161,134 @@ ELSE DO;
    H2x1_3  = .;
    H2x1_4  = .;
    H2x1_5  = .;
+END;
+*** *************************;
+*** Writing the Node H2x2_ ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H2x2_1  =     0.35487648363729 * H1x1_1  +    -1.23352844324567 * H1x1_2
+          +      0.4867158313468 * H1x1_3  +    -1.47292809903753 * H1x1_4
+          +    -1.00833023262854 * H1x1_5 ;
+   H2x2_2  =     1.32087363094324 * H1x1_1  +     0.82502983555141 * H1x1_2
+          +    -0.68621854188154 * H1x1_3  +     1.98219533394448 * H1x1_4
+          +     0.24099626891211 * H1x1_5 ;
+   H2x2_3  =     1.19516705715854 * H1x1_1  +    -0.20476587977538 * H1x1_2
+          +    -2.69435199012833 * H1x1_3  +      1.1085509496662 * H1x1_4
+          +    -0.95845782501191 * H1x1_5 ;
+   H2x2_4  =     0.80435775915951 * H1x1_1  +     1.81751702761299 * H1x1_2
+          +     0.07722876002556 * H1x1_3  +    -0.41957373993392 * H1x1_4
+          +    -1.39341356039439 * H1x1_5 ;
+   H2x2_1  = H2x2_1  +     0.84230993439042 * H1x2_1
+          +      1.4931541058726 * H1x2_2  +     0.29113033361443 * H1x2_3
+          +     0.58117372781043 * H1x2_4  +     0.21183820652904 * H1x2_5 ;
+   H2x2_2  = H2x2_2  +     0.27560928585641 * H1x2_1
+          +     1.00352880610395 * H1x2_2  +     1.86342723621296 * H1x2_3
+          +     0.68698974361713 * H1x2_4  +     1.62443344475228 * H1x2_5 ;
+   H2x2_3  = H2x2_3  +     0.59362453125998 * H1x2_1
+          +     2.21434215943762 * H1x2_2  +     0.00697391860503 * H1x2_3
+          +     0.52298455671378 * H1x2_4  +    -1.36319907473823 * H1x2_5 ;
+   H2x2_4  = H2x2_4  +     0.87949581153547 * H1x2_1
+          +     0.52867495476492 * H1x2_2  +    -0.30823702050003 * H1x2_3
+          +     1.30732992472712 * H1x2_4  +    -0.93335113891701 * H1x2_5 ;
+   H2x2_1  = H2x2_1  +    -0.18546949662618 * H1x3_1
+          +     0.12449215628678 * H1x3_2  +    -0.06904718348363 * H1x3_3
+          +     1.64236464165721 * H1x3_4  +      0.6073731959408 * H1x3_5 ;
+   H2x2_2  = H2x2_2  +    -0.65604349417832 * H1x3_1
+          +    -0.36719791640957 * H1x3_2  +     0.13320126120657 * H1x3_3
+          +     0.18159276955134 * H1x3_4  +     2.58327741985853 * H1x3_5 ;
+   H2x2_3  = H2x2_3  +     0.91638163706166 * H1x3_1
+          +    -0.47067218080648 * H1x3_2  +    -1.48968450897101 * H1x3_3
+          +     1.31187282169231 * H1x3_4  +     -0.2874693423684 * H1x3_5 ;
+   H2x2_4  = H2x2_4  +     0.53560065193109 * H1x3_1
+          +    -1.15405943087628 * H1x3_2  +     0.12331054856276 * H1x3_3
+          +     -1.4665768024733 * H1x3_4  +    -0.08015819920106 * H1x3_5 ;
+   H2x2_1  =     1.14294113680807 + H2x2_1 ;
+   H2x2_2  =     0.23029998902452 + H2x2_2 ;
+   H2x2_3  =     0.09214575938404 + H2x2_3 ;
+   H2x2_4  =    -1.18247593420886 + H2x2_4 ;
+   H2x2_5  = 0;
+   _MAX_ = MAX (H2x2_1 , H2x2_2 , H2x2_3 , H2x2_4 , H2x2_5 );
+   _SUM_ = 0.;
+   H2x2_1  = EXP(H2x2_1  - _MAX_);
+   _SUM_ = _SUM_ + H2x2_1 ;
+   H2x2_2  = EXP(H2x2_2  - _MAX_);
+   _SUM_ = _SUM_ + H2x2_2 ;
+   H2x2_3  = EXP(H2x2_3  - _MAX_);
+   _SUM_ = _SUM_ + H2x2_3 ;
+   H2x2_4  = EXP(H2x2_4  - _MAX_);
+   _SUM_ = _SUM_ + H2x2_4 ;
+   H2x2_5  = EXP(H2x2_5  - _MAX_);
+   _SUM_ = _SUM_ + H2x2_5 ;
+   H2x2_1  = H2x2_1  / _SUM_;
+   H2x2_2  = H2x2_2  / _SUM_;
+   H2x2_3  = H2x2_3  / _SUM_;
+   H2x2_4  = H2x2_4  / _SUM_;
+   H2x2_5  = H2x2_5  / _SUM_;
+END;
+ELSE DO;
+   H2x2_1  = .;
+   H2x2_2  = .;
+   H2x2_3  = .;
+   H2x2_4  = .;
+   H2x2_5  = .;
+END;
+*** *************************;
+*** Writing the Node H3x1_ ;
+*** *************************;
+IF _DM_BAD EQ 0 THEN DO;
+   H3x1_1  =     0.38781845364667 * H2x1_1  +    -1.29333236344932 * H2x1_2
+          +    -0.39452648844304 * H2x1_3  +    -1.74269898056816 * H2x1_4
+          +     0.80663208970159 * H2x1_5 ;
+   H3x1_2  =     3.42138045838852 * H2x1_1  +    -2.53755815247586 * H2x1_2
+          +     1.21718290783021 * H2x1_3  +    -5.59742312960418 * H2x1_4
+          +     0.93331767575635 * H2x1_5 ;
+   H3x1_3  =      0.3066875685513 * H2x1_1  +     0.06212172151661 * H2x1_2
+          +     0.54975837436313 * H2x1_3  +    -2.01758242649336 * H2x1_4
+          +     -1.5405169528484 * H2x1_5 ;
+   H3x1_4  =     0.75238654454663 * H2x1_1  +      0.8605688517794 * H2x1_2
+          +    -1.18675726977521 * H2x1_3  +    -0.23106123144614 * H2x1_4
+          +    -0.26022301590207 * H2x1_5 ;
+   H3x1_1  = H3x1_1  +     -1.9857802180333 * H2x2_1
+          +    -1.83746541265988 * H2x2_2  +    -0.19991218509663 * H2x2_3
+          +    -1.16358880876987 * H2x2_4  +     0.72072728861384 * H2x2_5 ;
+   H3x1_2  = H3x1_2  +     0.96937540396367 * H2x2_1
+          +    -0.36649624165623 * H2x2_2  +     0.89618563330616 * H2x2_3
+          +    -0.84224721075989 * H2x2_4  +     0.43309698013395 * H2x2_5 ;
+   H3x1_3  = H3x1_3  +    -0.90225214765586 * H2x2_1
+          +     0.02136319386846 * H2x2_2  +    -0.46868394918483 * H2x2_3
+          +     0.56005845701528 * H2x2_4  +     -1.2510120440755 * H2x2_5 ;
+   H3x1_4  = H3x1_4  +    -0.50993520854009 * H2x2_1
+          +    -2.07093806498525 * H2x2_2  +      0.4129198676448 * H2x2_3
+          +     0.26049404756746 * H2x2_4  +     2.51376895456424 * H2x2_5 ;
+   H3x1_1  =    -0.83299285935592 + H3x1_1 ;
+   H3x1_2  =     1.30330978853872 + H3x1_2 ;
+   H3x1_3  =    -2.12788819064089 + H3x1_3 ;
+   H3x1_4  =    -2.20240058017016 + H3x1_4 ;
+   H3x1_5  = 0;
+   _MAX_ = MAX (H3x1_1 , H3x1_2 , H3x1_3 , H3x1_4 , H3x1_5 );
+   _SUM_ = 0.;
+   H3x1_1  = EXP(H3x1_1  - _MAX_);
+   _SUM_ = _SUM_ + H3x1_1 ;
+   H3x1_2  = EXP(H3x1_2  - _MAX_);
+   _SUM_ = _SUM_ + H3x1_2 ;
+   H3x1_3  = EXP(H3x1_3  - _MAX_);
+   _SUM_ = _SUM_ + H3x1_3 ;
+   H3x1_4  = EXP(H3x1_4  - _MAX_);
+   _SUM_ = _SUM_ + H3x1_4 ;
+   H3x1_5  = EXP(H3x1_5  - _MAX_);
+   _SUM_ = _SUM_ + H3x1_5 ;
+   H3x1_1  = H3x1_1  / _SUM_;
+   H3x1_2  = H3x1_2  / _SUM_;
+   H3x1_3  = H3x1_3  / _SUM_;
+   H3x1_4  = H3x1_4  / _SUM_;
+   H3x1_5  = H3x1_5  / _SUM_;
+END;
+ELSE DO;
+   H3x1_1  = .;
+   H3x1_2  = .;
+   H3x1_3  = .;
+   H3x1_4  = .;
+   H3x1_5  = .;
 END;
 *** *************************;
 *** Writing the Node DepVar ;
@@ -976,10 +1319,10 @@ else do;
    end;
 end;
 IF _DM_BAD EQ 0 THEN DO;
-   P_DepVar1  =    -9.23664553457504 * H2x1_1  +     1.34611690798114 * H2x1_2
-          +    -6.67077102946651 * H2x1_3  +    -1.67245227685142 * H2x1_4
-          +    -7.67053346287177 * H2x1_5 ;
-   P_DepVar1  =      3.4145227149582 + P_DepVar1 ;
+   P_DepVar1  =     0.02793808059597 * H3x1_1  +    -8.41365271594755 * H3x1_2
+          +    -0.18933524733979 * H3x1_3  +     1.61020422729446 * H3x1_4
+          +     7.51494112828021 * H3x1_5 ;
+   P_DepVar1  =     0.83962115399384 + P_DepVar1 ;
    P_DepVar0  = 0;
    _MAX_ = MAX (P_DepVar1 , P_DepVar0 );
    _SUM_ = 0.;

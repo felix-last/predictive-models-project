@@ -1,0 +1,3588 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "08.08 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                28. April 2016
+Time:                08.08 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O132AMNF 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O132AMNF new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "08.08 Uhr" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_7PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.03.01M2P081512";
+MPRINT(EM_DIAGRAM):   put "EM Version:          12.1";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "08.08 Uhr" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMRUNSTATUS.xml' encoding="UTF-8" NOBOM;
+367714     proc freq data=EMWS8.SVM_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS8.SVM_VariableSet noprint;
+367715     table ROLE*LEVEL/out=WORK.SVMMETA;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.SVMMETA;
+367716     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 36 observations read from the data set EMWS8.SVM_VARIABLESET.
+NOTE: The data set WORK.SVMMETA has 7 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+367717     proc print data=WORK.SVMMETA label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.SVMMETA label noobs;
+367718     var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+367719     label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+367719   ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+367719   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+367720     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+367721     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+367722     run;
+
+NOTE: There were 7 observations read from the data set WORK.SVMMETA.
+NOTE: The PROCEDURE PRINT printed page 137.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+367723     title10;
+MPRINT(EM_DIAGRAM):   title10;
+367724     %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS8.Meta_TRAIN EMWS8.Meta_TRAIN 
+EMWS8.Meta_TRAIN EMWS8.Meta_TRAIN EMWS8 Meta_TRAIN 
+EMWS8.Meta_TRAIN EMWS8.Meta_TRAIN 
+EMWS8.Meta_TRAIN EMWS8.Meta_TRAIN EMWS8 Meta_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS8.Meta_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _sortedDecData;
+MPRINT(EM_DIAGRAM):   set EMWS8.SVM_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS8.SVM_DepVar_DD;
+MPRINT(EM_DIAGRAM):   set EMWS8.SVM_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.SVM_DepVar_DD;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.SVM_DepVar_DD;
+MPRINT(EM_DIAGRAM):   merge EMWS8.SVM_DepVar_DD _TEMPCLASS(rename=(NMISSPERCENT=TRAINPRIOR 
+FREQUENCY=COUNT));
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.SVM_DepVar_DD 
+out=EMWS8.SVM_DepVar_DD(drop=_levelorder_);
+MPRINT(EM_DIAGRAM):   by _levelorder_;
+MPRINT(EM_DIAGRAM):   run;
+367771     data WORK.SVM_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.SVM_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+367772     length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+367773     label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+367773   ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+367773   ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+367774        "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+367774   ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+367774   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+367775     set EMWS8.SVM_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS8.SVM_DEPVAR_DM( where=(_TYPE_="TARGET"));
+367776     NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+367777     select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+367778     when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+367779     when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+367780     when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+367781     when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+367782     otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+367783     end;
+MPRINT(EM_DIAGRAM):   end;
+367784     output;
+MPRINT(EM_DIAGRAM):   output;
+367785     run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.SVM_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+367786     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+367787     proc print data=WORK.SVM_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.SVM_EVENT noobs label;
+367788     var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+367789     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+367790     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+367791     run;
+
+NOTE: There were 1 observations read from the data set WORK.SVM_EVENT.
+NOTE: The PROCEDURE PRINT printed page 138.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+367792     title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+367793     proc print data = EMWS8.SVM_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS8.SVM_DepVar_DM noobs label;
+367794     var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+367795     where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+367796     label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+367796   ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+367796   ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+367797     title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+367798     title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+367799     run;
+
+NOTE: There were 7 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 139.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+367800     title10;
+MPRINT(EM_DIAGRAM):   title10;
+367801     %let EMEXCEPTIONSTRING=;
+MPRINT(EM_DIAGRAM):     proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= "1";
+MPRINT(EM_DIAGRAM):   label DECISION2= "0";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * SVM: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE 
+or _ALL_;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * SVM: EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * System Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   length string $2000;
+MPRINT(EM_DIAGRAM):   string = 'Tugas';
+MPRINT(EM_DIAGRAM):   call symput('EM_PROJECTNAME', trim(string));
+MPRINT(EM_DIAGRAM):   string = 'Predictive Models';
+MPRINT(EM_DIAGRAM):   call symput('EM_WSNAME', trim(string));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * Properties Macro Variables ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Files Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Import Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Export Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Decision Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   filename temp catalog 'sashelp.emutil.em_decdata.source';
+MPRINT(EM_DIAGRAM):   filename temp;
+MPRINT(EM_DECDATA):   proc display cat=sashelp.emutil.makedecdata.scl;
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   *------------------------------------------------------------*;
+MPRINT(EM_DECDATA):   * SVM: Create decision matrix;
+MPRINT(EM_DECDATA):   *------------------------------------------------------------*;
+MPRINT(EM_DECDATA):   data WORK.DepVar;
+MPRINT(EM_DECDATA):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 DECISION1 
+8 DECISION2 8 ;
+MPRINT(EM_DECDATA):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+MPRINT(EM_DECDATA):   format COUNT 10. ;
+MPRINT(EM_DECDATA):   DepVar="1";
+MPRINT(EM_DECDATA):   COUNT=359;
+MPRINT(EM_DECDATA):   DATAPRIOR=0.15122156697556;
+MPRINT(EM_DECDATA):   TRAINPRIOR=0.15122156697556;
+MPRINT(EM_DECDATA):   DECPRIOR=.;
+MPRINT(EM_DECDATA):   DECISION1=1;
+MPRINT(EM_DECDATA):   DECISION2=0;
+MPRINT(EM_DECDATA):   output;
+MPRINT(EM_DECDATA):   DepVar="0";
+MPRINT(EM_DECDATA):   COUNT=2015;
+MPRINT(EM_DECDATA):   DATAPRIOR=0.84877843302443;
+MPRINT(EM_DECDATA):   TRAINPRIOR=0.84877843302443;
+MPRINT(EM_DECDATA):   DECPRIOR=.;
+MPRINT(EM_DECDATA):   DECISION1=0;
+MPRINT(EM_DECDATA):   DECISION2=1;
+MPRINT(EM_DECDATA):   output;
+MPRINT(EM_DECDATA):   ;
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   proc datasets lib=work nolist;
+MPRINT(EM_DECDATA):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DECDATA):   label DECISION1= '1';
+MPRINT(EM_DECDATA):   label DECISION2= '0';
+MPRINT(EM_DECDATA):   run;
+MPRINT(EM_DECDATA):   quit;
+MPRINT(EM_DECDATA):   
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= "1";
+MPRINT(EM_DIAGRAM):   label DECISION2= "0";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Statement Macro Variables;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   set EMWS8.FIMPORT_EMINFO;
+MPRINT(EM_DIAGRAM):   where key in('HPDMSAMPLE', 'IDSTABLE');
+MPRINT(EM_DIAGRAM):   if key = 'HPDMSAMPLE' then call symput('_ForceGrid', '1');
+MPRINT(EM_DIAGRAM):   else call symput('_IDS_TABLE', DATA);
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(HPDM_PERFORMANCE):  ;
+PERFORMANCE  DETAILS
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * General Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Target Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Input Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Rejected Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * Misc Variable Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End Create EM Macro Variables and Macros;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   data EM_TARGETDECINFO;
+MPRINT(EM_DIAGRAM):   length TARGET $32 DECDATA DECMETA $43;
+MPRINT(EM_DIAGRAM):   TARGET="DepVar";
+MPRINT(EM_DIAGRAM):   DECDATA="EMWS8.SVM_DepVar_DD";
+MPRINT(EM_DIAGRAM):   DECMETA="EMWS8.SVM_DepVar_DM";
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EM_TARGETDECINFO;
+MPRINT(EM_DIAGRAM):   length TARGET $32 DECDATA DECMETA $43;
+MPRINT(EM_DIAGRAM):   TARGET="DepVar";
+MPRINT(EM_DIAGRAM):   DECDATA="EMWS8.SVM_DepVar_DD";
+MPRINT(EM_DIAGRAM):   DECMETA="EMWS8.SVM_DepVar_DM";
+MPRINT(EM_DIAGRAM):   output;
+MPRINT(EM_DIAGRAM):   run;
+368316     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+368317     * SVM: Generation of macros and macro variables;
+MPRINT(EM_DIAGRAM):   * SVM: Generation of macros and macro variables;
+368318     * To see the code generated, set the EM_DEBUG macro variable to SOURCE or _ALL_;
+MPRINT(EM_DIAGRAM):   * To see the code generated, set the EM_DEBUG macro variable to SOURCE 
+or _ALL_;
+368319     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+
+368320     %let EMEXCEPTIONSTRING=;
+368321     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+368322     * TRAIN: SVM;
+MPRINT(EM_DIAGRAM):   * TRAIN: SVM;
+368323     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+368324     %let EM_ACTION = TRAIN;
+368325     %let syscc = 0;
+368326     %macro main;
+368327     
+368328        filename temp catalog 'sashelp.emmodl.svm_macros.source';
+368329        %include temp;
+368330        filename temp;
+368331        %SetProperties;
+368332        %if %upcase(&EM_ACTION) = CREATE %then %do;
+368333            filename temp catalog 'sashelp.emmodl.svm_create.source';
+368334            %include temp;
+368335            filename temp;
+368336            %create;
+368337        %end;
+368338        %else
+368339        %if %upcase(&EM_ACTION) = TRAIN %then %do;
+368340            filename temp catalog 'sashelp.emmodl.svm_train.source';
+368341            %include temp;
+368342            filename temp;
+368343            %train;
+368344        %end;
+368345        %else
+368346        %if %upcase(&EM_ACTION) = REPORT %then %do;
+368347            filename temp catalog 'sashelp.emmodl.svm_report.source';
+368348            %include temp;
+368349            filename temp;
+368350            %report;
+368351        %end;
+368352     
+368353     %mend main;
+368354     
+368355     %main;
+MPRINT(EM_DIAGRAM):    
+MPRINT(MAIN):   filename temp catalog 'sashelp.emmodl.svm_macros.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.SVM_MACROS.SOURCE.
+368357    +%macro SetProperties;
+368358    +   %em_checkmacro(name=EM_PROPERTY_METHOD,  global=Y, value=DQP);
+368359    +   %em_checkmacro(name=EM_PROPERTY_TUNINGMETHOD,  global=Y, value=POPT);
+368360    +   %em_checkmacro(name=EM_PROPERTY_APPLYCV,  global=Y, value=N);
+368361    +   %em_checkmacro(name=EM_PROPERTY_CVMETHOD,  global=Y, value=RANDOM);
+368362    +   %em_checkmacro(name=EM_PROPERTY_CVFOLD, global=Y, value=Default);
+368363    +   %em_checkmacro(name=EM_PROPERTY_CVALUE,    global=Y, value=TUNING);
+368364    +   %em_checkmacro(name=EM_PROPERTY_USERCVALUE,    global=Y, value=0.1);
+368365    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_FROM,    global=Y, value=0.1);
+368366    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_TO,    global=Y, value=1);
+368367    +   %em_checkmacro(name=EM_PROPERTY_TUN_C_BY,    global=Y, value=0.1);
+368368    +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTION,    global=Y, value=DEFAULT);
+368369    +   %em_checkmacro(name=EM_PROPERTY_PRINTOPTHIST,    global=Y, value=N);
+368370    +   %em_checkmacro(name=EM_PROPERTY_KERNEL,    global=Y, value=LINEAR);
+368371    +   %em_checkmacro(name=EM_PROPERTY_POLY_K_PAR1,    global=Y, value=CONSTANT);
+368372    +   %em_checkmacro(name=EM_PROPERTY_POLY_USERK_PAR1,    global=Y, value=2);
+368373    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_FROM,    global=Y, value=2);
+368374    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_TO,    global=Y, value=5);
+368375    +   %em_checkmacro(name=EM_PROPERTY_POLY_TUN_KP1_BY,    global=Y, value=1);
+368376    +   %em_checkmacro(name=EM_PROPERTY_RBF_K_PAR1,    global=Y, value=CONSTANT);
+368377    +   %em_checkmacro(name=EM_PROPERTY_RBF_USERK_PAR1,    global=Y, value=1);
+368378    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_FROM,    global=Y, value=0.2);
+368379    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_TO,    global=Y, value=1);
+368380    +   %em_checkmacro(name=EM_PROPERTY_RBF_TUN_KP1_BY,    global=Y, value=0.2);
+368381    +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR1,    global=Y, value=CONSTANT);
+368382    +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR1,    global=Y, value=1);
+368383    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_FROM,    global=Y, value=0.1);
+368384    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_TO,    global=Y, value=1);
+368385    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP1_BY,    global=Y, value=0.1);
+368386    +   %em_checkmacro(name=EM_PROPERTY_SGMD_K_PAR2,       global=Y, value=CONSTANT);
+368387    +   %em_checkmacro(name=EM_PROPERTY_SGMD_USERK_PAR2,    global=Y, value=1);
+368388    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_FROM,    global=Y, value=0.1);
+368389    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_TO,    global=Y, value=1);
+368390    +   %em_checkmacro(name=EM_PROPERTY_SGMD_TUN_KP2_BY,    global=Y, value=0.1);
+368391    +   %em_checkmacro(name=EM_PROPERTY_APPLYSAMPLING,     global=Y,  value=Y);
+368392    +   %em_checkmacro(name=EM_PROPERTY_SAMPLESIZE,  global=Y,  value=1000);
+368393    +   %em_checkmacro(name=EM_PROPERTY_SUPPRESSSAMPWARN,  global=Y,  value=N);
+368394    +   %em_checkmacro(name=EM_PROPERTY_USEITERCG,  global=Y,  value=DEFAULT);
+368395    +   %em_checkmacro(name=EM_PROPERTY_CGITER,    global=Y, value=400);
+368396    +   %em_checkmacro(name=EM_PROPERTY_CGTOL,    global=Y,    value=0.000001);
+368397    +   %em_checkmacro(name=EM_PROPERTY_EPSILON,  global=Y,  value=0.1);
+368398    +   %em_checkmacro(name=EM_PROPERTY_QPSIZE,   global=Y,   value=100);
+368399    +   %em_checkmacro(name=EM_PROPERTY_MAXITER,  global=Y,  value=200);
+368400    +   %em_checkmacro(name=EM_PROPERTY_MAXFUNC,  global=Y,  value=500);
+368401    +   %em_checkmacro(name=EM_PROPERTY_MEMSIZE,  global=Y,  value=8);
+368402    +   %em_checkmacro(name=EM_PROPERTY_OUTITER,  global=Y,  value=10);
+368403    +   %em_checkmacro(name=EM_PROPERTY_GCONV,    global=Y,  value=0.00000001);
+368404    +   %em_checkmacro(name=EM_PROPERTY_ABSGCONV, global=Y,  value=0.0005);
+368405    +   %em_checkmacro(name=EM_PROPERTY_XSCALE, global=Y,  value=Y);
+368406    +   %em_checkmacro(name=EM_PROPERTY_XCONV,    global=Y,  value=0.00000001);
+368407    +   %em_checkmacro(name=EM_PROPERTY_ABSXCONV, global=Y,  value=0.0005);
+368409    +%mend SetProperties;
+368412    +%macro make_dmdb(indata=, out=0, classout=WORK.DMDBCLASS, varout=WORK.DMDBVAR) ;
+368414    +  %local emclassout emvarout;
+368416    +   proc dmdb batch dmdbcat= _emdmdb
+368418    +   %if &out ne 0 %then %do ;
+368419    +       data=&indata out= _emdmdb &emclassout &emvarout;
+368420    +   %end ;
+368421    +   %else %do ;
+368422    +       data=&indata &emclassout &emvarout;
+368423    +   %end ;
+368425    +   %if %em_interval ne  %then %do ; var %EM_INTERVAL ; %end ;
+368426    +   %if %em_class   ne  %then %do ;
+368427    +       class %EM_CLASS;
+368428    +   %end ;
+368429    +   /*%if %em_freq    ne  %then %do ; freq %em_freq   ; %end ;  */
+368430    +   %if %em_target ne %then %do ;
+368431    +          target %em_target ;
+368432    +   %end ;
+368433    +   run ;
+368434    +%mend make_dmdb;
+368437    +%macro svm_training(indata=,
+368438    +                    task=,
+368439    +                    classtask=,
+368440    +                    method=,
+368441    +                    outest =,
+368442    +                    outclass =,
+368443    +                    outfit =,
+368444    +                    isValidationSet =,
+368445    +                    testdata =,
+368446    +                    testout =,
+368447    +                    validSource=,
+368448    +                    usecgbydefault=
+368449    +                    );
+368451    +%make_dmdb(indata=&indata, out=1);
+368453    +options debug="nlpitermsg=2";
+368455    +%if (&EM_PROPERTY_TUNINGMETHOD eq GRID) %then %do;
+368456    +%EM_GETNAME(KEY=TUNINGCRIT, TYPE=DATA);
+368457    +ods output tun_crt = &EM_USER_TUNINGCRIT;
+368458    +%end;
+368460    +%let _PROPERTY_USERCVALUE = %sysfunc(strip(&EM_PROPERTY_USERCVALUE));
+368461    +%let _PROPERTY_TUN_C_FROM = %sysfunc(strip(&EM_PROPERTY_TUN_C_FROM));
+368462    +%let _PROPERTY_TUN_C_TO = %sysfunc(strip(&EM_PROPERTY_TUN_C_TO));
+368463    +%let _PROPERTY_TUN_C_BY = %sysfunc(strip(&EM_PROPERTY_TUN_C_BY));
+368465    +%let _PROPERTY_POLY_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_POLY_USERK_PAR1));
+368466    +%let _PROPERTY_POLY_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_FROM));
+368467    +%let _PROPERTY_POLY_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_TO));
+368468    +%let _PROPERTY_POLY_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_POLY_TUN_KP1_BY));
+368471    +%let _PROPERTY_RBF_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_RBF_USERK_PAR1));
+368472    +%let _PROPERTY_RBF_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_FROM));
+368473    +%let _PROPERTY_RBF_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_TO));
+368474    +%let _PROPERTY_RBF_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_RBF_TUN_KP1_BY));
+368476    +%let _PROPERTY_SGMD_USERK_PAR1 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR1));
+368477    +%let _PROPERTY_SGMD_TUN_KP1_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_FROM));
+368478    +%let _PROPERTY_SGMD_TUN_KP1_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_TO));
+368479    +%let _PROPERTY_SGMD_TUN_KP1_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP1_BY));
+368482    +%let _PROPERTY_SGMD_USERK_PAR2 = %sysfunc(strip(&EM_PROPERTY_SGMD_USERK_PAR2));
+368483    +%let _PROPERTY_SGMD_TUN_KP2_FROM = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_FROM));
+368484    +%let _PROPERTY_SGMD_TUN_KP2_TO = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_TO));
+368485    +%let _PROPERTY_SGMD_TUN_KP2_BY = %sysfunc(strip(&EM_PROPERTY_SGMD_TUN_KP2_BY));
+368488    +%let _PROPERTY_CGITER = %sysfunc(strip(&EM_PROPERTY_CGITER));
+368489    +%let _PROPERTY_CGTOL  = %sysfunc(strip(&EM_PROPERTY_CGTOL));
+368490    +%let _PROPERTY_QPSIZE =  %sysfunc(strip(&EM_PROPERTY_QPSIZE));
+368491    +%let _PROPERTY_EPSILON =  %sysfunc(strip(&EM_PROPERTY_EPSILON));
+368492    +%let _PROPERTY_MAXITER =  %sysfunc(strip(&EM_PROPERTY_MAXITER));
+368493    +%let _PROPERTY_MAXFUNC =  %sysfunc(strip(&EM_PROPERTY_MAXFUNC));
+368494    +%let _PROPERTY_MEMSIZE =  %sysfunc(strip(&EM_PROPERTY_MEMSIZE));
+368495    +%let _PROPERTY_OUTITER =  %sysfunc(strip(&EM_PROPERTY_OUTITER));
+368496    +%let _PROPERTY_GCONV   =  %sysfunc(strip(&EM_PROPERTY_GCONV));
+368497    +%let _PROPERTY_ABSGCONV =  %sysfunc(strip(&EM_PROPERTY_ABSGCONV));
+368498    +%let _PROPERTY_XCONV   =  %sysfunc(strip(&EM_PROPERTY_XCONV));
+368499    +%let _PROPERTY_ABSXCONV =  %sysfunc(strip(&EM_PROPERTY_ABSXCONV));
+368503    +proc svm data= _emdmdb
+368504    +         dmdbcat= _emdmdb
+368505    +         nomonitor
+368506    +         outfit= &outfit
+368507    +         outclass= &outclass
+368508    +         outest= &outest
+368509    +         out = _outtrain
+368510    +         maxiter = &_PROPERTY_MAXITER
+368511    +         maxfunc = &_PROPERTY_MAXFUNC
+368512    +      /*   memsiz =  &_PROPERTY_MEMSIZE*/
+368513    +         gconv =   &_PROPERTY_GCONV
+368514    +         absgconv = &_PROPERTY_ABSGCONV
+368515    +         xconv =   &_PROPERTY_XCONV
+368516    +         absxconv = &_PROPERTY_ABSXCONV
+368518    +    %if &EM_PROPERTY_KERNEL ne POLYNOM %then %do;
+368519    +         %if &EM_PROPERTY_XSCALE eq Y  %then %do;
+368520    +             xscale
+368521    +         %end;
+368522    +         %else %do;
+368523    +             noscale
+368524    +         %end;
+368525    +    %end;
+368526    +    %if &task eq CLASSIFICATION %then %do;
+368527    +        %if &EM_PROPERTY_METHOD eq DEFAULT  %then %do;
+368528    +         method= &method
+368529    +        %end;
+368530    +        %else %if &EM_PROPERTY_METHOD eq DQP %then %do;
+368531    +         method= DQP   qpsize = &_PROPERTY_QPSIZE
+368532    +        %end;
+368533    +        %else %do;
+368534    +         method= &EM_PROPERTY_METHOD
+368535    +        %end;
+368536    +    %end;
+368537    +    %else %do;
+368538    +         method= &method  task=&classtask
+368539    +         /*%if &classtask eq EPS_REG %then %do; */
+368540    +             esp=&_PROPERTY_EPSILON
+368541    +         /*%end;*/
+368542    +    %end;
+368544    +    %if &EM_PROPERTY_KERNEL ne  %then %do;
+368545    +         kernel = &EM_PROPERTY_KERNEL
+368546    +    %end;
+368547    +    %else %do;
+368548    +         kernel = Linear
+368549    +    %end;
+368551    +    %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+368553    +        %if ( (&EM_PROPERTY_CVALUE eq TUNING)
+368554    +            or  (&EM_PROPERTY_POLY_K_PAR1 eq TUNING)
+368555    +            or  (&EM_PROPERTY_RBF_K_PAR1 eq TUNING)
+368556    +            or  (&EM_PROPERTY_SGMD_K_PAR1 eq TUNING)
+368557    +            or  (&EM_PROPERTY_SGMD_K_PAR2 eq TUNING) )  %then %do;
+368558    +            tun = &EM_PROPERTY_TUNINGMETHOD
+368559    +        %end;
+368561    +    %end;
+368563    +    %if &EM_PROPERTY_APPLYCV eq Y %then %do;
+368564    +         CV  = &EM_PROPERTY_CVMETHOD
+368565    +         %if &EM_PROPERTY_CVFOLD ne Default %then %do;
+368566    +         fold = &EM_PROPERTY_CVFOLD
+368567    +         %end;
+368568    +         %if &EM_PROPERTY_CVMETHOD eq TESTSET %then %do;
+368569    +                testdata = &testdata
+368570    +         %end;
+368571    +    %end;
+368573    +    %if (&EM_PROPERTY_USEITERCG eq Y) or ( &usecgbydefault eq Y )  %then %do;
+368574    +      cgiter = &_PROPERTY_CGITER  cgtol=&_PROPERTY_CGTOL
+368575    +    %end;
+368577    +    %if &EM_PROPERTY_PRINTOPTION ne DEFAULT  %then %do;
+368578    +    &EM_PROPERTY_PRINTOPTION
+368579    +    %end;
+368581    +    %if &EM_PROPERTY_PRINTOPTHIST eq Y  %then %do;
+368582    +    POPTHIS
+368583    +    %end;
+368584    +    ;
+368585    +    var %EM_INPUT %EM_REJECTED;
+368586    +    target %EM_TARGET;
+368588    +     %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+368590    +         %if &EM_PROPERTY_CVALUE eq TUNING  %then %do;
+368591    +             C  &_PROPERTY_TUN_C_FROM to &_PROPERTY_TUN_C_TO
+368592    +             by &_PROPERTY_TUN_C_BY
+368593    +             ;
+368594    +         %end;
+368595    +         %else %if &EM_PROPERTY_CVALUE eq CONSTANT  %then %do;
+368596    +             C  &_PROPERTY_USERCVALUE ;
+368597    +         %end;
+368599    +     %end;
+368600    +     %else %do;
+368601    +           C  &_PROPERTY_USERCVALUE ;
+368602    +     %end;
+368605    +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
+368607    +          %if &EM_PROPERTY_TUNINGMETHOD eq GRID  %then %do;
+368608    +             %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
+368609    +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM to &_PROPERTY_POLY_TUN_KP1_TO
+368610    +                  by &_PROPERTY_POLY_TUN_KP1_BY
+368611    +                ;
+368612    +             %end;
+368613    +             %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
+368614    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+368615    +             %end;
+368616    +          %end;
+368617    +          %else %if &EM_PROPERTY_TUNINGMETHOD eq POPT  %then %do;
+368618    +              %if &EM_PROPERTY_POLY_K_PAR1 eq TUNING  %then %do;
+368619    +                 K_PAR  &_PROPERTY_POLY_TUN_KP1_FROM ;
+368620    +                ;
+368621    +              %end;
+368622    +              %else %if &EM_PROPERTY_POLY_K_PAR1 eq CONSTANT  %then %do;
+368623    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+368624    +              %end;
+368625    +           %end;
+368626    +           %else %do;
+368627    +                 K_PAR  &_PROPERTY_POLY_USERK_PAR1 ;
+368628    +           %end;
+368629    +    %end;
+368631    +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
+368632    +          %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+368633    +             %if &EM_PROPERTY_RBF_K_PAR1 eq TUNING  %then %do;
+368634    +                  K_PAR  &_PROPERTY_RBF_TUN_KP1_FROM to &_PROPERTY_RBF_TUN_KP1_TO
+368635    +                  by &_PROPERTY_RBF_TUN_KP1_BY
+368636    +                  ;
+368637    +              %end;
+368638    +              %else %if &EM_PROPERTY_RBF_K_PAR1 eq CONSTANT  %then %do;
+368639    +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
+368640    +              %end;
+368641    +          %end;
+368642    +          %else %do;
+368643    +                  K_PAR  &_PROPERTY_RBF_USERK_PAR1 ;
+368644    +          %end;
+368645    +    %end;
+368648    +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
+368650    +         %if &EM_PROPERTY_TUNINGMETHOD ne NONE %then %do;
+368652    +             %if &EM_PROPERTY_SGMD_K_PAR1 eq TUNING  %then %do;
+368653    +                K_PAR  &_PROPERTY_SGMD_TUN_KP1_FROM to &_PROPERTY_SGMD_TUN_KP1_TO
+368654    +                by &_PROPERTY_SGMD_TUN_KP1_BY
+368655    +             ;
+368656    +             %end;
+368657    +             %else %if &EM_PROPERTY_SGMD_K_PAR1 eq CONSTANT  %then %do;
+368658    +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
+368659    +             %end;
+368661    +             %if &EM_PROPERTY_SGMD_K_PAR2 eq TUNING  %then %do;
+368662    +                K_PAR2  &_PROPERTY_SGMD_TUN_KP2_FROM to &_PROPERTY_SGMD_TUN_KP2_TO
+368663    +                by &_PROPERTY_SGMD_TUN_KP2_BY
+368664    +             ;
+368665    +             %end;
+368666    +             %else %if &EM_PROPERTY_SGMD_K_PAR2 eq CONSTANT  %then %do;
+368667    +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
+368668    +             %end;
+368669    +          %end;
+368670    +          %else %do;
+368671    +                K_PAR  &_PROPERTY_SGMD_USERK_PAR1 ;
+368672    +                K_PAR2  &_PROPERTY_SGMD_USERK_PAR2 ;
+368673    +          %end;
+368674    +    %end;
+368676    +run;
+368677    +%TRAINENDLINE:
+368678    +quit;
+368679    +%mend svm_training;
+368681    +%macro svm_score(indata=,
+368682    +                 inest=,
+368683    +                 infit=,
+368684    +                 inclass=,
+368685    +                 outindata=,
+368686    +                 outscore=,
+368687    +                 targetLevel=
+368688    +                 );
+368691    +%if &TargetLevel eq BINARY %then %do;
+368693    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
+368695    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+368696    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+368697    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+368698    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+368701    +%do %while(^ %sysfunc(fetch(&dsid)));
+368702    +   %let TargetEvent = %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
+368703    +    %let TargetVar =   %sysfunc(getvarc(&dsid, &vn_target_name));
+368704    +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
+368705    +   %let TargetType =  %sysfunc(getvarc(&dsid, &vn_target_type));
+368706    +%end;
+368708    +%let dsid = %sysfunc(close(&dsid));
+368711    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
+368712    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+368714    +%do %while(^ %sysfunc(fetch(&dsid)));
+368715    +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+368716    +%end;
+368717    +%let dsid = %sysfunc(close(&dsid));
+368719    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
+368720    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+368722    +%do %while(^ %sysfunc(fetch(&dsid)));
+368723    +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+368724    +%end;
+368725    +%let dsid = %sysfunc(close(&dsid));
+368728    +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
+368729    +              out=&outscore(rename=(_F_=&F_VAR _I_=&I_VAR));
+368730    +run;
+368732    +filename resifref  "&EM_NODEDIR&EM_DSEP.tmprescode.sas";
+368733    +%makeResidualVars(target=&TargetVar, decmeta=&EM_DEC_DECMETA, fref=resifref); /*
+368733   !+from a part of %EM_MODEL() macro */
+368735    +data &outscore(drop=_P);
+368736    +      set  &outscore;
+368737    +     if (_P_ < -600) then _p =0;
+368738    +     else _P = 1/(1+EXP((-1)*(_P_)));
+368740    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+368741    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+368742    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+368744    +%do %while(^ %sysfunc(fetch(&dsid)));
+368745    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+368746    +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
+368747    +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
+368748    +       &P_Var = _P;
+368749    +   %end;
+368750    +   %else %do;
+368751    +       &P_Var = 1 - _P;
+368752    +       %let targetNonEvent = &P_LEVEL;
+368753    +   %end;
+368754    +%end;
+368755    +%let dsid = %sysfunc(close(&dsid));
+368757    +%include resifref;
+368759    +run;
+368761    +filename resifref;
+368763    +%end; /* the end of if - targetlevel eq binary */
+368764    +%else %do;
+368766    +/* ----     interval target  ------ */
+368768    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+368769    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+368771    +%do %while(^ %sysfunc(fetch(&dsid)));
+368772    +   %let P_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+368773    +%end;
+368774    +%let dsid = %sysfunc(close(&dsid));
+368776    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
+368777    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+368779    +%do %while(^ %sysfunc(fetch(&dsid)));
+368780    +   %let R_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+368781    +%end;
+368783    +%let dsid = %sysfunc(close(&dsid));
+368785    +proc svmscore data=&indata inest=&inest infit=&infit inclass=&inclass
+368786    +              out=&outscore(rename=(_P_=&P_VAR _R_=&R_VAR));
+368787    +run;
+368789    +%end; /* end of targetlevel eq interval */
+368792    +%mend svm_score;
+368795    +%macro makeSVMFitStatDs();
+368797    +data &EM_USER_SVMFITDS;
+368798    +     set &EM_USER_SVMFITSTAT;
+368799    +     Label _Bias_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_bias,
+368799   !+noquote))";
+368800    +     Label _K_PAR2_    = "%sysfunc(sasmsg(sashelp.dmine,
+368800   !+rpt_svmfitstat_label_k_par2, noquote))";
+368801    +     Label _K_PAR3_    = "%sysfunc(sasmsg(sashelp.dmine,
+368801   !+rpt_svmfitstat_label_k_par3, noquote))";
+368802    +     Label _K_PAR_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_k_par,
+368802   !+ noquote))";
+368803    +     Label _L1_        = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_l1,
+368803   !+noquote))";
+368804    +     Label _Margin_    = "%sysfunc(sasmsg(sashelp.dmine,
+368804   !+rpt_svmfitstat_label_margin, noquote))";
+368805    +     Label _NCLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nclev,
+368805   !+ noquote))";
+368806    +     Label _NCV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_ncv,
+368806   !+noquote))";
+368807    +     Label _NIV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_niv,
+368807   !+noquote))";
+368808    +     Label _NLV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nlv,
+368808   !+noquote))";
+368809    +     Label _NOBS_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nobs,
+368809   !+noquote))";
+368810    +     Label _NSV_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nsv,
+368810   !+noquote))";
+368811    +     Label _NTRAIN_    = "%sysfunc(sasmsg(sashelp.dmine,
+368811   !+rpt_svmfitstat_label_ntrain, noquote))";
+368812    +     Label _NYLEV_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_nylev,
+368812   !+ noquote))";
+368813    +     Label _NormW_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_normw,
+368813   !+ noquote))";
+368814    +     Label _OBJ_       = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_obj,
+368814   !+noquote))";
+368815    +     Label _Radius_    = "%sysfunc(sasmsg(sashelp.dmine,
+368815   !+rpt_svmfitstat_label_radius, noquote))";
+368816    +     Label _RegC_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_regc,
+368816   !+noquote))";
+368817    +     Label _SVOM_      = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_svom,
+368817   !+noquote))";
+368818    +     Label _VCDim_     = "%sysfunc(sasmsg(sashelp.dmine, rpt_svmfitstat_label_vcdim,
+368818   !+ noquote))";
+368819    +    if _TYPE_ ='_ACCTAB_' then delete;
+368820    +    %if &EM_PROPERTY_KERNEL eq LINEAR %then %do;
+368821    +      _BIAS_= _K_PAR_;
+368822    +      DROP _K_PAR_ _K_PAR2_ _K_PAR3_ _L1_;
+368823    +    %end;
+368824    +    %if &EM_PROPERTY_KERNEL eq POLYNOM %then %do;
+368825    +      DROP _K_PAR2_ _K_PAR3_  _L1_;
+368826    +    %end;
+368827    +    %if &EM_PROPERTY_KERNEL eq RBFREC %then %do;
+368828    +      DROP _K_PAR2_ _K_PAR3_  _L1_;
+368829    +    %end;
+368830    +    %if &EM_PROPERTY_KERNEL eq SIGMOID %then %do;
+368831    +      DROP _K_PAR3_  _L1_;
+368832    +    %end;
+368833    +run;
+368835    +proc transpose data =&EM_USER_SVMFITDS out =&EM_USER_SVMFITDS;
+368836    +run;
+368838    +data &EM_USER_SVMFITDS;
+368839    +     set &EM_USER_SVMFITDS;
+368840    +     Label _LABEL_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_label, noquote))"
+368840   !+;
+368841    +     Label _NAME_  = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_name, noquote))";
+368842    +     Label COL1 =  "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_trainstat,
+368842   !+noquote))";
+368843    +     Rename COL1 = Train;
+368844    +     if _NAME_ = '_ACCU_' then delete;
+368845    +run;
+368847    +%mend makeSVMFitStatDs;
+368849    +%macro svm_fitstat(validSource=);
+368851    +%EM_FITSTAT(trainDs = work._tmp_scored_train,
+368852    +            %if &_validSource= VALIDSET %then %do;
+368853    +                validDs=work._tmp_scored_test,
+368854    +                testDs=,
+368855    +            %end;
+368856    +            %else %if &_validSource= TESTSET %then %do;
+368857    +                validDs=,
+368858    +                testDs=work._tmp_scored_test,
+368859    +            %end;
+368860    +            decdata=&EM_DEC_DECDATA,
+368861    +            decmeta=&EM_DEC_DECMETA,
+368862    +            freqvar=, df=,
+368863    +            outfit=&EM_DATA_EMOUTFIT);
+368865    +data &EM_DATA_EMOUTFIT;
+368866    +     set &EM_DATA_EMOUTFIT;
+368867    +     DROP _DFM_    _DFE_    _MSE_    _RMSE_    _NW_    _FPE_    _RFPE_    _AIC_
+368867   !+_SBC_; /* Because of DF */
+368868    +run;
+368869    +%mend svm_fitstat;
+368871    +/*----------------------------------------------------------------------------------
+368871   !+-----
+368872    +   OUTEST data set
+368874    +                                                       APRTMNT_  APRTMNT_   TELIND_
+368874   !+  TELIND_
+368875    + Obs  _TARGET_  _TYPE_   _NAME_   _MEAN_     _STDEV_       1_        2_        1_
+368875   !+     2_
+368877    +  1    GENDER   _MEAN_             .        .            0.93845   0.06155   0.02391
+368877   !+   0.97609
+368878    +  2    GENDER   _STDEV_            .        .            0.24039   0.24039   0.15280
+368878   !+   0.15280
+368879    +  3    GENDER   _PARMS_          -0.12089  -.006143769  -0.09083  -0.03005  -0.04778
+368879   !+  -0.07311
+368881    +=-----------------------------------------------------------------------------------
+368881   !+--*/
+368882    +/* this is not used, generate score code directly for the case of linear svm */
+368883    +%macro gen_score(File=, Outclass=, Outest=, DecMeta=, ColumnsMeta=, Cutoff=,
+368883   !+Residual=);
+368885    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='TARGET'))));
+368887    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+368888    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+368889    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+368890    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+368891    +%let vn_target_level = %sysfunc(varnum(&dsid, LEVEL));
+368893    +%do %while(^ %sysfunc(fetch(&dsid)));
+368894    +   %let TargetEvent =  %sysfunc(getvarc(&dsid, &vn_event));
+368895    +   %let TargetVar =    %sysfunc(getvarc(&dsid, &vn_target_name));
+368896    +   %let TargetFormat = %sysfunc(getvarc(&dsid, &vn_target_format));
+368897    +   %let TargetType =   %sysfunc(getvarc(&dsid, &vn_target_type));
+368898    +   %let TargetLevel =  %sysfunc(getvarc(&dsid, &vn_target_level));
+368899    +%end;
+368900    +%let dsid = %sysfunc(close(&dsid));
+368902    +data _cmeta;
+368903    +    set &ColumnsMeta;
+368904    +    NAME = upcase(strip(NAME));
+368905    +run;
+368907    +data _tmpclass;
+368908    +       set &outclass;
+368909    +   _VAR_ = upcase(strip(_VAR_));
+368910    +run;
+368912    +proc sql;
+368913    +create table _outclass as
+368914    +select _NAME_, _LEVEL_, _VAR_, FORMAT, TYPE, LEVEL, ROLE
+368915    +  from  _tmpclass, _cmeta
+368916    +  where _tmpclass._VAR_ = _cmeta.NAME;
+368917    +run;
+368919    +data _outclass;
+368920    +    set _outclass;
+368921    +    if (upcase(strip(LEVEL)) eq 'INTERVAL') or
+368922    +       (upcase(strip(ROLE)) ne 'INPUT') then delete;
+368923    +run;
+368924    +data _meands;
+368925    +    set &outest;
+368926    +    if _TYPE_='_MEAN_';
+368927    +run;
+368929    +/*
+368930    +data _null_;
+368931    +    set &outest;
+368932    +    if _TYPE_='_PARMS_';
+368933    +    call symput('bias', _STDEV_ );
+368934    +    call symput('intercept', _MEAN_ );
+368935    +run;
+368936    +*/
+368938    +filename  _File_ "&File";
+368939    +data _null_;
+368940    +    FILE _File_;
+368941    +    length _line $500;
+368942    +    drop _line;
+368944    +    put ' ';
+368945    +    put '/*-------------------------------------------------*/';
+368946    +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote))" '*/';
+368947    +    put '/*-------------------------------------------------*/';
+368948    +    put ' ';
+368950    +    put 'length _warn_ $ 4;';
+368951    +    put 'label _warn_ = "Warnings";';
+368952    +    put 'length _svm_uname $32;';
+368953    +    put 'DROP _svm_uname ;';
+368955    +  dsid = open("work._outclass");
+368956    +    if dsid then do;
+368957    +          oldvname ='';
+368958    +          do while(not fetch(dsid));
+368959    +             vname = upcase(strip(getvarc(dsid,varnum(dsid, '_VAR_'))));
+368960    +             vlevel = upcase(strip(getvarc(dsid,varnum(dsid,'_LEVEL_'))));
+368961    +             dummyname = strip(getvarc(dsid,varnum(dsid,'_NAME_')));
+368962    +             vtype = strip(getvarc(dsid,varnum(dsid,'TYPE')));
+368963    +             vformat = strip(getvarc(dsid,varnum(dsid,'FORMAT')));
+368964    +             *put 'vtype =' vtype;
+368965    +             *put 'vformat=' vformat;
+368967    +             if oldname ne vname then do;
+368968    +                 if vtype = 'N' then do;
+368969    +                     if vformat eq ' ' then do;
+368970    +                        put '_svm_uname = put(' vname ', Best12.);';
+368971    +                     end; else do;
+368972    +                        put '_svm_uname = put(' vname ',' vformat ');';
+368973    +                     end;
+368974    +                  end;
+368975    +                  else do;
+368976    +                     if vformat eq ' ' then do;
+368977    +                        put '_svm_uname = ' vname ' ;';
+368978    +                     end; else do;
+368979    +                        put '_svm_uname = put(' vname ',' vformat ');';
+368980    +                     end;
+368981    +                  end;
+368982    +                  put '%DMNORMIP(_svm_uname);';
+368983    +              end; /* end of oldname ne vname */
+368985    +              /*put 'if _svm_uname = strip("' vlevel '") then ' dummyname '=1 ;';*/
+368986    +              _line = 'if _svm_uname =' || quote(strip(vlevel)) || ' then ';
+368987    +              put _line;
+368988    +              put ' ' dummyname  '= 1 ; else '  dummyname '=0 ; drop '  dummyname '
+368988   !+;';
+368989    +              oldname = vname;
+368990    +          end;
+368992    +     end;
+368993    +rc=close(dsid);
+368995    +dsid = open("&outest");
+368996    +    if dsid then do;
+368997    +          put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_predvalues,
+368997   !+noquote))"  "------ */";
+368998    +          ncol = attrn(dsid, 'NVARS');
+368999    +          do i=4 to ncol;
+369000    +             vname = upcase(trim(left(varname(dsid,i))));
+369001    +              do while(not fetch(dsid));
+369002    +                  type = strip(getvarc(dsid,2));
+369003    +                  select(type);
+369004    +                      when('_MEAN_')  mean =  getvarn(dsid, i);
+369005    +                      when('_STDEV_') std  =  getvarn(dsid, i);
+369006    +                      when('_PARMS_') coeff = getvarn(dsid, i);
+369007    +                  otherwise;
+369008    +                  end;
+369009    +              end; /* end of do-while*/
+369010    +              *put '+' coeff '*(' vname '-' mean ')/' std;
+369011    +              if i=4 then  do; put '_P_ =(' coeff ; end;
+369012    +              else if i=5 then do; put '+' coeff ');' ; end;
+369013    +              else do;
+369014    +                      tmpvar = '_TMPVAR'||strip(i);
+369015    +                      put 'if ' vname '= . then ' tmpvar '=' mean ';';
+369016    +                      put 'else ' tmpvar '=' vname ';';
+369017    +                      put '_P_ = _P_+' coeff '*' tmpvar ';';
+369018    +                      put 'drop  ' tmpvar ';';
+369019    +              end;
+369020    +              rc=rewind(dsid);
+369021    +         end; /* end of  do i=6 to &nvars; */
+369022    +         put ';';
+369023    +     end;
+369024    +    rc=close(dsid);
+369025    + put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_map_predvalues, noquote))"
+369025   !+"------ */";
+369027    +%if &TargetLevel eq BINARY %then %do;
+369029    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
+369030    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369031    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+369033    +   put ' if _P_ < -600 then _p =0; ';  /* to avoid the limit of EXP function */
+369034    +   put ' else _P = 1/(1+EXP((-1)*(_P_)));' ;
+369036    +%do %while(^ %sysfunc(fetch(&dsid)));
+369037    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+369038    +   %let P_Level = %sysfunc(getvarc(&dsid, &vn_level));
+369039    +   %if %nrbquote(&P_Level) = %nrbquote(&TargetEvent) %then %do;
+369040    +       put " &P_Var = _P;";
+369041    +   %end;
+369042    +   %else %do;
+369043    +       put " &P_Var = 1 - _P;";
+369044    +   %let targetNonEvent = &P_LEVEL;
+369045    +   %end;
+369046    +%end;
+369047    +%let dsid = %sysfunc(close(&dsid));
+369049    +%if &Residual = Y %then %do;
+369051    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"
+369051   !+"------ */";
+369053    +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
+369054    +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369055    +   %let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+369057    +   %do %while(^ %sysfunc(fetch(&dsid)));
+369058    +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+369059    +     %let R_Level = %sysfunc(getvarc(&dsid, &vn_level));
+369060    +     %if %nrbquote(&R_Level) = %nrbquote(&TargetEvent) %then %do;
+369061    +       put " &R_Var = 1 - _P;";
+369062    +   %end;
+369063    +   %else %do;
+369064    +       put " &R_Var = 0 - (1 - _P);";
+369065    +   %end;
+369066    +   %end;
+369067    +   %let dsid = %sysfunc(close(&dsid));
+369068    +%end;
+369069    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_from, noquote))"
+369069   !+"------ */";
+369071    +    put 'length _FORMAT_VAR $200;';
+369072    +    put 'length _TARGNOR $%DMNORLEN; ';
+369073    +    put 'DROP _FORMAT_VAR _TARGNOR;';
+369074    +    %if &TargetFormat ne  %then %do;
+369075    +    put "_FORMAT_VAR=PUT(&TargetVar, &TargetFormat);";
+369076    +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR);';
+369077    +    %end;
+369078    +    %else %do;
+369079    +    %if &TargetType  = N  %then %do;
+369080    +    put "_FORMAT_VAR=PUT(&TargetVar, BEST12.);";
+369081    +       %end;
+369082    +       %else %do;
+369083    +    put "_FORMAT_VAR= &TargetVar;";
+369084    +       %end;
+369085    +    put '%DMNORMCP(_FORMAT_VAR, _TARGNOR); ' ;
+369086    +    %end;
+369088    +    %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='FROM'))));
+369089    +    %let vn_f_var =%sysfunc(varnum(&dsid, VARIABLE));
+369090    +    %let vn_f_varlabel =%sysfunc(varnum(&dsid, LABEL));
+369092    +    %do %while(^ %sysfunc(fetch(&dsid)));
+369093    +        %let F_var = %sysfunc(getvarc(&dsid, &vn_f_var));
+369094    +        %let F_var_label = %sysfunc(getvarc(&dsid, &vn_f_varlabel));
+369095    +        %let qF_var_label = %str(%"&F_var_label%");
+369096    +    put "&F_var = _TARGNOR ;";
+369097    +    put "label &F_var = &qF_Var_label;";
+369098    +    %end;
+369099    +    %let dsid = %sysfunc(close(&dsid));
+369101    +    put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_var_into, noquote))"
+369101   !+"------ */";
+369103    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='INTO'))));
+369104    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369105    +%let vn_I_varlabel =%sysfunc(varnum(&dsid, LABEL));
+369107    +%do %while(^%sysfunc(fetch(&dsid)));
+369108    +   %let I_var = %sysfunc(getvarc(&dsid, &vn_var));
+369109    +   %let I_var_label = %sysfunc(getvarc(&dsid, &vn_I_varlabel));
+369110    +   %let qI_var_label = %str(%"&I_var_label%");
+369111    +   %let qTargetEvent = %str(%"&targetEvent%");
+369112    +   %let qTargetNonEvent = %str(%"&targetNonEvent%");
+369113    +       put " if _P  > &Cutoff  then &I_Var  = &qtargetEvent ;" ;
+369114    +       put " else &I_Var  =  &qtargetNonEvent ;";
+369115    +       put " label &I_var = &qI_var_label;";
+369116    +%end;
+369117    +%let dsid = %sysfunc(close(&dsid));
+369119    +%end;  /* end of TargetLevel= Binary */
+369121    +%else %if &TargetLevel eq INTERVAL %then %do;
+369123    +%let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='PREDICTED'))));
+369124    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369125    +%let vn_label =%sysfunc(varnum(&dsid, LABEL));
+369127    +%do %while(^ %sysfunc(fetch(&dsid)));
+369128    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+369129    +   %let P_label = %sysfunc(getvarc(&dsid, &vn_label));
+369130    +   %let qP_label = %str(%"&P_label%");
+369131    +    put " &P_Var = _P_;";
+369132    +    put " label &P_Var = &qP_label;";
+369133    +%end;
+369134    +%let dsid = %sysfunc(close(&dsid));
+369136    +%if &Residual = Y %then %do;
+369138    +   put " /*---" "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_calc_residual, noquote))"
+369138   !+"------ */";
+369140    +   %let dsid=%sysfunc(open(&DECMETA(where=(_TYPE_='RESIDUAL'))));
+369141    +   %let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369142    +   %let vn_label =%sysfunc(varnum(&dsid, LABEL));
+369144    +   %do %while(^ %sysfunc(fetch(&dsid)));
+369145    +     %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+369146    +     %let R_label = %sysfunc(getvarc(&dsid, &vn_label));
+369147    +     %let qR_label = %str(%"&R_label%");
+369148    +       put " &R_Var = &TargetVar - &P_var;";
+369149    +       put " label &R_Var = &qR_label;";
+369150    +   %end;
+369151    +   %let dsid = %sysfunc(close(&dsid));
+369152    +%end;
+369154    +%end;   /* end of TargetLevel= Interval */
+369156    +  put "/*------------------------------------------------------------*/";
+369157    +proc datasets lib=work nolist;
+369158    + delete _tmpclass _cmeta _outclass;
+369159    +run;
+369160    +run;
+369162    +filename  _File_;
+369164    +%mend gen_score;
+369166    +%Macro CheckBinaryTargetLevel(indata=, target=,  nLevel= );
+369167    +%global &nLevel;
+369168    +proc dmdb batch data=&indata
+369169    +classout=_tmp_dmdbout;
+369170    +class &target;
+369171    +run;
+369172    +data _tmp_dmdbout;
+369173    +    set _tmp_dmdbout;
+369174    +    if strip(TYPE) = 'N' and  strip(LEVEL) = '.' then delete;
+369175    +    if strip(TYPE) = 'C' and  strip(LEVEL) = '' then delete;
+369176    +run;
+369177    +data _null_;
+369178    +    %let dsid = %sysfunc(open(work._tmp_dmdbout));
+369179    +    %let _obs = %sysfunc(attrn(&dsid, NOBS));
+369180    +    %let dsid = %sysfunc(close(&dsid));
+369181    +     call symput("&nLevel", put(&_obs, Best12.));
+369182    +run;
+369184    +proc datasets lib=work nolist;
+369185    +     delete _tmp_dmdbout;
+369186    +run;
+369187    +quit;
+369188    +%Mend CheckBinaryTargetLevel;
+369191    +%macro getNObs(inds=, nobs=);
+369192    +    %global &nobs;
+369193    +    data _null_;
+369194    +        set &inds end=eof;
+369195    +        if eof then call symput("&nobs", _N_);
+369196    +    run;
+369197    +    quit;
+369198    +%mend  getNObs;
+369202    +%macro makeAlphaDs(target=, cmeta=);
+369204    + %let isOBSIndex= N;
+369205    + %let dsid = %sysfunc(open(&cmeta));
+369206    + %let vn_name =%sysfunc(varnum(&dsid, NAME));
+369207    + %do %while(^%sysfunc(fetch(&dsid)));
+369208    +     %let _name = %sysfunc(getvarc(&dsid, &vn_name));
+369209    +     %if %upcase(&_name) = _DATAOBS_  %then %do; %let isOBSIndex = Y;%end;
+369210    + %end;
+369211    + %let dsid = %sysfunc(close(&dsid));
+369213    +data &EM_USER_OUTALPHA;
+369214    +     set _sample_train;
+369215    +     set _outtrain(keep=_ALPHA_ _BOUND_);
+369216    +     %if &isOBSIndex= N %then %do;
+369217    +     keep _OBS_ _ALPHA_ _BOUND_ &target;
+369218    +     %end;
+369219    +     %else %do;
+369220    +     keep _OBS_ _dataobs_ _ALPHA_ _BOUND_ &target;
+369221    +     %end;
+369222    +run;
+369224    +data &EM_EXPORT_TRAIN;
+369225    +     length _OBS_ 8;
+369226    +     set &EM_EXPORT_TRAIN;
+369227    +     _OBS_ = _N_;
+369228    +run;
+369230    +data &EM_EXPORT_TRAIN(Drop=_OBS_);
+369231    +     merge &EM_EXPORT_TRAIN  &EM_USER_OUTALPHA(drop=&target);
+369232    +     by _OBS_;
+369233    +     if _ALPHA_ =. then _ALPHA_=0;
+369234    +     if _BOUND_ ="" then _BOUND_="_LBC";
+369235    +run;
+369237    +data &EM_USER_OUTALPHA;
+369238    +   set &EM_USER_OUTALPHA;
+369239    +   if _ALPHA_ = 0 then delete;
+369240    +   %if &isOBSIndex= N %then %do;
+369241    +   Label _OBS_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label, noquote))";
+369242    +   rename _OBS_ = _dataobs_;
+369243    +   %end;
+369244    +   %else %do;
+369245    +   drop _OBS_;
+369246    +   Label _dataobs_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_dataobs_label,
+369246   !+noquote))";
+369247    +   %end;
+369248    +   Label _ALPHA_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_alpha_label, noquote))";
+369249    +   Label &target = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_target_label, noquote))";
+369250    +   Label _BOUND_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_bound_label, noquote))";
+369251    +   run;
+369253    +%mend makeAlphaDs;
+369256    +%macro makeTunData();
+369257    +data &EM_USER_TUNINGCRIT;
+369258    +    set &EM_USER_TUNINGCRIT;
+369259    +    Drop N;
+369260    +    Label C = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_c, noquote))";
+369261    +    Label KF1 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf1, noquote))";
+369262    +    Label KF2 = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_kf2, noquote))";
+369263    +    Label NMisc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_nmisc, noquote))";
+369264    +    Label Perc = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_perc, noquote))";
+369265    +    Label ERROR = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_error, noquote))";
+369266    +    Label TstError = "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_label_tsterror,
+369266   !+noquote))";
+369267    +run;
+369268    +%mend makeTunData;
+369270    +/*------------------ Score Code Generation with Proc SVMScore
+369270   !+----------------------  */
+369273    +%macro score_code(TargetLevel=, type=);
+369275    +%let _inoutest = WORK._inoutest ;
+369276    +%let _inoutfit = WORK._inoutfit ;
+369277    +%let _inoutclass = WORK._inoutclass;
+369279    +%if &type eq FLOW %then %do;
+369280    +    %let _inoutest = &EM_USER_OUTEST;
+369281    +    %let _inoutfit = &EM_USER_SVMFITSTAT ;
+369282    +    %let _inoutclass = &EM_USER_OUTCLASS;
+369283    +%end;
+369284    +%else %do;
+369285    +%em_data2code(data=&EM_USER_OUTEST, outdata=&_inoutest,
+369285   !+outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+369286    +%em_data2code(data=&EM_USER_SVMFITSTAT, outdata=&_inoutfit,
+369286   !+outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+369287    +%em_data2code(data=&EM_USER_OUTCLASS, outdata=&_inoutclass,
+369287   !+outfile=%str("&EM_FILE_EMPUBLISHSCORECODE"), append=Y);
+369288    +%end;
+369290    +%let emscoreout = %str(&)%str(em_score_output);
+369293    +%if &type eq FLOW %then %do;
+369294    +filename  _File_ "&EM_FILE_EMFLOWSCORECODE";
+369295    +%end;
+369296    +%else %do;
+369297    +filename  _File_ "&EM_FILE_EMPUBLISHSCORECODE";
+369298    +%end;
+369300    +data _null_;
+369301    +    FILE _File_ MOD;
+369303    +    put ' ';
+369304    +    put '/*-------------------------------------------------*/';
+369305    +    put '/* ' "%sysfunc(sasmsg(sashelp.dmine, rpt_svm_score_title, noquote)) " ' */'
+369305   !+;
+369306    +    put '/*-------------------------------------------------*/';
+369307    +    put ' ';
+369309    +%if &TargetLevel eq BINARY %then %do;
+369311    +/*%put &emscoreout;  */
+369313    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='FROM'))));
+369314    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369316    +%do %while(^ %sysfunc(fetch(&dsid)));
+369317    +   %let F_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+369319    +%end;
+369320    +%let dsid = %sysfunc(close(&dsid));
+369322    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='INTO'))));
+369323    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369325    +%do %while(^ %sysfunc(fetch(&dsid)));
+369326    +   %let I_VAR = %sysfunc(getvarc(&dsid, &vn_var));
+369328    +%end;
+369329    +%let dsid = %sysfunc(close(&dsid));
+369332    +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit
+369332   !+inclass=&_inoutclass";
+369333    +    %if &type eq FLOW %then %do;
+369334    +    put "              out = &emscoreout(rename=(_F_=&F_VAR _I_=&I_VAR))";
+369335    +    %end;
+369336    +    %else %do;
+369337    +    put "              out = &emscoreout(rename=(_I_=&I_VAR))";
+369338    +    %end;
+369339    +    put ";";
+369340    +    put "run;";
+369343    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='TARGET'))));
+369345    +%let vn_event =%sysfunc(varnum(&dsid, EVENT));
+369346    +%let vn_target_name =%sysfunc(varnum(&dsid, VARIABLE));
+369347    +%let vn_target_format = %sysfunc(varnum(&dsid, FORMAT));
+369348    +%let vn_target_type = %sysfunc(varnum(&dsid, TYPE));
+369351    +%do %while(^ %sysfunc(fetch(&dsid)));
+369352    +   %let TargetEvent =   %nrbquote(%sysfunc(getvarc(&dsid, &vn_event)));
+369353    +   %let TargetVar   =   %sysfunc(getvarc(&dsid, &vn_target_name));
+369354    +   %let TargetFormat =  %sysfunc(getvarc(&dsid, &vn_target_format));
+369355    +   %let TargetType   =  %sysfunc(getvarc(&dsid, &vn_target_type));
+369356    +%end;
+369358    +%let dsid = %sysfunc(close(&dsid));
+369360    +    put "data &emscoreout(drop=_P);";
+369361    +    put "     set &emscoreout;";
+369362    +    put "if (_P_ < -600) then _p =0;";    /* to avoid the limit of EXP function */
+369363    +    put "else _P = 1/(1+EXP((-1)*(_P_)));";
+369365    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+369366    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369367    +%let vn_level =%sysfunc(varnum(&dsid, LEVEL));
+369369    +%do %while(^ %sysfunc(fetch(&dsid)));
+369370    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+369371    +   %let P_Level = %nrbquote(%sysfunc(getvarc(&dsid, &vn_level)));
+369372    +   %if "%quote(&P_Level)" = "%quote(&TargetEvent)" %then %do;
+369373    +    put " &P_Var = _P ;";
+369374    +   %end;
+369375    +   %else %do;
+369376    +    put " &P_Var = 1 - _P ;";
+369377    +    %let targetNonEvent = &P_LEVEL;
+369378    +   %end;
+369379    +%end;
+369380    +%let dsid = %sysfunc(close(&dsid));
+369382    +%end; /* the end of if - targetlevel eq binary */
+369383    +%else %do;
+369385    +/* ----     interval target  ------ */
+369387    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='PREDICTED'))));
+369388    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369390    +%do %while(^ %sysfunc(fetch(&dsid)));
+369391    +   %let P_Var = %sysfunc(getvarc(&dsid, &vn_var));
+369392    +%end;
+369393    +%let dsid = %sysfunc(close(&dsid));
+369395    +%let dsid=%sysfunc(open(&EM_DEC_DECMETA(where=(_TYPE_='RESIDUAL'))));
+369396    +%let vn_var =%sysfunc(varnum(&dsid, VARIABLE));
+369397    +%do %while(^ %sysfunc(fetch(&dsid)));
+369398    +   %let R_var = %sysfunc(getvarc(&dsid, &vn_var));
+369399    +%end;
+369400    +%let dsid = %sysfunc(close(&dsid));
+369402    +    put "proc svmscore data= &emscoreout inest=&_inoutest infit=&_inoutfit
+369402   !+inclass=&_inoutclass ";
+369403    +    %if &type eq FLOW %then %do;
+369404    +    put "              out = &emscoreout(rename=(_P_ = &P_VAR _R_=&R_VAR))";
+369405    +    %end;
+369406    +    %else %do;
+369407    +    put "              out = &emscoreout(rename=(_P_ = &P_VAR))";
+369408    +    %end;
+369409    +    put ";";
+369411    +%end; /* end of targetlevel eq interval */
+369413    +run;
+369414    +filename  _File_;
+369415    +%mend score_code;
+369418    +%macro makeDeltaCode(TargetLevel=);
+369419    +*--- Build Code to Modify Metadata ---*;
+369420    +filename X "&EM_FILE_CDELTA_TRAIN";
+369422    +/* modify columns meta */
+369423    +data _null_;
+369424    +    file X;
+369425    +        put "if upcase(trim(left(NAME))) eq  '_Y_'  then ROLE='PREDICT';";
+369426    +        put "if upcase(trim(left(NAME))) eq  '_R_'  then ROLE='RESIDUAL';";
+369427    +        put "if upcase(trim(left(NAME))) eq  '_ALPHA_'  then ROLE='REJECTED';";
+369428    +        put "if upcase(trim(left(NAME))) eq  '_BOUND_'  then ROLE='REJECTED';";
+369429    +run;
+369430    +%mend makeDeltaCode;
+369432    +%macro  EM_DECIDECODE(data= , decdata= , decmeta= , noresfile=, resfile=);
+369433    + %global m_data    m_decdata   m_decmeta  m_noresfile  m_resfile ;
+369435    +    %do;
+369436    +    %let m_data      = &data;
+369437    +    %let m_decdata   = &decdata;
+369438    +    %let m_decmeta   = &decmeta;
+369439    +    %let m_noresfile = &noresfile;
+369440    +    %let m_resfile   = &resfile;
+369441    +    dm "afa c=sashelp.emutil.decidecode.scl";
+369442    +  %end;
+369443    +%mend EM_DECIDECODE;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(SETPROPERTIES):  ;
+MPRINT(MAIN):  ;
+MPRINT(MAIN):   filename temp catalog 'sashelp.emmodl.svm_train.source';
+NOTE: %INCLUDE (level 1) file TEMP is file SASHELP.EMMODL.SVM_TRAIN.SOURCE.
+369444    +%Macro Train;
+369447    +/*%let SVM_MAXNUMOBS = 10000; */
+369448    +/*%let EM_SCORECODEFORMAT=PROC;*/
+369449    +/*%let SVM_SAMPLESIZE = 100; */
+369451    +%EM_GETNAME(key=SVMPLOTDS, type=DATA) ;
+369452    +%EM_GETNAME(KEY=SVMFITSTAT, TYPE=DATA);
+369453    +%EM_GETNAME(KEY=SVMFITDS, TYPE=DATA);
+369454    +%EM_GETNAME(KEY=OUTEST, TYPE=DATA);
+369455    +%EM_GETNAME(KEY=OUTCLASS, TYPE=DATA);
+369456    +%EM_GETNAME(KEY=OUTFIT, TYPE=DATA);
+369457    +%EM_GETNAME(KEY=OUTALPHA, TYPE=DATA);
+369460    +/*---------- Check the input data set ---------------------*/
+369461    +%if &EM_IMPORT_DATA eq  %then %do;
+369462    +%PUT ERROR:THERE IS NO VALID INPUT DATA ;
+369463    +%let  EMEXCEPTIONSTRING = exception.server.IMPORT.NOTRAIN,1;
+369464    +%GOTO ENDLINE;
+369465    +%end;
+369467    +/*----------- Check the target variable  -------------------*/
+369469    +%let _targetVar= %EM_TARGET;
+369470    +%let _targetlevel = %EM_TARGET_LEVEL;
+369472    +%if &_targetVar eq  %then %do;
+369473    +%PUT ERROR:THERE IS NO VALID TARGET;
+369474    +%let  EMEXCEPTIONSTRING = exception.server.USE1TARGET;
+369475    +%GOTO ENDLINE;
+369476    +%end;
+369478    +%let K = %SCAN(&_targetVar, 2, %STR( ));
+369479    +%if &K > %then %do;
+369480    +%PUT ERROR:THERE ARE MORE THAN ONE TARGET;
+369481    +%let  EMEXCEPTIONSTRING = exception.server.USE1TARGET;
+369482    +%GOTO ENDLINE;
+369483    +%end;
+369485    +/* check actual num of target levels */
+369486    +%if (&_targetLevel eq BINARY) %then %do;
+369487    +    %CheckBinaryTargetLevel(indata=&EM_IMPORT_DATA, target=&_targetVar,
+369487   !+nLevel=_nTargetLevel );
+369488    +    %if &_nTargetLevel  > 2 %then %do;
+369489    +    %let  EMEXCEPTIONSTRING = exception.server.METADATA.WRONGTARGETLEVEL,&_targetVar
+369489   !+;
+369490    +    %GOTO ENDLINE;
+369491    +    %end;
+369492    +%end;
+369493    +%else %do;
+369494    +      %PUT  ERROR:TARGET LEVEL, &_targetLevel, IS NOT ACCEPTED. THE CURRENT SVM NODE
+369494   !+ SUPPORTS ONLY BINARY TARGET;
+369495    +      %let  EMEXCEPTIONSTRING = exception.server.METADATA.USE1BINTARGET;
+369496    +      %GOTO ENDLINE;
+369497    +%end;
+369499    +%let _PROPERTY_TASK = ;
+369500    +%let _PROPERTY_CLASSTASK = ;
+369501    +%let _PROPERTY_METHOD = ;
+369502    +%if (&_targetLevel eq BINARY) %then %do;
+369503    +      %let _PROPERTY_TASK = CLASSIFICATION;
+369504    +      %let _PROPERTY_CLASSTASK = C_CLAS;
+369505    +      %let _PROPERTY_METHOD = LINSVM;
+369506    +%end;  /* end of %if (&_targetLevel eq BINARY)  */
+369507    +%else %if (&_targetLevel eq INTERVAL) %then %do;
+369508    +      /* for interval target */
+369509    +      %let _PROPERTY_TASK = REGRESSION;
+369510    +      %let _PROPERTY_CLASSTASK = L2_REG;
+369511    +      %let _PROPERTY_METHOD = LSSVM;
+369512    +%end; %else %do;
+369513    +      %let  EMEXCEPTIONSTRING = exception.server.METADATA.USE1BINORINTTARGET;
+369514    +      %GOTO ENDLINE;
+369516    +%end;
+369519    +%let _isValidationSet =NO;
+369520    +%let _testdata =;
+369521    +%let _testout =;
+369522    +%let _validSource=;
+369524    +%if &EM_IMPORT_VALIDATE  ne  %then %do;
+369525    +        %let _isValidationSet = YES;
+369526    +        %let _testdata = &EM_IMPORT_VALIDATE;
+369527    +        %let _testout = &EM_EXPORT_VALIDATE;
+369528    +        %let _validSource= VALIDSET;
+369529    +%end;
+369530    +%else %do;
+369531    +        %if &EM_IMPORT_TEST  ne  %then %do;
+369532    +         %let _isValidationSet = YES;
+369533    +         %let _testdata = &EM_IMPORT_TEST;
+369534    +         %let _testout = &EM_EXPORT_TEST;
+369535    +         %let _validSource= TESTSET;
+369536    +         %end;
+369537    +%end;
+369539    +%if (&EM_PROPERTY_APPLYCV eq Y) and (&EM_PROPERTY_CVMETHOD eq TESTSET) %then %do;
+369540    +    %if &_isValidationSet eq NO  %then %do;
+369541    +    %let  EMEXCEPTIONSTRING = exception.server.svm.notestvalid.data;
+369542    +    %GOTO ENDLINE;
+369543    +    %end;
+369544    +%end;
+369546    +%let _num_input_interval = %eval(&EM_NUM_INTERVAL_INPUT+&EM_NUM_INTERVAL_REJECTED);
+369547    +%let _num_input_binary = %eval(&EM_NUM_BINARY_INPUT+&EM_NUM_BINARY_REJECTED);
+369548    +%let _num_input_nominal = %eval(&EM_NUM_NOMINAL_INPUT+&EM_NUM_NOMINAL_REJECTED);
+369549    +%let _num_input_ordinal = %eval(&EM_NUM_ORDINAL_INPUT+&EM_NUM_ORDINAL_REJECTED);
+369550    +%let _num_input_class =
+369550   !+%eval(&_num_input_binary+&_num_input_nominal+&_num_input_ordinal);
+369551    +%let _num_input_total = %eval(&_num_input_interval+&_num_input_class);
+369553    +%if  &_num_input_total < 2 %then %do;
+369554    +         %let  EMEXCEPTIONSTRING = exception.server.METADATA.USEATLEAST2INPUTREJECT;
+369555    +         %goto ENDLINE;
+369556    +         %end;
+369559    +/*
+369560    +%if (&EM_PROPERTY_SUPPRESSSAMPWARN eq N ) and ( &EM_PROPERTY_APPLYSAMPLING eq N )
+369560   !+%then %do;
+369562    +    %getNObs(inds=&EM_IMPORT_DATA, nobs=_nobs);
+369564    +    %if &_nobs > &SVM_MAXNUMOBS  %then %do;
+369565    +         %let  EMEXCEPTIONSTRING =
+369565   !+exception.server.svm.sample.warning,&SVM_MAXNUMOBS;
+369566    +               %goto endline;
+369567    +    %end;
+369568    +%end;
+369569    +*/
+369571    +/*------ Training ----------------------*/
+369572    +%if &EM_PROPERTY_APPLYSAMPLING eq Y %then %do;
+369573    +    %if (&_targetLevel ne INTERVAL) %then %do;
+369574    +      %exploreSample(DATA=&EM_IMPORT_DATA, OUTPUT=_sample_train,
+369574   !+METADATA=&EM_DATA_VARIABLESET,
+369575    +                     METHOD=STRATIFY, size=&EM_PROPERTY_SAMPLESIZE, sizetype=NROW,
+369575   !+INDEX=Y, INDEXNAME=_OBS_ );
+369576    +    %end;
+369577    +    %else %do;
+369578    +      %exploreSample(DATA=&EM_IMPORT_DATA, OUTPUT=_sample_train,
+369578   !+METADATA=&EM_DATA_VARIABLESET,
+369579    +                     METHOD=RANDOM, size=&EM_PROPERTY_SAMPLESIZE, sizetype=NROW,
+369579   !+INDEX=Y, INDEXNAME=_OBS_ );
+369580    +    %end;
+369581    +%end;
+369582    +%else %do;
+369583    +data _sample_train;
+369584    +    length _OBS_ 8.;
+369585    +    set &EM_IMPORT_DATA;
+369586    +    _OBS_ = _N_;
+369587    +run;
+369588    +%end;
+369589    +%let _usecgbydefault=;
+369590    +%if &EM_PROPERTY_USEITERCG eq DEFAULT %then %do;
+369591    +    %let _usecgbydefault = N;
+369592    +    %getNObs(inds=_sample_train, nobs=_trainnobs);
+369593    +    %if &_trainnobs > 3000   %then %do;
+369594    +    %let _usecgbydefault = Y;
+369595    +   %end;
+369596    +%end;
+369598    +%svm_training(indata=_sample_train,
+369599    +              task=&_PROPERTY_TASK,
+369600    +              classtask =&_PROPERTY_CLASSTASK,
+369601    +              method = &_PROPERTY_METHOD,
+369602    +              outest=&EM_USER_OUTEST,
+369603    +              outfit=&EM_USER_SVMFITSTAT,
+369604    +              outclass=&EM_USER_OUTCLASS,
+369605    +              isValidationSet=&_isValidationSet,
+369606    +              testdata =&_testdata,
+369607    +              testout =&_testout,
+369608    +              validSource=&_validSource,
+369609    +              usecgbydefault=&_usecgbydefault
+369610    +              );
+369611    +run;
+369613    +%svm_score(indata=&EM_IMPORT_DATA,
+369614    +             inest=&EM_USER_OUTEST,
+369615    +             infit=&EM_USER_SVMFITSTAT,
+369616    +             inclass=&EM_USER_OUTCLASS,
+369617    +             outindata=  _tmpTrain ,
+369618    +             outscore = &EM_EXPORT_TRAIN,
+369619    +             targetLevel =&_targetLevel
+369620    +            );
+369622    +%if &EM_IMPORT_VALIDATE  ne  %then %do;
+369623    +  %svm_score(indata=&EM_IMPORT_VALIDATE,
+369624    +             inest=&EM_USER_OUTEST,
+369625    +             infit=&EM_USER_SVMFITSTAT,
+369626    +             inclass=&EM_USER_OUTCLASS,
+369627    +             outindata=_tmpValid,
+369628    +             outscore = &EM_EXPORT_VALIDATE,
+369629    +             targetLevel =&_targetLevel
+369630    +            );
+369632    +%end;
+369633    +%if &EM_IMPORT_TEST  ne  %then %do;
+369634    +  %svm_score(indata=&EM_IMPORT_TEST,
+369635    +             inest=&EM_USER_OUTEST,
+369636    +             infit=&EM_USER_SVMFITSTAT,
+369637    +             inclass=&EM_USER_OUTCLASS,
+369638    +             outindata=_tmpTest,
+369639    +             outscore= &EM_EXPORT_TEST,
+369640    +             targetLevel =&_targetLevel
+369641    +            );
+369643    +%end;
+369645    +/*------------------ run decision codes ----------------------*/
+369647    +%let decfile = %bquote(&EM_NODEDIR)&EM_DSEP._TMPDECIDECODE.sas;
+369648    +%let noresdecfile =  %bquote(&EM_NODEDIR)&EM_DSEP._TMPNORESDECIDECODE.sas;
+369650    +%EM_DECIDECODE(data=&EM_EXPORT_TRAIN, noresfile=&noresdecfile, resfile=&decfile);
+369651    +filename _sffile_  "&decfile";
+369652    +%if %sysfunc(fexist(_sffile_)) %then
+369653    +%do;
+369654    +    data &EM_EXPORT_TRAIN;
+369655    +       set &EM_EXPORT_TRAIN;
+369656    +           %include _sffile_;
+369657    +    run;
+369658    +    %if &EM_IMPORT_VALIDATE  ne  %then %do;
+369659    +    data &EM_EXPORT_VALIDATE;
+369660    +       set  &EM_EXPORT_VALIDATE;
+369661    +           %include _sffile_;
+369662    +    %end;
+369663    +    %if &EM_IMPORT_TEST  ne  %then %do;
+369664    +        data &EM_EXPORT_TEST;
+369665    +            set  &EM_EXPORT_TEST;
+369666    +            %include _sffile_;
+369667    +        run;
+369668    +    %end;
+369669    +%let rc = %sysfunc(fdelete(_sffile_));
+369670    +%end;
+369671    +filename _sffile_ ;
+369673    +%score_code(TargetLevel =&_targetLevel, type=FLOW);
+369674    +%score_code(TargetLevel =&_targetLevel, type=PUBLISH);
+369676    +%makeDeltaCode(TargetLevel =&_targetLevel);
+369679    +/* %put SYSError =  &SYSERR;  */
+369681    +%if &SYSERR > 0 %then %do;
+369682    +      %let EMEXCEPTIONSTRING = exception.server.EMTOOL.GENERICRUNTIMEEXCEPTION;
+369683    +      %goto ENDLINE;
+369684    +%end;
+369686    +/* %gen_score(File=&EM_FILE_EMFLOWSCORECODE, Outclass=&EM_USER_OUTCLASS,
+369686   !+Outest=&EM_USER_OUTEST, DecMeta=&EM_DEC_DECMETA, ColumnsMeta=&EM_IMPORT_DATA_CMETA,
+369686   !+Cutoff=0.5, Residual=Y)
+369687    +  %gen_score(File=&EM_FILE_EMPUBLISHSCORECODE, Outclass=&EM_USER_OUTCLASS,
+369687   !+Outest=&EM_USER_OUTEST, DecMeta=&EM_DEC_DECMETA, ColumnsMeta=&EM_IMPORT_DATA_CMETA,
+369687   !+Cutoff=0.5, Residual=N)
+369688    +*/
+369691    +%EM_MODEL(TARGET=&_targetVar, DECSCORECODE=Y, FITSTATISTICS=Y, PREDICTED=Y,
+369691   !+RESIDUALS=Y);
+369693    +/*------ Make data for report data ----------------*/
+369694    +%makeSVMFitStatDs;
+369696    +/* create &EM_USER_OUTALPHA contains alphas with nozero value */
+369698    +%makeAlphaDs(target=&_targetVar, cmeta=&EM_IMPORT_DATA_CMETA);
+369700    +proc datasets lib = work nolist;
+369701    +      delete _outtrain  _sample_train ;
+369702    +run;
+369704    +%getNObs(inds=&EM_USER_OUTALPHA, nobs=_svnobs);
+369705    +%if &_svnobs < 1   %then %do;
+369706    +     %let  EMEXCEPTIONSTRING = exception.server.svm.nosvfound.warning;
+369707    +      %goto endline;
+369708    +%end;
+369711    +%if (&EM_PROPERTY_TUNINGMETHOD eq GRID) %then %do;
+369712    +%makeTunData();
+369713    +%end;
+369716    +%ENDLINE:
+369718    +%Mend Train;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(MAIN):   filename temp;
+NOTE: Fileref TEMP has been deassigned.
+MPRINT(TRAIN):   ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):  ;
+MPRINT(CHECKBINARYTARGETLEVEL):   proc dmdb batch data=EMWS8.Meta_TRAIN classout=_tmp_dmdbout;
+MPRINT(CHECKBINARYTARGETLEVEL):   class DepVar;
+MPRINT(CHECKBINARYTARGETLEVEL):   run;
+
+NOTE: Records processed = 2374   Memory used = 511K.
+NOTE: View EMWS8.META_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.META_TRAIN.
+NOTE: The data set WORK._TMP_DMDBOUT has 2 observations and 9 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(CHECKBINARYTARGETLEVEL):   data _tmp_dmdbout;
+MPRINT(CHECKBINARYTARGETLEVEL):   set _tmp_dmdbout;
+MPRINT(CHECKBINARYTARGETLEVEL):   if strip(TYPE) = 'N' and strip(LEVEL) = '.' then delete;
+MPRINT(CHECKBINARYTARGETLEVEL):   if strip(TYPE) = 'C' and strip(LEVEL) = '' then delete;
+MPRINT(CHECKBINARYTARGETLEVEL):   run;
+
+NOTE: There were 2 observations read from the data set WORK._TMP_DMDBOUT.
+NOTE: The data set WORK._TMP_DMDBOUT has 2 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(CHECKBINARYTARGETLEVEL):   data _null_;
+MPRINT(CHECKBINARYTARGETLEVEL):   call symput("_nTargetLevel", put(2, Best12.));
+MPRINT(CHECKBINARYTARGETLEVEL):   run;
+
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(CHECKBINARYTARGETLEVEL):   proc datasets lib=work nolist;
+MPRINT(CHECKBINARYTARGETLEVEL):   delete _tmp_dmdbout;
+MPRINT(CHECKBINARYTARGETLEVEL):   run;
+
+NOTE: Deleting WORK._TMP_DMDBOUT (memtype=DATA).
+MPRINT(CHECKBINARYTARGETLEVEL):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(EXPLORESAMPLE):   filename x catalog 'sashelp.emutil.exploreobs.source';
+NOTE: %INCLUDE (level 1) file X is file SASHELP.EMUTIL.EXPLOREOBS.SOURCE.
+369720    +/*------------------------------------------------------------------
+369721    +  MACRO EXPLOREOBS
+369723    +  SUPPORT:  SASDHD - David Duling
+369724    +  PRODUCT:  Enterprise Miner
+369726    +  DESCRIPTION:
+369727    +  Generates maximum and default numbers of observations to
+369728    +  download for visualization depending on the record length.
+369730    +  Values were determined by trial and error using typical
+369731    +  Windows workstation configurations.
+369733    +  Discrete sets of values are returned so that user experience
+369734    +  will be consitent with similar sized data sets.
+369736    +  These macro variables are set:
+369737    +  _exploreobs_max -- maximum number of obs downloadable
+369738    +  _exploreobs_def -- default number of obs to be downloaded
+369739    +  _exploreobs_recl - record length.  Might be useful for reporting.
+369741    +  Use the _exploreobs_max to set limit the GUI selection of
+369742    +  observations for downloading.  The GUI selection for obs
+369743    +  could be reduced to "Default" and "Max".
+369745    +  Parameters
+369746    +  data=   libname.memname of input data
+369747    +  vars=   subset list of variables.
+369748    +          downloading 1 out of 500 really does work like downloading
+369749    +          1 out of 1 vars.  Users may select a subset of vars for
+369750    +                   visualizations.  Pass in the list as space delimited
+369751    +          var names.  If vars is not specified, the record length
+369752    +          of the entire data will be used.
+369753    +  NBYTES=   maximum number of bytes that shouldn't be exceeded.
+369755    +  Control
+369756    +  Users may control the values by entering these macro variables.
+369757    +            EM_EXPLOREOBS_MAX
+369758    +            EM_EXPLOREOBS_DEFAULT
+369759    +  These values override the computed values.
+369761    +  Debugging
+369762    +  %let _exploreobs_debug=1 ;
+369763    +--------------------------------------------------------------------
+369764    +  HISTORY: 20APR2004. sasdhd. pushed.
+369765    +           18DEC2004. sasdhd. S0280556.
+369766    +           07SEP2007. sasdhd. HK1009586
+369767    +--------------------------------------------------------------------*/
+369769    +%macro exploreobs(data=,vars=, nbytes=) ;
+369771    +   /*--- variable definitions ---*/
+369772    +   %global _exploreobs_max _exploreobs_def _exploreobs_recl _exploreobs_debug ;
+369773    +   %local xobs xvars xlen vlen xi vname vlist ;
+369774    +   %local _exp_source _exp_notes ;
+369776    +   /*--- USER definitions ---*/
+369777    +   %global EM_EXPLOREOBS_MAX EM_EXPLOREOBS_DEFAULT ;
+369779    +   /*--- variable intializations ---*/
+369780    +   %let _exploreobs_max=0 ;
+369781    +   %let _exploreobs_def=0 ;
+369782    +   %let _exploreobs_recl=0 ;
+369783    +   %let xvars= 0 ;
+369784    +   %let xlen = 0 ;
+369785    +   %let xobs = 0 ;
+369787    +   /*--- data error checks ---*/
+369788    +   %if "&data" eq "" %then %do ;
+369789    +            %put NOTE: DATA is not specified. ;
+369790    +            %goto term ;
+369791    +      %end ;
+369793    +   %let dsid=%sysfunc(open(&data)) ;
+369794    +   %if not &dsid %then %do ;
+369795    +            %put NOTE: DATA &data is not available. ;
+369796    +            %goto term ;
+369797    +      %end ;
+369799    +   /*--- if a vars list exists generate a subset ---*/
+369800    +   %if &vars ne %then %do ;
+369801    +         %let dsid=%sysfunc(close(&dsid)) ;
+369802    +         %if &_exploreobs_debug ne 1 %then %do ;
+369803    +                  %let _exp_source=%sysfunc(getoption(SOURCE)) ;
+369804    +            %let _exp_notes =%sysfunc(getoption(NOTES)) ;
+369805    +                  options nosource nonotes ;
+369806    +         %end ;
+369807    +         data _exploreobs_temp_data ;
+369808    +         set &data(obs=0) ;
+369809    +          keep &vars ;
+369810    +         run;
+369811    +         %if &_exploreobs_debug ne 1 %then %do ;
+369812    +                  options &_exp_source &_exp_notes ;
+369813    +         %end ;
+369814    +         %let dsid=%sysfunc(open(_exploreobs_temp_data)) ;
+369815    +         %if &dsid eq 0 %then %do ;
+369816    +                  %put NOTE: Sample is not available.;
+369817    +                  %goto term ;
+369818    +            %end ;
+369819    +      %end ;
+369821    +   /*--- get var attributes ---*/
+369822    +   %let xvars=%sysfunc(attrn(&dsid,nvars)) ;
+369823    +   %let xobs= %sysfunc(attrn(&dsid,nobs )) ;
+369824    +   %let xlen= %sysfunc(attrn(&dsid,lrecl)) ;
+369825    +   %let dsid= %sysfunc(close(&dsid)) ;
+369827    +   /*--- set default and max obs ---*/
+369828    +   %let _exploreobs_recl=%eval(&xlen) ;
+369829    +   %if &_exploreobs_recl eq 0 %then %do ;
+369830    +             %let _exploreobs_max= 0 ;
+369831    +             %let _exploreobs_def= 0 ;
+369832    +             %goto term ;
+369834    +   %end ;
+369835    +   %else
+369836    +   %if &_exploreobs_recl le 32 %then %do ;
+369837    +             %let _exploreobs_max=100000 ;
+369838    +             %let _exploreobs_def= 10000 ;
+369839    +   %end ;
+369840    +   %else
+369841    +   %if &_exploreobs_recl le 128 %then %do ;
+369842    +             %let _exploreobs_max=60000 ;
+369843    +             %let _exploreobs_def= 6000 ;
+369844    +   %end ;
+369845    +   %else
+369846    +   %if &_exploreobs_recl lt 1000 %then %do ;
+369847    +             %let _exploreobs_max=20000 ;
+369848    +             %let _exploreobs_def= 2000 ;
+369849    +   %end ;
+369850    +   %else
+369851    +   %if &_exploreobs_recl lt 5000 %then %do ;
+369852    +             %let _exploreobs_max= 10000 ;
+369853    +             %let _exploreobs_def=  1000 ;
+369854    +   %end ;
+369855    +   %else
+369856    +   %if &_exploreobs_recl lt 20000 %then %do ;
+369857    +             %let _exploreobs_max= 5000 ;
+369858    +             %let _exploreobs_def=  500 ;
+369859    +   %end ;
+369860    +   %else %do ;
+369861    +             %let _exploreobs_max= 1000 ;
+369862    +             %let _exploreobs_def=  200 ;
+369863    +   %end ;
+369865    +   /*--- Users options ---*/
+369866    +   %if &EM_EXPLOREOBS_MAX ne %then %do ;
+369867    +            %let _exploreobs_max= %eval(&EM_EXPLOREOBS_MAX) ;
+369868    +   %end;
+369869    +   %if &EM_EXPLOREOBS_DEFAULT ne %then %do ;
+369870    +            %let _exploreobs_def= %eval(&EM_EXPLOREOBS_DEFAULT) ;
+369871    +   %end;
+369873    +    /*--- S0868273 ---*/
+369874    +    %if "&NBYTES" ne "" %then %do;
+369875    +       %let nbytes_nrows = %eval(&nbytes/ &_exploreobs_recl);
+369876    +       %if &EM_EXPLOREOBS_MAX ne %then %do ;
+369877    +           %let _exploreobs_max   = %sysfunc(min(&nbytes_nrows ,
+369877   !+&EM_EXPLOREOBS_MAX));
+369878    +       %end;
+369880    +       %if &EM_EXPLOREOBS_DEFAULT ne %then %do ;
+369881    +          %let nbytes_nrows      = %eval(&nbytes_nrows/10);
+369882    +          %let _exploreobs_def   = %sysfunc(min(&nbytes_nrows ,
+369882   !+&EM_EXPLOREOBS_DEFAULT));
+369883    +          %if ^&_exploreobs_def %then
+369884    +              %let _exploreobs_def = 1;
+369886    +       %end;
+369887    +    %end;
+369889    +   /*--- Terminate ---*/
+369890    +   %term:
+369892    +   %put NOTE: EXPLOREOBS &data : vars= &xvars : recl= &_exploreobs_recl :
+369892   !+max=&_exploreobs_max : def= &_exploreobs_def ;
+369893    +%mend ;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(EXPLORESAMPLE):   filename x;
+NOTE: Fileref X has been deassigned.
+MPRINT(HPDM_PERFORMANCE):  ;
+PERFORMANCE  DETAILS
+MPRINT(EXPLORESAMPLE):  ;
+MPRINT(EXPLORESAMPLE):   proc sql;
+MPRINT(EXPLORESAMPLE):   reset noprint;
+MPRINT(EXPLORESAMPLE):   select count(*) into :popsize from EMWS8.Meta_TRAIN;
+NOTE: View EMWS8.META_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+MPRINT(EXPLORESAMPLE):   quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   data _null_;
+MPRINT(EXPLORESAMPLE):   set EMWS8.SVM_VariableSet end=eof;
+MPRINT(EXPLORESAMPLE):   where (ROLE in('TARGET', 'SEGMENT')) and (LEVEL ne 'INTERVAL');
+MPRINT(EXPLORESAMPLE):   call symput('VVStratVar_'!!strip(put(_N_, best.)), 
+"'"!!tranwrd(trim(NAME), "'", "''")!!"'n");
+MPRINT(EXPLORESAMPLE):   call symput('StratVar_'!!strip(put(_N_, best.)), trim(NAME));
+MPRINT(EXPLORESAMPLE):   if eof then call symput('StratNum', strip(put(_N_, best.)));
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.SVM_VARIABLESET.
+      WHERE ROLE in ('SEGMENT', 'TARGET') and (LEVEL not = 'INTERVAL');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+*------------------------------------------------------------*
+* Stratified sample
+*------------------------------------------------------------*
+MPRINT(EXPLORESAMPLE):   proc freq data=EMWS8.Meta_TRAIN noprint;
+MPRINT(EXPLORESAMPLE):   table 'DepVar'n /out=STRATASUMMARY (rename=(count=_npop_ 
+percent=_pctpop_)) missing;
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: View EMWS8.META_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.META_TRAIN.
+NOTE: The data set WORK.STRATASUMMARY has 2 observations and 3 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   quit;
+MPRINT(EXPLORESAMPLE):   proc sort data=STRATASUMMARY out=STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   by descending _npop_;
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: There were 2 observations read from the data set WORK.STRATASUMMARY.
+NOTE: The data set WORK.STRATASUMMARY has 2 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   data STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   set STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   STRATA_SIZE = int(1000 * (_npop_ / 2374) + 0.5);
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: There were 2 observations read from the data set WORK.STRATASUMMARY.
+NOTE: The data set WORK.STRATASUMMARY has 2 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   data STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   set STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   length _SFormat1 $200;
+MPRINT(EXPLORESAMPLE):   _SFormat1 = strip(put( 'DepVar'n, BEST.));
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: There were 2 observations read from the data set WORK.STRATASUMMARY.
+NOTE: The data set WORK.STRATASUMMARY has 2 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   data _null_;
+MPRINT(EXPLORESAMPLE):   set STRATASUMMARY end=eof;
+MPRINT(EXPLORESAMPLE):   length string $4000;
+MPRINT(EXPLORESAMPLE):   retain obsnum 0;
+MPRINT(EXPLORESAMPLE):   if _N_=1 then do;
+MPRINT(EXPLORESAMPLE):   call execute("data _sample_train ;");
+MPRINT(EXPLORESAMPLE):   call execute("length _OBS_ 8;");
+MPRINT(EXPLORESAMPLE):   call execute("set EMWS8.Meta_TRAIN ;");
+MPRINT(EXPLORESAMPLE):   call execute("_OBS_=_N_;");
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   if _N_>1 then call execute("else ");
+MPRINT(EXPLORESAMPLE):   obsnum = obsnum+1;
+MPRINT(EXPLORESAMPLE):   call execute("if ");
+MPRINT(EXPLORESAMPLE):   string = tranwrd(_SFormat1, "'","''");
+MPRINT(EXPLORESAMPLE):   call execute("strip(put('DepVar'n, BEST.))='"!!strip(string)!!"'");
+MPRINT(EXPLORESAMPLE):   call execute("then do;");
+MPRINT(EXPLORESAMPLE):   call execute("   _N"!!strip(put(obsnum, z6.))!!"+1;");
+MPRINT(EXPLORESAMPLE):   call execute("if _S"!!strip(put(obsnum, 
+z6.))!!'<'!!strip(put(STRATA_SIZE, best.))!!" then do;");
+MPRINT(EXPLORESAMPLE):   call execute("   if ranuni(12345)*("!!strip(put(_npop_, best.))!!' - 
+_N'!!strip(put(obsnum, z6.))!!')');
+MPRINT(EXPLORESAMPLE):   call execute("         <=("!!strip(put(STRATA_SIZE, best.))!!' - 
+_S'!!strip(put(obsnum, z6.))!!') then do;');
+MPRINT(EXPLORESAMPLE):   call execute("   _S"!!strip(put(obsnum, z6.))!!"+1;");
+MPRINT(EXPLORESAMPLE):   call execute("   output;");
+MPRINT(EXPLORESAMPLE):   call execute("   end;");
+MPRINT(EXPLORESAMPLE):   call execute("end;");
+MPRINT(EXPLORESAMPLE):   call execute("end;");
+MPRINT(EXPLORESAMPLE):   call execute("drop "!!"_S"!!strip(put(obsnum, z6.))!!' 
+_N'!!strip(put(obsnum, z6.))!!";");
+MPRINT(EXPLORESAMPLE):   if eof then do;
+MPRINT(EXPLORESAMPLE):   call execute("run;");
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   run;
+
+MPRINT(EXPLORESAMPLE):   data _sample_train ;
+MPRINT(EXPLORESAMPLE):   length _OBS_ 8;
+MPRINT(EXPLORESAMPLE):   set EMWS8.Meta_TRAIN ;
+MPRINT(EXPLORESAMPLE):   _OBS_=_N_;
+MPRINT(EXPLORESAMPLE):   then do;
+MPRINT(EXPLORESAMPLE):   _N000001+1;
+MPRINT(EXPLORESAMPLE):   if _S000001<849 then do;
+MPRINT(EXPLORESAMPLE):   <=(849 - _S000001) then do;
+MPRINT(EXPLORESAMPLE):   _S000001+1;
+MPRINT(EXPLORESAMPLE):   output;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   drop _S000001 _N000001;
+MPRINT(EXPLORESAMPLE):   then do;
+MPRINT(EXPLORESAMPLE):   _N000002+1;
+MPRINT(EXPLORESAMPLE):   if _S000002<151 then do;
+MPRINT(EXPLORESAMPLE):   <=(151 - _S000002) then do;
+MPRINT(EXPLORESAMPLE):   _S000002+1;
+MPRINT(EXPLORESAMPLE):   output;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   end;
+MPRINT(EXPLORESAMPLE):   drop _S000002 _N000002;
+MPRINT(EXPLORESAMPLE):   run;
+NOTE: There were 2 observations read from the data set WORK.STRATASUMMARY.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: CALL EXECUTE generated line.
+1         + data _sample_train ;
+2         + length _OBS_ 8;
+3         + set EMWS8.Meta_TRAIN ;
+4         + _OBS_=_N_;
+5         + if
+6         + strip(put('DepVar'n, BEST.))='0'
+7         + then do;
+8         +    _N000001+1;
+9         + if _S000001<849 then do;
+10        +    if ranuni(12345)*(2015 - _N000001)
+11        +          <=(849 - _S000001) then do;
+12        +    _S000001+1;
+13        +    output;
+14        +    end;
+15        + end;
+16        + end;
+17        + drop _S000001 _N000001;
+18        + else
+19        + if
+20        + strip(put('DepVar'n, BEST.))='1'
+21        + then do;
+22        +    _N000002+1;
+23        + if _S000002<151 then do;
+24        +    if ranuni(12345)*(359 - _N000002)
+25        +          <=(151 - _S000002) then do;
+26        +    _S000002+1;
+27        +    output;
+28        +    end;
+29        + end;
+30        + end;
+31        + drop _S000002 _N000002;
+32        + run;
+
+NOTE: View EMWS8.META_TRAIN.VIEW used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.META_TRAIN.
+NOTE: The data set WORK._SAMPLE_TRAIN has 1000 observations and 46 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.02 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EXPLORESAMPLE):   proc datasets lib=work nolist;
+MPRINT(EXPLORESAMPLE):   delete STRATASUMMARY;
+MPRINT(EXPLORESAMPLE):   run;
+
+NOTE: Deleting WORK.STRATASUMMARY (memtype=DATA).
+MPRINT(EXPLORESAMPLE):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(GETNOBS):   data _null_;
+MPRINT(GETNOBS):   set _sample_train end=eof;
+MPRINT(GETNOBS):   if eof then call symput("_trainnobs", _N_);
+MPRINT(GETNOBS):   run;
+
+NOTE: Numeric values have been converted to character values at the places given by: 
+      (Line):(Column).
+      12:34   
+NOTE: There were 1000 observations read from the data set WORK._SAMPLE_TRAIN.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(GETNOBS):   quit;
+MPRINT(TRAIN):  ;
+MPRINT(MAKE_DMDB):   proc dmdb batch dmdbcat= _emdmdb data=_sample_train out= _emdmdb ;
+MPRINT(MAKE_DMDB):   var
+MPRINT(EM_INTERVAL):   AcceptedCmpTotal Age Frq Income Kidhome Mnt MntFishProducts MntFruits 
+MntGoldProds MntMeatProducts MntSweetProducts MntWines MonthsAsCustomer NumCatalogPurchases 
+NumDealsPurchases NumDistPurchases NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat 
+RMntFrq Recency Teenhome _dataobs_
+MPRINT(MAKE_DMDB):   ;
+MPRINT(MAKE_DMDB):   class
+MPRINT(EM_CLASS):   AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 Complain 
+Custid DepVar Education HigherEducationBinary Marital_Status
+MPRINT(MAKE_DMDB):  ;
+MPRINT(MAKE_DMDB):   target
+MPRINT(EM_TARGET):   DepVar
+MPRINT(MAKE_DMDB):   ;
+MPRINT(MAKE_DMDB):   run ;
+
+NOTE: Records processed = 1000   Memory used = 511K.
+NOTE: There were 1000 observations read from the data set WORK._SAMPLE_TRAIN.
+NOTE: The data set WORK._EMDMDB has 1000 observations and 35 variables.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(SVM_TRAINING):  ;
+MPRINT(SVM_TRAINING):   options debug="nlpitermsg=2";
+MPRINT(SVM_TRAINING):  ;
+MPRINT(SVM_TRAINING):   ods output tun_crt = EMWS8.SVM_TUNINGCRIT;
+MPRINT(SVM_TRAINING):   proc svm data= _emdmdb dmdbcat= _emdmdb nomonitor outfit= 
+EMWS8.SVM_SVMFITSTAT outclass= EMWS8.SVM_OUTCLASS outest= EMWS8.SVM_OUTEST out = _outtrain 
+maxiter = 2000 maxfunc = 5000 gconv = 1.0E-8 absgconv = 5.0E-4 xconv = 1.0E-8 absxconv = 
+5.0E-4 xscale method= FQP kernel = LINEAR tun = GRID CV = RANDOM ;
+MPRINT(SVM_TRAINING):   var
+MPRINT(EM_INPUT):   AcceptedCmp1 AcceptedCmp2 AcceptedCmp3 AcceptedCmp4 AcceptedCmp5 
+AcceptedCmpTotal Age Complain Education Frq HigherEducationBinary Income Kidhome 
+Marital_Status Mnt MntFishProducts MntFruits MntGoldProds MntMeatProducts MntSweetProducts 
+MntWines MonthsAsCustomer NumCatalogPurchases NumDealsPurchases NumDistPurchases 
+NumStorePurchases NumWebPurchases NumWebVisitsMonth RFMstat RMntFrq Recency Teenhome
+MPRINT(SVM_TRAINING):  ;
+MPRINT(SVM_TRAINING):   target
+MPRINT(EM_TARGET):   DepVar
+MPRINT(SVM_TRAINING):  ;
+MPRINT(SVM_TRAINING):   C 0.1 to 1 by 0.1 ;
+MPRINT(SVM_TRAINING):   run;
+
+NOTE: For cross validation default fold=10 is set.
+NOTE: The data set EMWS8.SVM_OUTCLASS has 49 observations and 9 variables.
+1000 records read
+NOTE: Method  FQP is very unusual and not very efficient for 1000 observations and 47 
+      variables.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: GCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+NOTE: ABSGCONV convergence criterion satisfied.
+1000 records read
+1000 records read
+1000 records read
+1000 records read
+1000 records read
+NOTE: The data set WORK._OUTTRAIN has 1000 observations and 43 variables.
+NOTE: The data set EMWS8.SVM_OUTEST has 5 observations and 52 variables.
+NOTE: The data set EMWS8.SVM_SVMFITSTAT has 2 observations and 30 variables.
+WARNING: This is an experimental release of the SVM procedure. It has not had the same level 
+         of testing as other components of the SAS system.
+*** Total Number of Runs through Data :      260
+*** Number of Kernel Evaluations: 47411
+*** Time for Optimization: 822
+*** Total Processing Time: 822
+*** Total Number of Trainings :      121
+NOTE: The data set EMWS8.SVM_TUNINGCRIT has 10 observations and 5 variables.
+NOTE: The PROCEDURE SVM printed pages 140-144.
+NOTE: PROCEDURE SVM used (Total process time):
+      real time           13:41.95
+      cpu time            13:32.89
+      
+
+MPRINT(SVM_TRAINING):   quit;
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):   run;
+MPRINT(SVM_SCORE):   proc svmscore data=EMWS8.Meta_TRAIN inest=EMWS8.SVM_OUTEST 
+infit=EMWS8.SVM_SVMFITSTAT inclass=EMWS8.SVM_OUTCLASS out=EMWS8.SVM_TRAIN(rename=(_F_=F_DepVar 
+_I_=I_DepVar));
+MPRINT(SVM_SCORE):   run;
+
+WARNING: This is an experimental release of the SVMSCORE procedure. It has not had the same 
+         level of testing as other components of the SAS system.
+NOTE: View EMWS8.META_TRAIN.VIEW used (Total process time):
+      real time           0.15 seconds
+      cpu time            0.15 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: The data set EMWS8.SVM_TRAIN has 2374 observations and 51 variables.
+NOTE: PROCEDURE SVMSCORE used (Total process time):
+      real time           0.16 seconds
+      cpu time            0.15 seconds
+      
+
+MPRINT(SVM_SCORE):   filename resifref 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas";
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM end=eof;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ in('TARGET', 'FROM');
+MPRINT(MAKERESIDUALVARS):   if _TYPE_='TARGET' then call symput('target_level', strip(LEVEL));
+MPRINT(MAKERESIDUALVARS):   else call symput('from_var', strip(VARIABLE));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_ in ('FROM', 'TARGET');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ ='PREDICTED';
+MPRINT(MAKERESIDUALVARS):   call symput('pred_vars'!!strip(put(_N_,BEST.)), strip(Variable));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_='PREDICTED';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM end=eof;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ ='RESIDUAL';
+MPRINT(MAKERESIDUALVARS):   call symput('res_vars'!!strip(put(_N_,BEST.)), strip(Variable));
+MPRINT(MAKERESIDUALVARS):   call symput('res_labels'!!strip(put(_N_,BEST.)), 
+strip(tranwrd(LABEL,"'","''")));
+MPRINT(MAKERESIDUALVARS):   call symput('res_levels'!!strip(put(_N_,BEST.)), 
+strip(tranwrd(LEVEL,"'","''")));
+MPRINT(MAKERESIDUALVARS):   if eof then call symput('numLevels', strip(put(_N_,BEST.)));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_='RESIDUAL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   file resifref;
+MPRINT(MAKERESIDUALVARS):   put 
+"*------------------------------------------------------------*;";
+MPRINT(MAKERESIDUALVARS):   put "*Computing Residual Vars: DepVar;";
+MPRINT(MAKERESIDUALVARS):   put 
+"*------------------------------------------------------------*;";
+MPRINT(MAKERESIDUALVARS):   put "Label R_DepVar1='Residual: DepVar=1';";
+MPRINT(MAKERESIDUALVARS):   put "Label R_DepVar0='Residual: DepVar=0';";
+MPRINT(MAKERESIDUALVARS):   put "if ";
+MPRINT(MAKERESIDUALVARS):   put " F_DepVar ne '1'";
+MPRINT(MAKERESIDUALVARS):   put "and F_DepVar ne '0'";
+MPRINT(MAKERESIDUALVARS):   put " then do;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar1=.;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar0=.;";
+MPRINT(MAKERESIDUALVARS):   put "end;";
+MPRINT(MAKERESIDUALVARS):   put "else do;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar1= - P_DepVar1;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar0= - P_DepVar0;";
+MPRINT(MAKERESIDUALVARS):   put "select(F_DepVar);";
+MPRINT(MAKERESIDUALVARS):   put "when('1')R_DepVar1= R_DepVar1+1;";
+MPRINT(MAKERESIDUALVARS):   put "when('0')R_DepVar0= R_DepVar0+1;";
+MPRINT(MAKERESIDUALVARS):   put 'otherwise;';
+MPRINT(MAKERESIDUALVARS):   put 'end;';
+MPRINT(MAKERESIDUALVARS):   put 'end;';
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: The file RESIFREF is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas,
+      RECFM=V,LRECL=256,File Size (bytes)=0,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=26. April 2016 14.27 Uhr
+
+NOTE: 21 records were written to the file RESIFREF.
+      The minimum record length was 3.
+      The maximum record length was 63.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(SVM_SCORE):  ;
+MPRINT(SVM_SCORE):   data EMWS8.SVM_TRAIN(drop=_P);
+MPRINT(SVM_SCORE):   set EMWS8.SVM_TRAIN;
+MPRINT(SVM_SCORE):   if (_P_ < -600) then _p =0;
+MPRINT(SVM_SCORE):   else _P = 1/(1+EXP((-1)*(_P_)));
+MPRINT(SVM_SCORE):   P_DepVar1 = _P;
+MPRINT(SVM_SCORE):   P_DepVar0 = 1 - _P;
+NOTE: %INCLUDE (level 1) file RESIFREF is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas.
+369896    +*------------------------------------------------------------*;
+MPRINT(SVM_SCORE):   *------------------------------------------------------------*;
+369897    +*Computing Residual Vars: DepVar;
+MPRINT(SVM_SCORE):   *Computing Residual Vars: DepVar;
+369898    +*------------------------------------------------------------*;
+MPRINT(SVM_SCORE):   *------------------------------------------------------------*;
+369899    +Label R_DepVar1='Residual: DepVar=1';
+MPRINT(SVM_SCORE):   Label R_DepVar1= 'Residual: DepVar=1';
+369900    +Label R_DepVar0='Residual: DepVar=0';
+MPRINT(SVM_SCORE):   Label R_DepVar0= 'Residual: DepVar=0';
+369901    +if
+369902    + F_DepVar ne '1'
+369903    +and F_DepVar ne '0'
+369904    + then do;
+MPRINT(SVM_SCORE):   if F_DepVar ne '1' and F_DepVar ne '0' then do;
+369905    +R_DepVar1=.;
+MPRINT(SVM_SCORE):   R_DepVar1=.;
+369906    +R_DepVar0=.;
+MPRINT(SVM_SCORE):   R_DepVar0=.;
+369907    +end;
+MPRINT(SVM_SCORE):   end;
+369908    +else do;
+MPRINT(SVM_SCORE):   else do;
+369909    +R_DepVar1= - P_DepVar1;
+MPRINT(SVM_SCORE):   R_DepVar1= - P_DepVar1;
+369910    +R_DepVar0= - P_DepVar0;
+MPRINT(SVM_SCORE):   R_DepVar0= - P_DepVar0;
+369911    +select(F_DepVar);
+MPRINT(SVM_SCORE):   select(F_DepVar);
+369912    +when('1')R_DepVar1= R_DepVar1+1;
+MPRINT(SVM_SCORE):   when('1')R_DepVar1= R_DepVar1+1;
+369913    +when('0')R_DepVar0= R_DepVar0+1;
+MPRINT(SVM_SCORE):   when('0')R_DepVar0= R_DepVar0+1;
+369914    +otherwise;
+MPRINT(SVM_SCORE):   otherwise;
+369915    +end;
+MPRINT(SVM_SCORE):   end;
+369916    +end;
+MPRINT(SVM_SCORE):   end;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(SVM_SCORE):   run;
+
+NOTE: There were 2374 observations read from the data set EMWS8.SVM_TRAIN.
+NOTE: The data set EMWS8.SVM_TRAIN has 2374 observations and 55 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(SVM_SCORE):   filename resifref;
+NOTE: Fileref RESIFREF has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(SVM_SCORE):   proc svmscore data=EMWS8.Meta_VALIDATE inest=EMWS8.SVM_OUTEST 
+infit=EMWS8.SVM_SVMFITSTAT inclass=EMWS8.SVM_OUTCLASS 
+out=EMWS8.SVM_VALIDATE(rename=(_F_=F_DepVar _I_=I_DepVar));
+MPRINT(SVM_SCORE):   run;
+
+WARNING: This is an experimental release of the SVMSCORE procedure. It has not had the same 
+         level of testing as other components of the SAS system.
+NOTE: View EMWS8.META_VALIDATE.VIEW used (Total process time):
+      real time           0.10 seconds
+      cpu time            0.09 seconds
+      
+NOTE: There were 1018 observations read from the data set EMWS8.PART_VALIDATE.
+NOTE: The data set EMWS8.SVM_VALIDATE has 1018 observations and 51 variables.
+NOTE: PROCEDURE SVMSCORE used (Total process time):
+      real time           0.12 seconds
+      cpu time            0.12 seconds
+      
+
+MPRINT(SVM_SCORE):   filename resifref 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas";
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM end=eof;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ in('TARGET', 'FROM');
+MPRINT(MAKERESIDUALVARS):   if _TYPE_='TARGET' then call symput('target_level', strip(LEVEL));
+MPRINT(MAKERESIDUALVARS):   else call symput('from_var', strip(VARIABLE));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_ in ('FROM', 'TARGET');
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ ='PREDICTED';
+MPRINT(MAKERESIDUALVARS):   call symput('pred_vars'!!strip(put(_N_,BEST.)), strip(Variable));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_='PREDICTED';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   set EMWS8.SVM_DepVar_DM end=eof;
+MPRINT(MAKERESIDUALVARS):   where _TYPE_ ='RESIDUAL';
+MPRINT(MAKERESIDUALVARS):   call symput('res_vars'!!strip(put(_N_,BEST.)), strip(Variable));
+MPRINT(MAKERESIDUALVARS):   call symput('res_labels'!!strip(put(_N_,BEST.)), 
+strip(tranwrd(LABEL,"'","''")));
+MPRINT(MAKERESIDUALVARS):   call symput('res_levels'!!strip(put(_N_,BEST.)), 
+strip(tranwrd(LEVEL,"'","''")));
+MPRINT(MAKERESIDUALVARS):   if eof then call symput('numLevels', strip(put(_N_,BEST.)));
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DM.
+      WHERE _TYPE_='RESIDUAL';
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(MAKERESIDUALVARS):   data _null_;
+MPRINT(MAKERESIDUALVARS):   file resifref;
+MPRINT(MAKERESIDUALVARS):   put 
+"*------------------------------------------------------------*;";
+MPRINT(MAKERESIDUALVARS):   put "*Computing Residual Vars: DepVar;";
+MPRINT(MAKERESIDUALVARS):   put 
+"*------------------------------------------------------------*;";
+MPRINT(MAKERESIDUALVARS):   put "Label R_DepVar1='Residual: DepVar=1';";
+MPRINT(MAKERESIDUALVARS):   put "Label R_DepVar0='Residual: DepVar=0';";
+MPRINT(MAKERESIDUALVARS):   put "if ";
+MPRINT(MAKERESIDUALVARS):   put " F_DepVar ne '1'";
+MPRINT(MAKERESIDUALVARS):   put "and F_DepVar ne '0'";
+MPRINT(MAKERESIDUALVARS):   put " then do;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar1=.;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar0=.;";
+MPRINT(MAKERESIDUALVARS):   put "end;";
+MPRINT(MAKERESIDUALVARS):   put "else do;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar1= - P_DepVar1;";
+MPRINT(MAKERESIDUALVARS):   put "R_DepVar0= - P_DepVar0;";
+MPRINT(MAKERESIDUALVARS):   put "select(F_DepVar);";
+MPRINT(MAKERESIDUALVARS):   put "when('1')R_DepVar1= R_DepVar1+1;";
+MPRINT(MAKERESIDUALVARS):   put "when('0')R_DepVar0= R_DepVar0+1;";
+MPRINT(MAKERESIDUALVARS):   put 'otherwise;';
+MPRINT(MAKERESIDUALVARS):   put 'end;';
+MPRINT(MAKERESIDUALVARS):   put 'end;';
+MPRINT(MAKERESIDUALVARS):   run;
+
+NOTE: The file RESIFREF is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas,
+      RECFM=V,LRECL=256,File Size (bytes)=0,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=26. April 2016 14.27 Uhr
+
+NOTE: 21 records were written to the file RESIFREF.
+      The minimum record length was 3.
+      The maximum record length was 63.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(SVM_SCORE):  ;
+MPRINT(SVM_SCORE):   data EMWS8.SVM_VALIDATE(drop=_P);
+MPRINT(SVM_SCORE):   set EMWS8.SVM_VALIDATE;
+MPRINT(SVM_SCORE):   if (_P_ < -600) then _p =0;
+MPRINT(SVM_SCORE):   else _P = 1/(1+EXP((-1)*(_P_)));
+MPRINT(SVM_SCORE):   P_DepVar1 = _P;
+MPRINT(SVM_SCORE):   P_DepVar0 = 1 - _P;
+NOTE: %INCLUDE (level 1) file RESIFREF is file 
+      C:\\predictive-models-project\Workspaces\EMWS8\SVM\tmprescode.sas.
+369917    +*------------------------------------------------------------*;
+MPRINT(SVM_SCORE):   *------------------------------------------------------------*;
+369918    +*Computing Residual Vars: DepVar;
+MPRINT(SVM_SCORE):   *Computing Residual Vars: DepVar;
+369919    +*------------------------------------------------------------*;
+MPRINT(SVM_SCORE):   *------------------------------------------------------------*;
+369920    +Label R_DepVar1='Residual: DepVar=1';
+MPRINT(SVM_SCORE):   Label R_DepVar1= 'Residual: DepVar=1';
+369921    +Label R_DepVar0='Residual: DepVar=0';
+MPRINT(SVM_SCORE):   Label R_DepVar0= 'Residual: DepVar=0';
+369922    +if
+369923    + F_DepVar ne '1'
+369924    +and F_DepVar ne '0'
+369925    + then do;
+MPRINT(SVM_SCORE):   if F_DepVar ne '1' and F_DepVar ne '0' then do;
+369926    +R_DepVar1=.;
+MPRINT(SVM_SCORE):   R_DepVar1=.;
+369927    +R_DepVar0=.;
+MPRINT(SVM_SCORE):   R_DepVar0=.;
+369928    +end;
+MPRINT(SVM_SCORE):   end;
+369929    +else do;
+MPRINT(SVM_SCORE):   else do;
+369930    +R_DepVar1= - P_DepVar1;
+MPRINT(SVM_SCORE):   R_DepVar1= - P_DepVar1;
+369931    +R_DepVar0= - P_DepVar0;
+MPRINT(SVM_SCORE):   R_DepVar0= - P_DepVar0;
+369932    +select(F_DepVar);
+MPRINT(SVM_SCORE):   select(F_DepVar);
+369933    +when('1')R_DepVar1= R_DepVar1+1;
+MPRINT(SVM_SCORE):   when('1')R_DepVar1= R_DepVar1+1;
+369934    +when('0')R_DepVar0= R_DepVar0+1;
+MPRINT(SVM_SCORE):   when('0')R_DepVar0= R_DepVar0+1;
+369935    +otherwise;
+MPRINT(SVM_SCORE):   otherwise;
+369936    +end;
+MPRINT(SVM_SCORE):   end;
+369937    +end;
+MPRINT(SVM_SCORE):   end;
+NOTE: %INCLUDE (level 1) ending.
+MPRINT(SVM_SCORE):   run;
+
+NOTE: There were 1018 observations read from the data set EMWS8.SVM_VALIDATE.
+NOTE: The data set EMWS8.SVM_VALIDATE has 1018 observations and 55 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(SVM_SCORE):   filename resifref;
+NOTE: Fileref RESIFREF has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(EM_DECIDECODE):   dm "afa c=sashelp.emutil.decidecode.scl";
+369938     data SVM_SCORE/view=SVM_SCORE;
+MPRINT(EM_DECIDECODE):   data SVM_SCORE/view=SVM_SCORE;
+369939     set EMWS8.SVM_TRAIN;
+MPRINT(EM_DECIDECODE):   set EMWS8.SVM_TRAIN;
+369940     run;
+MPRINT(EM_DECIDECODE):   run;
+
+NOTE: DATA STEP view saved on file WORK.SVM_SCORE.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_DEPVAR_DD.
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+369941     *------------------------------------------------------------*;
+MPRINT(EM_DECIDECODE):    *------------------------------------------------------------*;
+369942     * SVM: Create decision matrix;
+MPRINT(EM_DECIDECODE):   * SVM: Create decision matrix;
+369943     *------------------------------------------------------------*;
+MPRINT(EM_DECIDECODE):   *------------------------------------------------------------*;
+369944     data WORK.DepVar;
+MPRINT(EM_DECIDECODE):   data WORK.DepVar;
+369945       length   DepVar                           $  32
+369946                COUNT                                8
+369947                DATAPRIOR                            8
+369948                TRAINPRIOR                           8
+369949                DECPRIOR                             8
+369950                DECISION1                            8
+369951                DECISION2                            8
+369952                ;
+MPRINT(EM_DECIDECODE):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 
+DECISION1 8 DECISION2 8 ;
+369953     
+369954       label    COUNT="Level Counts"
+369955                DATAPRIOR="Data Proportions"
+369956                TRAINPRIOR="Training Proportions"
+369957                DECPRIOR="Decision Priors"
+369958                DECISION1="1"
+369959                DECISION2="0"
+369960                ;
+MPRINT(EM_DECIDECODE):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+369961       format   COUNT 10.
+369962                ;
+MPRINT(EM_DECIDECODE):   format COUNT 10. ;
+369963     DepVar="1"; COUNT=359; DATAPRIOR=0.15122156697556; TRAINPRIOR=0.15122156697556;
+369963   ! DECPRIOR=.; DECISION1=1; DECISION2=0;
+MPRINT(EM_DECIDECODE):   DepVar="1";
+MPRINT(EM_DECIDECODE):   COUNT=359;
+MPRINT(EM_DECIDECODE):   DATAPRIOR=0.15122156697556;
+MPRINT(EM_DECIDECODE):   TRAINPRIOR=0.15122156697556;
+MPRINT(EM_DECIDECODE):   DECPRIOR=.;
+MPRINT(EM_DECIDECODE):   DECISION1=1;
+MPRINT(EM_DECIDECODE):   DECISION2=0;
+369964     output;
+MPRINT(EM_DECIDECODE):   output;
+369965     DepVar="0"; COUNT=2015; DATAPRIOR=0.84877843302443; TRAINPRIOR=0.84877843302443;
+369965   ! DECPRIOR=.; DECISION1=0; DECISION2=1;
+MPRINT(EM_DECIDECODE):   DepVar="0";
+MPRINT(EM_DECIDECODE):   COUNT=2015;
+MPRINT(EM_DECIDECODE):   DATAPRIOR=0.84877843302443;
+MPRINT(EM_DECIDECODE):   TRAINPRIOR=0.84877843302443;
+MPRINT(EM_DECIDECODE):   DECPRIOR=.;
+MPRINT(EM_DECIDECODE):   DECISION1=0;
+MPRINT(EM_DECIDECODE):   DECISION2=1;
+369966     output;
+MPRINT(EM_DECIDECODE):   output;
+369967     ;
+MPRINT(EM_DECIDECODE):   ;
+369968     run;
+MPRINT(EM_DECIDECODE):   run;
+
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+369969     proc datasets lib=work nolist;
+MPRINT(EM_DECIDECODE):   proc datasets lib=work nolist;
+369970     modify DepVar(type=PROFIT label=DepVar);
+MPRINT(EM_DECIDECODE):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DECIDECODE):   label DECISION1= '1';
+MPRINT(EM_DECIDECODE):   label DECISION2= '0';
+MPRINT(EM_DECIDECODE):   run;
+369971     label DECISION1= '1';
+369972     label DECISION2= '0';
+369973     run;
+
+NOTE: MODIFY was successful for WORK.DEPVAR.DATA.
+369974     quit;
+MPRINT(EM_DECIDECODE):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+369975     *------------------------------------------------------------*;
+MPRINT(EM_DECIDECODE):    *------------------------------------------------------------*;
+369976     * SVM Generate decision score code;
+MPRINT(EM_DECIDECODE):   * SVM Generate decision score code;
+369977     *------------------------------------------------------------*;
+MPRINT(EM_DECIDECODE):   *------------------------------------------------------------*;
+369978     run;
+MPRINT(EM_DECIDECODE):   run;
+
+MPRINT(EM_DECIDECODE):   
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):   filename _sffile_ 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\_TMPDECIDECODE.sas";
+MPRINT(TRAIN):   filename _sffile_ ;
+NOTE: Fileref _SFFILE_ has been deassigned.
+MPRINT(SCORE_CODE):   filename _File_ 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMFLOWSCORE.sas";
+MPRINT(SCORE_CODE):   data _null_;
+MPRINT(SCORE_CODE):   FILE _File_ MOD;
+MPRINT(SCORE_CODE):   put ' ';
+MPRINT(SCORE_CODE):   put '/*-------------------------------------------------*/';
+MPRINT(SCORE_CODE):   put '/* ' "SVM Score Code " ' */';
+MPRINT(SCORE_CODE):   put '/*-------------------------------------------------*/';
+MPRINT(SCORE_CODE):   put ' ';
+MPRINT(SCORE_CODE):   put "proc svmscore data= &em_score_output inest=EMWS8.SVM_OUTEST 
+infit=EMWS8.SVM_SVMFITSTAT inclass=EMWS8.SVM_OUTCLASS";
+MPRINT(SCORE_CODE):   put "              out = &em_score_output(rename=(_F_=F_DepVar 
+_I_=I_DepVar))";
+MPRINT(SCORE_CODE):   put ";";
+MPRINT(SCORE_CODE):   put "run;";
+MPRINT(SCORE_CODE):   put "data &em_score_output(drop=_P);";
+MPRINT(SCORE_CODE):   put "     set &em_score_output;";
+MPRINT(SCORE_CODE):   put "if (_P_ < -600) then _p =0;";
+MPRINT(SCORE_CODE):   put "else _P = 1/(1+EXP((-1)*(_P_)));";
+MPRINT(SCORE_CODE):   put " P_DepVar1 = _P ;";
+MPRINT(SCORE_CODE):   put " P_DepVar0 = 1 - _P ;";
+MPRINT(SCORE_CODE):   run;
+
+NOTE: The file _FILE_ is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMFLOWSCORE.sas,
+      RECFM=V,LRECL=256,File Size (bytes)=0,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=28. April 2016 08.22 Uhr
+
+NOTE: 15 records were written to the file _FILE_.
+      The minimum record length was 1.
+      The maximum record length was 113.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(SCORE_CODE):   filename _File_;
+NOTE: Fileref _FILE_ has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(EM_DATA2CODE):   proc display c=sashelp.emutil.data2code.scl;
+MPRINT(EM_DATA2CODE):   run;
+
+NOTE: There were 5 observations read from the data set EMWS8.SVM_OUTEST.
+NOTE: The data set WORK._INOUTEST has 5 observations and 52 variables.
+369979     %em_copyfile(infref=#LN05359, outfref=#LN05358, append=Y);
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file #LN05358 MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("#LN05359",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+
+NOTE: The file #LN05358 is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=0,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=28. April 2016 08.22 Uhr
+
+NOTE: 124 records were written to the file #LN05358.
+      The minimum record length was 1.
+      The maximum record length was 199.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DATA2CODE):  ;
+
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DATA2CODE):   
+MPRINT(SCORE_CODE):  ;
+MPRINT(EM_DATA2CODE):   proc display c=sashelp.emutil.data2code.scl;
+MPRINT(EM_DATA2CODE):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_SVMFITSTAT.
+NOTE: The data set WORK._INOUTFIT has 2 observations and 30 variables.
+369980     %em_copyfile(infref=#LN05361, outfref=#LN05360, append=Y);
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file #LN05360 MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("#LN05361",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+
+NOTE: The file #LN05360 is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=10168,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=28. April 2016 08.22 Uhr
+
+NOTE: 65 records were written to the file #LN05360.
+      The minimum record length was 1.
+      The maximum record length was 199.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DATA2CODE):  ;
+
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DATA2CODE):   
+MPRINT(SCORE_CODE):  ;
+MPRINT(EM_DATA2CODE):   proc display c=sashelp.emutil.data2code.scl;
+MPRINT(EM_DATA2CODE):   run;
+
+NOTE: There were 49 observations read from the data set EMWS8.SVM_OUTCLASS.
+NOTE: The data set WORK._INOUTCLASS has 49 observations and 9 variables.
+369981     %em_copyfile(infref=#LN05363, outfref=#LN05362, append=Y);
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file #LN05362 MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("#LN05363",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+
+NOTE: The file #LN05362 is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=20000,File Size (bytes)=13539,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=28. April 2016 08.22 Uhr
+
+NOTE: 112 records were written to the file #LN05362.
+      The minimum record length was 1.
+      The maximum record length was 151.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(EM_DATA2CODE):  ;
+
+NOTE: PROCEDURE DISPLAY used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DATA2CODE):   
+MPRINT(SCORE_CODE):  ;
+MPRINT(SCORE_CODE):   filename _File_ 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMPUBLISHSCORE.sas";
+MPRINT(SCORE_CODE):   data _null_;
+MPRINT(SCORE_CODE):   FILE _File_ MOD;
+MPRINT(SCORE_CODE):   put ' ';
+MPRINT(SCORE_CODE):   put '/*-------------------------------------------------*/';
+MPRINT(SCORE_CODE):   put '/* ' "SVM Score Code " ' */';
+MPRINT(SCORE_CODE):   put '/*-------------------------------------------------*/';
+MPRINT(SCORE_CODE):   put ' ';
+MPRINT(SCORE_CODE):   put "proc svmscore data= &em_score_output inest=WORK._inoutest 
+infit=WORK._inoutfit inclass=WORK._inoutclass";
+MPRINT(SCORE_CODE):   put "              out = &em_score_output(rename=(_I_=I_DepVar))";
+MPRINT(SCORE_CODE):   put ";";
+MPRINT(SCORE_CODE):   put "run;";
+MPRINT(SCORE_CODE):   put "data &em_score_output(drop=_P);";
+MPRINT(SCORE_CODE):   put "     set &em_score_output;";
+MPRINT(SCORE_CODE):   put "if (_P_ < -600) then _p =0;";
+MPRINT(SCORE_CODE):   put "else _P = 1/(1+EXP((-1)*(_P_)));";
+MPRINT(SCORE_CODE):   put " P_DepVar1 = _P ;";
+MPRINT(SCORE_CODE):   put " P_DepVar0 = 1 - _P ;";
+MPRINT(SCORE_CODE):   run;
+
+NOTE: The file _FILE_ is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\EMPUBLISHSCORE.sas,
+      RECFM=V,LRECL=256,File Size (bytes)=20790,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=28. April 2016 08.22 Uhr
+
+NOTE: 15 records were written to the file _FILE_.
+      The minimum record length was 1.
+      The maximum record length was 103.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(SCORE_CODE):   filename _File_;
+NOTE: Fileref _FILE_ has been deassigned.
+MPRINT(TRAIN):  ;
+MPRINT(MAKEDELTACODE):   *--- Build Code to Modify Metadata ---*;
+MPRINT(MAKEDELTACODE):   filename X 
+"C:\\predictive-models-project\Workspaces\EMWS8\SVM\CDELTA_TRAIN.sas";
+MPRINT(MAKEDELTACODE):   data _null_;
+MPRINT(MAKEDELTACODE):   file X;
+MPRINT(MAKEDELTACODE):   put "if upcase(trim(left(NAME))) eq  '_Y_'  then ROLE='PREDICT';";
+MPRINT(MAKEDELTACODE):   put "if upcase(trim(left(NAME))) eq  '_R_'  then ROLE='RESIDUAL';";
+MPRINT(MAKEDELTACODE):   put "if upcase(trim(left(NAME))) eq  '_ALPHA_'  then 
+ROLE='REJECTED';";
+MPRINT(MAKEDELTACODE):   put "if upcase(trim(left(NAME))) eq  '_BOUND_'  then 
+ROLE='REJECTED';";
+MPRINT(MAKEDELTACODE):   run;
+
+NOTE: The file X is:
+      Filename=C:\\predictive-models-project\Workspaces\EMWS8\SVM\CDELTA_TRAIN.sas,
+      RECFM=V,LRECL=256,File Size (bytes)=0,
+      Last Modified=28. April 2016 08.22 Uhr,
+      Create Time=26. April 2016 14.23 Uhr
+
+NOTE: 4 records were written to the file X.
+      The minimum record length was 59.
+      The maximum record length was 64.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(EM_MODEL):   data WORK.EM_USER_MODEL;
+MPRINT(EM_MODEL):   length DATA $65 TARGET $32 PREDICTED ASSESS DECSCORECODE FITSTATISTICS 
+CLASSIFICATION RESIDUALS $1;
+MPRINT(EM_MODEL):   data = "";
+MPRINT(EM_MODEL):   target = "DepVar";
+MPRINT(EM_MODEL):   predicted = "Y";
+MPRINT(EM_MODEL):   assess = "Y";
+MPRINT(EM_MODEL):   decscorecode = "Y";
+MPRINT(EM_MODEL):   fitstatistics = "Y";
+MPRINT(EM_MODEL):   classification = "N";
+MPRINT(EM_MODEL):   residuals = "Y";
+MPRINT(EM_MODEL):   run;
+
+NOTE: The data set WORK.EM_USER_MODEL has 1 observations and 8 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(MAKESVMFITSTATDS):   data EMWS8.SVM_SVMFITDS;
+MPRINT(MAKESVMFITSTATDS):   set EMWS8.SVM_SVMFITSTAT;
+MPRINT(MAKESVMFITSTATDS):   Label _Bias_ = "Bias";
+MPRINT(MAKESVMFITSTATDS):   Label _K_PAR2_ = "Kernel Function Parameter 2";
+MPRINT(MAKESVMFITSTATDS):   Label _K_PAR3_ = "Kernel Function Parameter 3";
+MPRINT(MAKESVMFITSTATDS):   Label _K_PAR_ = "Kernel Function Parameter 1";
+MPRINT(MAKESVMFITSTATDS):   Label _L1_ = "L1 Loss";
+MPRINT(MAKESVMFITSTATDS):   Label _Margin_ = "Geometric Margin";
+MPRINT(MAKESVMFITSTATDS):   Label _NCLEV_ = "Number of Class Variable Levels";
+MPRINT(MAKESVMFITSTATDS):   Label _NCV_ = "Number of Class Variables";
+MPRINT(MAKESVMFITSTATDS):   Label _NIV_ = "Number of Interval Variables";
+MPRINT(MAKESVMFITSTATDS):   Label _NLV_ = "Norm of Longest Vector";
+MPRINT(MAKESVMFITSTATDS):   Label _NOBS_ = "Number of Observations";
+MPRINT(MAKESVMFITSTATDS):   Label _NSV_ = "Number of Support Vectors";
+MPRINT(MAKESVMFITSTATDS):   Label _NTRAIN_ = "Number of Training Observations";
+MPRINT(MAKESVMFITSTATDS):   Label _NYLEV_ = "Number of Target levels";
+MPRINT(MAKESVMFITSTATDS):   Label _NormW_ = "L2 Norm of W";
+MPRINT(MAKESVMFITSTATDS):   Label _OBJ_ = "Objective Function";
+MPRINT(MAKESVMFITSTATDS):   Label _Radius_ = "Radius of Sphere";
+MPRINT(MAKESVMFITSTATDS):   Label _RegC_ = "Regularization Parameter";
+MPRINT(MAKESVMFITSTATDS):   Label _SVOM_ = "Support Vectors on Margin";
+MPRINT(MAKESVMFITSTATDS):   Label _VCDim_ = "Estimated VC Dimension";
+MPRINT(MAKESVMFITSTATDS):   if _TYPE_ ='_ACCTAB_' then delete;
+MPRINT(MAKESVMFITSTATDS):   _BIAS_= _K_PAR_;
+MPRINT(MAKESVMFITSTATDS):   DROP _K_PAR_ _K_PAR2_ _K_PAR3_ _L1_;
+MPRINT(MAKESVMFITSTATDS):   run;
+
+NOTE: There were 2 observations read from the data set EMWS8.SVM_SVMFITSTAT.
+NOTE: The data set EMWS8.SVM_SVMFITDS has 1 observations and 26 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(MAKESVMFITSTATDS):   proc transpose data =EMWS8.SVM_SVMFITDS out =EMWS8.SVM_SVMFITDS;
+MPRINT(MAKESVMFITSTATDS):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.SVM_SVMFITDS.
+NOTE: The data set EMWS8.SVM_SVMFITDS has 17 observations and 3 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKESVMFITSTATDS):   data EMWS8.SVM_SVMFITDS;
+MPRINT(MAKESVMFITSTATDS):   set EMWS8.SVM_SVMFITDS;
+MPRINT(MAKESVMFITSTATDS):   Label _LABEL_ = "Label";
+MPRINT(MAKESVMFITSTATDS):   Label _NAME_ = "Name";
+MPRINT(MAKESVMFITSTATDS):   Label COL1 = "Statistic";
+MPRINT(MAKESVMFITSTATDS):   Rename COL1 = Train;
+MPRINT(MAKESVMFITSTATDS):   if _NAME_ = '_ACCU_' then delete;
+MPRINT(MAKESVMFITSTATDS):   run;
+
+NOTE: There were 17 observations read from the data set EMWS8.SVM_SVMFITDS.
+NOTE: The data set EMWS8.SVM_SVMFITDS has 16 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(MAKEALPHADS):   data EMWS8.SVM_OUTALPHA;
+MPRINT(MAKEALPHADS):   set _sample_train;
+MPRINT(MAKEALPHADS):   set _outtrain(keep=_ALPHA_ _BOUND_);
+MPRINT(MAKEALPHADS):   keep _OBS_ _dataobs_ _ALPHA_ _BOUND_ DepVar;
+MPRINT(MAKEALPHADS):   run;
+
+NOTE: There were 1000 observations read from the data set WORK._SAMPLE_TRAIN.
+NOTE: There were 1000 observations read from the data set WORK._OUTTRAIN.
+NOTE: The data set EMWS8.SVM_OUTALPHA has 1000 observations and 5 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKEALPHADS):   data EMWS8.SVM_TRAIN;
+MPRINT(MAKEALPHADS):   length _OBS_ 8;
+MPRINT(MAKEALPHADS):   set EMWS8.SVM_TRAIN;
+MPRINT(MAKEALPHADS):   _OBS_ = _N_;
+MPRINT(MAKEALPHADS):   run;
+
+NOTE: There were 2374 observations read from the data set EMWS8.SVM_TRAIN.
+NOTE: The data set EMWS8.SVM_TRAIN has 2374 observations and 56 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(MAKEALPHADS):   data EMWS8.SVM_TRAIN(Drop=_OBS_);
+MPRINT(MAKEALPHADS):   merge EMWS8.SVM_TRAIN EMWS8.SVM_OUTALPHA(drop=DepVar);
+MPRINT(MAKEALPHADS):   by _OBS_;
+MPRINT(MAKEALPHADS):   if _ALPHA_ =. then _ALPHA_=0;
+MPRINT(MAKEALPHADS):   if _BOUND_ ="" then _BOUND_="_LBC";
+MPRINT(MAKEALPHADS):   run;
+
+NOTE: There were 2374 observations read from the data set EMWS8.SVM_TRAIN.
+NOTE: There were 1000 observations read from the data set EMWS8.SVM_OUTALPHA.
+NOTE: The data set EMWS8.SVM_TRAIN has 2374 observations and 57 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(MAKEALPHADS):   data EMWS8.SVM_OUTALPHA;
+MPRINT(MAKEALPHADS):   set EMWS8.SVM_OUTALPHA;
+MPRINT(MAKEALPHADS):   if _ALPHA_ = 0 then delete;
+MPRINT(MAKEALPHADS):   drop _OBS_;
+MPRINT(MAKEALPHADS):   Label _dataobs_ = "Observation Index";
+MPRINT(MAKEALPHADS):   Label _ALPHA_ = "Lagrange Mutiplier(alpha)";
+MPRINT(MAKEALPHADS):   Label DepVar = "Target Variable";
+MPRINT(MAKEALPHADS):   Label _BOUND_ = "Bound";
+MPRINT(MAKEALPHADS):   run;
+
+NOTE: There were 1000 observations read from the data set EMWS8.SVM_OUTALPHA.
+NOTE: The data set EMWS8.SVM_OUTALPHA has 194 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(TRAIN):   proc datasets lib = work nolist;
+MPRINT(TRAIN):   delete _outtrain _sample_train ;
+MPRINT(TRAIN):   run;
+
+NOTE: Deleting WORK._OUTTRAIN (memtype=DATA).
+NOTE: Deleting WORK._SAMPLE_TRAIN (memtype=DATA).
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.01 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(GETNOBS):   data _null_;
+MPRINT(GETNOBS):   set EMWS8.SVM_OUTALPHA end=eof;
+MPRINT(GETNOBS):   if eof then call symput("_svnobs", _N_);
+MPRINT(GETNOBS):   run;
+
+NOTE: Numeric values have been converted to character values at the places given by: 
+      (Line):(Column).
+      16:34   
+NOTE: There were 194 observations read from the data set EMWS8.SVM_OUTALPHA.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+MPRINT(GETNOBS):   quit;
+MPRINT(TRAIN):  ;
+MPRINT(MAKETUNDATA):   data EMWS8.SVM_TUNINGCRIT;
+MPRINT(MAKETUNDATA):   set EMWS8.SVM_TUNINGCRIT;
+MPRINT(MAKETUNDATA):   Drop N;
+MPRINT(MAKETUNDATA):   Label C = "Regularization Parameter";
+MPRINT(MAKETUNDATA):   Label KF1 = "First Kernel Parameter";
+MPRINT(MAKETUNDATA):   Label KF2 = "Second Kernel Parameter";
+MPRINT(MAKETUNDATA):   Label NMisc = "Misclassification (N)";
+MPRINT(MAKETUNDATA):   Label Perc = "Misclassification Rate (%)";
+MPRINT(MAKETUNDATA):   Label ERROR = "Train Error";
+MPRINT(MAKETUNDATA):   Label TstError = "Test Error";
+MPRINT(MAKETUNDATA):   run;
+
+NOTE: Variable KF1 is uninitialized.
+NOTE: Variable KF2 is uninitialized.
+NOTE: Variable TstError is uninitialized.
+NOTE: There were 10 observations read from the data set EMWS8.SVM_TUNINGCRIT.
+NOTE: The data set EMWS8.SVM_TUNINGCRIT has 10 observations and 4 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(TRAIN):  ;
+MPRINT(MAIN):  ;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   * End TRAIN: SVM;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+369982     
+369983     *------------------------------------------------------------*;
+369984     * End TRAIN: SVM;
+369985     *------------------------------------------------------------*;
+
+369986     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+369987     * Close any missing semi colons;
+MPRINT(EM_DIAGRAM):   * Close any missing semi colons;
+369988     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+369989     ;
+MPRINT(EM_DIAGRAM):   ;
+369990     ;
+MPRINT(EM_DIAGRAM):   ;
+369991     ;
+MPRINT(EM_DIAGRAM):   ;
+369992     ;
+MPRINT(EM_DIAGRAM):   ;
+369993     quit;
+MPRINT(EM_DIAGRAM):   quit;
+369994     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+369995     * Close any unbalanced quotes;
+MPRINT(EM_DIAGRAM):   * Close any unbalanced quotes;
+369996     *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+369997     /*; *"; *'; */
+369998     ;
+MPRINT(EM_DIAGRAM):   ;
+369999     run;
+MPRINT(EM_DIAGRAM):   run;
+370000     quit;
+MPRINT(EM_DIAGRAM):   quit;
+370001     /* Reset EM Options */
+370002     options formchar="|----|+|---+=|-/\<>*";
+MPRINT(EM_DIAGRAM):   options formchar="|----|+|---+=|-/\<>*";
+370003     options nocenter ls=256 ps=10000;
+MPRINT(EM_DIAGRAM):   options nocenter ls=256 ps=10000;
+370004     goptions reset=all device=WMF NODISPLAY;
+MPRINT(EM_DIAGRAM):   goptions reset=all device=WMF NODISPLAY;
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;

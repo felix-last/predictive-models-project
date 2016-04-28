@@ -126,71 +126,71 @@ _LP0 = 0;
 
 ***  Effect: PC_1 ;
 _TEMP = PC_1 ;
-_LP0 = _LP0 + (    0.14665985306277 * _TEMP);
+_LP0 = _LP0 + (    0.14663332022041 * _TEMP);
 
 ***  Effect: PC_10 ;
 _TEMP = PC_10 ;
-_LP0 = _LP0 + (   -0.35651612022221 * _TEMP);
+_LP0 = _LP0 + (   -0.35719965217248 * _TEMP);
 
 ***  Effect: PC_11 ;
 _TEMP = PC_11 ;
-_LP0 = _LP0 + (    0.11710505973124 * _TEMP);
+_LP0 = _LP0 + (    0.11801296747238 * _TEMP);
 
 ***  Effect: PC_13 ;
 _TEMP = PC_13 ;
-_LP0 = _LP0 + (   -0.57051174532602 * _TEMP);
+_LP0 = _LP0 + (   -0.57063758954814 * _TEMP);
 
 ***  Effect: PC_14 ;
 _TEMP = PC_14 ;
-_LP0 = _LP0 + (    0.23567907379008 * _TEMP);
+_LP0 = _LP0 + (    0.23480225159013 * _TEMP);
 
 ***  Effect: PC_15 ;
 _TEMP = PC_15 ;
-_LP0 = _LP0 + (   -0.14675379655714 * _TEMP);
+_LP0 = _LP0 + (   -0.14644921819342 * _TEMP);
 
 ***  Effect: PC_16 ;
 _TEMP = PC_16 ;
-_LP0 = _LP0 + (     0.1532794795638 * _TEMP);
+_LP0 = _LP0 + (    0.15192877131626 * _TEMP);
 
 ***  Effect: PC_17 ;
 _TEMP = PC_17 ;
-_LP0 = _LP0 + (   -0.07671272127102 * _TEMP);
+_LP0 = _LP0 + (   -0.07714648797052 * _TEMP);
 
 ***  Effect: PC_2 ;
 _TEMP = PC_2 ;
-_LP0 = _LP0 + (   -0.27300360343978 * _TEMP);
+_LP0 = _LP0 + (   -0.27282057439703 * _TEMP);
 
 ***  Effect: PC_3 ;
 _TEMP = PC_3 ;
-_LP0 = _LP0 + (   -0.05542783391748 * _TEMP);
+_LP0 = _LP0 + (   -0.05565967229284 * _TEMP);
 
 ***  Effect: PC_4 ;
 _TEMP = PC_4 ;
-_LP0 = _LP0 + (    0.08005077750279 * _TEMP);
+_LP0 = _LP0 + (    0.08016034574081 * _TEMP);
 
 ***  Effect: PC_5 ;
 _TEMP = PC_5 ;
-_LP0 = _LP0 + (   -0.19899666057506 * _TEMP);
+_LP0 = _LP0 + (   -0.19902615949141 * _TEMP);
 
 ***  Effect: PC_6 ;
 _TEMP = PC_6 ;
-_LP0 = _LP0 + (    0.09324100053548 * _TEMP);
+_LP0 = _LP0 + (    0.09321765205309 * _TEMP);
 
 ***  Effect: PC_7 ;
 _TEMP = PC_7 ;
-_LP0 = _LP0 + (    0.07981617446529 * _TEMP);
+_LP0 = _LP0 + (    0.07966372964424 * _TEMP);
 
 ***  Effect: PC_8 ;
 _TEMP = PC_8 ;
-_LP0 = _LP0 + (    0.18032379734585 * _TEMP);
+_LP0 = _LP0 + (    0.18049397279056 * _TEMP);
 
 ***  Effect: PC_9 ;
 _TEMP = PC_9 ;
-_LP0 = _LP0 + (    0.25568431676368 * _TEMP);
+_LP0 = _LP0 + (    0.25366163319277 * _TEMP);
 
 *** Naive Posterior Probabilities;
 drop _MAXP _IY _P0 _P1;
-_P0 = probnorm((   -1.53861846947625) + _LP0);
+_P0 = probnorm((   -1.53808507948744) + _LP0);
 _P1 = 1.0 - _P0;
 
 REG6DR1:

@@ -1,0 +1,1550 @@
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.23 Uhr" );
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Log";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+*------------------------------------------------------------*
+* Training Log
+Date:                28. April 2016
+Time:                09.23 Uhr
+*------------------------------------------------------------*
+MPRINT(EM_DIAGRAM):    filename O1VF5MSA 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   proc printto print=O1VF5MSA new;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOG 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMLOG.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.23 Uhr" );
+MPRINT(EM_DIAGRAM):   file _LOG;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "Site:                70107571";
+MPRINT(EM_DIAGRAM):   put "Platform:            X64_7PRO";
+MPRINT(EM_DIAGRAM):   put "Maintenance Release: 9.03.01M2P081512";
+MPRINT(EM_DIAGRAM):   put "EM Version:          12.1";
+MPRINT(EM_DIAGRAM):   put "* ";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMTRAIN.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _LOG MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_LOGIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMSCORE.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   file _LOG mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _LOGIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMREPORT.log" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _LOGIN;
+MPRINT(EM_DIAGRAM):    filename _LOG;
+MPRINT(EM_DIAGRAM):    filename _OUT 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMOUTPUT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   call symput('NLDATE', strip(put(date(), NLDATE.)));
+MPRINT(EM_DIAGRAM):   call symput('NLTIME', strip(put(datetime(), NLTIME.)));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   nldate= sasmsg("sashelp.dmine", "log_date_note", 'N', "28. April 2016" );
+MPRINT(EM_DIAGRAM):   nltime= sasmsg("sashelp.dmine", "log_time_note", 'N', "09.23 Uhr" );
+MPRINT(EM_DIAGRAM):   file _OUT;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "User:                Lukas Fahr";
+MPRINT(EM_DIAGRAM):   put nldate;
+MPRINT(EM_DIAGRAM):   put nltime;
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Training Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMTRAIN.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):   ;
+MPRINT(EM_COPYFILE):   data _null_;
+MPRINT(EM_COPYFILE):   length line $20000;
+MPRINT(EM_COPYFILE):   file _OUT MOD lrecl=20000;
+MPRINT(EM_COPYFILE):   fid=fopen("_OUTIN",'i',20000,'v');
+MPRINT(EM_COPYFILE):   if fid > 0 then do;
+MPRINT(EM_COPYFILE):   do while(^fread(fid));
+MPRINT(EM_COPYFILE):   rlen = frlen(fid);
+MPRINT(EM_COPYFILE):   rc= fget(fid,line,20000);
+MPRINT(EM_COPYFILE):   start = length(line)-length(left(line))+1;
+MPRINT(EM_COPYFILE):   line=strip(line);
+MPRINT(EM_COPYFILE):   put @start line;
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   if fid > 0 then rc=fclose(fid);
+MPRINT(EM_COPYFILE):   end;
+MPRINT(EM_COPYFILE):   run;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Score Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMSCORE.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   file _OUT mod;
+MPRINT(EM_DIAGRAM):   put _page_;
+MPRINT(EM_DIAGRAM):   put // "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   put "* Report Output";
+MPRINT(EM_DIAGRAM):   put "*------------------------------------------------------------*";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    filename _OUTIN 
+"C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMREPORT.out" encoding="UTF-8" NOBOM;
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   filename _OUTIN;
+MPRINT(EM_DIAGRAM):    filename _OUT;
+MPRINT(EM_DIAGRAM):    filename _emtool_ 
+'C:\\predictive-models-project\Workspaces\EMWS8\DMNeural2\EMRUNSTATUS.xml' encoding="UTF-8" 
+NOBOM;
+1226444    proc freq data=EMWS8.DMNeural2_VariableSet noprint;
+MPRINT(EM_DIAGRAM):    proc freq data=EMWS8.DMNeural2_VariableSet noprint;
+1226445    table ROLE*LEVEL/out=WORK.DMNeural2META;
+MPRINT(EM_DIAGRAM):   table ROLE*LEVEL/out=WORK.DMNeural2META;
+1226446    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set EMWS8.DMNEURAL2_VARIABLESET.
+NOTE: The data set WORK.DMNEURAL2META has 2 observations and 4 variables.
+NOTE: PROCEDURE FREQ used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226447    proc print data=WORK.DMNeural2META label noobs;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.DMNeural2META label noobs;
+1226448    var ROLE LEVEL COUNT;
+MPRINT(EM_DIAGRAM):   var ROLE LEVEL COUNT;
+1226449    label ROLE = "%sysfunc(sasmsg(sashelp.dmine, meta_role_vlabel, NOQUOTE))" LEVEL =
+1226449  ! "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" COUNT =
+1226449  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_count_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label ROLE = "Role" LEVEL = "Measurement Level" COUNT = "Frequency 
+Count";
+1226450    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1226451    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_varSummary_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Variable Summary";
+MPRINT(EM_DIAGRAM):   run;
+1226452    run;
+
+NOTE: There were 2 observations read from the data set WORK.DMNEURAL2META.
+NOTE: The PROCEDURE PRINT printed page 1180.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226453    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1226454    %let EMNORLEN = %DMNORLEN;
+MPRINT(EM_DIAGRAM):   
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN EMWS8 PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN 
+EMWS8.PRINCOMP_TRAIN EMWS8.PRINCOMP_TRAIN EMWS8 PRINCOMP_TRAIN 
+MPRINT(EM_DIAGRAM):    proc dmdb data=EMWS8.PRINCOMP_TRAIN 
+classout=WORK._DMDBCLASSTARGET(keep=NAME NRAW CRAW LEVEL FREQUENCY NMISSPERCENT);
+MPRINT(EM_DIAGRAM):   class DepVar(DESC) ;
+MPRINT(EM_DIAGRAM):   run;
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _INIT >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL setMetaData >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL next >> 
+Executing  SASHELP.EMCORE.EMINFOITERATOR.SCL _term >> 
+MPRINT(EM_DIAGRAM):    data _null_;
+MPRINT(EM_DIAGRAM):   set WORK._DMDBCLASSTARGET;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   if _N_=1 then call symput('_newevent', strip(LEVEL));
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=WORK._DMDBCLASSTARGET out=_TEMPCLASS(keep=LEVEL FREQUENCY 
+NMISSPERCENT rename=(LEVEL=DepVar));
+MPRINT(EM_DIAGRAM):   by LEVEL;
+MPRINT(EM_DIAGRAM):   where ^(NRAW eq . and CRAW eq '') and NAME="DepVar";
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   set _TEMPCLASS;
+MPRINT(EM_DIAGRAM):   NMISSPERCENT= NMISSPERCENT/100;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data _sortedDecData;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=_sortedDecdata;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data _null_;
+MPRINT(EM_DIAGRAM):   merge _TEMPCLASS(in=_a) _sortedDecdata(in=_b);
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   if (_a and ^_b) or (^_a and _b) then call symput('_emresetDec', '1');
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):    data EMWS8.DMNeural2_DepVar_DD;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_DepVar_DD;
+MPRINT(EM_DIAGRAM):   _levelorder_=_N_;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.DMNeural2_DepVar_DD;
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   data EMWS8.DMNeural2_DepVar_DD;
+MPRINT(EM_DIAGRAM):   merge EMWS8.DMNeural2_DepVar_DD 
+_TEMPCLASS(rename=(NMISSPERCENT=TRAINPRIOR FREQUENCY=COUNT));
+MPRINT(EM_DIAGRAM):   by DepVar;
+MPRINT(EM_DIAGRAM):   run;
+MPRINT(EM_DIAGRAM):   proc sort data=EMWS8.DMNeural2_DepVar_DD 
+out=EMWS8.DMNeural2_DepVar_DD(drop=_levelorder_);
+MPRINT(EM_DIAGRAM):   by _levelorder_;
+MPRINT(EM_DIAGRAM):   run;
+1226501    data WORK.DMNeural2_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS ORDER);
+MPRINT(EM_DIAGRAM):    data WORK.DMNeural2_EVENT(KEEP=VARIABLE LABEL LEVEL EVENT NUMLEVELS 
+ORDER);
+1226502    length ORDER $20;
+MPRINT(EM_DIAGRAM):   length ORDER $20;
+1226503    label VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_target_vlabel,  NOQUOTE))"
+1226503  ! EVENT = "%sysfunc(sasmsg(sashelp.dmine, assmt_event_vlabel, NOQUOTE))" NUMLEVELS =
+1226503  ! "%sysfunc(sasmsg(sashelp.dmine, rpt_numcat_vlabel, NOQUOTE))" LEVEL =
+1226504       "%sysfunc(sasmsg(sashelp.dmine, meta_level_vlabel, NOQUOTE))" ORDER =
+1226504  ! "%sysfunc(sasmsg(sashelp.dmine, meta_order_vlabel, NOQUOTE))" LABEL =
+1226504  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label VARIABLE = "Target" EVENT = "Event" NUMLEVELS = "Number of Levels" 
+LEVEL = "Measurement Level" ORDER = "Order" LABEL = "Label";
+1226505    set EMWS8.DMNEURAL2_DEPVAR_DM( where=(_TYPE_="TARGET"));
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNEURAL2_DEPVAR_DM( where=(_TYPE_="TARGET"));
+1226506    NumLevels=2;
+MPRINT(EM_DIAGRAM):   NumLevels=2;
+1226507    select(upcase(ORDER));
+MPRINT(EM_DIAGRAM):   select(upcase(ORDER));
+1226508    when('DESC') ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   when('DESC') ORDER = 'Descending';
+1226509    when('ASC') ORDER = 'Ascending';
+MPRINT(EM_DIAGRAM):   when('ASC') ORDER = 'Ascending';
+1226510    when('FMTDESC') ORDER = 'Formatted Descending';
+MPRINT(EM_DIAGRAM):   when('FMTDESC') ORDER = 'Formatted Descending';
+1226511    when('FMTASC') ORDER = 'Formatted Ascending';
+MPRINT(EM_DIAGRAM):   when('FMTASC') ORDER = 'Formatted Ascending';
+1226512    otherwise ORDER = 'Descending';
+MPRINT(EM_DIAGRAM):   otherwise ORDER = 'Descending';
+1226513    end;
+MPRINT(EM_DIAGRAM):   end;
+1226514    output;
+MPRINT(EM_DIAGRAM):   output;
+1226515    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 1 observations read from the data set EMWS8.DMNEURAL2_DEPVAR_DM.
+      WHERE _TYPE_='TARGET';
+NOTE: The data set WORK.DMNEURAL2_EVENT has 1 observations and 6 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226516    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1226517    proc print data=WORK.DMNeural2_EVENT noobs label;
+MPRINT(EM_DIAGRAM):   proc print data=WORK.DMNeural2_EVENT noobs label;
+1226518    var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+MPRINT(EM_DIAGRAM):   var VARIABLE EVENT LEVEL NUMLEVELS ORDER LABEL;
+1226519    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1226520    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_modelEvent_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Model Events";
+MPRINT(EM_DIAGRAM):   run;
+1226521    run;
+
+NOTE: There were 1 observations read from the data set WORK.DMNEURAL2_EVENT.
+NOTE: The PROCEDURE PRINT printed page 1181.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226522    title10;
+MPRINT(EM_DIAGRAM):   title10;
+"No decisions defined for target "DepVar"." 
+1226523    proc print data = EMWS8.DMNeural2_DepVar_DM noobs label;
+MPRINT(EM_DIAGRAM):    proc print data = EMWS8.DMNeural2_DepVar_DM noobs label;
+1226524    var _type_ variable label;
+MPRINT(EM_DIAGRAM):   var _type_ variable label;
+1226525    where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 'DECPRIOR');
+MPRINT(EM_DIAGRAM):   where _type_ ^in('MATRIX', 'DECISION', 'TRAINPRIOR', 'DATAPRIOR', 
+'DECPRIOR');
+1226526    label _TYPE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_type_vlabel,     NOQUOTE))"
+1226526  ! VARIABLE = "%sysfunc(sasmsg(sashelp.dmine, rpt_variable_vlabel, NOQUOTE))" LABEL =
+1226526  ! "%sysfunc(sasmsg(sashelp.dmine, meta_label_vlabel, NOQUOTE))";
+MPRINT(EM_DIAGRAM):   label _TYPE_ = "Type" VARIABLE = "Variable" LABEL = "Label";
+1226527    title9 ' ';
+MPRINT(EM_DIAGRAM):   title9 ' ';
+1226528    title10 "%sysfunc(sasmsg(sashelp.dmine, rpt_predDecVars_title  , NOQUOTE))";
+MPRINT(EM_DIAGRAM):   title10 "Predicted and decision variables";
+MPRINT(EM_DIAGRAM):   run;
+1226529    run;
+
+NOTE: There were 7 observations read from the data set EMWS8.DMNEURAL2_DEPVAR_DM.
+      WHERE _type_ not in ('DATAPRIOR', 'DECISION', 'DECPRIOR', 'MATRIX', 'TRAINPRIOR');
+NOTE: The PROCEDURE PRINT printed page 1182.
+NOTE: PROCEDURE PRINT used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226530    title10;
+MPRINT(EM_DIAGRAM):   title10;
+1226531    data WORK.M0D216MR;
+MPRINT(EM_DIAGRAM):    data WORK.M0D216MR;
+1226532    set WORK.M0D216MR;
+MPRINT(EM_DIAGRAM):   set WORK.M0D216MR;
+1226533    if role = 'TARGET' and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   if role = 'TARGET' and use = 'Y' then do;
+1226534    role = 'TARGET';
+MPRINT(EM_DIAGRAM):   role = 'TARGET';
+1226535    output;
+MPRINT(EM_DIAGRAM):   output;
+1226536    end;
+MPRINT(EM_DIAGRAM):   end;
+1226537    if role = 'INPUT' and use in ('Y','D') then do;
+MPRINT(EM_DIAGRAM):   if role = 'INPUT' and use in ('Y','D') then do;
+1226538    role = 'INPUT';
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+1226539    output;
+MPRINT(EM_DIAGRAM):   output;
+1226540    end;
+MPRINT(EM_DIAGRAM):   end;
+1226541    if role = 'REJECTED' and use = 'Y' then do;
+MPRINT(EM_DIAGRAM):   if role = 'REJECTED' and use = 'Y' then do;
+1226542    role = 'INPUT';
+MPRINT(EM_DIAGRAM):   role = 'INPUT';
+1226543    output;
+MPRINT(EM_DIAGRAM):   output;
+1226544    end;
+MPRINT(EM_DIAGRAM):   end;
+1226545    if role = 'FREQ' then do;
+MPRINT(EM_DIAGRAM):   if role = 'FREQ' then do;
+1226546    role = 'FREQ';
+MPRINT(EM_DIAGRAM):   role = 'FREQ';
+1226547    output;
+MPRINT(EM_DIAGRAM):   output;
+1226548    end;
+MPRINT(EM_DIAGRAM):   end;
+1226549    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set WORK.M0D216MR.
+NOTE: The data set WORK.M0D216MR has 19 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226550    data WORK.M0D216MR;
+MPRINT(EM_DIAGRAM):    data WORK.M0D216MR;
+1226551    set WORK.M0D216MR end=eof;
+MPRINT(EM_DIAGRAM):   set WORK.M0D216MR end=eof;
+1226552    output;
+MPRINT(EM_DIAGRAM):   output;
+1226553    if eof then do;
+MPRINT(EM_DIAGRAM):   if eof then do;
+1226554    NAME="";
+MPRINT(EM_DIAGRAM):   NAME="";
+1226555    ROLE="COST";
+MPRINT(EM_DIAGRAM):   ROLE="COST";
+1226556    LEVEL="INTERVAL";
+MPRINT(EM_DIAGRAM):   LEVEL="INTERVAL";
+1226557    TYPE="N";
+MPRINT(EM_DIAGRAM):   TYPE="N";
+1226558    output;
+MPRINT(EM_DIAGRAM):   output;
+1226559    end;
+MPRINT(EM_DIAGRAM):   end;
+1226560    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 19 observations read from the data set WORK.M0D216MR.
+NOTE: The data set WORK.M0D216MR has 20 observations and 21 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+NOTE: There were 2 observations read from the data set EMWS8.DMNEURAL2_DEPVAR_DD.
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+1226561    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------*;
+1226562    * DMNeural2: Create decision matrix;
+MPRINT(EM_DIAGRAM):   * DMNeural2: Create decision matrix;
+1226563    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1226564    data WORK.DepVar;
+MPRINT(EM_DIAGRAM):   data WORK.DepVar;
+1226565      length   DepVar                           $  32
+1226566               COUNT                                8
+1226567               DATAPRIOR                            8
+1226568               TRAINPRIOR                           8
+1226569               DECPRIOR                             8
+1226570               DECISION1                            8
+1226571               DECISION2                            8
+1226572               ;
+MPRINT(EM_DIAGRAM):   length DepVar $ 32 COUNT 8 DATAPRIOR 8 TRAINPRIOR 8 DECPRIOR 8 DECISION1 
+8 DECISION2 8 ;
+1226573    
+1226574      label    COUNT="Level Counts"
+1226575               DATAPRIOR="Data Proportions"
+1226576               TRAINPRIOR="Training Proportions"
+1226577               DECPRIOR="Decision Priors"
+1226578               DECISION1="1"
+1226579               DECISION2="0"
+1226580               ;
+MPRINT(EM_DIAGRAM):   label COUNT= "Level Counts" DATAPRIOR= "Data Proportions" TRAINPRIOR= 
+"Training Proportions" DECPRIOR= "Decision Priors" DECISION1= "1" DECISION2= "0" ;
+1226581      format   COUNT 10.
+1226582               ;
+MPRINT(EM_DIAGRAM):   format COUNT 10. ;
+1226583    DepVar="1"; COUNT=359; DATAPRIOR=0.151221567; TRAINPRIOR=0.15122156697556;
+1226583  ! DECPRIOR=.; DECISION1=1; DECISION2=0;
+MPRINT(EM_DIAGRAM):   DepVar="1";
+MPRINT(EM_DIAGRAM):   COUNT=359;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.151221567;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.15122156697556;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=1;
+MPRINT(EM_DIAGRAM):   DECISION2=0;
+1226584    output;
+MPRINT(EM_DIAGRAM):   output;
+1226585    DepVar="0"; COUNT=2015; DATAPRIOR=0.848778433; TRAINPRIOR=0.84877843302443;
+1226585  ! DECPRIOR=.; DECISION1=0; DECISION2=1;
+MPRINT(EM_DIAGRAM):   DepVar="0";
+MPRINT(EM_DIAGRAM):   COUNT=2015;
+MPRINT(EM_DIAGRAM):   DATAPRIOR=0.848778433;
+MPRINT(EM_DIAGRAM):   TRAINPRIOR=0.84877843302443;
+MPRINT(EM_DIAGRAM):   DECPRIOR=.;
+MPRINT(EM_DIAGRAM):   DECISION1=0;
+MPRINT(EM_DIAGRAM):   DECISION2=1;
+1226586    output;
+MPRINT(EM_DIAGRAM):   output;
+1226587    ;
+MPRINT(EM_DIAGRAM):   ;
+1226588    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK.DEPVAR has 2 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226589    proc datasets lib=work nolist;
+MPRINT(EM_DIAGRAM):   proc datasets lib=work nolist;
+1226590    modify DepVar(type=PROFIT label=DepVar);
+MPRINT(EM_DIAGRAM):   modify DepVar(type=PROFIT label= DepVar);
+MPRINT(EM_DIAGRAM):   label DECISION1= '1';
+MPRINT(EM_DIAGRAM):   label DECISION2= '0';
+MPRINT(EM_DIAGRAM):   run;
+1226591    label DECISION1= '1';
+1226592    label DECISION2= '0';
+1226593    run;
+
+NOTE: MODIFY was successful for WORK.DEPVAR.DATA.
+1226594    quit;
+MPRINT(EM_DIAGRAM):   quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.03 seconds
+      cpu time            0.03 seconds
+      
+
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   * DMNeural2: DMDBClass Macro ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1226595    *------------------------------------------------------------* ;
+1226596    * DMNeural2: DMDBClass Macro ;
+1226597    *------------------------------------------------------------* ;
+1226598    %macro DMDBClass;
+1226599        DepVar(DESC)
+1226600    %mend DMDBClass;
+1226601    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1226602    * DMNeural2: DMDBVar Macro ;
+MPRINT(EM_DIAGRAM):   * DMNeural2: DMDBVar Macro ;
+1226603    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1226604    %macro DMDBVar;
+1226605        PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+1226606       PC_7 PC_8 PC_9 Year_Birth
+1226607    %mend DMDBVar;
+1226608    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1226609    * DMNeural2: Create DMDB;
+MPRINT(EM_DIAGRAM):   * DMNeural2: Create DMDB;
+1226610    *------------------------------------------------------------*;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------*;
+1226611    proc dmdb batch data=EMWS8.PRINCOMP_TRAIN
+1226612    dmdbcat=WORK.DMNeural2_DMDB
+1226613    maxlevel = 513
+1226614    ;
+MPRINT(EM_DIAGRAM):   proc dmdb batch data=EMWS8.PRINCOMP_TRAIN dmdbcat=WORK.DMNeural2_DMDB 
+maxlevel = 513 ;
+MPRINT(EM_DIAGRAM):   class
+1226615    class %DMDBClass;
+MPRINT(DMDBCLASS):   DepVar(DESC)
+MPRINT(EM_DIAGRAM):  ;
+MPRINT(EM_DIAGRAM):   var
+1226616    var %DMDBVar;
+MPRINT(DMDBVAR):   PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 
+PC_6 PC_7 PC_8 PC_9 Year_Birth
+MPRINT(EM_DIAGRAM):  ;
+1226617    target
+1226618    DepVar
+1226619    ;
+MPRINT(EM_DIAGRAM):   target DepVar ;
+1226620    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: Records processed = 2374   Memory used = 511K.
+NOTE: View EMWS8.PRINCOMP_TRAIN.VIEW used (Total process time):
+      real time           0.05 seconds
+      cpu time            0.06 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: There were 2374 observations read from the data set EMWS8.PRINCOMP_TRAIN.
+NOTE: PROCEDURE DMDB used (Total process time):
+      real time           0.06 seconds
+      cpu time            0.06 seconds
+      
+
+MPRINT(EM_DIAGRAM):   quit;
+MPRINT(EM_DIAGRAM):   *--- end code ---*;
+1226621    quit;
+1226622    *--- end code ---*;
+
+1226623    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):    *------------------------------------------------------------* ;
+1226624    * DMNeural2: Input Variables Macro ;
+MPRINT(EM_DIAGRAM):   * DMNeural2: Input Variables Macro ;
+1226625    *------------------------------------------------------------* ;
+MPRINT(EM_DIAGRAM):   *------------------------------------------------------------* ;
+1226626    %macro INPUTS;
+1226627        PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 PC_6
+1226628       PC_7 PC_8 PC_9 Year_Birth
+1226629    %mend INPUTS;
+1226630    proc dmneurl data=EMWS8.PRINCOMP_TRAIN dmdbcat=WORK.DMNeural2_DMDB
+1226631    outest=EMWS8.DMNeural2_ESTIMATE outfit=WORK._OUTFIT_DMNEURAL
+1226632    out=WORK._OUT_DMNEURAL outclass=WORK._OUTCLASSDMNEURL_3PIMQLD
+1226633    optcrit=ACC maxcomp=6 maxstage=10 maxfunc=1000
+1226634    selcrit=SSE
+1226635    maxiter=400 maxvect=800 memsiz=8 stopr2=0.00005 cutoff=0.5 maxrows = 3000
+1226636    absgconv=0.0005 gconv=1E-8
+1226637    NOMONITOR
+1226638    ;
+MPRINT(EM_DIAGRAM):   proc dmneurl data=EMWS8.PRINCOMP_TRAIN dmdbcat=WORK.DMNeural2_DMDB 
+outest=EMWS8.DMNeural2_ESTIMATE outfit=WORK._OUTFIT_DMNEURAL out=WORK._OUT_DMNEURAL 
+outclass=WORK._OUTCLASSDMNEURL_3PIMQLD optcrit=ACC maxcomp=6 maxstage=10 maxfunc=1000 
+selcrit=SSE maxiter=400 maxvect=800 memsiz=8 stopr2=0.00005 cutoff=0.5 maxrows = 3000 
+absgconv=0.0005 gconv=1E-8 NOMONITOR ;
+MPRINT(EM_DIAGRAM):   var
+1226639    var %INPUTS;
+MPRINT(INPUTS):   PC_1 PC_10 PC_11 PC_12 PC_13 PC_14 PC_15 PC_16 PC_17 PC_2 PC_3 PC_4 PC_5 
+PC_6 PC_7 PC_8 PC_9 Year_Birth
+MPRINT(EM_DIAGRAM):  ;
+1226640    target DepVar;
+MPRINT(EM_DIAGRAM):   target DepVar;
+1226641    ;
+MPRINT(EM_DIAGRAM):   ;
+1226642    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: The data set WORK._OUTCLASSDMNEURL_3PIMQLD has 2 observations and 3 variables.
+
+Building X'X  for target: DepVar rows=19 memory=0.00 meg.
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=981
+NOTE: Sparsity  Percentage=0.0276874463
+     ---------- Optimization Cycle (Stage=0) ----------
+-------------------- Activation= SQUARE (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=3 Crit= 0.0432574: SSE=410.772241 Acc= 88.8374
+-------------------- Activation= TANH (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=6 Crit=0.04353471: SSE=413.405571 Acc= 88.7110
+-------------------- Activation= ARCTAN (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: ARCTAN: Iter=8 Crit=0.04337489: SSE=411.887915 Acc= 88.5425
+-------------------- Activation= LOGIST (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=25 Crit=0.04367086: SSE=414.698508 Acc= 88.6268
+-------------------- Activation= GAUSS (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=6.
+NOTE: GAUSS: Iter=13 Crit=0.05865079: SSE=556.947857 Acc= 86.0152
+-------------------- Activation= SIN (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: SIN: Iter=10 Crit=0.04315339: SSE=409.784549 Acc= 88.7110
+-------------------- Activation= COS (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: COS: Iter=6 Crit=0.05656143: SSE=537.107346 Acc= 86.1415
+-------------------- Activation= EXP (Stage=0) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=11 Crit=0.05025475: SSE=477.219095 Acc= 88.2898
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=1262
+NOTE: Sparsity  Percentage=0.035618305
+2374 records read
+     ---------- Optimization Cycle (Stage=1) ----------
+-------------------- Activation= SQUARE (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit= 0.0391813: SSE= 370.23681 Acc= 89.7641
+-------------------- Activation= TANH (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=8 Crit=0.03930242: SSE=371.447166 Acc= 89.8905
+-------------------- Activation= ARCTAN (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: ARCTAN: Iter=7 Crit=0.03931628: SSE=371.570161 Acc= 89.8905
+-------------------- Activation= LOGIST (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=4 Crit=  0.039335: SSE=371.961062 Acc= 89.9326
+-------------------- Activation= GAUSS (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: GAUSS: Iter=6 Crit=0.04151472: SSE=394.220463 Acc= 89.0901
+-------------------- Activation= SIN (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=4 Crit=0.03939849: SSE=372.470794 Acc= 89.9326
+-------------------- Activation= COS (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=6.
+NOTE: COS: Iter=8 Crit= 0.0415108: SSE=394.182009 Acc= 89.0901
+-------------------- Activation= EXP (Stage=1) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=3 Crit=0.03922386: SSE=370.908281 Acc= 89.7220
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=1153
+NOTE: Sparsity  Percentage=0.0325419221
+2374 records read
+     ---------- Optimization Cycle (Stage=2) ----------
+-------------------- Activation= SQUARE (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03843454: SSE=362.172337 Acc= 90.0590
+-------------------- Activation= TANH (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=4 Crit=0.03868491: SSE=364.587267 Acc= 89.8905
+-------------------- Activation= ARCTAN (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: ARCTAN: Iter=6 Crit= 0.0386843: SSE= 364.41662 Acc= 89.9326
+-------------------- Activation= LOGIST (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=0 Crit=0.03890443: SSE=367.640559 Acc= 89.6799
+-------------------- Activation= GAUSS (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: GAUSS: Iter=7 Crit= 0.0386395: SSE=365.187258 Acc= 90.1432
+-------------------- Activation= SIN (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=4 Crit=0.03874405: SSE=365.323401 Acc= 89.8484
+-------------------- Activation= COS (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=4.
+NOTE: COS: Iter=5 Crit=0.03894422: SSE=368.500505 Acc= 89.8062
+-------------------- Activation= EXP (Stage=2) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=2 Crit=0.03864214: SSE=364.065141 Acc= 89.8905
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=1185
+NOTE: Sparsity  Percentage=0.0334450804
+2374 records read
+     ---------- Optimization Cycle (Stage=3) ----------
+-------------------- Activation= SQUARE (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03814082: SSE=358.740376 Acc= 89.9326
+-------------------- Activation= TANH (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=5 Crit= 0.0382802: SSE= 359.95765 Acc= 90.0168
+-------------------- Activation= ARCTAN (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: ARCTAN: Iter=4 Crit=0.03831405: SSE=360.503096 Acc= 90.1011
+-------------------- Activation= LOGIST (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: LOGIST: Iter=1 Crit=0.03830277: SSE=360.402556 Acc= 89.9747
+-------------------- Activation= GAUSS (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=5.
+NOTE: GAUSS: Iter=5 Crit=0.03822946: SSE=360.616208 Acc= 89.9747
+-------------------- Activation= SIN (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=3 Crit=0.03830361: SSE= 360.34578 Acc= 89.9747
+-------------------- Activation= COS (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=4.
+NOTE: COS: Iter=6 Crit=0.03821675: SSE=360.507778 Acc= 89.9747
+-------------------- Activation= EXP (Stage=3) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=1 Crit=0.03828748: SSE=360.045584 Acc= 90.1011
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=889
+NOTE: Sparsity  Percentage=0.0250908662
+2374 records read
+     ---------- Optimization Cycle (Stage=4) ----------
+-------------------- Activation= SQUARE (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03802949: SSE=357.657033 Acc= 90.0590
+-------------------- Activation= TANH (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: TANH: Iter=10 Crit=0.03796636: SSE=356.561993 Acc= 90.1853
+-------------------- Activation= ARCTAN (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: ARCTAN: Iter=5 Crit=0.03804636: SSE= 357.72842 Acc= 90.1011
+-------------------- Activation= LOGIST (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=0 Crit=0.03806832: SSE= 357.96127 Acc= 90.0168
+-------------------- Activation= GAUSS (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=3.
+NOTE: GAUSS: Iter=7 Crit=0.03806407: SSE=358.368229 Acc= 89.8062
+-------------------- Activation= SIN (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: SIN: Iter=4 Crit=0.03804939: SSE= 357.78094 Acc= 90.0590
+-------------------- Activation= COS (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=5.
+NOTE: COS: Iter=4 Crit=0.03811228: SSE=358.477056 Acc= 90.0168
+-------------------- Activation= EXP (Stage=4) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=1 Crit=0.03805028: SSE=357.820862 Acc= 90.1011
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=1352
+NOTE: Sparsity  Percentage=0.0381584377
+2374 records read
+     ---------- Optimization Cycle (Stage=5) ----------
+-------------------- Activation= SQUARE (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03799234: SSE= 356.54588 Acc= 90.2696
+-------------------- Activation= TANH (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: TANH: Iter=4 Crit=0.03800661: SSE=  356.8159 Acc= 90.2275
+-------------------- Activation= ARCTAN (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: ARCTAN: Iter=4 Crit=0.03800831: SSE=356.770667 Acc= 90.2696
+-------------------- Activation= LOGIST (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=0 Crit=0.03801105: SSE=356.933258 Acc= 90.2696
+-------------------- Activation= GAUSS (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=3.
+NOTE: GAUSS: Iter=3 Crit= 0.0380327: SSE=357.275477 Acc= 90.1853
+-------------------- Activation= SIN (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=3 Crit=0.03800717: SSE=356.747284 Acc= 90.2275
+-------------------- Activation= COS (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=6.
+NOTE: COS: Iter=5 Crit=0.03802643: SSE=357.155436 Acc= 90.1432
+-------------------- Activation= EXP (Stage=5) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=1 Crit=0.03801112: SSE=356.842474 Acc= 90.2696
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=96
+NOTE: Sparsity  Percentage=39.669421488
+2374 records read
+     ---------- Optimization Cycle (Stage=6) ----------
+-------------------- Activation= SQUARE (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03800019: SSE= 356.66362 Acc= 90.3117
+-------------------- Activation= TANH (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=2 Crit=0.03800904: SSE=356.498727 Acc= 90.2275
+-------------------- Activation= ARCTAN (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: ARCTAN: Iter=3 Crit=0.03800216: SSE=356.693498 Acc= 90.3117
+-------------------- Activation= LOGIST (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=0 Crit=0.03800259: SSE=356.797099 Acc= 90.1853
+-------------------- Activation= GAUSS (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: GAUSS: Iter=3 Crit=0.03800195: SSE=356.620416 Acc= 90.3117
+-------------------- Activation= SIN (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=2 Crit=0.03800094: SSE=356.699575 Acc= 90.2696
+-------------------- Activation= COS (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: COS: Iter=4 Crit=0.03800195: SSE=356.622166 Acc= 90.3117
+-------------------- Activation= EXP (Stage=6) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=1.
+NOTE: EXP: Iter=2 Crit= 0.0380088: SSE=356.562998 Acc= 90.2696
+2374 records read
+2374 records read
+2374 records read
+2374 records read
+NOTE: Distinctive Patterns=97
+NOTE: Sparsity  Percentage=40.082644628
+2374 records read
+     ---------- Optimization Cycle (Stage=7) ----------
+-------------------- Activation= SQUARE (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SQUARE: Iter=1 Crit=0.03799298: SSE=356.795009 Acc= 90.2275
+-------------------- Activation= TANH (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: TANH: Iter=2 Crit=0.03799831: SSE=356.642556 Acc= 90.3117
+-------------------- Activation= ARCTAN (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: ARCTAN: Iter=2 Crit=0.03799991: SSE= 356.62087 Acc= 90.3117
+-------------------- Activation= LOGIST (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: LOGIST: Iter=0 Crit=0.03800189: SSE=356.650836 Acc= 90.2275
+-------------------- Activation= GAUSS (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: GAUSS: Iter=4 Crit=0.03801414: SSE= 356.55019 Acc= 90.2696
+-------------------- Activation= SIN (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: SIN: Iter=3 Crit=0.03799427: SSE=356.831052 Acc= 90.2696
+-------------------- Activation= COS (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: Singular Hessian at result, nullity=2.
+NOTE: COS: Iter=6 Crit= 0.0380141: SSE=356.549479 Acc= 90.2696
+-------------------- Activation= EXP (Stage=7) --------------------
+NOTE: ABSGCONV convergence criterion satisfied.
+NOTE: EXP: Iter=2 Crit=0.03799483: SSE=356.910929 Acc= 90.2696
+2374 records read
+NOTE: The data set EMWS8.DMNEURAL2_ESTIMATE has 110 observations and 24 variables.
+2374 records read
+NOTE: The data set WORK._OUT_DMNEURAL has 2374 observations and 4 variables.
+NOTE: The data set WORK._OUTFIT_DMNEURAL has 9 observations and 9 variables.
+*** Total Number of Runs through Data :       42
+*** Total Number of NL Optimizations  :       64
+*** Total Number of Iterations in NLP :      268
+*** Total Number Function Calls in NLP:      610
+NOTE: View EMWS8.PRINCOMP_TRAIN.VIEW used (Total process time):
+      real time           30.40 seconds
+      cpu time            30.42 seconds
+      
+NOTE: There were 2374 observations read from the data set EMWS8.PART_TRAIN.
+NOTE: The PROCEDURE DMNEURL printed pages 1183-1210.
+NOTE: PROCEDURE DMNEURL used (Total process time):
+      real time           30.41 seconds
+      cpu time            30.42 seconds
+      
+
+1226643    data WORK._OUTFIT_DMNEURAL;
+MPRINT(EM_DIAGRAM):    data WORK._OUTFIT_DMNEURAL;
+1226644    set WORK._OUTFIT_DMNEURAL;
+MPRINT(EM_DIAGRAM):   set WORK._OUTFIT_DMNEURAL;
+1226645    if _TYPE_^='_FITIND_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_FITIND_' then delete;
+1226646    label _STAGE_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_dmneural_label_stage, noquote))"
+1226646  ! ;
+MPRINT(EM_DIAGRAM):   label _STAGE_ = "Training Stage";
+1226647    _STAGE_=_STAGE_-1;
+MPRINT(EM_DIAGRAM):   _STAGE_=_STAGE_-1;
+
+NOTE: There were 9 observations read from the data set WORK._OUTFIT_DMNEURAL.
+NOTE: The data set WORK._OUTFIT_DMNEURAL has 8 observations and 9 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226648    proc transpose data=WORK._OUTFIT_DMNEURAL out=WORK._OUTFIT_DMNEURAL prefix=TRAINING;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._OUTFIT_DMNEURAL out=WORK._OUTFIT_DMNEURAL 
+prefix=TRAINING;
+
+NOTE: There were 8 observations read from the data set WORK._OUTFIT_DMNEURAL.
+NOTE: The data set WORK._OUTFIT_DMNEURAL has 6 observations and 10 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226649    data WORK._OUTFIT_DMNEURAL;
+MPRINT(EM_DIAGRAM):   data WORK._OUTFIT_DMNEURAL;
+1226650    set WORK._OUTFIT_DMNEURAL;
+MPRINT(EM_DIAGRAM):   set WORK._OUTFIT_DMNEURAL;
+1226651    label _NAME_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_dmneural_label_stat, noquote))";
+MPRINT(EM_DIAGRAM):   label _NAME_ = "Statistic";
+1226652    label _LABEL_ = "%sysfunc(sasmsg(sashelp.dmine, rpt_dmneural_label_statlabel,
+1226652  ! noquote))";
+MPRINT(EM_DIAGRAM):   label _LABEL_ = "Label of Statistic";
+1226653    rename _NAME_=STATISTIC;
+MPRINT(EM_DIAGRAM):   rename _NAME_=STATISTIC;
+1226654    rename _LABEL_=LABEL;
+MPRINT(EM_DIAGRAM):   rename _LABEL_=LABEL;
+1226655    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 6 observations read from the data set WORK._OUTFIT_DMNEURAL.
+NOTE: The data set WORK._OUTFIT_DMNEURAL has 6 observations and 10 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226656    data WORK._DSSTAGEDMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):    data WORK._DSSTAGEDMNEURL_3PIMQLD;
+1226657    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226658    by _STAGE_;
+MPRINT(EM_DIAGRAM):   by _STAGE_;
+1226659    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226660    keep _STAGE_ _NAME_;
+MPRINT(EM_DIAGRAM):   keep _STAGE_ _NAME_;
+1226661    if FIRST._STAGE_ then output;
+MPRINT(EM_DIAGRAM):   if FIRST._STAGE_ then output;
+1226662    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._DSSTAGEDMNEURL_3PIMQLD has 8 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226663    data WORK._DSSTDMEANDMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):    data WORK._DSSTDMEANDMNEURL_3PIMQLD;
+1226664    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226665    if _TYPE_='_STDEV_' or _TYPE_='_MEAN_' then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_STDEV_' or _TYPE_='_MEAN_' then output;
+1226666    DROP _TARGET_ _NAME_ _STAGE_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   DROP _TARGET_ _NAME_ _STAGE_ _MEAN_ _STDEV_;
+1226667    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._DSSTDMEANDMNEURL_3PIMQLD has 2 observations and 19 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226668    data WORK._DSPARADMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):    data WORK._DSPARADMNEURL_3PIMQLD;
+1226669    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226670    if _TYPE_='_PARMS_' then if _STAGE_=0 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=0 then output;
+1226671    if _TYPE_='_PARMS_' then if _STAGE_=1 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=1 then output;
+1226672    if _TYPE_='_PARMS_' then if _STAGE_=2 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=2 then output;
+1226673    if _TYPE_='_PARMS_' then if _STAGE_=3 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=3 then output;
+1226674    if _TYPE_='_PARMS_' then if _STAGE_=4 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=4 then output;
+1226675    if _TYPE_='_PARMS_' then if _STAGE_=5 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=5 then output;
+1226676    if _TYPE_='_PARMS_' then if _STAGE_=6 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=6 then output;
+1226677    if _TYPE_='_PARMS_' then if _STAGE_=7 then output;
+MPRINT(EM_DIAGRAM):   if _TYPE_='_PARMS_' then if _STAGE_=7 then output;
+1226678    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._DSPARADMNEURL_3PIMQLD has 64 observations and 24 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226679    data WORK._DSPARADMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):    data WORK._DSPARADMNEURL_3PIMQLD;
+1226680    set WORK._DSPARADMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):   set WORK._DSPARADMNEURL_3PIMQLD;
+1226681    by _STAGE_;
+MPRINT(EM_DIAGRAM):   by _STAGE_;
+1226682    if FIRST._STAGE_ then output;
+MPRINT(EM_DIAGRAM):   if FIRST._STAGE_ then output;
+1226683    DROP _TARGET_ _TYPE_ _MEAN_ _STDEV_ _NAME_ _STAGE_;
+MPRINT(EM_DIAGRAM):   DROP _TARGET_ _TYPE_ _MEAN_ _STDEV_ _NAME_ _STAGE_;
+
+NOTE: There were 64 observations read from the data set WORK._DSPARADMNEURL_3PIMQLD.
+NOTE: The data set WORK._DSPARADMNEURL_3PIMQLD has 8 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226684    proc transpose data=WORK._DSPARADMNEURL_3PIMQLD out=WORK._DSPARADMNEURL_3PIMQLD
+1226684  ! prefix=STAGE;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._DSPARADMNEURL_3PIMQLD 
+out=WORK._DSPARADMNEURL_3PIMQLD prefix=STAGE;
+
+NOTE: There were 8 observations read from the data set WORK._DSPARADMNEURL_3PIMQLD.
+NOTE: The data set WORK._DSPARADMNEURL_3PIMQLD has 18 observations and 9 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226685    proc transpose data=WORK._DSPARADMNEURL_3PIMQLD out=WORK._DSPARADMNEURL_3PIMQLD
+1226685  ! prefix=PARA;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._DSPARADMNEURL_3PIMQLD 
+out=WORK._DSPARADMNEURL_3PIMQLD prefix=PARA;
+1226686    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._DSPARADMNEURL_3PIMQLD.
+NOTE: The data set WORK._DSPARADMNEURL_3PIMQLD has 8 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226687    data WORK._OUTCLASSDMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):    data WORK._OUTCLASSDMNEURL_3PIMQLD;
+1226688    set WORK._OUTCLASSDMNEURL_3PIMQLD;
+MPRINT(EM_DIAGRAM):   set WORK._OUTCLASSDMNEURL_3PIMQLD;
+1226689    if upcase(_VAR_)=upcase('DepVar') then delete;
+MPRINT(EM_DIAGRAM):   if upcase(_VAR_)=upcase('DepVar') then delete;
+1226690    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 2 observations read from the data set WORK._OUTCLASSDMNEURL_3PIMQLD.
+NOTE: The data set WORK._OUTCLASSDMNEURL_3PIMQLD has 0 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226691    data WORK._SPRIN0;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN0;
+1226692    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226693    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226694    if _STAGE_ ^='0' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='0' then delete;
+1226695    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226694:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN0 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226696    proc transpose data=WORK._SPRIN0 out=WORK._SPRIN0 prefix=_SPRIN0;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN0 out=WORK._SPRIN0 prefix=_SPRIN0;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN0.
+NOTE: The data set WORK._SPRIN0 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226697    data WORK._SPRIN0;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN0;
+1226698    set WORK._SPRIN0;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN0;
+1226699    if _SPRIN01=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN01=. then delete;
+1226700    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN0.
+NOTE: The data set WORK._SPRIN0 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226701    proc transpose data=WORK._SPRIN0 out=WORK._SPRIN0;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN0 out=WORK._SPRIN0;
+1226702    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN0.
+NOTE: The data set WORK._SPRIN0 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226703    data WORK._SPRIN1;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN1;
+1226704    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226705    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226706    if _STAGE_ ^='1' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='1' then delete;
+1226707    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226706:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN1 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226708    proc transpose data=WORK._SPRIN1 out=WORK._SPRIN1 prefix=_SPRIN1;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN1 out=WORK._SPRIN1 prefix=_SPRIN1;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN1.
+NOTE: The data set WORK._SPRIN1 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226709    data WORK._SPRIN1;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN1;
+1226710    set WORK._SPRIN1;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN1;
+1226711    if _SPRIN11=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN11=. then delete;
+1226712    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN1.
+NOTE: The data set WORK._SPRIN1 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226713    proc transpose data=WORK._SPRIN1 out=WORK._SPRIN1;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN1 out=WORK._SPRIN1;
+1226714    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN1.
+NOTE: The data set WORK._SPRIN1 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226715    data WORK._SPRIN2;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN2;
+1226716    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226717    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226718    if _STAGE_ ^='2' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='2' then delete;
+1226719    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226718:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN2 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226720    proc transpose data=WORK._SPRIN2 out=WORK._SPRIN2 prefix=_SPRIN2;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN2 out=WORK._SPRIN2 prefix=_SPRIN2;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN2.
+NOTE: The data set WORK._SPRIN2 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226721    data WORK._SPRIN2;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN2;
+1226722    set WORK._SPRIN2;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN2;
+1226723    if _SPRIN21=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN21=. then delete;
+1226724    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN2.
+NOTE: The data set WORK._SPRIN2 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226725    proc transpose data=WORK._SPRIN2 out=WORK._SPRIN2;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN2 out=WORK._SPRIN2;
+1226726    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN2.
+NOTE: The data set WORK._SPRIN2 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226727    data WORK._SPRIN3;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN3;
+1226728    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226729    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226730    if _STAGE_ ^='3' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='3' then delete;
+1226731    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226730:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN3 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226732    proc transpose data=WORK._SPRIN3 out=WORK._SPRIN3 prefix=_SPRIN3;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN3 out=WORK._SPRIN3 prefix=_SPRIN3;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN3.
+NOTE: The data set WORK._SPRIN3 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226733    data WORK._SPRIN3;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN3;
+1226734    set WORK._SPRIN3;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN3;
+1226735    if _SPRIN31=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN31=. then delete;
+1226736    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN3.
+NOTE: The data set WORK._SPRIN3 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226737    proc transpose data=WORK._SPRIN3 out=WORK._SPRIN3;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN3 out=WORK._SPRIN3;
+1226738    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN3.
+NOTE: The data set WORK._SPRIN3 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226739    data WORK._SPRIN4;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN4;
+1226740    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226741    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226742    if _STAGE_ ^='4' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='4' then delete;
+1226743    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226742:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN4 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226744    proc transpose data=WORK._SPRIN4 out=WORK._SPRIN4 prefix=_SPRIN4;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN4 out=WORK._SPRIN4 prefix=_SPRIN4;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN4.
+NOTE: The data set WORK._SPRIN4 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226745    data WORK._SPRIN4;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN4;
+1226746    set WORK._SPRIN4;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN4;
+1226747    if _SPRIN41=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN41=. then delete;
+1226748    /* to delete _v_ variables */
+
+The SAS System
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN4.
+NOTE: The data set WORK._SPRIN4 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226749    proc transpose data=WORK._SPRIN4 out=WORK._SPRIN4;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN4 out=WORK._SPRIN4;
+1226750    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN4.
+NOTE: The data set WORK._SPRIN4 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226751    data WORK._SPRIN5;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN5;
+1226752    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226753    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226754    if _STAGE_ ^='5' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='5' then delete;
+1226755    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226754:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN5 has 6 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226756    proc transpose data=WORK._SPRIN5 out=WORK._SPRIN5 prefix=_SPRIN5;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN5 out=WORK._SPRIN5 prefix=_SPRIN5;
+
+NOTE: There were 6 observations read from the data set WORK._SPRIN5.
+NOTE: The data set WORK._SPRIN5 has 18 observations and 7 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226757    data WORK._SPRIN5;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN5;
+1226758    set WORK._SPRIN5;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN5;
+1226759    if _SPRIN51=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN51=. then delete;
+1226760    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN5.
+NOTE: The data set WORK._SPRIN5 has 18 observations and 7 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+1226761    proc transpose data=WORK._SPRIN5 out=WORK._SPRIN5;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN5 out=WORK._SPRIN5;
+1226762    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN5.
+NOTE: The data set WORK._SPRIN5 has 6 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226763    data WORK._SPRIN6;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN6;
+1226764    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226765    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226766    if _STAGE_ ^='6' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='6' then delete;
+1226767    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226766:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN6 has 2 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226768    proc transpose data=WORK._SPRIN6 out=WORK._SPRIN6 prefix=_SPRIN6;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN6 out=WORK._SPRIN6 prefix=_SPRIN6;
+
+NOTE: There were 2 observations read from the data set WORK._SPRIN6.
+NOTE: The data set WORK._SPRIN6 has 18 observations and 3 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226769    data WORK._SPRIN6;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN6;
+1226770    set WORK._SPRIN6;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN6;
+1226771    if _SPRIN61=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN61=. then delete;
+1226772    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN6.
+NOTE: The data set WORK._SPRIN6 has 18 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226773    proc transpose data=WORK._SPRIN6 out=WORK._SPRIN6;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN6 out=WORK._SPRIN6;
+1226774    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN6.
+NOTE: The data set WORK._SPRIN6 has 2 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226775    data WORK._SPRIN7;
+MPRINT(EM_DIAGRAM):    data WORK._SPRIN7;
+1226776    set EMWS8.DMNeural2_ESTIMATE;
+MPRINT(EM_DIAGRAM):   set EMWS8.DMNeural2_ESTIMATE;
+1226777    if _TYPE_^='_EIGVEC_' then delete;
+MPRINT(EM_DIAGRAM):   if _TYPE_^='_EIGVEC_' then delete;
+1226778    if _STAGE_ ^='7' then delete;
+MPRINT(EM_DIAGRAM):   if _STAGE_ ^='7' then delete;
+1226779    drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+MPRINT(EM_DIAGRAM):   drop _TARGET_ _TYPE_ _STAGE_ _NAME_ _MEAN_ _STDEV_;
+
+NOTE: Character values have been converted to numeric values at the places given by: 
+      (Line):(Column).
+      1226778:14   
+NOTE: There were 110 observations read from the data set EMWS8.DMNEURAL2_ESTIMATE.
+NOTE: The data set WORK._SPRIN7 has 2 observations and 18 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226780    proc transpose data=WORK._SPRIN7 out=WORK._SPRIN7 prefix=_SPRIN7;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN7 out=WORK._SPRIN7 prefix=_SPRIN7;
+
+NOTE: There were 2 observations read from the data set WORK._SPRIN7.
+NOTE: The data set WORK._SPRIN7 has 18 observations and 3 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226781    data WORK._SPRIN7;
+MPRINT(EM_DIAGRAM):   data WORK._SPRIN7;
+1226782    set WORK._SPRIN7;
+MPRINT(EM_DIAGRAM):   set WORK._SPRIN7;
+1226783    if _SPRIN71=. then delete;
+MPRINT(EM_DIAGRAM):   if _SPRIN71=. then delete;
+1226784    /* to delete _v_ variables */
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN7.
+NOTE: The data set WORK._SPRIN7 has 18 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.00 seconds
+      
+
+1226785    proc transpose data=WORK._SPRIN7 out=WORK._SPRIN7;
+MPRINT(EM_DIAGRAM):   proc transpose data=WORK._SPRIN7 out=WORK._SPRIN7;
+1226786    run;
+MPRINT(EM_DIAGRAM):   run;
+
+NOTE: There were 18 observations read from the data set WORK._SPRIN7.
+NOTE: The data set WORK._SPRIN7 has 2 observations and 19 variables.
+NOTE: PROCEDURE TRANSPOSE used (Total process time):
+      real time           0.00 seconds
+      cpu time            0.01 seconds
+      
+
+MPRINT(EM_DIAGRAM):    proc printto;
+MPRINT(EM_DIAGRAM):   run;
